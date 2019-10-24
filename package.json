@@ -1,11 +1,15 @@
 {
-  "name": "zoom-ui",
+  "name": "zoom-ui-1.0",
   "version": "0.1.0",
-  "private": true,
+  "description": "this is zoom-ui",
+  "license": "MIT",
+  "main": "lib/zoom-ui-1.0.umd.js",
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name zoom-ui-1.0 --dest lib src/plugins/index.js"
   },
   "dependencies": {
     "register-service-worker": "^1.6.2",
