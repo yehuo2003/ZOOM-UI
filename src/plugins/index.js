@@ -27,6 +27,19 @@ const install = Vue => {
             el.focus();
         }
     })
+    Vue.prototype.$id = function(id) {
+        return document.getElementById(id);
+    }
+    Vue.prototype.$rn = function(min,max){
+        var n = Math.random()*(max-min)+min;
+        return Math.floor(n)
+    }
+    Vue.prototype.$rc = function(min,max){
+        var r = this.$rn(min,max);
+        var g = this.$rn(min,max);
+        var b = this.$rn(min,max);
+        return `rgb(${r},${g},${b})`
+    }
     if (install.installed) return;
     install.installed;
     requireComponent.keys().map(component => {

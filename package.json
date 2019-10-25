@@ -1,8 +1,9 @@
 {
   "name": "zoom-ui-1.0",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "this is zoom-ui",
   "license": "MIT",
+  "author": "linzhuming",
   "main": "lib/zoom-ui-1.0.umd.js",
   "private": false,
   "scripts": {
