@@ -1,15 +1,12 @@
 <template>
   <div class="zoom-upload">
     <zoom-button v-if="!link" :op="btnOp" ref="uploadButton" v-show="!coverPicture">{{text}}</zoom-button>
-    <div v-else class="custom" v-html="link" @click="imgClick">
-    </div>
-    <ul v-if="coverPicture" class="coverPicture">
-      <li>
+    <div v-else class="custom" v-html="link" @click="imgClick"></div>
+    <div v-if="coverPicture" @click="deleteFile" title="删除" class="del" v-html="del"></div>
+    <ul class="coverPicture">
+      <li v-if="coverPicture">
         <a href="javascript:void(0);">
           <img :src="coverPicture" :alt="fileName" :title="fileName" />
-        </a>
-        <a href="javascript:void(0);" @click="deleteFile" title="删除" class="del" v-html="del">
-          <!-- <span class="hae-icon icon-del">删除</span> -->
         </a>
       </li>
     </ul>
@@ -20,7 +17,7 @@
       v-show="false"
       class="getImgUrl_file"
       @change="uploadImg($event)"
-      accept="image/jpg, imgage/jpeg, image/png"
+      accept="image/*"
     />
   </div>
 </template>
@@ -33,7 +30,7 @@ export default {
   data() {
       return {
           size: 50,     //规定大小
-          del: '<span class="hae-icon icon-del">删除</span>',
+          del: '<button class="zoom-btn">删除</button>',
           link: '',
           text: '开始上传',
           coverPicture: '',     //保存图片信息
@@ -46,28 +43,36 @@ export default {
       }
   },
   created() {
-      this.btnOp.isdisabled = this.op.isdisabled;
-      this.btnOp.hue = this.op.hue;
-      this.text = this.op.content;
-      this.link = this.op.custom;
-      this.del = this.op.customdel;
-      let size = 50;
-      if (this.op.size.indexOf('M') > -1) {
-          size = this.op.size.split('M')[0] * 1024
-      } else if (this.op.size.indexOf('K') > -1) {
-          size = this.op.size.split('K')[0]
-      } else {
-          size = this.op.size
-      }
-      size = Number(size)
-      if (isNaN(size)) {
-          throw Error('zoom-ui error: size必须为数字,或者以KB, MB结尾');
-          return
-      } else {
-          this.size = size;
-      }
+      this.loadData();
   },
   methods: {
+    // 加载组件
+    loadData() {
+        if (this.op) {
+          if (this.op.isdisabled) this.btnOp.isdisabled = this.op.isdisabled;
+          if (this.op.hue) this.btnOp.hue = this.op.hue;
+          if (this.op.content) this.text = this.op.content;
+          if (this.op.custom) this.link = this.op.custom;
+          if (this.op.customdel) this.del = this.op.customdel;
+          if (this.op.size) {
+              let size = 50;
+              if (this.op.size.indexOf('M') > -1) {
+                  size = this.op.size.split('M')[0] * 1024
+              } else if (this.op.size.indexOf('K') > -1) {
+                  size = this.op.size.split('K')[0]
+              } else {
+                  size = this.op.size
+              }
+              size = Number(size)
+              if (isNaN(size)) {
+                  throw Error('zoom-ui error: size必须为数字,或者以KB, MB结尾');
+                  return
+              } else {
+                  this.size = size;
+              } 
+          }
+        }
+    },
     //   上传图片点击事件
     imgClick() {
         this.$id('zoom-upload-file').click();
@@ -79,14 +84,24 @@ export default {
             this.$refs['msg'].msgPlugin(msg);
             throw Error('zoom-ui error:',msg);
         }
-        if (this.op.defeatedEvent) {
-            this.op.defeatedEvent();
+        if (this.op && this.op.defeatedEvent) {
+            if (typeof this.op.defeatedEvent === 'function') {
+                this.op.defeatedEvent();
+            } else {
+                throw Error('zoom-ui error: defeatedEvent必须是一个方法!');
+                return
+            }
         }
     },
     // 将上传图片转换成base64位编码
     uploadImg(e) {
-        if (this.op.beforeEvent) {
-            this.op.beforeEvent();
+        if (this.op && this.op.beforeEvent) {
+            if (typeof this.op.beforeEvent === 'function') {
+                this.op.beforeEvent();
+            } else {
+                throw Error('zoom-ui error: beforeEvent必须是一个方法!');
+                return
+            }
         }
         let files = this.$id('zoom-upload-file').files[0];
         let name = files.name;
@@ -127,14 +142,28 @@ export default {
         data.fileName = this.fileName;
         data.fileSize = (fileSize / 1024).toFixed(2) + 'KB';
         this.$emit('imgData', data);
+
+        if (this.op && this.op.afterEvent) {
+            if (typeof this.op.afterEvent === 'function') {
+                this.op.afterEvent();
+            } else {
+                throw Error('zoom-ui error: afterEvent必须是一个方法!');
+                return
+            }
+        }
     },
     // 删除图片
     deleteFile() {
         this.$id('zoom-upload-file').value = '';
         this.coverPicture = this.fileName = ''
         this.showFile = false;
-        if (this.op.deleteEvent) {
-            this.op.deleteEvent();
+        if (this.op && this.op.deleteEvent) {
+            if (typeof this.op.deleteEvent === 'function') {
+                this.op.deleteEvent();
+            } else {
+                throw Error('zoom-ui error: deleteEvent必须是一个方法!');
+                return
+            }
         }
     } 
   }
@@ -143,5 +172,8 @@ export default {
 <style>
 .custom {
     cursor: pointer;
+}
+.coverPicture {
+    margin: 20px;
 }
 </style>

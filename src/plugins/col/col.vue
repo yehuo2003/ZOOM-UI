@@ -24,21 +24,6 @@ export default {
 }
 </script>
 <style>
-*{
-  margin: 0;
-  padding: 0;
-}
-ul,li{
-  list-style: none;
-}
-.clearfix::after{
-  content: '.';
-  display: block;
-  clear: both;
-  height: 0;
-  overflow: hidden;
-}
- 
 /*超小设备（手机：小于768px）*/
 @media(max-width:768px){
   .col-xs-1{ width: 8.33333333%;}
