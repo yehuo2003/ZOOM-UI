@@ -7,24 +7,51 @@
 export default {
     name: 'zoom-col',
     props: {
-        span: String
+        span: String,
+        lg: String,
+        md: String,
+        sm: String,
+        xs: String
     },
     data() {
         return {
-            cls: 'col-xs-12 col-sm-12 col-md-12 col-lg-12'
+            cls: 'col-lg-12 col-md-12 col-sm-12 col-xs-12'
         }
     },
     created() {
-        let num = 12;
         if (this.span) {
-          let reg = /^(?:1[0-2]|[1-9])$/;
-          if (reg.test(Number(this.span))) {
-            num = this.span;
-          } else {
-            throw Error(`ZOOM-UI TypeError: value ${this.span} 解析出错, 请传入一个范围 1~12 之间的正整数!`);
+          // 如果有传入span
+          if (this.testing(this.span)) {
+            this.cls = `col-xs-${this.span} col-sm-${this.span} col-md-${this.span} col-lg-${this.span}`;
           }
+        } else {
+          // 如果没有span
+          let cls = 'col-lg-12 col-md-12 col-sm-12 col-xs-12'
+          if (this.lg && this.testing(this.lg)) {
+            cls = cls.replace(/col-lg-12/g, `col-lg-${this.lg}`)
+          }
+          if (this.md && this.testing(this.md)) {
+            cls = cls.replace(/col-md-12/g, `col-md-${this.md}`)
+          }
+          if (this.sm && this.testing(this.sm)) {
+            cls = cls.replace(/col-sm-12/g, `col-sm-${this.sm}`)
+          }
+          if (this.xs && this.testing(this.xs)) {
+            cls = cls.replace(/col-xs-12/g, `col-xs-${this.xs}`)
+          }
+          this.cls = cls;
         }
-        this.cls = `col-xs-${num} col-sm-${num} col-md-${num} col-lg-${num}`;
+    },
+    methods: {
+      // 验证方法
+      testing(num) {
+        let reg = /^(?:1[0-2]|[1-9])$/;
+        if (reg.test(num)) {
+            return true;
+        } else {
+          throw Error(`ZOOM-UI ValueError: value ${num} 解析出错, 请传入一个范围 1~12 之间的正整数!`);
+        }
+      }
     }
 }
 </script>

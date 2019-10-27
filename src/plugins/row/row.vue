@@ -5,10 +5,7 @@
 </template>
 <script>
 export default {
-    name: 'zoom-row',
-    props: {
-        msg: String
-    },
+    name: 'zoom-row'
 }
 </script>
 <style>

@@ -1,3 +1,4 @@
+import '../assets/fontIcon/iconfont.css'
 // import msg from './msg/msg.vue'
 // import btn from './button/button.vue'
 // let plugins = {};

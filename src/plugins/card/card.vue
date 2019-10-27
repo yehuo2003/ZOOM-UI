@@ -5,7 +5,7 @@
 </template>
 <script>
 export default {
-    name: 'zoom-card',
+    name: 'zoom-card'
 }
 </script>
 <style>
@@ -16,9 +16,9 @@ export default {
     border-radius: 2px;
     margin: 20px;
 }
-.zoom-card .zoom-card-header,
-.zoom-card .zoom-card-container,
-.zoom-card .zoom-card-footer {
+.zoom-card .zoom-header,
+.zoom-card .zoom-container,
+.zoom-card .zoom-footer {
     padding: 10px;
 }
 </style>

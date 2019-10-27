@@ -2,6 +2,7 @@
   <div class="btn">
       <button class="zoom-btn" :class="css" :disabled="isdisabled" @click="handleClick">
         <slot></slot>
+        <i v-if="showIcon" class="icon iconfont" :class="IconStyle"></i>
       </button>
   </div>
 </template>
@@ -9,25 +10,32 @@
 export default {
     name: 'zoom-button',
     props: {
-        op: Object
+        op: Object,
+        hue: String
     },
     data() {
         return {
             css: '',
-            isdisabled: false
+            isdisabled: false,
+            showIcon: false,
+            IconStyle: ''
         }
     },
     created() {
-        if (this.op) {
-            if (!typeof(this.op.hue) == 'string') {
+        if (this.op || this.hue) {
+            let hue = this.op ? this.op.hue : this.hue; 
+            if (!typeof(hue) == 'string') {
                 throw Error('zoom-ui error: hue 的类型需要传入字符串');
                 return
             }
-            switch (this.op.hue) {
+            switch (hue) {
                 case 'err':
                    this.css = 'danger' 
                     break;
                 case 'error':
+                   this.css = 'danger' 
+                    break;
+                case 'red':
                    this.css = 'danger' 
                     break;
                 case 'green':
@@ -39,11 +47,27 @@ export default {
                 case 'gray':
                    this.css = 'info' 
                     break;
+                case 'blue':
+                   this.css = 'primary' 
+                    break;
                 default:
-                    this.css = this.op.hue;
+                    this.css = hue;
                     break;
             }
-            this.isdisabled = this.op.isdisabled;
+            if (this.op && this.op.isdisabled) {
+                console.log(this.op.isdisabled,'this.op.isdisabled');
+                this.isdisabled = !!this.op.isdisabled;
+            }
+            if (this.op && this.op.IconStyle) {
+                if (this.op.IconStyle.indexOf('icon') > -1) {
+                    this.showIcon = true;
+                    this.IconStyle = this.op.IconStyle;
+                } else {
+                    this.IconStyle = '';
+                    this.showIcon = false;
+                    throw Error(`zoom-ui TypeError: IconStyle: ${this.op.IconStyle} 错误, 请传入有效的icon名`);
+                }
+            }
         }
     },
     methods: {
@@ -209,5 +233,8 @@ export default {
 .zoom-btn:active {
     border: 1px solid #1890ff;
     background: #e6f7ff;
+}
+.btn .iconfont {
+    font-size: 12px;
 }
 </style>

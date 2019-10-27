@@ -25,32 +25,32 @@ import '../node_modules/zoom-ui-1.0/lib/zoom-ui-1.0.css'
     <zoom-row>
       <zoom-col span="4">
         <zoom-card>
-          <zoom-card-header>
+          <zoom-header>
             按钮组件
-          </zoom-card-header>
-          <zoom-card-container>
+          </zoom-header>
+          <zoom-container>
             <zoom-button :op="btnOp">按钮</zoom-button>
-          </zoom-card-container>
+          </zoom-container>
         </zoom-card>
       </zoom-col>
       <zoom-col span="4">
         <zoom-card>
-          <zoom-card-header>
+          <zoom-header>
             上传头像
-          </zoom-card-header>
-          <zoom-card-container>
+          </zoom-header>
+          <zoom-container>
             <zoom-upload></zoom-upload>
-          </zoom-card-container>
+          </zoom-container>
         </zoom-card>
       </zoom-col>
       <zoom-col span="4">
         <zoom-card>
-          <zoom-card-header>
+          <zoom-header>
             随机验证码
-          </zoom-card-header>
-          <zoom-card-container>
+          </zoom-header>
+          <zoom-container>
             <zoom-testing></zoom-testing>
-          </zoom-card-container>
+          </zoom-container>
         </zoom-card>
       </zoom-col>
     </zoom-row>

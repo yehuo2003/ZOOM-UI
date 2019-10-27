@@ -86,51 +86,7 @@ export default {
       outShowStyle: {},   // 更清晰的图片,若不提供会采用 url(more detailed photo url)
       highUrl: String,
       url: String,    // 图片地址(photo url)
-    },
-    // highUrl: String,    // 更清晰的图片,若不提供会采用 url(more detailed photo url)
-    // width: {    // 放大镜宽度(width of magnifying glass)
-    //   type: Number,
-    //   default: 168
-    // },
-    // selectorStyle: {    // 放大镜样式(style of magnifying glass)
-    //   type: Object,
-    //   default () {
-    //     return {};
-    //   }
-    // },
-    // outShowStyle: {},
-    // scale: {    // 放大倍数(scale)
-    //   type: Number,
-    //   default: 3
-    // },
-    // lazyload: {
-    //   type: Boolean,
-    //   default: false
-    // },
-    // moveEvent: {    // 当需要在外部监听移动事件时,请通过该字段传入事件（必须包含 pageX,pageY,clientY）(When you need to listen for moving events outside the component)
-    //   type: [Object, MouseEvent],
-    //   default: null
-    // },
-    // leaveEvent: {   // 当需要在外部监听离开事件时，请通过该字段传入事件(When you need to listen for leaving events outside the component)
-    //   type: [Object, MouseEvent],
-    //   default: null
-    // },
-    // hideZoom: { // 隐藏放大镜，图像加载时不会显示放大镜(hide magnifying)
-    //   type: Boolean,
-    //   default: false
-    // },
-    // outShow: {  // 	图片展示区域会在图片外部(image will be displayed on the outside)
-    //   type: Boolean,
-    //   default: false
-    // },
-    // pointer: {  // 外部区域的中心点 (The center of an external area)
-    //   type: Boolean,
-    //   default: false
-    // },
-    // baseline: { // 外部区域的基线 (The baseline of the external area)
-    //   type: Boolean,
-    //   default: false
-    // }
+    }
   },
   data () {
     return {

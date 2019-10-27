@@ -18,25 +18,28 @@
     </zoom-row> -->
 
     <zoom-row>
-      <zoom-col span="6">
+      <zoom-col lg="5" md="7" sm="8" xs="12">
         <zoom-card>
-          <zoom-card-header>上传图片组件</zoom-card-header>
-          <zoom-card-container>
+          <zoom-header>上传图片组件</zoom-header>
+          <zoom-container>
             <zoom-upload :op="uploadOp" @imgData="getName"></zoom-upload>
-          </zoom-card-container>
-          <zoom-card-footer>
-            <zoom-button :op="btnOp">提交</zoom-button>
-          </zoom-card-footer>
+          </zoom-container>
+          <zoom-footer>
+            <span class="icon iconfont icon-RectangleCopy1"></span>
+            <zoom-button hue="green" :op="btnOp">
+              提交
+            </zoom-button>
+          </zoom-footer>
         </zoom-card>
       </zoom-col>
 
       <!-- <zoom-col span="6">
         <zoom-card>
-          <zoom-card-header>4位数随机验证码</zoom-card-header>
-          <zoom-card-container>
+          <zoom-header>4位数随机验证码</zoom-header>
+          <zoom-container>
             <zoom-testing></zoom-testing>
-          </zoom-card-container>
-          <zoom-card-footer>尾部</zoom-card-footer>
+          </zoom-container>
+          <zoom-footer>尾部</zoom-footer>
         </zoom-card>
       </zoom-col> -->
     </zoom-row>
@@ -91,8 +94,9 @@ export default Vue.extend({
       },
       btnOp: {
         isdisabled: false,
-        hue: 'error',
-        onClick: this.search
+        // hue: 'info',
+        onClick: this.search,
+        IconStyle: 'icon-close'
         // onClick: function() {
         //   console.log(111);
         // }
