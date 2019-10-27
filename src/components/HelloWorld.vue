@@ -1,34 +1,36 @@
 <template>
   <div class="hello">
-    <zoom-row>
-      <!-- <zoom-col :span="3">
+    <!-- <zoom-row>
+      <zoom-col span="3">
         <zoom-input v-focus :op="inputOp" v-model="name"></zoom-input>
         <zoom-msg ref="msg"></zoom-msg>
       </zoom-col>
-      <zoom-col :span="9">
+      <zoom-col span="9">
         <zoom-button :op="btnOp">提交</zoom-button>
-      </zoom-col> -->
-      <zoom-col :span="3">
       </zoom-col>
-      <zoom-col :span="4">
+      <zoom-col>
+      </zoom-col>
+      <zoom-col span="5">
         <zoom-photo :op="zoomOp"></zoom-photo>
       </zoom-col>
-      <zoom-col :span="3">
+      <zoom-col span="3">
       </zoom-col>
-    </zoom-row>
+    </zoom-row> -->
 
     <zoom-row>
-      <zoom-col :span="4">
+      <zoom-col span="6">
         <zoom-card>
           <zoom-card-header>上传图片组件</zoom-card-header>
           <zoom-card-container>
             <zoom-upload :op="uploadOp" @imgData="getName"></zoom-upload>
           </zoom-card-container>
-          <zoom-card-footer>尾部</zoom-card-footer>
+          <zoom-card-footer>
+            <zoom-button :op="btnOp">提交</zoom-button>
+          </zoom-card-footer>
         </zoom-card>
       </zoom-col>
 
-      <zoom-col :span="4">
+      <!-- <zoom-col span="6">
         <zoom-card>
           <zoom-card-header>4位数随机验证码</zoom-card-header>
           <zoom-card-container>
@@ -36,7 +38,7 @@
           </zoom-card-container>
           <zoom-card-footer>尾部</zoom-card-footer>
         </zoom-card>
-      </zoom-col>
+      </zoom-col> -->
     </zoom-row>
   </div>
 </template>
@@ -98,6 +100,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    getimg(){
+
+    },
     // 获取base64编码
     getName(data) {
       console.log('父组件接收', data);

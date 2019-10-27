@@ -17,7 +17,12 @@ export default {
     created() {
         let num = 12;
         if (this.span) {
+          let reg = /^(?:1[0-2]|[1-9])$/;
+          if (reg.test(Number(this.span))) {
             num = this.span;
+          } else {
+            throw Error(`ZOOM-UI TypeError: value ${this.span} 解析出错, 请传入一个范围 1~12 之间的正整数!`);
+          }
         }
         this.cls = `col-xs-${num} col-sm-${num} col-md-${num} col-lg-${num}`;
     }

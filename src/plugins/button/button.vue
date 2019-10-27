@@ -48,7 +48,6 @@ export default {
     },
     methods: {
         handleClick() {
-            console.log(typeof this.op.onClick === 'function');
             if (typeof this.op.onClick === 'function') {
                 this.op.onClick();
             } else {
