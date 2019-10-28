@@ -205,16 +205,18 @@ export default {
     }
   },
   created () {
-    this.type = this.op.type;
-    this.width = this.op.width;
-    this.scale = this.op.scale;
-    this.url = this.op.url;
-    this.highUrl = this.op.highUrl;
-    this.leaveEvent = this.op.leaveEvent;
-    this.moveEvent = this.op.moveEvent;
-    this.outShowStyle = this.op.outShowStyle;
-    this.url && this.op.lazyload && this.handlerUrlChange();
-    this.outShow = this.op.outShow;
+    if (this.op) {
+      this.type = this.op.type;
+      this.width = this.op.width || 168;
+      this.scale = this.op.scale || 2;
+      this.url = this.op.url;
+      this.highUrl = this.op.highUrl;
+      this.leaveEvent = this.op.leaveEvent;
+      this.moveEvent = this.op.moveEvent;
+      this.outShowStyle = this.op.outShowStyle;
+      this.url && this.op.lazyload && this.handlerUrlChange();
+      this.outShow = this.op.outShow;
+    }
   },
   mounted () {
     this.$img = this.$refs["img"];

@@ -30,25 +30,25 @@ export default {
             }
             switch (hue) {
                 case 'err':
-                   this.css = 'danger' 
+                   this.css = 'danger';
                     break;
                 case 'error':
-                   this.css = 'danger' 
+                   this.css = 'danger';
                     break;
                 case 'red':
-                   this.css = 'danger' 
+                   this.css = 'danger';
                     break;
                 case 'green':
-                   this.css = 'success' 
+                   this.css = 'success'; 
                     break;
                 case 'yellow':
-                   this.css = 'warning' 
+                   this.css = 'warning';
                     break;
                 case 'gray':
-                   this.css = 'info' 
+                   this.css = 'info';
                     break;
                 case 'blue':
-                   this.css = 'primary' 
+                   this.css = 'primary'; 
                     break;
                 default:
                     this.css = hue;

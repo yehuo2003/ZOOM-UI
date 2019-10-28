@@ -18,7 +18,15 @@
     </zoom-row> -->
 
     <zoom-row>
-      <zoom-col lg="5" md="7" sm="8" xs="12">
+      <zoom-col span="6">
+        <zoom-button :op="btnOp">测试普通弹框</zoom-button>
+        <zoom-button :op="bigOp">测试大弹框</zoom-button>
+      </zoom-col>
+      <zoom-col span="6">
+        <zoom-input></zoom-input>
+      </zoom-col>
+      <zoom-alert ref="msg"></zoom-alert>
+      <!-- <zoom-col lg="5" md="7" sm="8" xs="12">
         <zoom-card>
           <zoom-header>上传图片组件</zoom-header>
           <zoom-container>
@@ -31,7 +39,7 @@
             </zoom-button>
           </zoom-footer>
         </zoom-card>
-      </zoom-col>
+      </zoom-col> -->
 
       <!-- <zoom-col span="6">
         <zoom-card>
@@ -95,11 +103,24 @@ export default Vue.extend({
       btnOp: {
         isdisabled: false,
         // hue: 'info',
-        onClick: this.search,
+        onClick: () => {
+          this.$refs['msg'].msg('小弹框', 2000);
+        },
         IconStyle: 'icon-close'
         // onClick: function() {
         //   console.log(111);
         // }
+      },
+      bigOp: {
+        isdisabled: false,
+        hue: 'yellow',
+        onClick: () => {
+          this.$refs['msg'].alert({
+            title: '标题',
+            content: '内容',
+            type: 'primary'
+          }, 5000);
+        }
       }
     }
   },
