@@ -18,7 +18,10 @@
 export default {
     name: 'zoom-alert',
     props: {
-        msg: String,
+        msg: {
+            type: String,
+            default: ''
+        },
         size: String
     },
     data() {
@@ -31,7 +34,6 @@ export default {
         }
     },
     created() {
-        this.text = this.msg;
         if (this.size && this.size == 'lager') {
             this.lager = true;
         } else {
@@ -64,7 +66,6 @@ export default {
                     default:
                         this.IconStyle = false;
                 }
-                console.log(obj.type);
             } else if (typeof obj === 'string') {
                 this.content = obj;
             } else {
@@ -83,7 +84,7 @@ export default {
             this.lager = true;
             this.testing(obj, time);
         },
-        msg(msg, time) {
+        msage(msg, time) {
             this.lager = false;
             this.title = this.content = '';
             this.testing(msg, time);

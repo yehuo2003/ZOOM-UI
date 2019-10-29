@@ -19,8 +19,20 @@
 
     <zoom-row>
       <zoom-col span="6">
+        <zoom-form label-width="100">
+          <zoom-form-item label="用户名:">
+            <zoom-input :op="nameOp"></zoom-input>
+          </zoom-form-item>
+          <zoom-form-item label="密 码:">
+            <zoom-input></zoom-input>
+          </zoom-form-item>
+          <zoom-form-item>
+            <zoom-button :op="bigOp">测试大弹框</zoom-button>
+          </zoom-form-item>
+        </zoom-form>
+      </zoom-col>
+      <zoom-col span="6">
         <zoom-button :op="btnOp">测试普通弹框</zoom-button>
-        <zoom-button :op="bigOp">测试大弹框</zoom-button>
       </zoom-col>
       <zoom-col span="6">
         <zoom-input></zoom-input>
@@ -64,6 +76,22 @@ export default Vue.extend({
   },
   data() {
     return {
+      nameOp: {
+        isdisabled: false,
+        type: 'text',
+        IconStyle: 'icon-jian',
+        onClick:()=> {
+          this.$refs['msg'].alert('66666', 2000);
+        },
+        errMsg: '姓名长度必须大于10',
+        testing:function(value) {
+          if (value.length > 10) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      },
       zoomOp: {
         baseline: false,
         pointer: false,
@@ -104,7 +132,7 @@ export default Vue.extend({
         isdisabled: false,
         // hue: 'info',
         onClick: () => {
-          this.$refs['msg'].msg('小弹框', 2000);
+          this.$refs['msg'].msage('小弹框', 2000);
         },
         IconStyle: 'icon-close'
         // onClick: function() {
@@ -136,7 +164,7 @@ export default Vue.extend({
       // this.$myMethod();
       if (!this.name) {
         // alert('请输入名字')
-        this.$refs['msg'].msgPlugin('请输入名字', 2000);
+        this.$refs['msg'].alert('请输入名字', 2000);
       }
     }
   }
