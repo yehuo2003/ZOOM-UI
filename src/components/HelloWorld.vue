@@ -16,7 +16,6 @@
       <zoom-col span="3">
       </zoom-col>
     </zoom-row> -->
-
     <zoom-row>
       <zoom-col span="6">
         <zoom-form label-width="100">
@@ -26,12 +25,19 @@
           <zoom-form-item label="密 码:">
             <zoom-input></zoom-input>
           </zoom-form-item>
+          <zoom-form-item label="计数器">
+            <zoom-numeric :op="numOp"></zoom-numeric>
+          </zoom-form-item>
+          <zoom-form-item label="开关">
+            <zoom-switch :op="switchOp"></zoom-switch>
+          </zoom-form-item>
           <zoom-form-item>
             <zoom-button :op="bigOp">测试大弹框</zoom-button>
           </zoom-form-item>
         </zoom-form>
       </zoom-col>
       <zoom-col span="6">
+         <zoom-loading color="#1890ff" show="true"></zoom-loading>
         <zoom-button :op="btnOp">测试普通弹框</zoom-button>
       </zoom-col>
       <zoom-col span="6">
@@ -76,6 +82,23 @@ export default Vue.extend({
   },
   data() {
     return {
+      switchOp: {
+        isdisabled: false,
+        open: '开启',
+        close: '关闭',
+        status: 'open',
+        beforeClick: function(val) {
+          console.log('点击前触发', val);
+        },
+        afterClick: function(val) {
+          console.log('点击后触发', val);
+        }
+      },
+      numOp: {
+        max: 10,
+        min: 0,
+        isdisabled: true
+      },
       nameOp: {
         isdisabled: false,
         type: 'text',

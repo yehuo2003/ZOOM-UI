@@ -1,5 +1,5 @@
 <template>
-<!-- @submit.prevent="false" 阻止默认提交事件 -->
+<!-- submit.prevent="false" 阻止默认提交事件 -->
   <form :label="labelWidth" id="zoom-form" class="zoom-form">
       <slot></slot>
   </form>
