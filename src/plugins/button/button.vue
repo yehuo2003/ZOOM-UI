@@ -72,10 +72,14 @@ export default {
     },
     methods: {
         handleClick() {
-            if (typeof this.op.onClick === 'function') {
-                this.op.onClick();
+            if (this.op && this.op.onClick) {
+                if (typeof this.op.onClick === 'function') {
+                    this.op.onClick();
+                } else {
+                    throw Error('zoom-ui error: onClick 需要绑定一个函数对象')
+                }
             } else {
-                throw Error('zoom-ui error: onClick 需要绑定一个函数对象')
+                return;
             }
         }
     }

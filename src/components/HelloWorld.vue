@@ -16,6 +16,7 @@
       <zoom-col span="3">
       </zoom-col>
     </zoom-row> -->
+    <zoom-dialog-box></zoom-dialog-box>
     <zoom-row>
       <zoom-col span="6">
         <zoom-form label-width="100">
@@ -30,6 +31,9 @@
           </zoom-form-item>
           <zoom-form-item label="开关">
             <zoom-switch :op="switchOp"></zoom-switch>
+          </zoom-form-item>
+          <zoom-form-item label="文本域">
+            <zoom-textarea :op="textareaOp"></zoom-textarea>
           </zoom-form-item>
           <zoom-form-item>
             <zoom-button :op="bigOp">测试大弹框</zoom-button>
@@ -98,6 +102,18 @@ export default Vue.extend({
         max: 10,
         min: 0,
         isdisabled: true
+      },
+      textareaOp: {
+        isdisabled: false,
+        placeHolder: '请输入内容',
+        errMsg: '姓名长度必须大于10',
+        testing:function(value) {
+          if (value.length > 10) {
+            return true;
+          } else {
+            return false;
+          }
+        }
       },
       nameOp: {
         isdisabled: false,

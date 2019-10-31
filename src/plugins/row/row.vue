@@ -10,14 +10,15 @@ export default {
 </script>
 <style>
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary{ margin:0; padding:0;box-sizing: border-box;}  
-body{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Arial"; color:#333; background-color:#fff; font-size:15px; background-image:url(about:blank); background-attachment:fixed; overflow-x:hidden;}  
+body{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Arial"; color:#333; background-color:#fff; font-size:15px; background-image:url(about:blank); background-attachment:fixed; overflow-x:hidden;box-sizing: border-box;}  
 a { color:#06f; text-decoration: none;}  
 a:hover{ color:#f60; text-decoration: none;}  
 img{ border:none; vertical-align:middle; max-width: 100%;}  
 i,em{ font-style:normal;}  
 li{ list-style-type:none;}  
-textarea{ resize:vertical;}  
-input, select, textarea{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Arial"; background-color:#fff; margin:0; padding:0; outline:none;}  
+textarea{ resize:vertical;}
+* {box-sizing: border-box;}  
+input, select, textarea{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Arial"; background-color:#fff; margin:0; padding:0; outline:none;box-sizing: border-box;}  
 .zoom-row {
     margin-bottom: 20px;
     margin-right: -10px;
