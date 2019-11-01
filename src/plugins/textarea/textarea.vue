@@ -51,7 +51,6 @@ export default {
     };
   },
   created() {
-      console.log(this.options);
       if (this.op) {
           this.options.isdisabled = this.op.isdisabled;
           this.options.maxLength = this.op.maxLength || 50;

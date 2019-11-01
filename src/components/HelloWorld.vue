@@ -16,7 +16,9 @@
       <zoom-col span="3">
       </zoom-col>
     </zoom-row> -->
-    <zoom-dialog-box></zoom-dialog-box>
+    <zoom-dialog-box :op="dialogOp" :show="visibility" @close="handleClose">
+      <h1>弹框测试</h1>
+    </zoom-dialog-box>
     <zoom-row>
       <zoom-col span="6">
         <zoom-form label-width="100">
@@ -86,6 +88,13 @@ export default Vue.extend({
   },
   data() {
     return {
+      dialogOp: {
+        showBtn: true,
+        onClick: function() {
+          console.log(666666);
+        }
+      },
+      visibility: false,
       switchOp: {
         isdisabled: false,
         open: '开启',
@@ -172,6 +181,8 @@ export default Vue.extend({
         // hue: 'info',
         onClick: () => {
           this.$refs['msg'].msage('小弹框', 2000);
+          this.visibility = true;
+          console.log(this.visibility,'this.visibility');
         },
         IconStyle: 'icon-close'
         // onClick: function() {
@@ -192,8 +203,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    getimg(){
-
+    handleClose() {
+      this.visibility = false;
     },
     // 获取base64编码
     getName(data) {

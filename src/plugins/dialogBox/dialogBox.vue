@@ -1,11 +1,16 @@
 <template>
-  <div class="zoom-dialog-box zoom-dialog-warpper">
-      <div class="dialog-box" style="width: 30%; top: 15vh; left: calc((100vw - 30%) / 2);">
-        <div class="dialog-header">提示</div>
-        <div class="dialog-content">内容</div>
-        <div class="dialog-footer">
-            <zoom-button>确定</zoom-button>
-            <zoom-button>取消</zoom-button>
+  <div v-show="visibility" class="zoom-dialog-box zoom-dialog-warpper">
+      <div class="dialog-box" :style=" 'width:' + width + '; top: 15vh; left: calc((100vw - 30%) / 2);' ">
+        <div class="dialog-header">
+            <span>提示</span>
+            <a @click="closeBox" href="javascript:void(0);">×</a>
+        </div>
+        <div class="dialog-content">
+            <slot></slot>
+        </div>
+        <div v-if="showBtn" class="dialog-footer">
+            <zoom-button :op="quitOp">确定</zoom-button>
+            <zoom-button :op="closeOp">取消</zoom-button>
         </div>
       </div>
   </div>
@@ -16,20 +21,72 @@ export default {
   props: {
       op: {
           type: Object,
+      },
+      width: {
+        type: String,
+        default: '30%'
+      },
+      show: {
+          type: Boolean,
+          default: false
       }
   },
   data() {
       return {
+          showBtn: true,
+          visibility: false,
+          quitOp: {
+              hue: "primary",
+              onClick: () => {
+                  this.handleClick();
+              }
+          },
+          closeOp: {
+              onClick: () => {
+                  this.closeBox();
+              }
+          }
+      }
+  },
+  watch: {
+      op: function(n, o){
+        this.visibility = this.show;
+      },
+      show: function(n, o){
+        this.visibility = this.show;
       }
   },
   created() {
+      this.load();
   },
   methods: {
+      load() {
+        this.visibility = this.show;
+        if (this.op) {
+            this.visibility = this.op.show;
+            this.showBtn = this.op.showBtn;
+            if (this.op.width) this.width = this.op.width;
+        }
+      },
+      handleClick() {
+        if (this.op && this.op.onClick) {
+            this.op.onClick();
+        }
+      },
+      closeBox() {
+          this.visibility = false;
+          this.$emit('close', this.visibility);
+      }
   }
 };
 </script>
 <style>
+.zoom-dialog-box .dialog-box .dialog-footer .btn {
+    padding: 0 10px;
+}
 .zoom-dialog-box .dialog-box .dialog-footer {
+    display: flex;
+    justify-content: center;
     padding: 0 0 24px;
     text-align: center;
     -webkit-box-sizing: border-box;
@@ -43,7 +100,14 @@ export default {
     overflow: auto;
     min-height: 65vh;
 }
+.zoom-dialog-box .dialog-box .dialog-header a {
+    float: right;
+    color: #666;
+    font-size: 25px;
+    text-decoration: none;
+}
 .zoom-dialog-box .dialog-box .dialog-header {
+    text-align-last: left;
     padding: 8px 24px;
     height: 40px;
     background: #ffffff;
@@ -61,8 +125,7 @@ export default {
 .zoom-dialog-warpper {
     z-index: 666;
     position: fixed;
-    background: #b3b3b3;
-    opacity: .7;
+    background: rgba(0, 0, 0, .5);
     top: 0;
     right: 0;
     bottom: 0;
