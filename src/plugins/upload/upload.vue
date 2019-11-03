@@ -10,7 +10,7 @@
         </a>
       </li>
     </ul>
-    <zoom-msg ref="msg"></zoom-msg>
+    <zoom-alert ref="msg"></zoom-alert>
     <input
       type="file"
       id="zoom-upload-file"

@@ -5,9 +5,11 @@
       @blur="handleBlur"
       :value="currentValue"
       @input="Oninput"
-      :type="options.type"
       :placeholder="options.placeHolder"
       :disabled="options.isdisabled"
+      :readonly="options.readonly"
+      type="text"
+      ref="downVal"
     />
     <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
     <div class="input-btn">
@@ -15,20 +17,17 @@
       <a
         @click="serach"
         href="javascript:void(0);"
-        class="icon iconfont icon-down"
+        class="icon iconfont"
+        :class="showDown ? 'icon-up' : 'icon-down'"
       ></a>
     </div>
-    <div class="zoom-selector">
+    <div v-show="showDown" class="zoom-selector">
+      <div class="show-warpper" @click="serach">
+      </div>
         <div class="selector-content">
             <ul class="zoom-poplist">
-                <li class="list-item select-active" val="1" title="深圳">深圳</li>
-                <li class="list-item" val="2" title="长沙">长沙</li>
-                <li class="list-item" val="3" title="武汉">武汉</li>
-                <li class="list-item" val="4" title="北京">北京</li>
-                <li class="list-item" val="5" title="上海">上海</li>
-                <li class="list-item" val="6" title="广州">广州</li>
-                <li class="list-item" val="7" title="南京">南京</li>
-                <li class="list-item" val="8" title="贵州">贵州</li>
+                <!-- <li class="list-item select-active" val="1" title="深圳">深圳</li> -->
+                <li v-for="(item,index) of options.downData" :key="index" :val="item.value" :title="item.text" @click="itemClick(item)" class="list-item">{{item.text}}</li>
             </ul>
         </div>
     </div>
@@ -36,7 +35,7 @@
 </template>
 <script>
 export default {
-  name: "zoom-input",
+  name: "zoom-dropdown",
   props: {
     op: {
       placeHolder: {
@@ -51,42 +50,68 @@ export default {
           type: String,
           default: ''
       },
-      IconStyle: {
-        type: String,
-        default: false
+      downData: {
+        type: Array,
+          default: function () {
+              return [];
+          }
       }
     },
     value: String
   },
   data() {
     return {
+      // list: [
+      //   {value: '1', text: '深圳'},
+      //   {value: '2', text: '长沙'},
+      //   {value: '3', text: '武汉'},
+      //   {value: '4', text: '北京'},
+      //   {value: '5', text: '上海'},
+      //   {value: '6', text: '广州'},
+      //   {value: '7', text: '南京'},
+      //   {value: '8', text: '贵州'},
+      // ],
+      list: [{value: null, text: '暂无数据'}],
+      showDown: false,
       currentValue: this.value,
       error: false,
       errMsg: null,
       options: {
-        type: "text",
+        downData: [],
         errMsg: '',
         placeHolder: null,
         isdisabled: false,
-        IconStyle: false
       }
     };
+  },
+  mounted() {
+    if (this.options.defalut && this.options.downData) {
+      let data = this.options.downData;
+      data.forEach( item => {
+          if (this.options.defalut == item.value) {
+            this.currentValue = item.text;
+            this.$refs['downVal'].value = item.value;
+          }
+      });
+    }
   },
   created() {
     if (this.op) {
       this.options = this.op;
-      this.options.type = this.op.type || "text";
-      if (this.options.type == "text" || this.options.type == "password") {
-        return;
-      } else {
-        this.options.type = "text";
-        throw Error(
-          `zoom-ui TypeError: type属性解析失败, 仅支持 'text', 'password' !`
-        );
+      if (!this.options.downData) {
+        this.options.downData = this.list;
       }
     }
   },
   methods: {
+    itemClick(e) {
+      if (e.value === null && e.text === '暂无数据') {
+        return;
+      }
+      this.currentValue = e.text;
+      this.$refs['downVal'].value = e.value;
+      this.showDown = false;
+    },
     // 验证功能
     handleBlur() {
       if (this.options.testing) {
@@ -116,14 +141,26 @@ export default {
       this.$emit("input", $event.target.value);
     },
     serach() {
-      if (this.op && this.op.onClick) {
-        this.op.onClick();
+      if (this.options.isdisabled) {
+        return;
       }
+      this.showDown = !this.showDown;
     }
   }
 };
 </script>
 <style>
+.show-warpper {
+    z-index: 6;
+    position: fixed;
+    background: rgba(0, 0, 0, 0);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    margin: 0;
+}
 /* 新增 */
 .zoom-selector .select-active,
 .zoom-selector .zoom-poplist li:hover {
@@ -157,6 +194,8 @@ export default {
     max-height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
+    z-index: 10;
 }
 /* 结束 */
 .zoom-input .err-msg {
@@ -206,12 +245,15 @@ export default {
 }
 .zoom-input > input[disabled] {
   cursor: not-allowed;
-  pointer-events: none;
+  /* pointer-events: none; */
   border: 1px solid #d9d9d9;
   color: #bfbfbf;
   background: #f5f5f5;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+.zoom-input > input[readonly] {
+  cursor: not-allowed;
 }
 .zoom-input {
   position: relative;

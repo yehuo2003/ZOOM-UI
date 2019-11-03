@@ -159,7 +159,7 @@ export default {
 }
 .zoom-input > input[disabled] {
   cursor: not-allowed;
-  pointer-events: none;
+  /* pointer-events: none; */
   border: 1px solid #d9d9d9;
   color: #bfbfbf;
   background: #f5f5f5;
