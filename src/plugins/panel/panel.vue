@@ -75,6 +75,7 @@ export default {
     line-height: 46px;
     cursor: pointer;
     position: relative;
+    text-align: left;
 }
 .zoom-panel {
     border: 0;

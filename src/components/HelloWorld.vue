@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <!-- <zoom-row>
+    <zoom-button hue="warning">自定义的button</zoom-button>
+    <zoom-row>
       <zoom-col span="3">
         <zoom-input v-focus :op="inputOp" v-model="name"></zoom-input>
         <zoom-msg ref="msg"></zoom-msg>
@@ -15,11 +16,12 @@
       </zoom-col>
       <zoom-col span="3">
       </zoom-col>
-    </zoom-row> -->
+    </zoom-row>
     <zoom-dialog-box :op="dialogOp" :show="visibility" @close="handleClose">
       <h1>弹框测试</h1>
     </zoom-dialog-box>
     <zoom-row>
+    <zoom-panel>
       <zoom-col span="6">
         <zoom-form label-width="100">
           <zoom-form-item label="用户名:">
@@ -42,15 +44,16 @@
           </zoom-form-item>
         </zoom-form>
       </zoom-col>
+    </zoom-panel>
       <zoom-col span="6">
-         <zoom-loading color="#1890ff" show="true"></zoom-loading>
+         <zoom-loading color="#1890ff" :show="visibility"></zoom-loading>
         <zoom-button :op="btnOp">测试普通弹框</zoom-button>
       </zoom-col>
       <zoom-col span="6">
         <zoom-input></zoom-input>
       </zoom-col>
       <zoom-alert ref="msg"></zoom-alert>
-      <!-- <zoom-col lg="5" md="7" sm="8" xs="12">
+      <zoom-col lg="5" md="7" sm="8" xs="12">
         <zoom-card>
           <zoom-header>上传图片组件</zoom-header>
           <zoom-container>
@@ -63,7 +66,7 @@
             </zoom-button>
           </zoom-footer>
         </zoom-card>
-      </zoom-col> -->
+      </zoom-col>
 
       <!-- <zoom-col span="6">
         <zoom-card>
@@ -127,9 +130,13 @@ export default Vue.extend({
       nameOp: {
         isdisabled: false,
         type: 'text',
-        IconStyle: 'icon-jian',
+        IconStyle: 'icon-add',
         onClick:()=> {
-          this.$refs['msg'].alert('66666', 2000);
+          this.$refs['msg'].alert({
+            title: '自定义标题',
+            content: '自定义内容',
+            type: 'error'
+          }, 5000);
         },
         errMsg: '姓名长度必须大于10',
         testing:function(value) {

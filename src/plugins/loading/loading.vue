@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show == 'true'" id="zoom-loading" :style="'color:' + color + ';border: 1px solid ' + color + ';' ">
+  <div v-show="show" id="zoom-loading" :style="'color:' + color + ';border: 1px solid ' + color + ';' ">
     <p>loading</p>
     <div :style="'background:' + color + ';' " class="zoom-loading loading-one"></div>
     <div :style="'background:' + color + ';' " class="zoom-loading loading-two"></div>
@@ -17,8 +17,8 @@ export default {
       default: '#00ff00'
     },
     show: {
-      type: String,
-      default: 'true',
+      type: Boolean,
+      default: true,
     }
   }
 };
