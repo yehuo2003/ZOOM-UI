@@ -1,6 +1,76 @@
 <template>
-  <div>
-      grid
+  <div class="zoom-grid">
+      <div class="zoom-grid-body">
+          <!-- 表头 -->
+          <div class="grid-head">
+              <div class="grid-headbox">
+                  <table class="grid-table grid-thead">
+                      <thead class="grid-head-content">
+                          <tr>
+                              <!-- <th v-for="item of titleData" :key="item.id" :col="item.id" class="grid-item item-sort" field="indexId" :style=" 'width: ' + item.minWidth + 'px;' "> -->
+                              <th v-for="item of titleData" :key="item.id" :col="item.id" class="grid-item item-sort">
+                                  <div v-if="item.sort" minwidth="56" class="grid-sort">
+                                      <span class="asc zoom-icon icon iconfont icon-up"></span>
+                                      <span class="asc zoom-icon icon iconfont icon-down"></span>
+                                  </div>
+                                  <span class="thead-title">{{item.title}}</span>
+                              </th>
+                          </tr>
+                      </thead>
+                  </table>
+              </div>
+          </div>
+          <!-- 内容 -->
+          <div  class="grid-body">
+              <div v-if="!bodyData" class="zoom-not-data">
+                  <p>
+                  <span class="icon iconfont icon-close"></span>
+                      暂无数据
+                  </p>
+              </div>
+              <div class="grid-bodybox">
+                  <table class="grid-table grid-tbody">
+                      <tbody class="grid-body-content">
+                          <tr v-for="item of bodyData" :key="item.indexId" :_row="item.indexId" :class="{'active':item.indexId == clickIndex}" @click="clickIndex = item.indexId" class="grid-row">
+                              <td class="grid-item" fieId="indexId">
+                                  <span class="grid-input">{{item.indexId}}</span>
+                              </td>
+                              <td class="grid-item table-operation" fieId="operate">
+                                  <!-- <span v-for="(i, index) of item.btns" :key="index" class="grid-input">
+                                      <span>
+                                        <a title="i.title">
+                                            <span :class="i.css.icon?i.css.icon:i.css"></span>
+                                        </a>
+                                      </span>
+                                  </span> -->
+                              </td>
+                              <td class="grid-item" fieId="userName">
+                                  <span class="grid-input">{{item.userName}}</span>
+                              </td>
+                              <td class="grid-item" fieId="fullName">
+                                  <span class="grid-input">{{item.fullName}}</span>
+                              </td>
+                              <td class="grid-item" fieId="userEmail">
+                                  <span class="grid-input">{{item.userEmail}}</span>
+                              </td>
+                              <td class="grid-item" fieId="roleName">
+                                  <span class="grid-input">{{item.roleName}}</span>
+                              </td>
+                              <td class="grid-item" fieId="depaer1">
+                                  <span class="grid-input">{{item.depaer1}}</span>
+                              </td>
+                              <td class="grid-item" fieId="depaer4">
+                                  <span class="grid-input">{{item.depaer4}}</span>
+                              </td>
+                              <td class="grid-item" fieId="createDate">
+                                  <span class="grid-input">{{item.createDate}}</span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
   </div>
 </template>
 <script>
@@ -8,17 +78,70 @@ export default {
   name: "zoom-grid",
   props: {
       op: {
-      }
+          type: Object,
+          data: {
+              type: Array,
+              default() {
+                  return {}
+              }
+          }
+      },
   },
   data() {
       return {
+        clickIndex: -1,
+        titleData: [
+            {id: 0, fieId: "indexId", title: '', minWidth: 36, sort: true},
+            {id: 1, fieId: "operation", title: '操作', minWidth: 36},
+            {id: 2, fieId: "userName", title: '用户名称', minWidth: 36},
+            {id: 3, fieId: "fullName", title: '中文名称', minWidth: 36},
+            {id: 4, fieId: "userEmail", title: '邮箱', minWidth: 36},
+            {id: 5, fieId: "roleName", title: '角色', minWidth: 36},
+            {id: 6, fieId: "depaer1", title: '一级标题', minWidth: 36},
+            {id: 7, fieId: "depaer4", title: '四级标题', minWidth: 36},
+            {id: 8, fieId: "createDate", title: '创建时间', minWidth: 36}
+        ],
+        bodyData: [
+            {indexId: 0, userName: 'Tom', fullName: '汤姆', userEmail: 'Tom@qq.com', roleName: '游客', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-11'},
+            {indexId: 1, userName: 'Jerry', fullName: '杰瑞', userEmail: 'Jerry@qq.com', roleName: 'VIP1', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-12'},
+            {indexId: 2, userName: 'dingding', fullName: '钉钉', userEmail: 'dingding@qq.com', roleName: 'VIP2', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-13'},
+            {indexId: 3, userName: 'Lin', fullName: '林主明', userEmail: 'linzhuming@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-10-11'},
+            {indexId: 4, userName: 'yangmi', fullName: '杨幂', userEmail: 'yangmi@qq.com', roleName: 'VIP6', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-15'},
+            {indexId: 5, userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2018-11-11'}
+        ]  
       }
   },
   created() {
+    if (this.op) {
+        if (this.op.data) {
+            let data = this.op.data;
+            let titleData = [];
+            let btns = [];
+            data.forEach((item, index) => {
+                titleData.push({id: index + 1, fieId: item.fieId, title: item.header, minWidth: item.width, sort: item.sort});
+                if (item.btns) {
+                    btns = item.btns;
+                }
+            });
+            this.titleData = titleData;
+            // this.bodyData.map(item => {
+            //     item.btns = btns;
+            //     console.log(item);
+            //     return item;
+            // })
+            console.log(this.titleData, 'this.titleData');
+        }
+    }
   },
 };
 </script>
 <style>
+.grid-body .zoom-not-data p {
+    line-height: 150px;
+}
+.grid-body .zoom-not-data {
+    text-align: center;
+}
 .grid-tbody tbody
 tr:nth-child(odd), .grid-tfoot tbody
 tr:nth-child(odd), .grid-thead

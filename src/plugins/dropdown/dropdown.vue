@@ -8,12 +8,18 @@
       :placeholder="options.placeHolder"
       :disabled="options.isdisabled"
       :readonly="options.readonly"
+      :id="id"
       type="text"
       ref="downVal"
     />
     <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
     <div class="input-btn">
-      <a @click="clear" href="javascript:void(0);" class="icon iconfont icon-close icon-default"></a>
+      <a
+        v-if="!options.hideClose"
+        @click="clear"
+        href="javascript:void(0);"
+        class="icon iconfont icon-close icon-default"
+      ></a>
       <a
         @click="serach"
         href="javascript:void(0);"
@@ -22,14 +28,19 @@
       ></a>
     </div>
     <div v-show="showDown" class="zoom-selector">
-      <div class="show-warpper" @click="serach">
+      <div class="show-warpper" @click="serach"></div>
+      <div class="selector-content">
+        <ul class="zoom-poplist">
+          <li
+            v-for="(item,index) of options.downData"
+            :key="index"
+            :val="item.value"
+            :title="item.text"
+            @click="itemClick(item)"
+            class="list-item"
+          >{{item.text}}</li>
+        </ul>
       </div>
-        <div class="selector-content">
-            <ul class="zoom-poplist">
-                <!-- <li class="list-item select-active" val="1" title="深圳">深圳</li> -->
-                <li v-for="(item,index) of options.downData" :key="index" :val="item.value" :title="item.text" @click="itemClick(item)" class="list-item">{{item.text}}</li>
-            </ul>
-        </div>
     </div>
   </div>
 </template>
@@ -37,6 +48,7 @@
 export default {
   name: "zoom-dropdown",
   props: {
+    id: String,
     op: {
       placeHolder: {
         type: String,
@@ -46,52 +58,50 @@ export default {
         type: Boolean,
         default: false
       },
+      hideClose: {
+        type: Boolean,
+        default: false
+      },
       errMsg: {
-          type: String,
-          default: ''
+        type: String,
+        default: ""
+      },
+      onClick: {
+        type: Function
       },
       downData: {
         type: Array,
-          default: function () {
-              return [];
-          }
+        default: function() {
+          return [];
+        }
       }
     },
     value: String
   },
   data() {
     return {
-      // list: [
-      //   {value: '1', text: '深圳'},
-      //   {value: '2', text: '长沙'},
-      //   {value: '3', text: '武汉'},
-      //   {value: '4', text: '北京'},
-      //   {value: '5', text: '上海'},
-      //   {value: '6', text: '广州'},
-      //   {value: '7', text: '南京'},
-      //   {value: '8', text: '贵州'},
-      // ],
-      list: [{value: null, text: '暂无数据'}],
+      list: [{ value: null, text: "暂无数据" }],
       showDown: false,
       currentValue: this.value,
       error: false,
       errMsg: null,
       options: {
         downData: [],
-        errMsg: '',
+        errMsg: "",
         placeHolder: null,
-        isdisabled: false,
+        isdisabled: false
       }
     };
   },
   mounted() {
-    if (this.options.defalut && this.options.downData) {
+    if (this.options.default && this.options.downData) {
       let data = this.options.downData;
-      data.forEach( item => {
-          if (this.options.defalut == item.value) {
-            this.currentValue = item.text;
-            this.$refs['downVal'].value = item.value;
-          }
+      data.forEach(item => {
+        // 如果有设置默认值
+        if (this.options.default == item.value) {
+          this.currentValue = item.text;
+          this.$refs["downVal"].value = item.value;
+        }
       });
     }
   },
@@ -105,11 +115,14 @@ export default {
   },
   methods: {
     itemClick(e) {
-      if (e.value === null && e.text === '暂无数据') {
+      if (this.options.onClick) {
+        this.options.onClick(e);
+      }
+      if (e.value === null && e.text === "暂无数据") {
         return;
       }
       this.currentValue = e.text;
-      this.$refs['downVal'].value = e.value;
+      this.$refs["downVal"].value = e.value;
       this.showDown = false;
     },
     // 验证功能
@@ -121,7 +134,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-                this.errMsg = null;
+              this.errMsg = null;
             }, 2000);
           }
         } else {
@@ -151,63 +164,63 @@ export default {
 </script>
 <style>
 .show-warpper {
-    z-index: 6;
-    position: fixed;
-    background: rgba(0, 0, 0, 0);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    overflow: auto;
-    margin: 0;
+  z-index: 6;
+  position: fixed;
+  background: rgba(0, 0, 0, 0);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  margin: 0;
 }
 /* 新增 */
 .zoom-selector .select-active,
 .zoom-selector .zoom-poplist li:hover {
-    cursor: pointer;
-    background: #e6f7ff;
-    color: #333; 
+  cursor: pointer;
+  background: #e6f7ff;
+  color: #333;
 }
 .zoom-selector .zoom-poplist li {
-    min-height: 30px;
-    line-height: 30px;
-    max-width: 30px;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding: 0 8px;
+  min-height: 30px;
+  line-height: 30px;
+  max-width: 30px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 8px;
 }
 .zoom-selector {
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-    -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .3); 
-    box-shadow: 0 0 4px rgba(0, 0, 0, .3);
-    background: #ffffff;
-    color: #333;
-    margin-top: 2px;
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  background: #ffffff;
+  color: #333;
+  margin-top: 2px;
 }
 .zoom-selector .selector-content {
-    max-height: 150px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
-    z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 10;
 }
 /* 结束 */
 .zoom-input .err-msg {
-    color: #fff;
-    font-size: 14px;
-    position: absolute;
-    z-index: 11;
-    right: -100px;
-    top: 0;
-    background: #ff4d4f;
-    padding: 5px;
-    border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  z-index: 11;
+  right: -100px;
+  top: 0;
+  background: #ff4d4f;
+  padding: 5px;
+  border-radius: 5px;
 }
 .zoom-input .error {
   border: 1px solid red;
