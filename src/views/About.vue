@@ -1,5 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <zoom-grid></zoom-grid>
+    <zoom-pubu></zoom-pubu>
   </div>
 </template>
