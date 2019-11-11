@@ -63,7 +63,7 @@ export default {
             type: Array,
             default() {
                 return []
-            }              
+            }
           },
           datas: {
               type: Array,
@@ -104,7 +104,7 @@ export default {
             {indexId: 3, userName: 'Lin', fullName: '林主明', userEmail: 'linzhuming@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-10-11'},
             {indexId: 4, userName: 'yangmi', fullName: '杨幂', userEmail: 'yangmi@qq.com', roleName: 'VIP6', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-15'},
             {indexId: 5, userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2018-11-11'}
-        ]  
+        ]
       }
   },
   created() {
@@ -165,8 +165,8 @@ export default {
         let data1 = data.splice(0, this.defaultPagerOp.pageVal.pageSize);
         this.surplus = data;  //  当前页数据
         this.bodyData = data1;  //  当前页数据
-      }  
-    },  
+      }
+    },
     //   排序方法
     compare(fun, property) {
         return function(a, b) {
@@ -287,11 +287,11 @@ tr:last-child th {
 }
 .grid-thead .grid-sort .zoom-icon {
     font-style: normal;
-    font-weight: 400;   
+    font-weight: 400;
     font-size: 20px;
     display: inline-block;
-    -webkit-font-smoothing: antialiased; 
-    -moz-osx-font-smoothing: grayscale; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .grid-thead .grid-sort span {
     position: absolute;
@@ -326,7 +326,7 @@ tr:last-child th {
 .grid-table thead.grid-head-content th.grid-item {
     text-align: left;
 }
-.grid-tbody tbody tr 
+.grid-tbody tbody tr
 td:first-child, .grid-tbody tbody tr
 th:first-child, .grid-tbody thead tr
 td:first-child, .grid-tbody thead tr
@@ -360,7 +360,7 @@ th:first-child {
 }
 .grid-tbody thead, .grid-tbody thead:first-child td, .grid-tbody thead:first-child th, .grid-tfoot thead, .grid-tfoot thead:first-child td, .grid-tfoot thead:first-child th, .grid-thead thead, .grid-thead thead:first-child td, .grid-thead thead:first-child th {
     border: none;
-} 
+}
 .grid-tbody, .grid-tfoot, .grid-thead {
     table-layout: fixed;
     width: 100%;

@@ -57,7 +57,7 @@ export default {
             // //3.创建5条干扰线
             for(var i=0;i<5;i++){
             ctx.beginPath();
-            
+
             this.$stroke(this.$rc(0,230), ctx);
             this.$moveTo(this.$rn(0,120),this.$rn(0,30), ctx);
             this.$lineTo(this.$rn(0,120),this.$rn(0,30), ctx);

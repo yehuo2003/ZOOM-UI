@@ -226,7 +226,7 @@ export default {
     border: 1px solid #e4e1e1;
     border-radius: 2px;
     color: #666;
-    padding: 0 4px; 
+    padding: 0 4px;
 }
 
 .zoom-pager span.page:hover {

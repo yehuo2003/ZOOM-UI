@@ -43,7 +43,7 @@ export default {
 }
 @media (min-width: 400px) {
     .masonry {
-        column-count: 2; 
+        column-count: 2;
     }
 }
 @media (min-width: 1200px) {

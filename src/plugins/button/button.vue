@@ -23,7 +23,7 @@ export default {
     },
     created() {
         if (this.op || this.hue) {
-            let hue = this.op ? this.op.hue : this.hue; 
+            let hue = this.op ? this.op.hue : this.hue;
             if (!typeof(hue) == 'string') {
                 throw Error('zoom-ui error: hue 的类型需要传入字符串');
                 return
@@ -39,7 +39,7 @@ export default {
                    this.css = 'danger';
                     break;
                 case 'green':
-                   this.css = 'success'; 
+                   this.css = 'success';
                     break;
                 case 'yellow':
                    this.css = 'warning';
@@ -48,7 +48,7 @@ export default {
                    this.css = 'info';
                     break;
                 case 'blue':
-                   this.css = 'primary'; 
+                   this.css = 'primary';
                     break;
                 default:
                     this.css = hue;

@@ -153,7 +153,7 @@ export default {
     color: #333;
 }
 /* error */
-.alert-error .icon-alert, 
+.alert-error .icon-alert,
 .alert-error .close-alert
 {
     color: #f5222d;
@@ -192,7 +192,7 @@ export default {
     background: rgba(0, 0, 0, .5);
     border-radius: 5px;
     color: #fff;
-    -webkit-font-smoothing: antialiased; 
+    -webkit-font-smoothing: antialiased;
     -webkit-transition: all .5s ease-in-out;
     -moz-transition: all .5s ease-in-out;
     transition: all .5s ease-in-out;

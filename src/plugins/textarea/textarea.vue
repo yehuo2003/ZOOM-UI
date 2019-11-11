@@ -8,7 +8,7 @@
       :placeholder="options.placeHolder"
       :disabled="options.isdisabled"
       :maxlength="options.maxLength"
-      
+
     ></textarea>
     <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
     <div class="zoom-statistics">{{currentValue?currentValue.length:0}}/{{options.maxLength}}</div>
@@ -117,7 +117,7 @@ export default {
     color: #bfbfbf;
     background: #f5f5f5;
     -webkit-box-shadow: none;
-    box-shadow: none; 
+    box-shadow: none;
 }
 .zoom-textarea>textarea:focus,
 .zoom-textarea>textarea:active {
@@ -140,15 +140,15 @@ export default {
     line-height: 140%;
     padding: 8px;
     display: inline-block;
-    -webkit-user-select: auto; 
-    -moz-user-select: auto; 
-    -ms-user-select: auto; 
-    -o-user-select: auto; 
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    -o-user-select: auto;
     user-select: auto;
     -webkit-transition: border .3s;
     transition: border .3s;
     outline: 0;
-    resize: vertical; 
+    resize: vertical;
 }
 .zoom-textarea {
     position: relative;

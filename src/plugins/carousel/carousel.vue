@@ -44,7 +44,7 @@ export default {
                 return [];
             }
         }
-    }  
+    }
   },
   data() {
     return {
@@ -127,12 +127,12 @@ export default {
     overflow: hidden;
     background-color: #fff;
 }
- 
+
 .swipe_list {
     width: 100%;
     height: 100%;
 }
- 
+
 .swipe_list li {
     position: absolute;
     width: 100%;
@@ -146,7 +146,7 @@ export default {
     width: 100%;
     height: 100%;
 }
- 
+
 .swipe_dian {
     position: absolute;
     z-index: 90;
@@ -156,7 +156,7 @@ export default {
     font-size: 0;
     right: 10px;
 }
- 
+
 .swipe_dian span {
     display: inline-block;
     width: 8px;
@@ -166,11 +166,11 @@ export default {
     background-color: #5f5853;
     cursor: pointer;
 }
- 
+
 .swipe_dian .active {
     background-color: #ffffff;
 }
- 
+
 .swipe_title {
     position: absolute;
     line-height: 60px;
@@ -186,7 +186,7 @@ export default {
     text-overflow:ellipsis;
     white-space:nowrap
 }
- 
+
 .swipe_bottom {
     position: absolute;
     width: 100%;
@@ -196,7 +196,7 @@ export default {
     opacity: 0.5;
     z-index: 10;
 }
- 
+
 .swipe_control {
     position: absolute;
     z-index: 10;
@@ -208,7 +208,7 @@ export default {
     justify-content: space-between;
     cursor: pointer;
 }
- 
+
 .swipe_control .prev,
 .swipe_control .next {
     text-align: center;
@@ -219,13 +219,13 @@ export default {
     background-color: #190f0b;
     color: white;
 }
- 
+
 .swipe_control .prev:hover {
     color: #cccccc;
     font-weight: bold;
     opacity: 0.7;
 }
- 
+
 .swipe_control .next:hover {
     color: #cccccc;
     font-weight: bold;
@@ -246,7 +246,7 @@ export default {
 .list-in-leave {
     transform: translateX(0);
 }
- 
+
 /*切换到上一张的变化*/
 .list-out-leave {
   transform: translateX(0);

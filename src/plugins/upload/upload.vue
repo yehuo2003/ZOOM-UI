@@ -69,7 +69,7 @@ export default {
                   return
               } else {
                   this.size = size;
-              } 
+              }
           }
         }
     },
@@ -122,7 +122,7 @@ export default {
                 return false;
             } else {
                 this.fileName = name;
-                this.showFile = true;    
+                this.showFile = true;
             }
         } else {
             this.defeated();
@@ -165,7 +165,7 @@ export default {
                 return
             }
         }
-    } 
+    }
   }
 };
 </script>

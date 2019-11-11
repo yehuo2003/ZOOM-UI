@@ -71,7 +71,7 @@ export default {
   .col-xs-11{ width: 91.66666667%;}
   .col-xs-12{ width: 100%;}
 }
- 
+
 /*小型设备 （平板电脑：768px起）0*/
 @media(min-width:768px){
   .col-sm-1{ width: 8.33333333%;}
@@ -87,7 +87,7 @@ export default {
   .col-sm-11{ width: 91.66666667%;}
   .col-sm-12{ width: 100%;}
 }
- 
+
 /*中型设备（台式电脑：992px起）*/
 @media(min-width:992px){
   .col-md-1{ width: 8.33333333%;}
@@ -103,7 +103,7 @@ export default {
   .col-md-11{ width: 91.66666667%;}
   .col-md-12{ width: 100%;}
 }
- 
+
 /*大型设备（台式电脑：1200px起）*/
 @media(min-width:1200px){
   .col-lg-1{ width: 8.33333333%;}
@@ -117,7 +117,7 @@ export default {
   .col-lg-9{ width: 75%;}
   .col-lg-10{ width: 83.33333333%;}
   .col-lg-11{ width: 91.66666667%;}
-  .col-lg-12{ width: 100%;}   
+  .col-lg-12{ width: 100%;}
 }
 /* 被定义的元素内边距和边框不再会增加它的宽度，不加入的话排版会有问题 */
 .container *,.container{
@@ -125,7 +125,7 @@ export default {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
- 
+
 .row>div>p{
   background: #ccc;
 }

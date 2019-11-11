@@ -38,7 +38,7 @@ export default {
       if (this.op) {
         if (this.op.isdisabled) {
             this.isdisabled = this.op.isdisabled;
-        }  
+        }
         this.OPEN = this.op.open;
         this.CLOSE = this.op.close;
         if (this.op.status === 'open') {

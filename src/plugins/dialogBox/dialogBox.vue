@@ -119,8 +119,8 @@ export default {
     position: absolute;
     background: #ffffff;
     border: 1px solid transparent;
-    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2); 
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2); 
+    -webkit-box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .2);
 }
 .zoom-dialog-warpper {
     z-index: 666;
