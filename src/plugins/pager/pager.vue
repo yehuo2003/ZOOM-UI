@@ -1,15 +1,16 @@
 <template>
   <div class="zoom-pager">
       <span v-if="mode !== 'mini' " class="pager-total">
+          共{{total}}条
           <zoom-dropdown :op="dropOp"></zoom-dropdown>
-          页
+          条/页
       </span>
 
       <span :class="{ 'disabled': changeStart == 1}" @click="prePageHandle" class="zoom-prev">&lt;</span>
 
       <span v-show="index != 5" v-if="index != 7" v-for="(page, index) of  showPage" :key="index" :class="{ 'active':(changeStart + page - 1) == currentPage}" @click="changeShow(changeStart + page - 1, index)" class="page">
-        {{index === 6 && showPage >= 10 ? '...' : (changeStart + page - 1)}}    
-      </span>  
+        {{index === 6 && showPage >= 10 ? '...' : (changeStart + page - 1)}}
+      </span>
 
       <span :class="{ 'disabled': changeStart + showPage - 1 == pages}" @click="nextPageHandle" class="zoom-next">&gt;</span>
 
@@ -45,9 +46,9 @@ export default {
          type: String,
          default: 'Number'
        }
-    },  
+    },
   },
-  data(){
+  data() {
     return {
         mode: 'Number',
         value: 0,
@@ -115,16 +116,16 @@ export default {
       }
   },
   computed:{
-    changeStart(){//分页逻辑
+    changeStart() {//分页逻辑
         this.posPage = Math.floor(this.showPage/2) + 1;
         if(this.pages<=this.showPage){
             return this.start = 1
-        }else{
-            if(this.currentPage<=this.posPage){
+        } else {
+            if (this.currentPage<=this.posPage) {
                 return this.start = 1
-            }else if(this.pages-this.currentPage<=this.posPage){
+            } else if (this.pages-this.currentPage<=this.posPage) {
                 return  this.start = this.pages - this.showPage + 1
-            }else{
+            } else {
                 return  this.start = this.currentPage - this.posPage + 1
             }
         }
@@ -154,16 +155,16 @@ export default {
         }
         this.$emit('input', curPage);
     },
-    changeShow(page, index){
+    changeShow(page, index) {
         this.currentPage = page;
         this.$emit('input',page);
 
     },
-    jump(){
-        if (this.val < 1){
+    jump() {
+        if (this.val < 1) {
             this.val = 1;
         }
-        if (this.val > this.pages){
+        if (this.val > this.pages) {
             this.val = this.pages;
         }
         this.val = Math.floor(this.val);

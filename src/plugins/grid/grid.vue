@@ -8,10 +8,10 @@
                       <thead class="grid-head-content">
                           <tr>
                               <!-- <th v-for="item of titleData" :key="item.id" :col="item.id" class="grid-item item-sort" field="indexId" :style=" 'width: ' + item.minWidth + 'px;' "> -->
-                              <th v-for="item of titleData" :key="item.id" :col="item.id" class="grid-item item-sort">
+                              <th v-for="item of titleData" :key="item.id" :col="item.id" :class="item.sort ? 'item-sort' : ''" class="grid-item">
                                   <div v-if="item.sort" minwidth="56" class="grid-sort">
-                                      <span class="asc zoom-icon icon iconfont icon-up"></span>
-                                      <span class="asc zoom-icon icon iconfont icon-down"></span>
+                                      <span @click="sortClick('up', item)" class="asc zoom-icon icon iconfont icon-up"></span>
+                                      <span @click="sortClick('down', item)" class="asc zoom-icon icon iconfont icon-down"></span>
                                   </div>
                                   <span class="thead-title">{{item.title}}</span>
                               </th>
@@ -32,44 +32,24 @@
                   <table class="grid-table grid-tbody">
                       <tbody class="grid-body-content">
                           <tr v-for="item of bodyData" :key="item.indexId" :_row="item.indexId" :class="{'active':item.indexId == clickIndex}" @click="clickIndex = item.indexId" class="grid-row">
-                              <td class="grid-item" fieId="indexId">
-                                  <span class="grid-input">{{item.indexId}}</span>
-                              </td>
-                              <td class="grid-item table-operation" fieId="operate">
-                                  <!-- <span v-for="(i, index) of item.btns" :key="index" class="grid-input">
-                                      <span>
-                                        <a title="i.title">
-                                            <span :class="i.css.icon?i.css.icon:i.css"></span>
-                                        </a>
-                                      </span>
-                                  </span> -->
-                              </td>
-                              <td class="grid-item" fieId="userName">
-                                  <span class="grid-input">{{item.userName}}</span>
-                              </td>
-                              <td class="grid-item" fieId="fullName">
-                                  <span class="grid-input">{{item.fullName}}</span>
-                              </td>
-                              <td class="grid-item" fieId="userEmail">
-                                  <span class="grid-input">{{item.userEmail}}</span>
-                              </td>
-                              <td class="grid-item" fieId="roleName">
-                                  <span class="grid-input">{{item.roleName}}</span>
-                              </td>
-                              <td class="grid-item" fieId="depaer1">
-                                  <span class="grid-input">{{item.depaer1}}</span>
-                              </td>
-                              <td class="grid-item" fieId="depaer4">
-                                  <span class="grid-input">{{item.depaer4}}</span>
-                              </td>
-                              <td class="grid-item" fieId="createDate">
-                                  <span class="grid-input">{{item.createDate}}</span>
+                              <td v-for="(i, index) of item" :key="index" class="grid-item">
+                                  <span class="grid-input">
+                                      {{i === item.btns ? '' : i}}
+                                      <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
+                                      <a v-if="i === item.btns" v-for="(j, jIndex) of i" :key="jIndex" :title="j.title" @click="iconClick(j, item)" class="zoom-icon">
+                                          <span :class="j.css.icon ? 'icon iconfont ' + j.css.icon : j.css"></span>
+                                      </a>
+                                  </span>
                               </td>
                           </tr>
                       </tbody>
                   </table>
               </div>
           </div>
+      </div>
+      <!-- 尾部 -->
+      <div v-if="showPager" class="grid-foot">
+          <zoom-pager :op="defaultPagerOp"></zoom-pager>
       </div>
   </div>
 </template>
@@ -79,16 +59,32 @@ export default {
   props: {
       op: {
           type: Object,
-          data: {
+          title: {
+            type: Array,
+            default() {
+                return []
+            }              
+          },
+          datas: {
               type: Array,
               default() {
                   return {}
               }
-          }
-      },
+          },
+          pagerOp: Object
+      }
   },
   data() {
       return {
+        surplus: [],    //   剩余数据
+        showPager: true,
+        defaultPagerOp: {
+            pageVal: {
+                total: 0,
+                curPage: 1,
+                pageSize: 10
+            }
+        },
         clickIndex: -1,
         titleData: [
             {id: 0, fieId: "indexId", title: '', minWidth: 36, sort: true},
@@ -112,30 +108,104 @@ export default {
       }
   },
   created() {
-    if (this.op) {
-        if (this.op.data) {
-            let data = this.op.data;
-            let titleData = [];
-            let btns = [];
+    this.load();
+  },
+  methods: {
+    load() {
+      if (!this.op) {
+        return
+      }
+      if (this.op.title) {
+        let title = this.op.title;
+        let titleData = [];
+        let fieIdArr = ['indexId'];
+        let btns = [];
+        title.forEach((item, index) => {
+            titleData.push({id: index + 1, fieId: item.fieId, title: item.header, minWidth: item.width, sort: item.sort});
+            if (item.fieId) {
+                fieIdArr.push(item.fieId);
+            }
+            if (item.btns) {
+                btns = item.btns;
+            }
+        });
+        this.titleData = titleData;
+            // 如果内容部分有传值
+        if (this.op.datas) {
+            let data = this.op.datas;
+            let dataArr = [];
+            // 循环先判断datas数组里每个对象里key值是否和title里key值对应
             data.forEach((item, index) => {
-                titleData.push({id: index + 1, fieId: item.fieId, title: item.header, minWidth: item.width, sort: item.sort});
-                if (item.btns) {
-                    btns = item.btns;
+                let obj = {};
+                // 设置索引值
+                obj.indexId = index + 1;
+                // 是否有设置按钮
+                if (btns && btns.length) {
+                    obj.btns = btns;
                 }
-            });
-            this.titleData = titleData;
-            // this.bodyData.map(item => {
-            //     item.btns = btns;
-            //     console.log(item);
-            //     return item;
-            // })
-            console.log(this.titleData, 'this.titleData');
+                for (let key in item) {
+                    if (fieIdArr.indexOf(key) > -1) {
+                        // 和头部的键对应才会加入进对象
+                        obj[key] = item[key];
+                    }
+                }
+                dataArr.push(obj);
+            })
+            this.bodyData = dataArr;
+        }
+      }
+        // 是否设置了分页
+      if (this.op.pagerOp) {
+        this.defaultPagerOp = this.op.pagerOp;
+      } else if (this.bodyData && this.bodyData.length) {
+        this.defaultPagerOp.pageVal.total = this.bodyData.length;
+      }
+      if (this.defaultPagerOp.pageVal) {
+        let data = this.bodyData;
+        let data1 = data.splice(0, this.defaultPagerOp.pageVal.pageSize);
+        this.surplus = data;  //  当前页数据
+        this.bodyData = data1;  //  当前页数据
+      }  
+    },  
+    //   排序方法
+    compare(fun, property) {
+        return function(a, b) {
+            let value1 = a[property];
+            let value2 = b[property];
+            if (fun === 'up') {
+                return value1 - value2;
+            } else {
+                return value2 - value1;
+            }
+        }
+    },
+    // 排序
+    sortClick(fun, item) {
+        let data = this.bodyData;
+        let arr = data.sort(this.compare(fun, 'indexId'));
+    },
+    // 按钮点击事件
+    iconClick(e, item) {
+        if (e.onClick) {
+            // 防止改变原数据
+            let value = JSON.parse(JSON.stringify(item));
+            delete value.btns;
+            e.onClick(value);
         }
     }
-  },
+  }
 };
 </script>
 <style>
+.grid-bodybox .grid-input .zoom-icon span:hover {
+    cursor: pointer;
+    color: #096dd9;
+}
+.grid-bodybox .grid-input .zoom-icon span {
+    font-size: 20px;
+    line-height: 20px;
+    color: #1890ff;
+}
 .grid-body .zoom-not-data p {
     line-height: 150px;
 }
@@ -156,6 +226,7 @@ tbody tr:nth-child(odd) {
 }
 .zoom-grid .grid-table tbody tr td .grid-input {
     position: relative;
+    padding-left: .2em;
     width: 100%;
     display: block;
 }
@@ -184,6 +255,9 @@ tbody tr:nth-child(odd) {
 .grid-thead thead:last-child
 tr:last-child th {
     border-bottom: 1px solid #d9d9d9;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    padding-left: .2em;
     color: #333;
 }
 .grid-thead span:not(.zoom-icon) {
@@ -208,10 +282,13 @@ tr:last-child th {
 .grid-thead .grid-sort span+span {
     top: 31%;
 }
+.grid-thead .grid-sort .zoom-icon:hover {
+    color: #333;
+}
 .grid-thead .grid-sort .zoom-icon {
     font-style: normal;
-    font-weight: 400;
-    position: relative;
+    font-weight: 400;   
+    font-size: 20px;
     display: inline-block;
     -webkit-font-smoothing: antialiased; 
     -moz-osx-font-smoothing: grayscale; 
