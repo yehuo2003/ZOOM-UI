@@ -9,7 +9,7 @@
                           <tr>
                               <!-- <th v-for="item of titleData" :key="item.id" :col="item.id" class="grid-item item-sort" field="indexId" :style=" 'width: ' + item.minWidth + 'px;' "> -->
                               <th v-for="item of titleData" :key="item.id" :col="item.id" :class="item.sort ? 'item-sort' : ''" class="grid-item">
-                                  <div v-if="item.sort" minwidth="56" class="grid-sort">
+                                  <div v-if="item.sort" minwidth="56" class="zoom-sort">
                                       <span @click="sortClick('up', item)" class="asc zoom-icon icon iconfont icon-up"></span>
                                       <span @click="sortClick('down', item)" class="asc zoom-icon icon iconfont icon-down"></span>
                                   </div>
@@ -22,21 +22,22 @@
           </div>
           <!-- 内容 -->
           <div  class="grid-body">
-              <div v-if="!bodyData" class="zoom-not-data">
-                  <p>
-                  <span class="icon iconfont icon-close"></span>
+              <div v-if="bodyData.length === 0" class="zoom-not-data">
+                  <p v-show="!showLoad">
+                    <span class="icon iconfont icon-close"></span>
                       暂无数据
                   </p>
+                  <zoom-loading color="#1890ff" :show="showLoad"></zoom-loading>
               </div>
               <div class="grid-bodybox">
                   <table class="grid-table grid-tbody">
                       <tbody class="grid-body-content">
                           <tr v-for="item of bodyData" :key="item.indexId" :_row="item.indexId" :class="{'active':item.indexId == clickIndex}" @click="clickIndex = item.indexId" class="grid-row">
-                              <td v-for="(i, index) of item" :key="index" class="grid-item">
+                              <td v-if="i !== item.onClick" @click="itemClick($event, i, item)" v-for="(i, index) of item" :key="index" class="grid-item">
                                   <span class="grid-input">
                                       {{i === item.btns ? '' : i}}
                                       <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
-                                      <a v-if="i === item.btns" v-for="(j, jIndex) of i" :key="jIndex" :title="j.title" @click="iconClick(j, item)" class="zoom-icon">
+                                      <a v-if="i === item.btns" v-for="(j, jIndex) of i" :key="jIndex" :title="j.title" @click.stop="iconClick(j, item)" class="zoom-icon">
                                           <span :class="j.css.icon ? 'icon iconfont ' + j.css.icon : j.css"></span>
                                       </a>
                                   </span>
@@ -48,7 +49,7 @@
           </div>
       </div>
       <!-- 尾部 -->
-      <div v-if="showPager" class="grid-foot">
+      <div v-if="showPager">
           <zoom-pager :op="defaultPagerOp"></zoom-pager>
       </div>
   </div>
@@ -71,11 +72,13 @@ export default {
                   return {}
               }
           },
+          beforeLoad: Function,
           pagerOp: Object
       }
   },
   data() {
       return {
+        showLoad: false,  //  loading
         surplus: [],    //   剩余数据
         showPager: true,
         defaultPagerOp: {
@@ -86,32 +89,20 @@ export default {
             }
         },
         clickIndex: -1,
-        titleData: [
-            {id: 0, fieId: "indexId", title: '', minWidth: 36, sort: true},
-            {id: 1, fieId: "operation", title: '操作', minWidth: 36},
-            {id: 2, fieId: "userName", title: '用户名称', minWidth: 36},
-            {id: 3, fieId: "fullName", title: '中文名称', minWidth: 36},
-            {id: 4, fieId: "userEmail", title: '邮箱', minWidth: 36},
-            {id: 5, fieId: "roleName", title: '角色', minWidth: 36},
-            {id: 6, fieId: "depaer1", title: '一级标题', minWidth: 36},
-            {id: 7, fieId: "depaer4", title: '四级标题', minWidth: 36},
-            {id: 8, fieId: "createDate", title: '创建时间', minWidth: 36}
-        ],
-        bodyData: [
-            {indexId: 0, userName: 'Tom', fullName: '汤姆', userEmail: 'Tom@qq.com', roleName: '游客', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-11'},
-            {indexId: 1, userName: 'Jerry', fullName: '杰瑞', userEmail: 'Jerry@qq.com', roleName: 'VIP1', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-12'},
-            {indexId: 2, userName: 'dingding', fullName: '钉钉', userEmail: 'dingding@qq.com', roleName: 'VIP2', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-13'},
-            {indexId: 3, userName: 'Lin', fullName: '林主明', userEmail: 'linzhuming@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-10-11'},
-            {indexId: 4, userName: 'yangmi', fullName: '杨幂', userEmail: 'yangmi@qq.com', roleName: 'VIP6', depaer1: '一级标题', depaer4: '四级标题', createDate: '2019-11-15'},
-            {indexId: 5, userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', roleName: 'BOSS', depaer1: '一级标题', depaer4: '四级标题', createDate: '2018-11-11'}
-        ]
+        titleData: [],
+        bodyData: []
       }
   },
-  created() {
-    this.load();
+  mounted() {
+      if (this.op.beforeLoad) {
+          this.op.beforeLoad();
+      } else {
+          this.load();
+      }
   },
   methods: {
-    load() {
+    load(gridData) {
+      this.showLoad = true;
       if (!this.op) {
         return
       }
@@ -131,40 +122,49 @@ export default {
         });
         this.titleData = titleData;
             // 如果内容部分有传值
-        if (this.op.datas) {
-            let data = this.op.datas;
-            let dataArr = [];
-            // 循环先判断datas数组里每个对象里key值是否和title里key值对应
-            data.forEach((item, index) => {
-                let obj = {};
-                // 设置索引值
-                obj.indexId = index + 1;
-                // 是否有设置按钮
-                if (btns && btns.length) {
-                    obj.btns = btns;
+        let data = []
+        if (gridData) {
+            data = gridData;
+        } else if (this.op.datas) {
+            data = this.op.datas;
+        } else {
+            return;
+        }
+        let dataArr = [];
+        // 循环先判断datas数组里每个对象里key值是否和title里key值对应
+        data.forEach((item, index) => {
+            let obj = {};
+            // 设置索引值
+            obj.indexId = index + 1;
+            // 是否有设置按钮
+            if (btns && btns.length) {
+                obj.btns = btns;
+            }
+            if (this.op.onClick) {
+                obj.onClick = this.op.onClick;
+            }
+            for (let key in item) {
+                if (fieIdArr.indexOf(key) > -1) {
+                    // 和头部的键对应才会加入进对象
+                    obj[key] = item[key];
                 }
-                for (let key in item) {
-                    if (fieIdArr.indexOf(key) > -1) {
-                        // 和头部的键对应才会加入进对象
-                        obj[key] = item[key];
-                    }
-                }
-                dataArr.push(obj);
-            })
+            }
+            dataArr.push(obj);
+        })
+            // 是否设置了分页
+        if (this.op.pagerOp) {
+            this.defaultPagerOp = this.op.pagerOp;
+        } else if (this.bodyData && this.bodyData.length) {
+            this.defaultPagerOp.pageVal.total = this.bodyData.length;
+        }
+        if (this.defaultPagerOp.pageVal && this.defaultPagerOp.pageVal.pageSize) {
+            let data1 = dataArr.splice(0, this.defaultPagerOp.pageVal.pageSize);
+            this.bodyData = data1;  //  当前页数据
+            this.surplus = dataArr;  //  剩余数据
+        } else {
             this.bodyData = dataArr;
         }
-      }
-        // 是否设置了分页
-      if (this.op.pagerOp) {
-        this.defaultPagerOp = this.op.pagerOp;
-      } else if (this.bodyData && this.bodyData.length) {
-        this.defaultPagerOp.pageVal.total = this.bodyData.length;
-      }
-      if (this.defaultPagerOp.pageVal) {
-        let data = this.bodyData;
-        let data1 = data.splice(0, this.defaultPagerOp.pageVal.pageSize);
-        this.surplus = data;  //  当前页数据
-        this.bodyData = data1;  //  当前页数据
+        this.showLoad = false;
       }
     },
     //   排序方法
@@ -184,6 +184,14 @@ export default {
         let data = this.bodyData;
         let arr = data.sort(this.compare(fun, 'indexId'));
     },
+    // 行点击事件
+    itemClick(dom, elemnt, col) {
+        // 防止改变原数据
+        //  dom元素 elemnt 当前点击单元格   col 当前行
+        let value = JSON.parse(JSON.stringify(col));
+        delete value.onClick;
+        col.onClick(dom, elemnt, value);
+    },
     // 按钮点击事件
     iconClick(e, item) {
         if (e.onClick) {
@@ -199,6 +207,7 @@ export default {
 <style>
 .grid-bodybox .grid-input .zoom-icon span:hover {
     cursor: pointer;
+    font-weight: bold;
     color: #096dd9;
 }
 .grid-bodybox .grid-input .zoom-icon span {
@@ -267,7 +276,7 @@ tr:last-child th {
     height: 30px;
     line-height: 28px;
 }
-.grid-thead .grid-sort span {
+.grid-thead .zoom-sort span {
     position: absolute;
     text-decoration: none;
     color: #999;
@@ -279,13 +288,13 @@ tr:last-child th {
     top: -1px;
     left: 0;
 }
-.grid-thead .grid-sort span+span {
+.grid-thead .zoom-sort span+span {
     top: 31%;
 }
-.grid-thead .grid-sort .zoom-icon:hover {
+.grid-thead .zoom-sort .zoom-icon:hover {
     color: #333;
 }
-.grid-thead .grid-sort .zoom-icon {
+.grid-thead .zoom-sort .zoom-icon {
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -293,7 +302,7 @@ tr:last-child th {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.grid-thead .grid-sort span {
+.grid-thead .zoom-sort span {
     position: absolute;
     text-decoration: none;
     color: #999;
@@ -305,7 +314,7 @@ tr:last-child th {
     top: -1px;
     left: 0;
 }
-.grid-thead .grid-sort {
+.grid-thead .zoom-sort {
     float: right;
     cursor: pointer;
     position: relative;

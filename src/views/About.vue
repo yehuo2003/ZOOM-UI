@@ -1,12 +1,20 @@
 <template>
   <div class="about">
-    <zoom-grid :op="gridOp"></zoom-grid>
+    <zoom-grid ref="grid" :op="gridOp"></zoom-grid>
+    <!-- <zoom-testing ref="test" :op="testOp"></zoom-testing> -->
+    <zoom-button @click.native="handleClick">测试按钮</zoom-button>
+    <zoom-alert ref="msg"></zoom-alert>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      testOp: {
+        id: 'test666',
+        pool: '的方式发生的范德萨发生的方法规范的格式共和国凤凰家园如一日同年级和成本',
+        hideText: true
+      },
       pageOp: {
         pageVal: {
           total: 100,
@@ -15,6 +23,9 @@ export default {
         }
       },
       gridOp: {
+        onClick: (dom, ele, col) => {
+          console.log(dom, ele, col);
+        },
         title: [
           {
             fieId: '',
@@ -84,20 +95,32 @@ export default {
             width: 200
           },
         ],
-        datas: [
-            {userName: 'Tom', fullName: '汤姆', userEmail: 'Tom@qq.com', role: '游客', phone: '12345678901', addr: '联系地址', createDate: '2019-11-11'},
-            {userName: 'Jerry', fullName: '杰瑞', userEmail: 'Jerry@qq.com', role: 'VIP1', phone: '138445156166', addr: '联系地址', createDate: '2019-11-12'},
-            {userName: 'dingding', fullName: '钉钉', userEmail: 'dingding@qq.com', role: 'VIP2', phone: '15415163154', addr: '联系地址', createDate: '2019-11-13'},
-            {userName: 'Lin', fullName: '林主明', userEmail: 'linzhuming@qq.com', role: 'BOSS', phone: '13666990716', addr: '联系地址', createDate: '2019-10-11'},
-            {userName: 'yangmi', fullName: '杨幂', userEmail: 'yangmi@qq.com', role: 'VIP6', phone: '13906080567', addr: '联系地址', createDate: '2019-11-15'},
-            {userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', role: 'BOSS', phone: '15115156748', addr: '联系地址', createDate: '2018-11-11'}
-        ],
+        datas: [],
+        beforeLoad: () => {
+          this.handleClick();
+        },
         pagerOp: {
           total: 100,
           curPage: 3,
           pageSize: 20
         }
       }
+    }
+  },
+  methods: {
+    handleClick() {
+      // this.$refs['msg'].alert('6666')
+      //  let code = this.$refs['test'].testCode;
+      //  console.log(code);
+      let data = [
+            {userName: 'Tom', fullName: '汤姆', userEmail: 'Tom@qq.com', role: '游客', phone: '12345678901', addr: '联系地址', createDate: '2019-11-11'},
+            {userName: 'Jerry', fullName: '杰瑞', userEmail: 'Jerry@qq.com', role: 'VIP1', phone: '138445156166', addr: '联系地址', createDate: '2019-11-12'},
+            {userName: 'dingding', fullName: '钉钉', userEmail: 'dingding@qq.com', role: 'VIP2', phone: '15415163154', addr: '联系地址', createDate: '2019-11-13'},
+            {userName: 'Lin', fullName: '林主明', userEmail: 'linzhuming@qq.com', role: 'BOSS', phone: '13666990716', addr: '联系地址', createDate: '2019-10-11'},
+            {userName: 'yangmi', fullName: '杨幂', userEmail: 'yangmi@qq.com', role: 'VIP6', phone: '13906080567', addr: '联系地址', createDate: '2019-11-15'},
+            {userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', role: 'BOSS', phone: '15115156748', addr: '联系地址', createDate: '2018-11-11'}
+        ]
+        this.$refs['grid'].load(data);
     }
   }
 }

@@ -1,18 +1,58 @@
 <template>
   <div class="zoom-testing">
-      <canvas id="c3" width="130" height="40"></canvas>
+      <canvas :id="canvasId" @click="changeClick" width="130" height="40"></canvas>
+      <a v-if="showText" @click="testing">换一张</a>
   </div>
 </template>
 <script>
 export default {
     name: 'zoom-testing',
     props: {
-        op: Object
+        op: {
+            type: Object,
+            hideText: {
+                type: Boolean,
+                default: false
+            },
+            id: String
+        },
+        id: String
+    },
+    data() {
+        return {
+            showText: true,
+            canvasId: null,
+            testCode: '',
+            pool: 'QWERTYUIOPASDFGHJKLZXCVBNM1234567890zxcvbnmasdfghjklqwertyuiop'
+        }
+    },
+    created() {
+        let id = 'zoom-canvas-' + Math.floor(Math.random() * 1000);
+        if (this.id) {
+            id = this.id;
+        }
+        if (this.op) {
+            if (this.op.id) {
+                id = this.op.id;
+            }
+            if (this.op.pool) {
+                this.pool = this.op.pool;
+            }
+            if (this.op.hideText) {
+                this.showText = false;
+            }
+        }
+        this.canvasId = id;
     },
     mounted() {
         this.testing();
     },
     methods: {
+        changeClick() {
+            if (!this.showText) {
+                this.testing();
+            }
+        },
         $ctx(id,getContext){
             var c3 = this.$id(id);
             return c3.getContext(getContext);
@@ -36,48 +76,58 @@ export default {
             return  ctx.lineTo(x,y);
         },
         testing() {
+            this.testCode = '';
             // 创建画笔
-            // var canvas = this.$id('c3');
-            // var ctx = canvas.getContext('2d');
-            var ctx = this.$ctx('c3','2d');
-            // 1.创建矩形120*30 背景颜色随机
-            this.$fill(this.$rc(180,230), ctx);
+            var ctx = this.$ctx(this.canvasId, '2d');
+            // 1.创建矩形 200 * 100 背景颜色随机
+            this.$fill(this.$rc(200,100), ctx);
             // ctx.fillRect(0,0,120,30)
             ctx.fillRect(0,0,200,100)
-            // //2.创建随机字符串4绘制矩形中
-            var pool = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890zxcvbnmasdfghjklqwertyuiop";
-            for(var i=0;i<4;i++){
-            var c = pool[this.$rn(30,pool.length)]
-                ctx.textBaseline = "top";
-            var fs = this.$rn(10,30)
+            // 2.创建随机字符串4绘制矩形中
+            var pool = this.pool;
+            var testCode = '';
+            for(var i = 0; i < 4; i ++ ){
+            var c = pool[this.$rn(30,pool.length)];
+            testCode += c;
+            ctx.textBaseline = "top";
+            var fs = this.$rn(10, 30)
             this.$font(fs, ctx)
-            this.$fill(this.$rc(30,180), ctx);
-            this.$Text(c,30*i,0, ctx);
+            this.$fill(this.$rc(30, 180), ctx);
+            this.$Text(c, 30 * (i + .5), 5, ctx);
             }
-            // //3.创建5条干扰线
-            for(var i=0;i<5;i++){
-            ctx.beginPath();
-
-            this.$stroke(this.$rc(0,230), ctx);
-            this.$moveTo(this.$rn(0,120),this.$rn(0,30), ctx);
-            this.$lineTo(this.$rn(0,120),this.$rn(0,30), ctx);
-            ctx.stroke();
+            this.testCode = testCode;
+            // 3.创建5条干扰线
+            for(var i = 0; i < 5; i ++ ){
+                ctx.beginPath();
+                this.$stroke(this.$rc(0, 230), ctx);
+                this.$moveTo(this.$rn(0, 200),this.$rn(0, 100), ctx);
+                this.$lineTo(this.$rn(0, 200),this.$rn(0, 100), ctx);
+                ctx.stroke();
             }
-            // //4.创建50个干扰点
-            for(var i=0;i<50;i++){
-            this.$fill(this.$rc(0,255), ctx);
-            ctx.beginPath();
-            ctx.arc(this.$rn(0,120),this.$rn(0,30),1,0,2*Math.PI);
-            ctx.stroke();
+            // 4.创建50个干扰点
+            for(var i = 0; i < 50; i ++ ){
+                this.$fill(this.$rc(0, 255), ctx);
+                ctx.beginPath();
+                ctx.arc(this.$rn(0, 200),this.$rn(0, 100), 1, 0, 2 * Math.PI);
+                ctx.stroke();
             }
         }
     }
 }
 </script>
 <style>
-#c3 {
+.zoom-testing canvas {
     width: 200px;
     height: 50px;
     background: #ccc;
+}
+.zoom-testing a:hover {
+    cursor: pointer;
+    color: #096dd9;
+}
+.zoom-testing a {
+    padding: 10px;
+    text-decoration: underline;
+    color: #1890ff;
 }
 </style>

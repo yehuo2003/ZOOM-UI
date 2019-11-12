@@ -45,6 +45,7 @@ export default {
             this.msgStatus = this.lager = false;
         },
         testing(obj, time) {
+
             let cls = 'active alert-';
             if (typeof obj === 'object') {
                 this.title = obj.title;
@@ -71,6 +72,7 @@ export default {
             } else {
                 throw Error(`zoom-ui TypeError: 参数 ${obj} 类型错误, 请参考zoom-ui使用手册! `);
             }
+            time = time || 2000;
             if (typeof time !== 'number') {
                 throw Error(`zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `);
             }

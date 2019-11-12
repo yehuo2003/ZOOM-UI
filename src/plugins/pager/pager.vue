@@ -27,6 +27,8 @@ export default {
   props:{
     op: {
        type: Object,
+       pageSize: Array,
+       skip: Function,
        pageVal: {
            type: Object,
            total: {  // 总条数
@@ -111,7 +113,8 @@ export default {
   watch: {
       currentPage(val, old) {
           if (this.op.skip) {
-              this.op.skip(val);
+            //   监听当前页
+              this.op.skip(val, this.op.pageVal);
           }
       }
   },
