@@ -1,15 +1,33 @@
 <template>
   <div class="about">
-    <zoom-grid ref="grid" :op="gridOp"></zoom-grid>
+    <zoom-nav-menu :op="navOp"></zoom-nav-menu>
+    <!-- <zoom-grid ref="grid" :op="gridOp"></zoom-grid> -->
     <!-- <zoom-testing ref="test" :op="testOp"></zoom-testing> -->
-    <zoom-button @click.native="handleClick">测试按钮</zoom-button>
-    <zoom-alert ref="msg"></zoom-alert>
+    <!-- <zoom-button @click.native="handleClick">测试按钮</zoom-button>
+    <zoom-alert ref="msg"></zoom-alert> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      navOp: {
+        data: [
+          {title: '首页', url: ''},
+          {title: '商品详情', url: '', children: [
+            {title: '评论', children: [
+              {title: '小明'},
+              {title: '小红'},
+              {title: '小兰'},
+            ]},
+            {title: '图片'},
+            {title: '销量'},
+          ]},
+          {title: '最新商品', url: ''},
+          {title: '火热潮款', url: ''},
+          {title: '冬季爆款', url: ''},
+        ]
+      },
       testOp: {
         id: 'test666',
         pool: '的方式发生的范德萨发生的方法规范的格式共和国凤凰家园如一日同年级和成本',
@@ -26,6 +44,7 @@ export default {
         onClick: (dom, ele, col) => {
           console.log(dom, ele, col);
         },
+        tip: true,
         title: [
           {
             fieId: '',
@@ -72,6 +91,7 @@ export default {
           {
             fieId: 'userEmail',
             header: '电子邮箱',
+            tip: true,
             width: 80
           },
           {
@@ -92,12 +112,13 @@ export default {
           {
             fieId: 'createDate',
             header: '创建时间',
+            tip: true,
             width: 200
           },
         ],
         datas: [],
         beforeLoad: () => {
-          this.handleClick();
+          // this.handleClick();
         },
         pagerOp: {
           total: 100,
