@@ -55,12 +55,12 @@ export default {
             data: {
                 type: Array,
                 default: []
+            },
+            hideTree: {
+                type: Boolean,
+                default: false
             }
         },
-        hideTree: {
-            type: Boolean,
-            default: false
-        }
     },
     data() {
         return {
@@ -144,7 +144,6 @@ export default {
     min-height: 300px;
     background: #fff;
     padding: 0 10px;
-    transform: translate(140px 0);
 }
 .tree .tree-list>ul li:hover .zoom-menu {
     display: block;

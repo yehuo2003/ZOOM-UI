@@ -94,7 +94,11 @@ export default {
   props: {
     op: {
       type: Object,
-      title: {
+      tip: {   // 是否显示tip
+        type: Boolean,
+        default: false
+      },
+      title: {  // 表格头部数据
         type: Array,
         default() {
           return [];
@@ -106,8 +110,8 @@ export default {
           return {};
         }
       },
-      beforeLoad: Function,
-      pagerOp: Object
+      beforeLoad: Function, // 组件加载时调用, 可以这时挂载数据
+      pagerOp: Object // 是否启用分页组件
     }
   },
   data() {
