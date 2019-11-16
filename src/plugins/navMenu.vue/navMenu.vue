@@ -134,11 +134,12 @@ export default {
     float: left;
 }
 .tree .tree-list>ul li .zoom-menu {
-    visibility: hidden;
+    display: none;
     position: absolute;
     border-top: none;
     border: 1px solid #e0e0e0;
     top: 48px;
+    left: 183px;
     min-width: 800px;
     min-height: 300px;
     background: #fff;
@@ -146,14 +147,15 @@ export default {
     transform: translate(140px 0);
 }
 .tree .tree-list>ul li:hover .zoom-menu {
-    visibility: inherit;
+    display: block;
 }
 .tree .tree-list>ul li {
     line-height: 48px;
     padding-left: 20px;
+    text-align-last: left;
 }
 .tree:hover .tree-list>ul {
-    visibility: inherit;
+    display: block;
 }
 .tree .tree-list>ul li:hover a {
     color: #1890ff;
@@ -165,7 +167,7 @@ export default {
     color: #333;
 }
 .tree .tree-list>ul {
-    visibility: hidden;
+    display: none;
     background: #fff;
     border: 1px solid #e0e0e0;
     font-size: 14px;
@@ -176,12 +178,13 @@ export default {
 .tree:hover>a {
     background: #10a491;
     color: #fff;
-    padding: 13px 18px 14px 18px;
+    padding: 13px 18px 16px 18px;
     transform: rotate(0);
 }
 .tree>a {
     padding: 15px;
     color: #fff;
+    display: block;
     font-weight: bold;
     transform: rotate(90deg);
     -webkit-transform: rotate(90deg);
@@ -227,6 +230,7 @@ export default {
 .zoom-nav {
     background: #12bca6;
     height: 48px;
+    z-index: 999;
     position: relative;
     padding: 0 24px;
 }
@@ -250,11 +254,11 @@ export default {
     transform: rotate(90deg);
 }
 .zoom-nav ul li.zoom-list .zoom-list-child {
-    visibility: hidden;
+    display: none;
     width: 160px;
 }
 .zoom-nav ul li.zoom-list:hover .zoom-list-child {
-    visibility: inherit;
+    display: block;
     transition: all .3s linear;
 }
 .zoom-nav ul li.zoom-list .zoom-list-child ul li {

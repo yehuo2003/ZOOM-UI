@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <zoom-nav-menu :op="navOp"></zoom-nav-menu>
+    <zoom-tab></zoom-tab>
     <!-- <zoom-grid ref="grid" :op="gridOp"></zoom-grid> -->
     <!-- <zoom-testing ref="test" :op="testOp"></zoom-testing> -->
     <!-- <zoom-button @click.native="handleClick">测试按钮</zoom-button>
@@ -23,8 +24,8 @@ export default {
             {title: '图片'},
             {title: '销量'},
           ]},
-          {title: '最新商品', url: ''},
-          {title: '火热潮款', url: ''},
+          {title: '最新商品', url: '#/shop'},
+          {title: '火热潮款', url: '#/home', target: 'blank'},
           {title: '冬季爆款', url: ''},
         ]
       },
