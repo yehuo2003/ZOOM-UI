@@ -1,11 +1,19 @@
 <template>
   <div class="about">
-    <zoom-nav-menu :op="navOp"></zoom-nav-menu>
-    <zoom-tag ref="tag" :op="tagOp"></zoom-tag>
+    <!-- <zoom-nav-menu :op="navOp"></zoom-nav-menu>
+    <zoom-tag ref="tag" :op="tagOp"></zoom-tag> -->
     <!-- <zoom-grid ref="grid" :op="gridOp"></zoom-grid> -->
     <!-- <zoom-testing ref="test" :op="testOp"></zoom-testing> -->
-    <zoom-button @click.native="handleClick">测试按钮</zoom-button>
-    <zoom-alert ref="msg"></zoom-alert>
+    <!-- <zoom-pubu></zoom-pubu>
+    <zoom-button @click.native="handleClick">测试按钮</zoom-button> -->
+    <!-- <zoom-alert ref="msg"></zoom-alert> -->
+    <h1 id="title">晚上好</h1>
+    <div class="p-con">
+      <p>111</p>
+      <p>222</p>
+      <p>333</p>
+      <p class="p4">444</p>
+    </div>
   </div>
 </template>
 <script>
@@ -140,6 +148,15 @@ export default {
       }
     }
   },
+  mounted() {
+    // $('p').addClass('blue');
+
+    // $('.p4').setText('666666666666');
+    // $('div').find('p').eq(1).setText(66666666666).addClass('blue');
+    let title = $Z('.p-con');
+    console.log(title,'sss');
+
+  },
   methods: {
     handleClick() {
       // this.$refs['msg'].alert('6666')
@@ -154,11 +171,13 @@ export default {
       //       {userName: 'renzhengfei', fullName: '阿飞', userEmail: 'renzhengfei@qq.com', role: 'BOSS', phone: '15115156748', addr: '联系地址', createDate: '2018-11-11'}
       //   ]
       //   this.$refs['grid'].load(data);
-      console.log(this.$refs['tag'].tagList, 'tagList');
+      // console.log(this.$refs['tag'].tagList, 'tagList');
     }
   }
 }
 </script>
 <style>
-
+.blue {
+  color: blue;
+}
 </style>
