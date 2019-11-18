@@ -101,7 +101,7 @@ export default {
     font-weight: bold;
     color: #999;
     position: absolute;
-    left: 160px;
+    left: 140px;
 }
 .tree .tree-list>ul li .zoom-menu ul::after {
     content: " ";
@@ -138,8 +138,8 @@ export default {
     position: absolute;
     border-top: none;
     border: 1px solid #e0e0e0;
-    top: 48px;
-    left: 183px;
+    top: 0;
+    left: 160px;
     min-width: 800px;
     min-height: 300px;
     background: #fff;
@@ -147,6 +147,7 @@ export default {
 }
 .tree .tree-list>ul li:hover .zoom-menu {
     display: block;
+    animation: showTree .5s;
 }
 .tree .tree-list>ul li {
     line-height: 48px;
@@ -173,6 +174,7 @@ export default {
 }
 .tree .tree-list {
     width: 160px;
+    position: absolute;
 }
 .tree:hover>a {
     background: #10a491;
@@ -186,6 +188,7 @@ export default {
     display: block;
     font-weight: bold;
     transform: rotate(90deg);
+    transition: all .3s ease;
     -webkit-transform: rotate(90deg);
 }
 .tree {
@@ -258,7 +261,8 @@ export default {
 }
 .zoom-nav ul li.zoom-list:hover .zoom-list-child {
     display: block;
-    transition: all .3s linear;
+    position: absolute;
+    animation: showIndex .5s;
 }
 .zoom-nav ul li.zoom-list .zoom-list-child ul li {
     margin: 1px 0;
@@ -269,5 +273,14 @@ export default {
 }
 a {
     text-decoration: none;
+}
+
+@keyframes showIndex {
+    0% {opacity: 0; transform: translate(-800px, 0)}
+    100% {opacity: 1; transform: translate(0, 0)}
+}
+@keyframes showTree {
+    0% {opacity: 0; transform: translate(800px, 0)}
+    100% {opacity: 1; transform: translate(0, 0)}
 }
 </style>
