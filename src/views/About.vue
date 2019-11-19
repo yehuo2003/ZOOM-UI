@@ -15,10 +15,10 @@
       <p class="p4">444</p>
     </div> -->
     <zoom-tabs>
-      <zoom-tab-item title="组件1">
+      <zoom-tab-item title="组件1" id="title-d1">
         组件1
       </zoom-tab-item>
-      <zoom-tab-item title="组件2">
+      <zoom-tab-item title="组件2" id="title-d2">
         组件2
       </zoom-tab-item>
     </zoom-tabs>

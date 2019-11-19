@@ -44,7 +44,7 @@ export default {
           planList: []
       }
   },
-  watchL: {
+  watch: {
       progress(newVal, oldVal) {
         //   根据数值不同呈现不同颜色, 遍历planList
         if (this.planList && this.planList.length) {

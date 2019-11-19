@@ -1,18 +1,18 @@
 <template>
   <div class="zoom-tabs" style="margin: 20px;">
       <div class="zoom-tabs-top">
-          <div class="zoom-tab-item">
+          <div v-for="(item, index) of titleList" :key="index" :data-id="item.id" @click="getItem(item,index)" :class="activeClass == index ? 'tab-active' : '' " class="zoom-tab-item">
               <div class="tab-tops-item">
-                  Tab 1
-                  <span class="zoom-icon icon iconfont icon-close"></span>
+                  {{item.title}}
+                  <!-- <span class="zoom-icon icon iconfont icon-close" @click="deleteItem(item)"></span> -->
               </div>
           </div>
-          <div class="zoom-tab-item tab-active">
+          <!-- <div class="zoom-tab-item tab-active">
               <div class="tab-tops-item">
                   Tab 2
                   <span class="zoom-icon icon iconfont icon-close"></span>
               </div>
-          </div>
+          </div> -->
       </div>
       <div class="zoom-tabs-content">
           <slot></slot>
@@ -26,6 +26,58 @@ export default {
         op: {
         }
     },
+    data() {
+        return {
+            activeClass: 0,
+            titleList: []
+        }
+    },
+    computed: {
+        getters() {
+            return this.$store.getters.targetTitle;
+        }
+    },
+    watch: {
+         getters(val) {
+             this.titleList = val;
+             console.log('新值', val);
+         }
+    },
+    methods: {
+        getItem(item, index) {
+            this.activeClass = index;  // 把当前点击元素的index，赋值给activeClass
+            let data = $Z('[zoom-title]');
+            // 切换
+            for(var i = 0; i < data.length; i++) {
+                data[i].style = 'display: none;'
+            }
+            $Z(`[zoom-title=${item.title}]`)[0].style = 'display: block;'
+        },
+        // 删除
+        deleteItem(e) {
+            if (e.id) {
+                this.titleList.forEach((item, index) => {
+                    if (item.id === e.id) {
+                        this.titleList.splice(index, 1);
+                    }
+                });
+                this.$store.commit('deleteTabTitle', e.id);
+                this.$nextTick(() => {
+                    this.load();
+                })
+            }
+        },
+        load() {
+            let data = $Z('[zoom-title]');
+            data[0].style = 'display: block;';
+            for(var i = 1; i < data.length; i++) {
+                data[i].style = 'display: none;'
+            }
+        }
+    },
+    mounted() {
+        this.load();
+    }
 }
 </script>
 <style>

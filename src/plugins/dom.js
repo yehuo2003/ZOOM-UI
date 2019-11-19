@@ -22,7 +22,6 @@ window.$Z = $ = Zoom = (function(window, undefined) {
             } else {
                 dom = element.querySelectorAll(selector);
             }
-            console.log(typeof dom);
             return dom;
         } else {
             throw Error('zoom-ui TypeError: 请传入字符串!')
