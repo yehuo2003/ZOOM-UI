@@ -33,4 +33,8 @@ input, select, textarea{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","A
     display: block;
     clear: both;
 }
+*,::after,::before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
 </style>
