@@ -1,7 +1,7 @@
 <template>
     <ol class="zoom-breadcrumb">
         <li v-for="(item, index) of value" :key="index" :class="item.css" :zoom-flag="breadcrumbFlag">
-            <a :data-id="item.id"  :href="item.url" :target="item.target == 'blank' ? '_blank' : '' ">{{item.text}}</a>
+            <a @click="handleClick(item, index)" :data-id="item.id"  :href="item.url" :target="item.target == 'blank' ? '_blank' : '' ">{{item.title}}</a>
         </li>
     </ol>
 </template>
@@ -13,7 +13,8 @@ export default {
             type: Object,
             data: {
                 type: Array
-            }
+            },
+            flag: String
         },
     },
     data() {
@@ -33,6 +34,14 @@ export default {
         }
     },
     methods: {
+        // 点击事件
+        handleClick(item, index) {
+            let value = JSON.parse(JSON.stringify(item));
+            if (item.onClick) {
+                delete value.onClick;
+                item.onClick(value, index);
+            }
+        }
     }
 }
 </script>

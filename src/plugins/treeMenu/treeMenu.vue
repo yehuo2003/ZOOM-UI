@@ -1,70 +1,35 @@
 <template>
-  <div class="zoom-tree-menu">
+  <div class="zoom-tree-menu" :style="Width ? 'width: ' + Width : '' ">
       <ul class="zoom-tree-menus">
           <!-- 一级菜单 -->
-          <li class="tree-item">
-              <div class="tree-item-link">
-                  <a class="item-node">
-                      <span class="node-name">首页</span>
-                  </a>
-              </div>
-          </li>
-          <li class="tree-item tree-open">
-              <span class="zoom-icon icon iconfont icon-down"></span>
-              <div class="tree-item-link">
-                  <a class="item-node">
-                      <span class="node-name">指南</span>
+          <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index)" :class="item.show ? 'tree-open' : '' " class="tree-item tree-open">
+              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-right' " class="zoom-icon icon iconfont"></span>
+              <div @click="handleClick(item, index)" class="tree-item-link">
+                  <a :href="item.url ? item.url : 'javascript:void(0);'" :target="item.target === 'blank' ? '_blank'  : '' " class="item-node">
+                      <span class="node-name">{{item.title}}</span>
                   </a>
               </div>
               <!-- 二级菜单 -->
-              <ul class="zoom-tree-menus">
-                  <li class="tree-item tree-open">
-                      <span class="zoom-icon icon iconfont icon-down"></span>
+              <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
+                  <li v-for="(i, index) of item.children" :key="index" @click.stop="showTree(i, index)" :class="i.show ? 'tree-open' : '' " class="tree-item tree-open">
+                      <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-right' " class="zoom-icon icon iconfont"></span>
                       <div class="tree-item-link">
-                        <a class="item-node">
-                            <span class="node-name">引入组件</span>
+                        <a :href="i.url ? i.url : 'javascript:void(0);'" :target="i.target === 'blank' ? '_blank'  : '' " class="item-node">
+                            <span class="node-name">{{i.title}}</span>
                         </a>
                       </div>
                       <!-- 三级菜单 -->
-                      <ul class="zoom-tree-menus">
-                          <li class="tree-item">
+                      <ul v-show="i.show" v-if="i.children" class="zoom-tree-menus">
+                          <li v-for="(j, index) of i.children" :key="index" @click.stop="showTree(j, index)" :class="j.show ? 'tree-open' : '' " class="tree-item">
                               <div class="tree-item-link">
-                                <a class="item-node">
-                                    <span class="node-name">按需引入</span>
-                                </a>
-                              </div>
-                          </li>
-                          <li class="tree-item">
-                              <div class="tree-item-link">
-                                <a class="item-node">
-                                    <span class="node-name">完整引入</span>
+                                <a :href="j.url ? j.url : 'javascript:void(0);'" :target="j.target === 'blank' ? '_blank'  : '' " class="item-node">
+                                    <span class="node-name">{{j.title}}</span>
                                 </a>
                               </div>
                           </li>
                       </ul>
                   </li>
-                  <li class="tree-item">
-                      <div class="tree-item-link">
-                        <a class="item-node">
-                            <span class="node-name">后端适配器</span>
-                        </a>
-                      </div>
-                  </li>
-                  <li class="tree-item">
-                      <div class="tree-item-link">
-                        <a class="item-node">
-                            <span class="node-name">服务代理</span>
-                        </a>
-                      </div>
-                  </li>
               </ul>
-          </li>
-          <li class="tree-item">
-              <div class="tree-item-link">
-                  <a class="item-node">
-                      <span class="node-name">规范</span>
-                  </a>
-              </div>
           </li>
       </ul>
   </div>
@@ -73,22 +38,92 @@
 export default {
     name: 'zoom-tree-menu',
     props: {
+        op: {
+            type: Object,
+            data: {
+                type: Array,
+                default: []
+            },
+            accordion: {    // 手风琴效果
+                type: Boolean,
+                default: false
+            }
+        }
     },
     data() {
         return {
+            Width: '210px',
+            treeList: []
         }
     },
-    mounted() {
+    created() {
+        if (this.op) {
+            if (this.op.data) {
+                let data = [];
+                // 如果是手风琴 默认第一个展开
+                let count = 0;
+                this.op.data.forEach(item => {
+                    if (item.children) {
+                        count += 1;
+                        if (!item.show) {
+                            let obj = item;
+                            obj.show = false;
+                            if (this.op.accordion && count === 1) {
+                                obj.show = true;
+                            }
+                        }
+                        item.children.forEach(i => {
+                            i.show = i.show ? i.show : false;
+                        });
+                    }
+                    data.push(item);
+                });
+                this.treeList = data;
+            }
+            if (this.op.width) {
+                this.Width = this.op.width;
+            }
+        }
+    },
+    methods: {
+        // 展开下拉树事件
+        showTree(item, index) {
+            let value = JSON.parse(JSON.stringify(item));
+            if (item.load) {
+                delete value.load;
+                item.load(value, index);
+            }
+            // 判断是否开启手风琴模式
+            if (this.op.accordion) {
+                this.treeList.forEach(elem => {
+                    elem.show = false;
+                })
+                item.show = true;
+            } else {
+                item.show = !item.show;
+            }
+        },
+        // 点击节点事件
+        handleClick(item, index) {
+            let value = JSON.parse(JSON.stringify(item));
+            if (item.onClick) {
+                delete value.onClick;
+                item.onClick(value, index);
+            }
+        }
     }
 }
 </script>
 <style>
+.zoom-tree-menu .zoom-tree-menus .tree-item:not(.tree-open):hover {
+    background: #e4ecef;
+}
 .tree-item .zoom-tree-menus .tree-item .zoom-tree-menus .tree-item {
     margin-left: 36px;
 }
 /* 二级菜单 */
 .tree-item .zoom-tree-menus .tree-item .item-node {
-    margin-left: 24px;
+    margin-left: 18px;
 }
 /* 展开状态 */
 .zoom-tree-menu .zoom-tree-menus .tree-item.tree-open>.tree-item-link>a.item-node {
@@ -153,7 +188,8 @@ export default {
     width: 100%;
 }
 .zoom-tree-menu {
-    width: 210px;
+    /* width: 210px; */
+    width: 100%;
     background: #fff;
     position: relative;
     font-size: 12px;

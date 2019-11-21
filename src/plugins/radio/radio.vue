@@ -1,6 +1,6 @@
 <template>
   <label class="zoom-radio"><span class="zoom-radio__input" :class="isChecked? 'is-checked' : ''"><span class="zoom-radio__inner" @click="isCheckedClick"></span>
-    <input ref="isRadio" type="radio" aria-hidden="true" class="zoom-radio__original" :name="checkname" :value="checck" :checked="isChecked?true:false">
+    <input ref="isRadio" type="radio" aria-hidden="true" class="zoom-radio__original" :name="checkname" :value="checck" :checked="isChecked ? true : false">
     </span><span class="zoom-radio__label"><slot></slot></span>
  </label>
 </template>
@@ -18,19 +18,10 @@ export default {
           isChecked: false,
       }
   },
-  created() {
-    //   console.log(this.checkname, '子组件');
-  },
   methods: {
       isCheckedClick() {
           this.isChecked = true;
           this.$refs['isRadio'].click()
-        //   let checkname = document.getElementsByName(this.checkname);
-        //   for (var i = 0; i<= checkname.length; i++) {
-        //       checkname[i].value = this.$refs['isRadio'].value;
-        //   }
-          console.log('checkname', document.getElementsByName(this.checkname));
-        //   console.log(document.getElementsByName('sex')[0].value);
       }
   }
 };
