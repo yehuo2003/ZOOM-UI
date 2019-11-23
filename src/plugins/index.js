@@ -9,6 +9,22 @@ const install = Vue => {
             el.focus();
         }
     })
+    // 深拷贝方法
+    Vue.prototype.clone = function(obj) {
+        let clonedObj;
+        // 判断直接数据类型
+        if (['number', 'string', 'boolean', 'undefined', 'symbol',].includes(typeof obj)
+            || obj === null) {
+            clonedObj = obj;
+            return clonedObj;
+        }
+        const constructor = obj.constructor || Object;
+        clonedObj = new constructor();
+        Object.entries(obj).forEach(([key, value]) => {
+            clonedObj[key] = Vue.prototype.clone(value);
+        })
+        return clonedObj;
+    }
     Vue.prototype.$id = function(id) {
         return document.getElementById(id);
     }

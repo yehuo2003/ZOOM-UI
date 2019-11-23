@@ -119,7 +119,7 @@ export default {
       tips: false,
       showLoad: false, //  loading
       surplus: [], //   剩余数据
-      showPager: true,
+      showPager: false,
       defaultPagerOp: {
         pageVal: {
           total: 0,
@@ -228,6 +228,7 @@ export default {
         });
         // 是否设置了分页
         if (this.op.pagerOp) {
+          this.showPager = true;
           this.defaultPagerOp = this.op.pagerOp;
         } else if (this.bodyData && this.bodyData.length) {
           this.defaultPagerOp.pageVal.total = this.bodyData.length;

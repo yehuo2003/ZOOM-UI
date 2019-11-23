@@ -29,6 +29,24 @@ window.$Z = $ = Zoom = (function(window, undefined) {
     }
 
     Z.prototype = {
+        // 深拷贝
+        clone(obj) {
+            let doms = [];
+            let clonedObj;
+            // 判断直接数据类型
+            if (['number', 'string', 'boolean', 'undefined', 'symbol',].includes(typeof obj)
+                || obj === null) {
+                clonedObj = obj;
+                return clonedObj;
+            }
+            const constructor = obj.constructor || Object;
+            clonedObj = new constructor();
+            Object.entries(obj).forEach(([key, value]) => {
+                clonedObj[key] = this.clone(value);
+            })
+            doms.push(clonedObj);
+            return new Z(doms, this.selector);
+        },
         each(callback) {
             // [].every 是es5的循环方法
             // [].every.call  --改变作用域的方式调用every方法

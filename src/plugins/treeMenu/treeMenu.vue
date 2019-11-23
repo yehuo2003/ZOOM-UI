@@ -2,34 +2,38 @@
   <div class="zoom-tree-menu" :style="Width ? 'width: ' + Width : '' ">
       <ul class="zoom-tree-menus">
           <!-- 一级菜单 -->
-          <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index)" :class="item.show ? 'tree-open' : '' " class="tree-item tree-open">
-              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-right' " class="zoom-icon icon iconfont"></span>
+          <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index)" :class="item.show ? 'tree-open' : '' " class="tree-item">
+              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-add' " class="zoom-icon icon iconfont"></span>
               <div @click="handleClick(item, index)" class="tree-item-link">
                   <a :href="item.url ? item.url : 'javascript:void(0);'" :target="item.target === 'blank' ? '_blank'  : '' " class="item-node">
                       <span class="node-name">{{item.title}}</span>
                   </a>
               </div>
               <!-- 二级菜单 -->
-              <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
-                  <li v-for="(i, index) of item.children" :key="index" @click.stop="showTree(i, index)" :class="i.show ? 'tree-open' : '' " class="tree-item tree-open">
-                      <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-right' " class="zoom-icon icon iconfont"></span>
-                      <div class="tree-item-link">
-                        <a :href="i.url ? i.url : 'javascript:void(0);'" :target="i.target === 'blank' ? '_blank'  : '' " class="item-node">
-                            <span class="node-name">{{i.title}}</span>
-                        </a>
-                      </div>
-                      <!-- 三级菜单 -->
-                      <ul v-show="i.show" v-if="i.children" class="zoom-tree-menus">
-                          <li v-for="(j, index) of i.children" :key="index" @click.stop="showTree(j, index)" :class="j.show ? 'tree-open' : '' " class="tree-item">
-                              <div class="tree-item-link">
-                                <a :href="j.url ? j.url : 'javascript:void(0);'" :target="j.target === 'blank' ? '_blank'  : '' " class="item-node">
-                                    <span class="node-name">{{j.title}}</span>
-                                </a>
-                              </div>
-                          </li>
-                      </ul>
-                  </li>
-              </ul>
+              <transition name="fade">
+                <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
+                    <li v-for="(i, index) of item.children" :key="index" @click.stop="showTree(i, index)" :class="i.show ? 'tree-open' : '' " class="tree-item">
+                        <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-add' " class="zoom-icon icon iconfont"></span>
+                        <div class="tree-item-link">
+                            <a :href="i.url ? i.url : 'javascript:void(0);'" :target="i.target === 'blank' ? '_blank'  : '' " class="item-node">
+                                <span class="node-name">{{i.title}}</span>
+                            </a>
+                        </div>
+                        <!-- 三级菜单 -->
+                        <transition name="fade">
+                            <ul v-show="i.show" v-if="i.children" class="zoom-tree-menus">
+                                <li v-for="(j, index) of i.children" :key="index" @click.stop="showTree(j, index)" :class="j.show ? 'tree-open' : '' " class="tree-item">
+                                    <div class="tree-item-link">
+                                        <a :href="j.url ? j.url : 'javascript:void(0);'" :target="j.target === 'blank' ? '_blank'  : '' " class="item-node">
+                                            <span class="node-name">{{j.title}}</span>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </transition>
+                    </li>
+                </ul>
+              </transition>
           </li>
       </ul>
   </div>
@@ -65,20 +69,20 @@ export default {
                 this.op.data.forEach(item => {
                     if (item.children) {
                         count += 1;
-                        if (!item.show) {
-                            let obj = item;
-                            obj.show = false;
-                            if (this.op.accordion && count === 1) {
-                                obj.show = true;
-                            }
-                        }
                         item.children.forEach(i => {
-                            i.show = i.show ? i.show : false;
+                            if (i.children) {
+                                i.show = i.show ? i.show : false;
+                            }
                         });
+                        item.show = item.show ? item.show : false;
+                        if (this.op.accordion && count === 1) {
+                            item.show = true;
+                        }
                     }
                     data.push(item);
                 });
-                this.treeList = data;
+                // 调用深拷贝方法
+                this.treeList = this.clone(data);
             }
             if (this.op.width) {
                 this.Width = this.op.width;
@@ -115,6 +119,18 @@ export default {
 }
 </script>
 <style>
+.zoom-tree-menu .fade-enter {
+    opacity: 0;
+}
+.zoom-tree-menu .fade-enter-active {
+    transition: opacity .5s;
+}
+.zoom-tree-menu .fade-leave-active {
+    transition: opacity .5s;
+}
+.zoom-tree-menu .fade-leave-to {
+    transition: opacity 0;
+}
 .zoom-tree-menu .zoom-tree-menus .tree-item:not(.tree-open):hover {
     background: #e4ecef;
 }

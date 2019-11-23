@@ -22,7 +22,8 @@
         组件2
       </zoom-tab-item>
     </zoom-tabs> -->
-    <zoom-tree-menu></zoom-tree-menu>
+    <!-- <zoom-tree-menu :op="navOp"></zoom-tree-menu> -->
+    <zoom-transfer></zoom-transfer>
   </div>
 </template>
 <script>
@@ -41,10 +42,20 @@ export default {
         ]
       },
       navOp: {
+        accordion: false,
         data: [
           {title: '首页', url: ''},
           {title: '商品详情', url: '', children: [
             {title: '评论', children: [
+              {title: '小明'},
+              {title: '小红'},
+              {title: '小兰'},
+            ]},
+            {title: '图片'},
+            {title: '销量'},
+          ]},
+          {title: '详情商品', url: '', children: [
+            {title: '购物车', children: [
               {title: '小明'},
               {title: '小红'},
               {title: '小兰'},
