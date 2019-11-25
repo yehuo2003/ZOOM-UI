@@ -30,7 +30,7 @@
             <zoom-form-item label="单选框:">
               <zoom-radio v-for="(item,index) of list" :key="index" :checck="item.value" v-model="radioStatus" checkname="age">{{item.value}}</zoom-radio>
               <!-- <input type="radio" name="age" v-for="(item,index) of list" :key="index" :value="item.value" v-model="radioStatus"> -->
-              <zoom-checkbox></zoom-checkbox>
+              <zoom-checkbox>111</zoom-checkbox>
             </zoom-form-item>
             <zoom-form-item label="用户名:">
               <zoom-input :op="nameOp"></zoom-input>

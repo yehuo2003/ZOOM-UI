@@ -1,7 +1,9 @@
 <template>
   <label class="zoom-checkbox"><span class="zoom-checkbox__input is-checked"><span class="zoom-checkbox__inner"></span>
     <input type="checkbox" aria-hidden="false" class="zoom-checkbox__original" value="">
-    </span><span class="zoom-checkbox__label">复选框<!----></span>
+    </span><span class="zoom-checkbox__label">
+        <slot></slot>
+    </span>
   </label>
 </template>
 <script>
