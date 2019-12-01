@@ -15,11 +15,11 @@
       </div>
   </div>
   <div class="upload-content">
-      <div v-show="!List" ref='select_frame'  ondragstart="return false" class="upload-text">
-          <i class="zoom-icon icon-info"></i>
-          <div>拖拽文件至此处</div>
-      </div>
-    <ul v-show="List" class="upload-file-list">
+    <div v-show="filelist.length === 0" ref='select_frame'  ondragstart="return false" class="upload-text">
+        <i class="zoom-icon icon-info"></i>
+        <div>拖拽文件至此处</div>
+    </div>
+    <ul v-show="filelist.length > 0" class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
                 <img v-if="item.type === 'image/png' " :src="item.url" :alt="item.name">
@@ -35,30 +35,14 @@
                 {{item.size}}
             </div>
             <div class="file-status">
-                <!-- {{isprogress}} -->
-                <zoom-progress :op="proOp"></zoom-progress>
+                <zoom-progress :progress="item.progress"></zoom-progress>
             </div>
         </li>
-        <!-- <li class="upload-file">
-            <div class="upload-item">
-                <img src="../../../src/assets/logo.png" alt="">
-            </div>
-            <div class="file-name" title="">
-                <span class="file-name-wrapper">这是一个文件.txt</span>
-            </div>
-            <div class="file-close">
-                <a class="zoom-icon icon-delete"></a>
-            </div>
-            <div class="file-size">
-                392KB
-            </div>
-            <div class="file-status"></div>
-        </li> -->
     </ul>
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
-          <zoom-button :op="startUploadOp">开始上传</zoom-button>
+          <zoom-button @click="submit">开始上传</zoom-button>
           <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button>
       </div>
@@ -71,7 +55,7 @@ export default {
  name: 'my-upload',
  props: {
  name: String,
- action: {
+ action: {  // 要上传的服务器地址
   type: String,
   required: true
  },
@@ -82,36 +66,37 @@ export default {
  data: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
  multiple: Boolean, //  是否多选
  limit: Number,     //  文件数量
- onChange: Function,
- onBefore: Function,
- onProgress: Function,
- onSuccess: Function,
- onFailed: Function,
- onFinished: Function
+ onChange: Function,    //监听文件变化，增减文件时都会被子组件调用
+ onBefore: Function,    // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送
+ onProgress: Function,  //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
+ onSuccess: Function,   //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
+ onFailed: Function,    //某文件上传失败会执行，index代表列表中第index个文件    uploadFailed(index, err)
+ onFinished: Function   //所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }   onFinished(result)
  },
  data() {
      return {
          size: '10GB',
-         proOp: {
-             progress: 0
-         },
-         isprogress: 0,
          filelist: [],
-         List: null,
-         startUploadOp: {
-             onClick: () => {
-                 this.submit();
-             }
-         }
+         List: []
      }
  },
  watch: {
-     filelist(newVal, oldVal) {
-         debugger
-         console.log(this.filelist, 'this.filelist----');
-         this.List = null;
-         console.log(newVal, 'watch');
-         this.List = newVal[newVal.length - 1];
+    //  List: { // 深度监听进度条变化
+    //     handler: function(newVal, oldVal) {
+    //         for(let i = 0; i < newVal.length; i++) {
+    //             if (oldVal && oldVal[i] && oldVal[i].progress != newVal[i].progress) {
+    //                 this.List = newVal;
+    //                 break;
+    //             }
+    //         }
+    //         this.onChange(newVal);
+    //         console.log('深度监听List---变化');
+    //     },
+    //     deep: true,
+    //     immediate: true
+    //  },
+     List(newVal, oldVal) {
+         this.onChange(newVal);
      }
  },
  mounted() {
@@ -207,8 +192,9 @@ export default {
                 return;
             }
         }
-        let fileList = [...this.fileList];
-        if(this.multiple){//多选时，文件全部压如列表末尾
+        // let fileList = [...this.filelist];
+        let fileList = [];
+        if(this.multiple && files.length > 1){//多选时，文件全部压如列表末尾
             fileList = [...fileList, ...files];
             let len = fileList.length;
             let limit = this.limit;
@@ -219,21 +205,33 @@ export default {
             }
         } else {//单选时，只取最后一个文件。注意这里没写成fileList = files;是因为files本身就有多个元素（比如选择文件时一下子框了一堆）时，也只要一个
             // fileList = [files[0]];
-            fileList = files[0];
+            // fileList = [files[0]];
+            fileList = files;
         }
+        let List = [];
         this.filelist.push(fileList);
-        this.List = this.filelist;
-        this.onChange(this.filelist);//调用父组件方法，将列表缓存到上一级data中的fileList属性
+        this.filelist.forEach(item => {
+            if (item.length > 1) {
+                item.forEach(i => {
+                    List.push(i)
+                })
+            } else {
+                List.push(item[0])
+            }
+        })
+        this.List = Array.from(new Set(List));
+        // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
         // this.$parent.fileList.push(fileList);
         // this.fileList = this.$parent.fileList;
-        // this.onChange(fileList);//调用父组件方法，将列表缓存到上一级data中的fileList属性
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
-        let fileList = [...this.fileList];
+        // let fileList = [...this.fileList];
+        let fileList = [...this.List];
         if(fileList.length){
             fileList.splice(index, 1);
-            this.onChange(fileList);
+            this.List = fileList;
+            // this.onChange(this.List);
         }
     },
     // 提交上传 这里使用了两种方式，fetch和原生方式，由于fetch不支持获取上传的进度，如果不需要进度条或者自己模拟进度或者XMLHttpRequest对象不存在的时候，使用fetch请求上传逻辑会更简单一些
@@ -278,7 +276,7 @@ export default {
     xhrSubmit(){
         const _this = this;
         // let options = this.fileList.map((rawFile, index) => ({
-        let options = this.filelist.map((rawFile, index) => ({
+        let options = this.List.map((rawFile, index) => ({
             file: rawFile,
             data: _this.data,
             filename: _this.name || "file",
@@ -293,10 +291,9 @@ export default {
                 _this.onFailed(index, err);
             }
         }));
-        // let l = this.fileList.length;
-        let l = this.filelist.length;
+        let len = this.List.length;
         let send = async options => {
-        for(let i = 0; i < l; i++){
+        for(let i = 0; i < len; i++){
             await _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
         }
         };
@@ -316,7 +313,6 @@ export default {
         } else {
             msg = 'fail to post ' + action + ' ' + xhr.status;
         }
-
             var err = new Error(msg);
             err.status = xhr.status;
             err.method = 'post';
@@ -349,15 +345,15 @@ export default {
         if (xhr.upload) {
             xhr.upload.onprogress = function progress(e) {
                 if (e.total > 0) {
-                     e.percent = e.loaded / e.total * 100;
+                    e.percent = e.loaded / e.total * 100;
                 }
-                _this.isprogress = e.percent;
-                _this.proOp.progress = e.percent;
-                console.log(_this.proOp.progress, '_this.proOp.progressrefs');
+                // _this.proOp.progress = e.percent;
+                option.file.progress = e.percent;
+                _this.$set(option.file, 'progress', e.percent);
                 option.onProgress(e);
             };
         }
-
+        // _this.$set(option.file, 'progress', 10);
         var formData = new FormData();
 
         if (option.data) {

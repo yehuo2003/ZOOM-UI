@@ -1,17 +1,18 @@
 <template>
     <div class="zoom-progress">
         <div class="zoom-progress-container">
-            <p :class="status" :style="{ width : progress + '%' }" class="progress">
-                <b v-if="inside">{{progress}}%</b>
+            <p :class="status" :style="{ width : ValProgress + '%' }" class="progress">
+                <b v-if="inside">{{ValProgress}}%</b>
             </p>
         </div>
-        <span v-if="!inside" class="zoom-icon">{{progress}}%</span>
+        <span v-if="!inside" class="zoom-icon">{{ValProgress}}%</span>
     </div>
 </template>
 <script>
 export default {
   name: "zoom-progress",
   props: {
+      progress: Number,
       op: {
           status: String,   // 开始时候的状态
           planList: Array,
@@ -37,7 +38,7 @@ export default {
   data() {
       return {
           status: '',
-          progress: 0,
+          ValProgress: 0,
           start: 0,
           endVal: null,
           inside: false,
@@ -45,22 +46,30 @@ export default {
       }
   },
   watch: {
-      op: {
+      progress: { // 深度监听进度条变化
           handler: function(val, oldVal) {
-              if (val.progress) {
-                  this.progress = val.progress;
+              if (val) {
+                  this.ValProgress = val;
               }
-              console.log(val, '深度监听');
+              console.log('progress---变化');
           },
           deep: true
       },
-      progress(newVal, oldVal) {
+      op: { // 深度监听进度条变化
+          handler: function(val, oldVal) {
+              if (val.progress) {
+                  this.ValProgress = val.progress;
+              }
+          },
+          deep: true
+      },
+      ValProgress(newVal, oldVal) {
         //   根据数值不同呈现不同颜色, 遍历planList
         if (this.planList && this.planList.length) {
             let len = this.planList.length - 1;
             let data = this.planList[this.start];
             // 达到或超过临界点时变色
-            if (this.progress >= data.progress) {
+            if (this.ValProgress >= data.progress) {
                 this.status = data.status;
                 this.start += 1;
             }
@@ -71,9 +80,12 @@ export default {
       }
   },
   created() {
+      if (this.ValProgress) {
+          this.progress = this.ValProgress;
+      }
       if (this.op) {
           if (this.op.progress) {
-              this.progress = this.op.progress;
+              this.ValProgress = this.op.progress;
           }
           if (this.op.inside) {
               this.inside = this.op.inside;
@@ -94,8 +106,8 @@ export default {
             //   根据总结束时间计算每秒增长率
               let time = Math.floor(endTime / endVal);
               let timer = setInterval(() => {
-                this.progress += spacing;
-                if (this.progress === endVal) {
+                this.ValProgress += spacing;
+                if (this.ValProgress === endVal) {
                     clearInterval(timer)
                 }
               }, time);

@@ -37,27 +37,14 @@
     :limit="5"
     :on-finished="onFinished">
     </my-upload>
-    <!-- <my-upload
-    ref="upload"
-    :fileList="fileList"
-    :action="url"
-    :data="param"
-    :on-change="onChange"
-    :on-progress="uploadProgress"
-    :on-success="uploadSuccess"
-    :on-failed="uploadFailed"
-    multiple
-    :limit="5"
-    :on-finished="onFinished">
-    </my-upload> -->
-    <!-- <button @click="upload" class="btn btn-xs btn-primary">Upload</button> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      url: 'https://www.lagou.com/nearBy/updateMyResume',
+      // url: 'https://www.lagou.com/nearBy/updateMyResume',
+      url: 'http://127.0.0.1:8090/admin/dish/image',
       fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
       param: {param1: '', param2: '' },//携带参数列表
       tagOp: {
