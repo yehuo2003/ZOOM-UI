@@ -1,7 +1,15 @@
 <template>
-  <label class="zoom-checkbox"><span class="zoom-checkbox__input is-checked"><span class="zoom-checkbox__inner"></span>
+  <label class="zoom-checkbox">
+    <!-- <span class="zoom-checkbox__input is-checked"><span class="zoom-checkbox__inner"></span>
     <input type="checkbox" aria-hidden="false" class="zoom-checkbox__original" value="">
     </span><span class="zoom-checkbox__label">
+        <slot></slot>
+    </span> -->
+    <span class="zoom-checkbox_input" :class="isChecked ? 'is-checked' : '' ">
+        <span class="zoom-checkbox_inner" @click="isCheckedClick"></span>
+        <input @input="Oninput" :id="id" :name="name" :value="val" :checked="isChecked ? true : false" aria-hidden="false" class="zoom-checkbox__original" ref="isBox" type="checkbox">
+    </span>
+    <span class="zoom-checkbox_label">
         <slot></slot>
     </span>
   </label>
@@ -10,15 +18,32 @@
 export default {
   name: "zoom-checkbox",
   props: {
-      op: {
-      }
+      id: String,
+      val: String,
+      name: String,
+      op: Object
   },
   data() {
       return {
+          isCheckbox: false
       }
   },
-  created() {
+  mounted() {
+    this.$refs['isBox'].checkbox = this.isChecked;
   },
+  methods: {
+      isCheckedClick() {
+          this.isCheckbox = !this.isCheckbox;
+      },
+      Oninput($event) {
+        this.$refs['isBox'].checkbox = this.isChecked;
+        if (this.$refs['isBox'.checkbox]) {
+            this.$emit('input', $event.target.value);
+        } else {
+            this.$emit('input', undefined);
+        }
+      }
+  }
 };
 </script>
 <style>

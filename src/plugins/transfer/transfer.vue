@@ -21,8 +21,8 @@
         </div>
         <!-- 中间图标 -->
         <div class="transfer-center">
-        <div class="icon iconfont icon-add"></div>
-        <div class="icon iconfont icon-jian"></div>
+        <div class="zoom-icon icon-add"></div>
+        <div class="zoom-icon icon-jian"></div>
         </div>
         <!-- 右边选中数据 -->
         <div class="transfer-panel select-panel">

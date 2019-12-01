@@ -1,7 +1,7 @@
 <template>
   <div class="zoom-panel">
       <div @click="handleClick" class="zoom-panel-header">
-          <i :class="visibility ? 'icon-down' : 'icon-up' " class="icon iconfont panel-icon"></i>
+          <i :class="visibility ? 'icon-down' : 'icon-up' " class="zoom-icon panel-icon"></i>
           <p class="panel-title" v-html="titleContent"></p>
       </div>
       <div v-show="visibility" class="zoom-panel-content">

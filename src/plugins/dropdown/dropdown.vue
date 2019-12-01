@@ -18,12 +18,12 @@
         v-if="!options.hideClose"
         @click="clear"
         href="javascript:void(0);"
-        class="icon iconfont icon-close icon-default"
+        class="zoom-icon icon-close icon-default"
       ></a>
       <a
         @click="serach"
         href="javascript:void(0);"
-        class="icon iconfont"
+        class="zoom-icon"
         :class="showDown ? 'icon-up' : 'icon-down'"
       ></a>
     </div>

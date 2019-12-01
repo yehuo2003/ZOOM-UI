@@ -5,7 +5,7 @@
                 <b v-if="inside">{{progress}}%</b>
             </p>
         </div>
-        <span v-if="!inside" class="icon iconfont">{{progress}}%</span>
+        <span v-if="!inside" class="zoom-icon">{{progress}}%</span>
     </div>
 </template>
 <script>
@@ -45,6 +45,15 @@ export default {
       }
   },
   watch: {
+      op: {
+          handler: function(val, oldVal) {
+              if (val.progress) {
+                  this.progress = val.progress;
+              }
+              console.log(val, '深度监听');
+          },
+          deep: true
+      },
       progress(newVal, oldVal) {
         //   根据数值不同呈现不同颜色, 遍历planList
         if (this.planList && this.planList.length) {
@@ -137,8 +146,8 @@ export default {
 .progress {
     background: #1890ff;
     border-radius: 10px;
-    height: 20px;
-    line-height: 20px;
+    height: 100%;
+    line-height: 100%;
     text-align: right;
     transition: all .3s linear;
 }

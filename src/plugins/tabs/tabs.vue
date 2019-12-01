@@ -4,13 +4,13 @@
           <div v-for="(item, index) of titleList" :key="index" :data-id="item.id" @click="getItem(item,index)" :class="activeClass == index ? 'tab-active' : '' " class="zoom-tab-item">
               <div class="tab-tops-item">
                   {{item.title}}
-                  <!-- <span class="zoom-icon icon iconfont icon-close" @click="deleteItem(item)"></span> -->
+                  <!-- <span class="zoom-icon icon-close" @click="deleteItem(item)"></span> -->
               </div>
           </div>
           <!-- <div class="zoom-tab-item tab-active">
               <div class="tab-tops-item">
                   Tab 2
-                  <span class="zoom-icon icon iconfont icon-close"></span>
+                  <span class="zoom-icon icon-close"></span>
               </div>
           </div> -->
       </div>

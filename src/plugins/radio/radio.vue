@@ -1,6 +1,6 @@
 <template>
   <label class="zoom-radio"><span class="zoom-radio__input" :class="isChecked? 'is-checked' : ''"><span class="zoom-radio__inner" @click="isCheckedClick"></span>
-    <input ref="isRadio" type="radio" aria-hidden="true" class="zoom-radio__original" :name="checkname" :value="checck" :checked="isChecked ? true : false">
+    <input @input="Oninput" ref="isRadio" type="radio" aria-hidden="true" class="zoom-radio__original" :name="checkname" :value="checck" :checked="isChecked ? true : false">
     </span><span class="zoom-radio__label"><slot></slot></span>
  </label>
 </template>
@@ -10,8 +10,7 @@ export default {
   props: {
       checck: String,
       checkname: String,
-      op: {
-      }
+      op: Object
   },
   data() {
       return {
@@ -19,9 +18,21 @@ export default {
       }
   },
   methods: {
+      Oninput($event) {
+          console.log(this.$refs['isRadio'].checked, '---checked');
+          this.$$emit('input', $event.target.value);
+      },
       isCheckedClick() {
-          this.isChecked = true;
           this.$refs['isRadio'].click()
+          let name = $Z(this.name);
+          for (var i = 0; i <= name.length; i ++) {
+              if (name[i]) {
+                  name[i].parentNode.className = 'zoom-radio_input';
+              }
+          }
+          this.isChecked = true;
+          this.$refs['isRadio'].parentNode.className = 'zoom-radio_input is-checked';
+
       }
   }
 };

@@ -26,7 +26,7 @@
           <li @click="handleClick(item, index)" v-for="(item, index) of navList" :key="index" class="zoom-list">
                <a :href="item.url ? item.url : 'javascript:void(0);' " :target="item.target == 'blank' ? '_blank' : '' ">
                    {{item.title}}
-                   <span v-if="item.children" class="icon iconfont icon-down"></span>
+                   <span v-if="item.children" class="zoom-icon icon-down"></span>
                </a>
                <div v-if="item.children" class="zoom-list-child">
                    <ul>

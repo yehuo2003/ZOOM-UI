@@ -25,12 +25,12 @@
     <zoom-row>
       <!-- <zoom-panel> -->
         <zoom-col span="6">
-          <zoom-page :total="104" :prepage="100" :show-page="10" v-model="sPage"></zoom-page>
+          <zoom-pager :total="104" :prepage="100" :show-page="10" v-model="sPage"></zoom-pager>
           <zoom-form label-width="100">
             <zoom-form-item label="单选框:">
-              <zoom-radio v-for="(item,index) of list" :key="index" :checck="item.value" v-model="radioStatus" checkname="age">{{item.value}}</zoom-radio>
+              <zoom-radio v-for="(item,index) of list" :key="index" :name="item.value" :checck="item.value" v-model="radioStatus" checkname="age">{{item.value}}</zoom-radio>
               <!-- <input type="radio" name="age" v-for="(item,index) of list" :key="index" :value="item.value" v-model="radioStatus"> -->
-              <zoom-checkbox>111</zoom-checkbox>
+              <!-- <zoom-checkbox v-for="(item,index) of list" :key="index">{{item.text}}</zoom-checkbox> -->
             </zoom-form-item>
             <zoom-form-item label="用户名:">
               <zoom-input :op="nameOp"></zoom-input>
@@ -71,7 +71,7 @@
             <zoom-upload :op="uploadOp" @imgData="getName"></zoom-upload>
           </zoom-container>
           <zoom-footer>
-            <span class="icon iconfont icon-RectangleCopy1"></span>
+            <span class="zoom-icon icon-RectangleCopy1"></span>
             <zoom-button hue="green" :op="btnOp">
               提交
             </zoom-button>
@@ -104,7 +104,7 @@ export default Vue.extend({
     return {
       sPage: 1,
       dropdownOp: {
-        isdisabled: true,
+        // isdisabled: true,
         placeHolder: '--请选择--',
         // defalut: '5',
         // readonly: true,

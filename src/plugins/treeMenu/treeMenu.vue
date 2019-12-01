@@ -3,7 +3,7 @@
       <ul class="zoom-tree-menus">
           <!-- 一级菜单 -->
           <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index)" :class="item.show ? 'tree-open' : '' " class="tree-item">
-              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-add' " class="zoom-icon icon iconfont"></span>
+              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-add' " class="zoom-icon"></span>
               <div @click="handleClick(item, index)" class="tree-item-link">
                   <a :href="item.url ? item.url : 'javascript:void(0);'" :target="item.target === 'blank' ? '_blank'  : '' " class="item-node">
                       <span class="node-name">{{item.title}}</span>
@@ -13,7 +13,7 @@
               <transition name="fade">
                 <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
                     <li v-for="(i, index) of item.children" :key="index" @click.stop="showTree(i, index)" :class="i.show ? 'tree-open' : '' " class="tree-item">
-                        <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-add' " class="zoom-icon icon iconfont"></span>
+                        <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-add' " class="zoom-icon"></span>
                         <div class="tree-item-link">
                             <a :href="i.url ? i.url : 'javascript:void(0);'" :target="i.target === 'blank' ? '_blank'  : '' " class="item-node">
                                 <span class="node-name">{{i.title}}</span>

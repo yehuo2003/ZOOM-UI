@@ -18,11 +18,11 @@
                   <div v-if="item.sort" class="zoom-sort">
                     <span
                       @click="sortClick('up', item)"
-                      class="asc zoom-icon icon iconfont icon-up"
+                      class="asc zoom-icon icon-up"
                     ></span>
                     <span
                       @click="sortClick('down', item)"
-                      class="asc zoom-icon icon iconfont icon-down"
+                      class="asc zoom-icon icon-down"
                     ></span>
                   </div>
                   <span class="thead-title">{{item.title}}</span>
@@ -36,7 +36,7 @@
       <div class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
           <p v-show="!showLoad">
-            <span class="icon iconfont icon-close"></span>
+            <span class="zoom-icon icon-close"></span>
             暂无数据
           </p>
           <zoom-loading color="#1890ff" :show="showLoad"></zoom-loading>
@@ -72,7 +72,7 @@
                       @click.stop="iconClick(j, item)"
                       class="zoom-icon"
                     >
-                      <span :class="j.css.icon ? 'icon iconfont ' + j.css.icon : j.css"></span>
+                      <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
                     </a>
                   </span>
                 </td>

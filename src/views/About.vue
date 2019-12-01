@@ -27,7 +27,7 @@
     <my-upload
     ref="myUpload"
     :file-list="fileList"
-    action="/uploadPicture"
+    :action="url"
     :data="param"
     :on-change="onChange"
     :on-progress="uploadProgress"
@@ -37,16 +37,29 @@
     :limit="5"
     :on-finished="onFinished">
     </my-upload>
-    <button @click="upload" class="btn btn-xs btn-primary">Upload</button>
+    <!-- <my-upload
+    ref="upload"
+    :fileList="fileList"
+    :action="url"
+    :data="param"
+    :on-change="onChange"
+    :on-progress="uploadProgress"
+    :on-success="uploadSuccess"
+    :on-failed="uploadFailed"
+    multiple
+    :limit="5"
+    :on-finished="onFinished">
+    </my-upload> -->
+    <!-- <button @click="upload" class="btn btn-xs btn-primary">Upload</button> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      url: 'https://www.lagou.com/nearBy/updateMyResume',
       fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
       param: {param1: '', param2: '' },//携带参数列表
-
       tagOp: {
         addTag: true,
         title: '添加',
@@ -211,26 +224,27 @@ export default {
       // console.log(this.$refs['tag'].tagList, 'tagList');
     },
     onChange(fileList){//监听文件变化，增减文件时都会被子组件调用
-    this.fileList = [...fileList];
+      this.fileList = [...fileList];
+      console.log('文件变化了onChange', this.fileList);
     },
     uploadSuccess(index, response){//某个文件上传成功都会执行该方法，index代表列表中第index个文件
-    console.log(index, response);
+      console.log(index, response, '文件上传成功uploadSuccess');
     },
     upload(){//触发子组件的上传方法
-    this.$refs.myUpload.submit();
+      this.$refs.myUpload.submit();
     },
     removeFile(index){//移除某文件
-    this.$refs.myUpload.remove(index);
+      this.$refs.myUpload.remove(index);
     },
     uploadProgress(index, progress){//上传进度，上传时会不断被触发，需要进度指示时会很有用
-    const{ percent } = progress;
-    console.log(index, percent);
+      const{ percent } = progress;
+      console.log(index, percent, '上传进度被触发uploadProgress');
     },
     uploadFailed(index, err){//某文件上传失败会执行，index代表列表中第index个文件
-    console.log(index, err);
+      console.log(index, err, '上传失败了uploadFailed');
     },
     onFinished(result){//所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }
-    console.log(result);
+      console.log('onFinished上传完毕,结果是:',result);
     }
   }
 }

@@ -1,5 +1,16 @@
 <template>
-  <div class="zoom-input">
+  <div
+    @click="handleChild('click')"
+    @mousedown="handleChild('mousedownChild')"
+    @mouseenter="handleChild('mouseenterChild')"
+    @mouseleave="handleChild('mouseleaveChild')"
+    @mousemove="handleChild('mousemoveChild')"
+    @mouseout="handleChild('mouseoutChild')"
+    @mouseover="handleChild('mouseoverChild')"
+    @keydown="handleChild('keydownChild')"
+    @keyup="handleChild('keyupChild')"
+    class="zoom-input"
+  >
     <input
       :class="error ? 'error' : ''"
       @blur="handleBlur"
@@ -11,13 +22,13 @@
     />
     <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
     <div class="input-btn">
-      <a @click="clear" href="javascript:void(0);" class="icon iconfont icon-close icon-default"></a>
+      <a @click="clear" href="javascript:void(0);" class="zoom-icon icon-close icon-default"></a>
       <a
         v-if="options.IconStyle"
         :class="options.IconStyle"
         @click="serach"
         href="javascript:void(0);"
-        class="icon iconfont"
+        class="zoom-icon"
       ></a>
     </div>
   </div>
@@ -75,6 +86,9 @@ export default {
     }
   },
   methods: {
+    handleChild(e) {
+      this.$emit(e);
+    },
     // 验证功能
     handleBlur() {
       if (this.options.testing) {

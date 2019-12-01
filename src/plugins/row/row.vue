@@ -28,6 +28,7 @@ input, select, textarea{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","A
     margin-left: -10px;
     width: 100%;
 }
+.zoom-clear::after,
 .zoom-row::after {
     content: " ";
     display: block;

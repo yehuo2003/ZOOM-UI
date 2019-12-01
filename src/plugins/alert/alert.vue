@@ -2,14 +2,14 @@
   <div :class="lager ? 'alert-lager' : '' ">
       <div class="zoom-alert" :class="msgStatus">
           <div v-if="!lager" class="msg-warpper">
-              <span v-if="IconStyle" class="icon iconfont icon-alert" :class="IconStyle"></span>
+              <span v-if="IconStyle" class="zoom-icon icon-alert" :class="IconStyle"></span>
                   {{content}}
           </div>
           <div v-else class="lager-warpper">
-              <span v-if="IconStyle" class="icon iconfont icon-alert" :class="IconStyle"></span>
+              <span v-if="IconStyle" class="zoom-icon icon-alert" :class="IconStyle"></span>
               <p class="alert-title">{{title}}</p>
               <p class="alert-content">{{content}}</p>
-              <i class="icon iconfont close-alert icon-close" @click="close"></i>
+              <i class="zoom-icon close-alert icon-close" @click="close"></i>
           </div>
       </div>
   </div>
