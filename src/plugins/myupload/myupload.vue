@@ -81,20 +81,6 @@ export default {
      }
  },
  watch: {
-    //  List: { // 深度监听进度条变化
-    //     handler: function(newVal, oldVal) {
-    //         for(let i = 0; i < newVal.length; i++) {
-    //             if (oldVal && oldVal[i] && oldVal[i].progress != newVal[i].progress) {
-    //                 this.List = newVal;
-    //                 break;
-    //             }
-    //         }
-    //         this.onChange(newVal);
-    //         console.log('深度监听List---变化');
-    //     },
-    //     deep: true,
-    //     immediate: true
-    //  },
      List(newVal, oldVal) {
          this.onChange(newVal);
      }
@@ -226,10 +212,12 @@ export default {
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
+        debugger
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
         if(fileList.length){
             fileList.splice(index, 1);
+            this.$refs['zoom-upload'].files.splice(index, 1);
             this.List = fileList;
             // this.onChange(this.List);
         }
@@ -292,12 +280,22 @@ export default {
             }
         }));
         let len = this.List.length;
-        let send = async options => {
-        for(let i = 0; i < len; i++){
-            await _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
-        }
+        let send = options => {
+            for(let i = 0; i < len; i++){
+                console.log(options[i], '_this.sendRequest(options[i])----');
+                _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
+            }
         };
+        // let send = async options => {
+        //     for(let i = 0; i < len; i++){
+        //         await _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
+        //     }
+        // };
         send(options);
+        this.List = []
+        options.forEach(item => {
+            this.List.push(item.file);
+        })
     },
     // 这里借鉴了element-ui的上传源码
     sendRequest(option){
@@ -353,6 +351,8 @@ export default {
                 option.onProgress(e);
             };
         }
+        option.file.progress = 30;
+        console.log('progress值是:', option.file.progress);
         // _this.$set(option.file, 'progress', 10);
         var formData = new FormData();
 
@@ -412,9 +412,11 @@ export default {
     position: relative;
     bottom: 0;
     right: 0;
-    height: 2px;
+    /* height: 2px; */
+    max-height: 30px;
 }
 .upload-content .upload-file .file-close {
+    z-index: 11;
     cursor: pointer;
     position: absolute;
     bottom: 5px;

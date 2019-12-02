@@ -25,17 +25,18 @@
     <!-- <zoom-tree-menu :op="navOp"></zoom-tree-menu> -->
     <!-- <zoom-transfer></zoom-transfer> -->
     <my-upload
+    :action="url"
+    multiple
     ref="myUpload"
     :file-list="fileList"
-    :action="url"
     :data="param"
     :on-change="onChange"
     :on-progress="uploadProgress"
     :on-success="uploadSuccess"
     :on-failed="uploadFailed"
-    multiple
     :limit="5"
-    :on-finished="onFinished">
+    :on-finished="onFinished"
+    >
     </my-upload>
   </div>
 </template>

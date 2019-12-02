@@ -369,15 +369,15 @@
   content: "\e6a9";
 }
 
-.icon-forbid:before {
+.icon-warning:before {
   content: "\e6ac";
 }
 
-.icon-set:before {
+.icon-price:before {
   content: "\e6af";
 }
 
-.icon-price:before {
+.icon-set:before {
   content: "\e6b1";
 }
 

@@ -46,14 +46,8 @@ export default {
       }
   },
   watch: {
-      progress: { // 深度监听进度条变化
-          handler: function(val, oldVal) {
-              if (val) {
-                  this.ValProgress = val;
-              }
-              console.log('progress---变化');
-          },
-          deep: true
+      progress(newVal, oldVal) {
+          this.ValProgress = newVal;
       },
       op: { // 深度监听进度条变化
           handler: function(val, oldVal) {
