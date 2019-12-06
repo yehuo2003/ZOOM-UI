@@ -357,15 +357,11 @@
   content: "\e62e";
 }
 
-.icon-caution:before {
+.icon-glass:before {
   content: "\e6a3";
 }
 
-.icon-pie:before {
-  content: "\e6a5";
-}
-
-.icon-allot:before {
+.icon-bulb:before {
   content: "\e6a9";
 }
 
@@ -373,7 +369,7 @@
   content: "\e6ac";
 }
 
-.icon-price:before {
+.icon-recycle:before {
   content: "\e6af";
 }
 
@@ -381,15 +377,15 @@
   content: "\e6b1";
 }
 
-.icon-target:before {
+.icon-shut:before {
   content: "\e6b8";
 }
 
-.icon-lock:before {
+.icon-form:before {
   content: "\e6be";
 }
 
-.icon-form:before {
+.icon-lock:before {
   content: "\e6bf";
 }
 
@@ -397,15 +393,11 @@
   content: "\e6c0";
 }
 
-.icon-rmb:before {
-  content: "\e6c2";
-}
-
-.icon-release:before {
+.icon-entrepot:before {
   content: "\e6c4";
 }
 
-.icon-turnover:before {
+.icon-calendar:before {
   content: "\e6c5";
 }
 
@@ -413,19 +405,19 @@
   content: "\e6c9";
 }
 
-.icon-structure:before {
+.icon-ash-bin:before {
   content: "\e6cb";
 }
 
-.icon-location:before {
+.icon-bills:before {
   content: "\e708";
 }
 
-.icon-RectangleCopy253:before {
+.icon-fodder:before {
   content: "\e79f";
 }
 
-.icon-location2:before {
+.icon-location:before {
   content: "\e7a3";
 }
 
@@ -433,3 +425,64 @@
   content: "\e7a5";
 }
 
+/* 测试 */
+
+.icon-test-store:before {
+  content: "\e896";
+}
+
+.icon-test-order:before {
+  content: "\e897";
+}
+
+.icon-test-order-success:before {
+  content: "\e899";
+}
+
+.icon-test-shopping-cart:before {
+  content: "\e89a";
+}
+
+.icon-test-calendar:before {
+  content: "\e89e";
+}
+
+.icon-test-user:before {
+  content: "\e8a0";
+}
+
+.icon-test-stop:before {
+  content: "\e8a7";
+}
+
+.icon-test-refresh:before {
+  content: "\e8aa";
+}
+
+.icon-test-laugh:before {
+  content: "\e8ab";
+}
+
+.icon-test-stop-fill:before {
+  content: "\e8c1";
+}
+
+.icon-test-enter:before {
+  content: "\e8cb";
+}
+
+.icon-test-modification:before {
+  content: "\e8cf";
+}
+
+.icon-test-guide:before {
+  content: "\e8d0";
+}
+
+.icon-test-full-screen:before {
+  content: "\e626";
+}
+
+.icon-test-home:before {
+  content: "\e62e";
+}

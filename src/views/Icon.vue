@@ -1,8 +1,9 @@
 <template>
   <div class="zoom-icon-list">
       <div v-for="(item, index) of list" :key="index" class="icon-gorup">
-        <span class="zoom-icon icon-comments" :class="item.cls"></span>
+        <span class="zoom-icon" :class="item.cls"></span>
         <p>{{item.name}}</p>
+        <p>{{item.cls}}</p>
       </div>
   </div>
 </template>
@@ -93,26 +94,23 @@ export default {
               {cls: 'icon-modification', name: '修改'},
               {cls: 'icon-guide', name: '指南'},
               {cls: 'icon-full-screen', name: '全屏'},
-              {cls: 'icon-home', name: '说明'},
-            //   {cls: 'icon-full-screen', name: ''},
-              {cls: 'icon-pie', name: '我的'},
-              {cls: 'icon-caution', name: '放大镜'},
-              {cls: 'icon-allot', name: '灯泡'},
+              {cls: 'icon-home', name: '主页'},
+              {cls: 'icon-glass', name: '放大镜'},
+              {cls: 'icon-bulb', name: '灯泡'},
               {cls: 'icon-warning', name: '警告'},
-              {cls: 'icon-set', name: '收起'},
-              {cls: 'icon-price', name: '设置/管理'},
-              {cls: 'icon-target', name: '关闭'},
-              {cls: 'icon-lock', name: '报表'},
-              {cls: 'icon-form', name: '锁'},
+              {cls: 'icon-set', name: '设置/管理'},
+              {cls: 'icon-recycle', name: '收起'},
+              {cls: 'icon-shut', name: '关闭-小'},
+              {cls: 'icon-lock', name: '锁'},
+              {cls: 'icon-form', name: '报表'},
               {cls: 'icon-channel', name: '单据'},
-            //   {cls: 'icon-rmb', name: '价格'},
-              {cls: 'icon-release', name: '仓库'},
-              {cls: 'icon-turnover', name: '日历'},
+              {cls: 'icon-entrepot', name: '仓库'},
+              {cls: 'icon-calendar', name: '日历'},
               {cls: 'icon-indicator', name: '进出'},
-              {cls: 'icon-structure', name: '垃圾桶'},
-              {cls: 'icon-location', name: '单据管理'},
-              {cls: 'icon-RectangleCopy253', name: '素材中心'},
-              {cls: 'icon-location2', name: '定位'},
+              {cls: 'icon-ash-bin', name: '垃圾桶'},
+              {cls: 'icon-bills', name: '单据管理'},
+              {cls: 'icon-fodder', name: '素材中心'},
+              {cls: 'icon-location', name: '定位'},
               {cls: 'icon-logistics', name: '物流'},
           ]
       }
@@ -131,7 +129,7 @@ export default {
 .zoom-icon-list .icon-gorup {
     float: left;
     padding: 20px;
-    width: 120px;
+    width: 200px;
     text-align: center;
 }
 .zoom-icon-list {

@@ -3,8 +3,16 @@
   <div class="upload-header">
      <div class="upload-title">选择文件</div>
      <div class="alert-upload upload-info">
-        <i class="zoom-icon close-alert icon-info"></i>
-        最多上传两个文件, 每个文件最大10M
+        <i class="zoom-icon close-alert icon-hint"></i>
+        最多上传两个文件, 每个文件最大{{size}}
+     </div>
+     <div v-show="successCount" class="alert-upload upload-success">
+        <i class="zoom-icon close-alert icon-success"></i>
+        上传成功{{successCount}}个文件
+     </div>
+     <div v-show="errCount" class="alert-upload upload-error">
+        <i class="zoom-icon close-alert icon-close"></i>
+        上传失败{{errCount}}个文件!
      </div>
   </div>
   <div class="upload-toolbar zoom-clear">
@@ -15,11 +23,11 @@
       </div>
   </div>
   <div class="upload-content">
-    <div v-show="filelist.length === 0" ref='select_frame'  ondragstart="return false" class="upload-text">
-        <i class="zoom-icon icon-info"></i>
+    <div v-show="List.length === 0" ref='select_frame'  ondragstart="return false" class="upload-text">
+        <i class="zoom-icon icon-fodder"></i>
         <div>拖拽文件至此处</div>
     </div>
-    <ul v-show="filelist.length > 0" class="upload-file-list">
+    <ul v-show="List.length > 0" class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
                 <img v-if="item.type === 'image/png' " :src="item.url" :alt="item.name">
@@ -42,9 +50,9 @@
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
-          <zoom-button @click="submit">开始上传</zoom-button>
-          <zoom-button>停止上传</zoom-button>
-          <zoom-button>关闭</zoom-button>
+          <zoom-button hue="primary" @click="submit">开始上传</zoom-button>
+          <!-- <zoom-button>停止上传</zoom-button>
+          <zoom-button>关闭</zoom-button> -->
       </div>
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
@@ -75,6 +83,8 @@ export default {
  },
  data() {
      return {
+         successCount: 0,   //上传成功的文件数量
+         errCount: 0,       //上传失败的文件数量
          size: '10GB',
          filelist: [],
          List: []
@@ -82,28 +92,32 @@ export default {
  },
  watch: {
      List(newVal, oldVal) {
+         this.successCount = 0;
+         this.errCount = 0;
          this.onChange(newVal);
      }
  },
  mounted() {
+     this.successCount = 0;
+     this.errCount = 0;
      this.$refs.select_frame.ondragleave = (e) => {
-            e.preventDefault()  // 阻止离开时的浏览器默认行为
+            e.preventDefault();  // 阻止离开时的浏览器默认行为
         }
         this.$refs.select_frame.ondrop = (e) => {
-            e.preventDefault()    // 阻止拖放后的浏览器默认行为
-            const data = e.dataTransfer.files[0]  // 获取文件对象
+            e.preventDefault();    // 阻止拖放后的浏览器默认行为
+            const data = e.dataTransfer.files[0];  // 获取文件对象
             if (data.length < 1) {
-                return  // 检测是否有文件拖拽到页面
+                return;  // 检测是否有文件拖拽到页面
             }
             console.log(data)
             this.addFile({target: {files: [data]}})//上传文件的方法
         }
         this.$refs.select_frame.ondragenter = (e) => {
-            e.preventDefault()  // 阻止拖入时的浏览器默认行为
+            e.preventDefault();  // 阻止拖入时的浏览器默认行为
             this.$refs.select_frame.border = '2px dashed red'
         }
         this.$refs.select_frame.ondragover = (e) => {
-            e.preventDefault()    // 阻止拖来拖去的浏览器默认行为
+            e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
         }
  },
  methods: {
@@ -174,6 +188,7 @@ export default {
                 files[i].url = URL.createObjectURL(files[i]);//创建blob地址，不然图片怎么展示？
                 files[i].status = 'ready';//开始想给文件一个字段表示上传进行的步骤的，后面好像也没去用......
                 files[i].progress = 0;    // 进度
+                files[i].id = (Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5);    // 随机id
             } else {
                 return;
             }
@@ -196,13 +211,18 @@ export default {
         }
         let List = [];
         this.filelist.push(fileList);
+        // 如果状态是delete的不加进来
         this.filelist.forEach(item => {
             if (item.length > 1) {
                 item.forEach(i => {
-                    List.push(i)
+                    if (i.status !== 'delete') {
+                        List.push(i)
+                    }
                 })
             } else {
-                List.push(item[0])
+                if (item[0].status !== 'delete') {
+                    List.push(item[0])
+                }
             }
         })
         this.List = Array.from(new Set(List));
@@ -212,18 +232,41 @@ export default {
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
-        debugger
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
+        let fileId = fileList[index].id;
+        let files = this.$refs['zoom-upload'].files;
+        let len = files.length;
+        // 把已经删除的文件状态标记为delete 因为文件对象无法直接删除
         if(fileList.length){
+            for (var i = 0; i<len; i ++) {
+                if (files[i].fileId === fileId) {
+                    // 标记当前文件状态
+                    this.$refs['zoom-upload'].files[i].status = 'delete';
+                    break;
+                }
+            }
             fileList.splice(index, 1);
-            this.$refs['zoom-upload'].files.splice(index, 1);
+            // 把已经删除的文件状态标记为delete
+            this.filelist.forEach(item => {
+                if (item.length === 1) {
+                    item.status = 'delete';
+                } else {
+                    item.forEach(i => {
+                        if(fileId === i.id) {
+                            i.status = 'delete';
+                        }
+                    })
+                }
+            })
             this.List = fileList;
             // this.onChange(this.List);
         }
     },
     // 提交上传 这里使用了两种方式，fetch和原生方式，由于fetch不支持获取上传的进度，如果不需要进度条或者自己模拟进度或者XMLHttpRequest对象不存在的时候，使用fetch请求上传逻辑会更简单一些
     submit(){
+        this.successCount = 0;
+        this.errCount = 0;
         if(this.checkIfCanUpload()){
             if(this.onProgress && typeof XMLHttpRequest !== 'undefined')
                 this.xhrSubmit();
@@ -273,24 +316,24 @@ export default {
                 _this.onProgress(index, e);//闭包，将index存住
             },
             onSuccess(res){
+                _this.successCount += 1;
+                rawFile.status = 'success'
                 _this.onSuccess(index, res);
             },
             onError(err){
+                _this.errCount += 1;
+                rawFile.status = 'error'
                 _this.onFailed(index, err);
             }
         }));
         let len = this.List.length;
         let send = options => {
             for(let i = 0; i < len; i++){
-                console.log(options[i], '_this.sendRequest(options[i])----');
-                _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
+                if (options[i].file.status !== 'delete') {
+                    _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
+                }
             }
         };
-        // let send = async options => {
-        //     for(let i = 0; i < len; i++){
-        //         await _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
-        //     }
-        // };
         send(options);
         this.List = []
         options.forEach(item => {
@@ -485,6 +528,9 @@ export default {
     max-height: 260px;
     border: 1px solid #d9d9d9;
 }
+.zoom-file-upload .upload-toolbar .btn {
+    float: left;
+}
 .zoom-file-upload .upload-toolbar .upload-switch {
     float: right;
     line-height: 30px;
@@ -492,7 +538,25 @@ export default {
 .zoom-file-upload .upload-toolbar {
     margin: 10px 0;
 }
-.zoom-file-upload .upload-header .upload-info .icon-info {
+/* 上传成功 */
+.zoom-file-upload .upload-header .upload-success .icon-success {
+    color: #52c41a;
+}
+.zoom-file-upload .upload-header .alert-upload.upload-success {
+    background: #f6ffed;
+    border: 1px solid #95de64;
+}
+
+/* 上传失败 */
+.zoom-file-upload .upload-header .upload-error .icon-close {
+    color: #f5222d;
+}
+.zoom-file-upload .upload-header .alert-upload.upload-error {
+    background: #fff1f0;
+    border: 1px solid #ff7875;
+}
+/* 上传提示 */
+.zoom-file-upload .upload-header .upload-info .icon-hint {
     color: #1890ff;
 }
 .zoom-file-upload .upload-header .alert-upload {
