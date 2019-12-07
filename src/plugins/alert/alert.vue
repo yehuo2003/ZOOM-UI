@@ -62,7 +62,7 @@ export default {
                         this.IconStyle = 'icon-warning';
                         break;
                     case 'primary':
-                        this.IconStyle = 'icon-news';
+                        this.IconStyle = 'icon-query';
                         break;
                     default:
                         this.IconStyle = false;

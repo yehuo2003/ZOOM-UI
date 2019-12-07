@@ -7,6 +7,7 @@
           <table class="grid-table grid-thead">
             <thead class="grid-head-content">
               <tr>
+                <!-- 表格宽度 -->
                 <th
                   v-for="item of titleData"
                   :key="item.id"
@@ -18,11 +19,11 @@
                   <div v-if="item.sort" class="zoom-sort">
                     <span
                       @click="sortClick('up', item)"
-                      class="asc zoom-icon icon-up"
+                      class="asc zoom-icon icon-up-fill"
                     ></span>
                     <span
                       @click="sortClick('down', item)"
-                      class="asc zoom-icon icon-down"
+                      class="asc zoom-icon icon-down-fill"
                     ></span>
                   </div>
                   <span class="thead-title">{{item.title}}</span>
@@ -35,9 +36,10 @@
       <!-- 内容 -->
       <div class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
+        <!-- <div v-if="!bodyData" class="zoom-not-data"> -->
           <p v-show="!showLoad">
-            <span class="zoom-icon icon-close"></span>
-            暂无数据
+            <i class="zoom-icon icon-glass"></i>
+            <span>暂无数据</span>
           </p>
           <zoom-loading color="#1890ff" :show="showLoad"></zoom-loading>
         </div>
@@ -53,7 +55,6 @@
                 class="grid-row"
               >
                 <td
-                  v-if="i !== item.onClick"
                   @click="itemClick($event, i, item, name)"
                   v-for="(i, name, index) of item"
                   :key="index"
@@ -64,16 +65,17 @@
                   <span class="grid-input">
                     {{i === item.btns ? '' : i}}
                     <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
-                    <a
-                      v-if="i === item.btns"
-                      v-for="(j, jIndex) of i"
-                      :key="jIndex"
-                      :title="j.title"
-                      @click.stop="iconClick(j, item)"
-                      class="zoom-icon"
-                    >
-                      <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
-                    </a>
+                    <span v-if="i === item.btns">
+                      <a
+                        v-for="(j, jIndex) of item.btns"
+                        :key="jIndex"
+                        :title="j.title"
+                        @click.stop="iconClick(j, item)"
+                        class="zoom-icon"
+                      >
+                        <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
+                      </a>
+                    </span>
                   </span>
                 </td>
               </tr>
@@ -94,6 +96,10 @@ export default {
   props: {
     op: {
       type: Object,
+      hideIndex: {  // 是否隐藏序列号
+        type: Boolean,
+        default: false,
+      },
       tip: {   // 是否显示tip
         type: Boolean,
         default: false
@@ -117,6 +123,7 @@ export default {
   data() {
     return {
       tips: false,
+      serial: false, //  是否显示序列号
       showLoad: false, //  loading
       surplus: [], //   剩余数据
       showPager: false,
@@ -152,6 +159,10 @@ export default {
           if (item.minWidth && item.fieId) {
             let arr = document.querySelectorAll(`[fieId=${item.fieId}]`);
             arr.forEach(i => {
+              // 如果用户设置了不显示序列号选项 则隐藏
+              if (item.fieId === 'indexId' && this.serial) {
+                $Z('[col="1"]')[0].style = i.style = 'display: none;';
+              } else {
                 // 判断是否有自定义样式
               if (item.css && typeof item.css === "string") {
                 i.classList.add(item.css);
@@ -162,6 +173,7 @@ export default {
               }
             //   设置列宽
               i.style = `width: ${item.minWidth}%;`;
+              }
             });
           }
         });
@@ -169,6 +181,10 @@ export default {
       this.titleData = data;
     },
     load(gridData) {
+      // 看用户是否设置了隐藏序列号
+      if (this.op && this.op.hideIndex) {
+        this.serial = this.op.hideIndex;
+      }
       this.showLoad = true;
       if (!this.op) {
         return;
@@ -176,7 +192,8 @@ export default {
       if (this.op.title) {
         let title = this.op.title;
         let titleData = [];
-        let fieIdArr = ["indexId"];
+        // let fieIdArr = ["indexId"];
+        let fieIdArr = [];
         let btns = [];
         title.forEach((item, index) => {
           titleData.push({
@@ -188,9 +205,11 @@ export default {
             css: item.css,
             tip: item.tip
           });
+          // 给每列内容加fieId
           if (item.fieId) {
             fieIdArr.push(item.fieId);
           }
+          // 如果有按钮就给每列加上
           if (item.btns) {
             btns = item.btns;
           }
@@ -211,6 +230,7 @@ export default {
           let obj = {};
           // 设置索引值
           obj.indexId = index + 1;
+          // obj.index = index + 1;
           // 是否有设置按钮
           if (btns && btns.length) {
             obj.btns = btns;
@@ -227,22 +247,23 @@ export default {
           dataArr.push(obj);
         });
         // 是否设置了分页
-        if (this.op.pagerOp) {
-          this.showPager = true;
-          this.defaultPagerOp = this.op.pagerOp;
-        } else if (this.bodyData && this.bodyData.length) {
-          this.defaultPagerOp.pageVal.total = this.bodyData.length;
-        }
-        if (
-          this.defaultPagerOp.pageVal &&
-          this.defaultPagerOp.pageVal.pageSize
-        ) {
-          let data1 = dataArr.splice(0, this.defaultPagerOp.pageVal.pageSize);
-          this.bodyData = data1; //  当前页数据
-          this.surplus = dataArr; //  剩余数据
-        } else {
-          this.bodyData = dataArr;
-        }
+        // if (this.op.pagerOp) {
+        //   this.showPager = true;
+        //   this.defaultPagerOp = this.op.pagerOp;
+        // } else if (dataArr && dataArr.length) {
+        //   this.defaultPagerOp.pageVal.total = dataArr.length;
+        // }
+        // if (
+        //   this.defaultPagerOp.pageVal &&
+        //   this.defaultPagerOp.pageVal.pageSize
+        // ) {
+        //   let data1 = dataArr.splice(0, this.defaultPagerOp.pageVal.pageSize);
+        //   this.bodyData = data1; //  当前页数据
+        //   this.surplus = dataArr; //  剩余数据
+        // } else {
+        //   this.bodyData = dataArr;
+        // }
+        this.bodyData = dataArr;
         this.showLoad = false;
       }
       this.setWidth();
@@ -268,9 +289,11 @@ export default {
     itemClick(dom, elemnt, col, fieId) {
       // 防止改变原数据
       //  dom元素 elemnt 当前点击单元格   col 当前行
-      let value = JSON.parse(JSON.stringify(col));
-      delete value.onClick;
-      col.onClick(dom, elemnt, value, fieId);
+      if (col.onClick) {
+        let value = JSON.parse(JSON.stringify(col));
+        delete value.onClick;
+        col.onClick(dom, elemnt, value, fieId);
+      }
     },
     // 按钮点击事件
     iconClick(e, item) {
@@ -345,8 +368,15 @@ export default {
   line-height: 20px;
   color: #1890ff;
 }
+.grid-body .zoom-not-data p span {
+  display: block;
+}
+.grid-body .zoom-not-data p .zoom-icon {
+    font-size: 4em;
+    font-weight: bold;
+}
 .grid-body .zoom-not-data p {
-  line-height: 150px;
+  padding: 50px 0;
 }
 .grid-body .zoom-not-data {
   text-align: center;
@@ -427,7 +457,7 @@ export default {
 .grid-thead .zoom-sort .zoom-icon {
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   display: inline-block;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

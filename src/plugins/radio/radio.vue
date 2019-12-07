@@ -20,11 +20,11 @@ export default {
   methods: {
       Oninput($event) {
           console.log(this.$refs['isRadio'].checked, '---checked');
-          this.$$emit('input', $event.target.value);
+          this.$emit('input', $event.target.value);
       },
       isCheckedClick() {
           this.$refs['isRadio'].click()
-          let name = $Z(this.name);
+          let name = $Z(this.checkname);
           for (var i = 0; i <= name.length; i ++) {
               if (name[i]) {
                   name[i].parentNode.className = 'zoom-radio_input';

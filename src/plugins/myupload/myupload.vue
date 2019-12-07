@@ -19,7 +19,7 @@
       <zoom-button @click="addFileClick">添加文件</zoom-button>
       <div class="upload-switch">
           <zoom-radio checkname="list">列表模式</zoom-radio>
-          <zoom-radio checkname="list">缩略图模式</zoom-radio>
+          <zoom-radio checkname="list" checck>缩略图模式</zoom-radio>
       </div>
   </div>
   <div class="upload-content">
@@ -27,11 +27,11 @@
         <i class="zoom-icon icon-fodder"></i>
         <div>拖拽文件至此处</div>
     </div>
-    <ul v-show="List.length > 0" class="upload-file-list">
+    <!-- <ul v-show="List.length > 0" class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
                 <img v-if="item.type === 'image/png' " :src="item.url" :alt="item.name">
-                <span v-else class="zoom-icon icon-delete"></span>
+                <span v-else class="zoom-icon icon-channel"></span>
             </div>
             <div class="file-name" title="">
                 <span class="file-name-wrapper">{{item.name}}</span>
@@ -46,7 +46,8 @@
                 <zoom-progress :progress="item.progress"></zoom-progress>
             </div>
         </li>
-    </ul>
+    </ul> -->
+    <zoom-grid v-show="List.length > 0" ref="uplod-grid" :op="gridOp"></zoom-grid>
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
@@ -56,6 +57,7 @@
       </div>
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
+  <zoom-alert ref="upload-warn"></zoom-alert>
 </div>
 </template>
 <script>
@@ -87,7 +89,66 @@ export default {
          errCount: 0,       //上传失败的文件数量
          size: '10GB',
          filelist: [],
-         List: []
+         List: [],
+         gridOp: {
+            title: [
+                {
+                    fieId: 'indexId',
+                    header: '编号',
+                    width: 30,
+                    sort: true
+                },
+                {
+                    fieId: 'btns',
+                    header: '操作',
+                    btns: [
+                        {
+                            title: '删除文件',
+                            css: {
+                            icon: 'icon-delete'
+                            },
+                            onClick: val => {
+                                this.remove(val.indexId - 1);
+                                console.log('点击的当前行是:', val);
+                            }
+                        }
+                    ],
+                    width: 30
+                },
+                {
+                    fieId: 'fileName',
+                    header: '文件名',
+                    width: 100
+                },
+                {
+                    fieId: 'status',
+                    header: '状态',
+                    width: 50
+                },
+                {
+                    fieId: 'progress',
+                    header: '上传进度',
+                    width: 50
+                },
+                 {
+                    fieId: 'fileSize',
+                    header: '文件大小',
+                    width: 50
+                },
+                {
+                    fieId: 'fileDate',
+                    header: '修改日期',
+                    width: 100
+                },
+                {
+                    fieId: 'type',
+                    header: '文件类型',
+                    tip: true,
+                    width: 100
+                },
+            ],
+            datas: [],
+         }
      }
  },
  watch: {
@@ -95,6 +156,7 @@ export default {
          this.successCount = 0;
          this.errCount = 0;
          this.onChange(newVal);
+         this.$refs['uplod-grid'].load(this.List);
      }
  },
  mounted() {
@@ -185,10 +247,26 @@ export default {
     addFile({target: {files}}){//input标签触发onchange事件时，将文件加入待上传列表
         for(let i = 0, l = files.length; i < l; i++){
             if (this.testSize(files[i])) {
+                // 计算文件大小并转换
+                let fileSize = 0;
+                let size = files[i].size;
+                if (Math.floor(size / 1024) < 1024) {
+                    fileSize = Math.floor(size / 1024) + 'KB';
+                } else if (Math.floor(size / 1024 / 1024) < 1024) {
+                    fileSize = Math.floor(size / 1024 / 1024) + 'MB';
+                } else if (Math.floor(size / 1024 / 1024 / 1024) < 1024) {
+                    fileSize = Math.floor(size / 1024 / 1024 / 1024) + 'GB';
+                } else {
+                    fileSize = size + 'B';
+                }
+                // filesDate = dateFormat
+                files[i].fileName = files[i].name;  // 文件名
                 files[i].url = URL.createObjectURL(files[i]);//创建blob地址，不然图片怎么展示？
                 files[i].status = 'ready';//开始想给文件一个字段表示上传进行的步骤的，后面好像也没去用......
                 files[i].progress = 0;    // 进度
                 files[i].id = (Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5);    // 随机id
+                files[i].fileSize = fileSize;   //  给用户展示的文件大小
+                files[i].fileDate = this.dateFormat("YYYY-mm-dd HH:MM", files[i].lastModifiedDate); // 格式化日期 展示给用户看
             } else {
                 return;
             }
@@ -226,6 +304,7 @@ export default {
             }
         })
         this.List = Array.from(new Set(List));
+        this.$refs['uplod-grid'].load(this.List);
         // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
         // this.$parent.fileList.push(fileList);
         // this.fileList = this.$parent.fileList;
@@ -272,6 +351,12 @@ export default {
                 this.xhrSubmit();
             else
                 this.fetchSubmit();
+        } else {
+            this.$refs['upload-warn'].alert({
+                title: '提示',
+                content: '请检查要上传文件',
+                type: 'warning'
+            })
         }
     },
     // 4.基于上传的两套逻辑，这里封装了两个方法xhrSubmit和fetchSubmit
@@ -317,12 +402,13 @@ export default {
             },
             onSuccess(res){
                 _this.successCount += 1;
-                rawFile.status = 'success'
+                rawFile.status = 'success';
                 _this.onSuccess(index, res);
             },
             onError(err){
+                console.warn(err);
                 _this.errCount += 1;
-                rawFile.status = 'error'
+                rawFile.status = 'error';
                 _this.onFailed(index, err);
             }
         }));
@@ -394,9 +480,8 @@ export default {
                 option.onProgress(e);
             };
         }
-        option.file.progress = 30;
-        console.log('progress值是:', option.file.progress);
-        // _this.$set(option.file, 'progress', 10);
+        // option.file.progress = 30;
+        // console.log('progress值是:', option.file.progress);
         var formData = new FormData();
 
         if (option.data) {
@@ -470,6 +555,9 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.upload-content .upload-file-list li.upload-file .upload-item .icon-channel {
+    font-size: 50px;
 }
 .upload-content .upload-file-list li.upload-file .upload-item img {
     width: 60px;

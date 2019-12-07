@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <zoom-nav-menu :op="navOp"></zoom-nav-menu>
+    <!-- <zoom-nav-menu :op="navOp"></zoom-nav-menu> -->
     <!--<zoom-tag ref="tag" :op="tagOp"></zoom-tag> -->
     <!-- <zoom-grid ref="grid" :op="gridOp"></zoom-grid> -->
     <!-- <zoom-testing ref="test" :op="testOp"></zoom-testing> -->
@@ -103,15 +103,16 @@ export default {
           console.log(dom, ele, col);
         },
         tip: true,
+        hideIndex: false,
         title: [
           {
-            fieId: '',
-            header: '',
-            width: 30,
+            fieId: 'indexId',
+            header: '编号',
+            width: 50,
             sort: true
           },
           {
-            fieId: 'operation',
+            fieId: 'btns',
             header: '操作',
             btns: [
               {
@@ -126,7 +127,7 @@ export default {
               {
                 title: '减少',
                 css: {
-                  icon: 'icon-jian'
+                  icon: 'icon-search'
                 },
                 onClick: val => {
                   console.log('点击的当前行是jian:', val);
@@ -176,7 +177,7 @@ export default {
         ],
         datas: [],
         beforeLoad: () => {
-          // this.handleClick();
+          this.handleClick();
         },
         pagerOp: {
           total: 100,
