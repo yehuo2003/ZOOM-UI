@@ -1,124 +1,130 @@
 <template>
-  <label class="zoom-checkbox">
-    <!-- <span class="zoom-checkbox__input is-checked"><span class="zoom-checkbox__inner"></span>
-    <input type="checkbox" aria-hidden="false" class="zoom-checkbox__original" value="">
-    </span><span class="zoom-checkbox__label">
+  <span class="zoom-checkbox">
+    <label v-for="(item, index) of list" :key="index" @click.prevent="handleClick(item, 'click')"  :disabled="isdisabled" class="checkbox-item">
+        <i class="zoom-icon" :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"></i>
+        {{item.text}}
         <slot></slot>
-    </span> -->
-    <span class="zoom-checkbox_input" :class="isChecked ? 'is-checked' : '' ">
-        <span class="zoom-checkbox_inner" @click="isCheckedClick"></span>
-        <input @input="Oninput" :id="id" :name="name" :value="val" :checked="isChecked ? true : false" aria-hidden="false" class="zoom-checkbox__original" ref="isBox" type="checkbox">
-    </span>
-    <span class="zoom-checkbox_label">
-        <slot></slot>
-    </span>
-  </label>
+    </label>
+  </span>
 </template>
 <script>
 export default {
   name: "zoom-checkbox",
   props: {
-      id: String,
-      val: String,
-      name: String,
-      op: Object
+      op: {
+          type: Object,
+          name: String,
+          data: Array,
+          Bool: Boolean,
+          isdisabled: Boolean
+      }
   },
   data() {
       return {
-          isCheckbox: false
+          active: false,
+          isdisabled: false,
+          list: [],
+          name: ""
       }
   },
-  mounted() {
-    this.$refs['isBox'].checkbox = this.isChecked;
+  created() {
+    if (this.op) {
+        if (this.op.name) {
+            this.name = this.op.name;
+        }
+        if (this.op.data) {
+            let list = [];
+            this.op.data.forEach(item => {
+                // 判断是否设置了默认项
+                if (!item.checked) {
+                    item.checked = false;
+                } else {
+                    item.checked = true;
+                }
+                list.push(item);
+            })
+            this.list = this.clone(list);
+            this.sendVal();
+        }
+        if (this.op.isdisabled) {
+        this.isdisabled = !!this.op.isdisabled;
+      }
+    }
   },
   methods: {
-      isCheckedClick() {
-          this.isCheckbox = !this.isCheckbox;
+    //   动态加载数据
+      load(data) {
+          if (data) {
+             data.forEach(item => {
+                if (!item.checked) {
+                    item.checked = false;
+                } else {
+                    item.checked = true;
+                }
+                list.push(item);
+            })
+            this.list = this.clone(list);
+            this.sendVal();
+          }
       },
-      Oninput($event) {
-        this.$refs['isBox'].checkbox = this.isChecked;
-        if (this.$refs['isBox'.checkbox]) {
-            this.$emit('input', $event.target.value);
+      sendVal() {
+        let list = [];
+        let Bool = false;
+        this.list.forEach(item => {
+            if (item.checked) {
+                list.push(item.value);
+                Bool = true;
+            }
+        })
+        //   如果选择Bool模式,则返回布尔值
+        if (this.op.Bool) {
+            this.$emit('input', Bool);
         } else {
-            this.$emit('input', undefined);
+            this.$emit('input', list);
         }
+      },
+      handleClick(item, e) {
+          if (!this.isdisabled) {
+              this.$emit(e);
+              item.checked = !item.checked;
+              this.sendVal();
+          }
       }
   }
 };
 </script>
 <style>
-/* active */
-.zoom-checkbox__input.is-checked .zoom-checkbox__inner {
-    background-color: #409eff;
-    border-color: #409eff;
+.zoom-checkbox .checkbox-item:first-child {
+    margin-left: 5px;
 }
-.zoom-checkbox__input.is-checked .zoom-checkbox__inner:after {
-    transform: rotate(45deg) scaleY(1);
-}
-/* 普通状态 */
-.zoom-checkbox__inner:after {
-    box-sizing: content-box;
-    content: "";
-    border: 1px solid #fff;
-    border-left: 0;
-    border-top: 0;
-    height: 7px;
-    left: 4px;
-    position: absolute;
-    top: 1px;
-    transform: rotate(45deg) scaleY(0);
-    width: 3px;
-    transition: transform .15s ease-in .05s;
-    transform-origin: center;
-}
-.zoom-checkbox:last-of-type {
-    margin-right: 0;
-}
-.zoom-checkbox {
-    color: #606266;
-    font-weight: 500;
-    font-size: 14px;
-    position: relative;
+.zoom-checkbox .checkbox-item {
     cursor: pointer;
     display: inline-block;
-    white-space: nowrap;
-    user-select: none;
-    margin-right: 30px;
+    margin-right: 5px;
 }
-.zoom-checkbox__input {
-    white-space: nowrap;
-    cursor: pointer;
-    outline: none;
-    display: inline-block;
-    line-height: 1;
-    position: relative;
-    vertical-align: middle;
+.zoom-checkbox .checkbox-item[disabled],
+.zoom-checkbox .checkbox-item[disabled]:hover,
+.zoom-checkbox .checkbox-item[disabled]:focus,
+.zoom-checkbox .checkbox-item[disabled]:active,
+.zoom-checkbox .checkbox-item[disabled] i.zoom-icon,
+.zoom-checkbox .checkbox-item[disabled] i.zoom-icon:hover,
+.zoom-checkbox .checkbox-item[disabled] i.zoom-icon:focus,
+.zoom-checkbox .checkbox-item[disabled] i.zoom-icon:active {
+  color: #d9d9d9;
+  cursor: no-drop;
 }
-.zoom-checkbox__inner {
-    display: inline-block;
-    position: relative;
-    border: 1px solid #dcdfe6;
-    border-radius: 2px;
-    box-sizing: border-box;
-    width: 14px;
-    height: 14px;
-    background-color: #fff;
-    z-index: 1;
-    transition: border-color .25s cubic-bezier(.71,-.46,.29,1.46),background-color .25s cubic-bezier(.71,-.46,.29,1.46);
+
+.zoom-checkbox .checkbox-item i.zoom-icon:active,
+.zoom-checkbox .checkbox-item i.zoom-icon:focus {
+  color: #096dd9;
 }
-.zoom-checkbox__original {
-    opacity: 0;
-    outline: none;
-    position: absolute;
-    margin: 0;
-    width: 0;
-    height: 0;
-    z-index: -1;
+.zoom-checkbox .checkbox-item i.zoom-icon:hover {
+  color: #40a9ff;
 }
-.zoom-checkbox__label {
-    display: inline-block;
-    padding-left: 10px;
-    line-height: 19px;
-    font-size: 14px;
+.zoom-checkbox .checkbox-item i.icon-checkbox-fill {
+    color: #1890ff;
+}
+.zoom-checkbox .checkbox-item i.icon-checkbox {
+    color: #d9d9d9;
 }
 </style>

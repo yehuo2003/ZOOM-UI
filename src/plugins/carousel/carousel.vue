@@ -15,8 +15,8 @@
         </div>
     <!--左右控制，使用图标-->
         <div class="swipe_control" :id="'swipe_control'+id" v-show="control">
-            <i class="zoom-icon-arrow-left prev" v-on:click="handleChange(prevIndex)"></i>
-            <i class="zoom-icon-arrow-right next" v-on:click="handleChange(nextIndex)"></i>
+            <i class="zoom-icon icon-left prev" v-on:click="handleChange(prevIndex)"></i>
+            <i class="zoom-icon icon-right next" v-on:click="handleChange(nextIndex)"></i>
         </div>
     <!--底部标题-->
         <div class="swipe_title" v-for="(item,index) in op.images" v-show="index===currentIndex" :key="index">
@@ -88,13 +88,13 @@ export default {
      * 开始轮播
      */
     handleGo() {
-    this.control = false;
-    this.timer = setInterval(() => {
-        this.currentIndex++;
-        if (this.currentIndex > this.op.images.length - 1) {
-        this.currentIndex = 0;
-        }
-    }, 3000);
+        this.control = false;
+        this.timer = setInterval(() => {
+            this.currentIndex++;
+            if (this.currentIndex > this.op.images.length - 1) {
+            this.currentIndex = 0;
+            }
+        }, 3000);
     },
     /**
      * 停止轮播
@@ -200,7 +200,8 @@ export default {
 .swipe_control {
     position: absolute;
     z-index: 10;
-    top: 185px;
+    /* top: 185px; */
+    top: 50%;
     width: 100%;
     height: 30px;
     padding: 0 15px;

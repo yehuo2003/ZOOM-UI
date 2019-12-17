@@ -1,112 +1,135 @@
 <template>
-  <label class="zoom-radio"><span class="zoom-radio__input" :class="isChecked? 'is-checked' : ''"><span class="zoom-radio__inner" @click="isCheckedClick"></span>
-    <input @input="Oninput" ref="isRadio" type="radio" aria-hidden="true" class="zoom-radio__original" :name="checkname" :value="checck" :checked="isChecked ? true : false">
-    </span><span class="zoom-radio__label"><slot></slot></span>
- </label>
+  <span class="zoom-radio">
+    <label v-for="(item, index) of list" :key="index" @click.prevent="handleClick(item, 'click')"  :disabled="isdisabled" class="radio-item">
+        <i class="zoom-icon" :class="item.checked ? 'icon-radio-fill' : 'icon-success-box'"></i>
+        <input v-show="false" type="radio" :value="item.value" :name="name" :disabled="isdisabled">
+        {{item.text}}
+    </label>
+  </span>
 </template>
 <script>
 export default {
   name: "zoom-radio",
   props: {
-      checck: String,
-      checkname: String,
-      op: Object
+      op: {
+          type: Object,
+          name: String,
+          data: Array,
+          Bool: Boolean,
+          isdisabled: Boolean
+      }
   },
   data() {
       return {
-          isChecked: false,
+          active: false,
+          isdisabled: false,
+          list: [],
+          name: ""
       }
   },
+  created() {
+    if (this.op) {
+        if (this.op.name) {
+            this.name = this.op.name;
+        }
+        if (this.op.data) {
+            let list = [];
+            this.op.data.forEach(item => {
+                if (!item.checked) {
+                    item.checked = false;
+                } else {
+                    item.checked = true;
+                    if (this.op.Bool) {
+                        this.$emit('input', item.checked);
+                    } else {
+                        this.$emit('input', item.value);
+                    }
+                }
+                list.push(item);
+            })
+            this.list = this.clone(list);
+        }
+        if (this.op.isdisabled) {
+        this.isdisabled = !!this.op.isdisabled;
+      }
+    }
+  },
   methods: {
-      Oninput($event) {
-          console.log(this.$refs['isRadio'].checked, '---checked');
-          this.$emit('input', $event.target.value);
-      },
-      isCheckedClick() {
-          this.$refs['isRadio'].click()
-          let name = $Z(this.checkname);
-          for (var i = 0; i <= name.length; i ++) {
-              if (name[i]) {
-                  name[i].parentNode.className = 'zoom-radio_input';
-              }
+      load(data) {
+          if (data) {
+            let list = [];
+            data.forEach(item => {
+                if (!item.checked) {
+                    item.checked = false;
+                } else {
+                    item.checked = true;
+                    if (this.op.Bool) {
+                        this.$emit('input', item.checked);
+                    } else {
+                        this.$emit('input', item.value);
+                    }
+                }
+                list.push(item);
+            })
+            this.list = this.clone(list);
           }
-          this.isChecked = true;
-          this.$refs['isRadio'].parentNode.className = 'zoom-radio_input is-checked';
-
+      },
+      sendVal(item) {
+        let res = '';
+        this.list.forEach(elem => {
+            elem.checked = false;
+        })
+            item.checked = true;
+            res = item.value
+        //   如果选择Bool模式,则返回布尔值
+        if (this.op.Bool) {
+            this.$emit('input', item.checked);
+        } else {
+            this.$emit('input', res);
+        }
+      },
+      handleClick(item, e) {
+          if (!this.isdisabled) {
+              this.$emit(e);
+              this.sendVal(item);
+          }
       }
   }
 };
 </script>
 <style>
-/* active */
-.zoom-radio__input.is-checked .zoom-radio__inner {
-    border-color: #409eff;
-    background: #409eff;
+.zoom-radio .radio-item:first-child {
+    margin-left: 5px;
 }
-.zoom-radio__input.is-checked .zoom-radio__inner:after {
-    transform: translate(-50%,-50%) scale(1);
-}
-/* 普通状态 */
-.zoom-radio {
-    color: #606266;
-    font-weight: 500;
-    line-height: 1;
-    position: relative;
+.zoom-radio .radio-item {
     cursor: pointer;
     display: inline-block;
-    white-space: nowrap;
-    outline: none;
-    font-size: 14px;
-    margin-right: 30px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    margin-right: 5px;
 }
-.zoom-radio__input {
-    white-space: nowrap;
-    cursor: pointer;
-    outline: none;
-    display: inline-block;
-    line-height: 1;
-    position: relative;
-    vertical-align: middle;
+.zoom-radio .radio-item[disabled],
+.zoom-radio .radio-item[disabled]:hover,
+.zoom-radio .radio-item[disabled]:focus,
+.zoom-radio .radio-item[disabled]:active,
+.zoom-radio .radio-item[disabled] i.zoom-icon,
+.zoom-radio .radio-item[disabled] i.zoom-icon:hover,
+.zoom-radio .radio-item[disabled] i.zoom-icon:focus,
+.zoom-radio .radio-item[disabled] i.zoom-icon:active {
+  color: #d9d9d9;
+  cursor: no-drop;
 }
-.zoom-radio__inner {
-    border: 1px solid #dcdfe6;
-    border-radius: 100%;
-    width: 14px;
-    height: 14px;
-    background-color: #fff;
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-    box-sizing: border-box;
+
+.zoom-radio .radio-item i.zoom-icon:active,
+.zoom-radio .radio-item i.zoom-icon:focus {
+  color: #096dd9;
 }
-.zoom-radio__inner:after {
-    width: 4px;
-    height: 4px;
-    border-radius: 100%;
-    background-color: #fff;
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%) scale(0);
-    transition: transform .15s ease-in;
+.zoom-radio .radio-item i.zoom-icon:hover {
+  color: #40a9ff;
 }
-.zoom-radio__original {
-    opacity: 0;
-    outline: none;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
+
+.zoom-radio .radio-item i.icon-radio-fill {
+    color: #1890ff;
 }
-.zoom-radio__label {
-    font-size: 14px;
-    padding-left: 10px;
+.zoom-radio .radio-item i.icon-success-box {
+    color: #d9d9d9;
 }
 </style>

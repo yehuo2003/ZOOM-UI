@@ -65,7 +65,7 @@ export default {
                 this.dropOp.default = val.value;
                 this.setPager();
             },
-            downData: [
+            data: [
                 {value: 5, text: '5'},
                 {value: 10, text: '10'},
                 {value: 20, text: '20'}
@@ -150,7 +150,7 @@ export default {
     },
     send(curPage) {
         let res = true;
-        if (this.op.beforeSkip) {
+        if (this.op && this.op.beforeSkip) {
             res = this.op.beforeSkip(curPage, this.op.pageVal);
         }
         if (res === false) {

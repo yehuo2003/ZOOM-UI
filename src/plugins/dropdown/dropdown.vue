@@ -1,5 +1,15 @@
 <template>
-  <div class="zoom-input zoom-dropdown">
+  <div
+    @click="handleChild('click')"
+    @mousedown="handleChild('mousedownChild')"
+    @mouseenter="handleChild('mouseenterChild')"
+    @mouseleave="handleChild('mouseleaveChild')"
+    @mousemove="handleChild('mousemoveChild')"
+    @mouseout="handleChild('mouseoutChild')"
+    @mouseover="handleChild('mouseoverChild')"
+    @keydown="handleChild('keydownChild')"
+    @keyup="handleChild('keyupChild')"
+    class="zoom-input zoom-dropdown">
     <input
       :class="error ? 'error' : ''"
       @blur="handleBlur"
@@ -32,13 +42,19 @@
       <div class="selector-content">
         <ul class="zoom-poplist">
           <li
-            v-for="(item,index) of options.downData"
+            v-for="(item,index) of options.data"
             :key="index"
             :val="item.value"
             :title="item.text"
             @click="itemClick(item)"
             class="list-item"
-          >{{item.text}}</li>
+          >
+          <!-- 多选功能开启时启动复选框 -->
+          <zoom-checkbox v-show="isChecked" :ref="item.value" :op="checkOp">
+            {{item.text}}
+          </zoom-checkbox>
+            {{isChecked ? '' : item.text}}
+          </li>
         </ul>
       </div>
     </div>
@@ -50,43 +66,58 @@ export default {
   props: {
     id: String,
     op: {
-      placeHolder: {
+      placeHolder: {  //  占位符
         type: String,
         default: null
       },
-      isdisabled: {
+      isdisabled: {  //是否禁用 默认false
         type: Boolean,
         default: false
       },
-      hideClose: {
+      readonly: { // 是否禁止输入默认false
         type: Boolean,
         default: false
       },
-      errMsg: {
+      isChecked: { // 是否启用多选功能 默认false
+        type: Boolean,
+        default: false
+      },
+      hideClose: {  //是否隐藏清除按钮 默认false
+        type: Boolean,
+        default: false
+      },
+      errMsg: { //  验证失败时候显示的信息
         type: String,
         default: ""
       },
-      onClick: {
+      onClick: {  //  点击事件
         type: Function
       },
-      downData: {
+      data: { //下拉框数据, 键值对的方式, text是展示的文本
         type: Array,
         default: function() {
           return [];
         }
       }
-    },
-    value: String
+    }
   },
   data() {
     return {
-      list: [{ value: null, text: "暂无数据" }],
+      list: [], //  多选时候用
+      defaultList: [{ value: null, text: "暂无数据" }],
       showDown: false,
+      isChecked: false, //  是否启用多选功能
       currentValue: this.value,
       error: false,
       errMsg: null,
+      checkOp: {  //  如果配置了多选
+        Bool: true,
+        data: [
+          {text: '', value: ''}
+        ]
+      },
       options: {
-        downData: [],
+        data: [],
         errMsg: "",
         placeHolder: null,
         isdisabled: false
@@ -94,8 +125,8 @@ export default {
     };
   },
   mounted() {
-    if (this.options.default && this.options.downData) {
-      let data = this.options.downData;
+    if (this.options.default && this.options.data) {
+      let data = this.options.data;
       data.forEach(item => {
         // 如果有设置默认值
         if (this.options.default == item.value) {
@@ -107,13 +138,35 @@ export default {
   },
   created() {
     if (this.op) {
+      if (this.op.isChecked) {
+        this.isChecked = this.op.isChecked;
+        let list = [];
+        this.op.data.forEach(item => {
+            // 判断是否设置了默认项
+            if (!item.checked) {
+                item.checked = false;
+            } else {
+                item.checked = true;
+            }
+            list.push(item);
+        })
+        this.op.data = this.clone(list);
+      }
       this.options = this.op;
-      if (!this.options.downData) {
-        this.options.downData = this.list;
+      if (!this.options.data) {
+        this.options.data = this.defaultList;
       }
     }
   },
   methods: {
+    load(data) {
+      if (data && data.length && data instanceof Array) {
+        this.list = data;
+      }
+    },
+    handleChild(e) {
+      this.$emit(e);
+    },
     itemClick(e) {
       if (this.options.onClick) {
         this.options.onClick(e);
@@ -121,9 +174,43 @@ export default {
       if (e.value === null && e.text === "暂无数据") {
         return;
       }
-      this.currentValue = e.text;
-      this.$refs["downVal"].value = e.value;
-      this.showDown = false;
+      // 判断是否是多选
+      if (!this.isChecked) {
+        // 单选状态
+        this.currentValue = e.text;
+        this.$refs["downVal"].value = e.value;
+        this.$emit('input', e.value);
+        this.showDown = false;
+      } else {
+        let list = this.clone(this.list);
+        let str = ''; //  展示的数据
+        let lst = []; //  返回给父组件的
+        if (!e.checked) {
+          // 选中
+          list.push(e);
+          list.forEach(item => {
+            str += item.text + ';'
+            lst.push(item.value);
+          })
+        } else {
+          // 取消选中
+          list.forEach((item, index) => {
+            if (item.value === e.value) {
+              list[index] = null;
+            } else {
+              str += item.text + ';'
+              lst.push(item.value);
+            }
+          })
+        }
+        // 返回给父组件v-model
+          this.$emit('input', lst);
+          // 展示的文本
+          this.currentValue = str;
+          // 去除为空的数据然后保存下来
+          this.list = list.filter(d => d);
+          e.checked = !e.checked;
+      }
     },
     // 验证功能
     handleBlur() {
@@ -145,6 +232,16 @@ export default {
     clear() {
       if (!this.options.isdisabled) {
         this.currentValue = "";
+        this.list = [];
+        this.$emit('input', this.currentValue);
+        if (this.options.isChecked) {
+          this.options.data.forEach(item => {
+            if (item.checked) {
+              // 清空复选框
+              this.$refs[item.value][0].list[0].checked = item.checked = false;
+            }
+          })
+        }
       } else {
         throw Error("zoom-ui error: disabled状态下无法清除内容! ");
       }
@@ -180,6 +277,9 @@ export default {
   cursor: pointer;
   background: #e6f7ff;
   color: #333;
+}
+.zoom-selector .zoom-poplist label {
+  width: 100%;
 }
 .zoom-selector .zoom-poplist li {
   min-height: 30px;
@@ -230,9 +330,9 @@ export default {
   display: block;
   float: left;
   color: #1890ff;
-  font-size: 16px;
+  font-size: 14px;
   width: 20px;
-  line-height: 30px;
+  line-height: 35px;
 }
 .zoom-input:hover .input-btn .icon-default.icon-close {
   display: block;

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Icon from '../views/Icon.vue'
+import date from '../views/date.vue'
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/Icon',
     name: 'Icon',
     component: Icon
+  },
+  {
+    path: '/date',
+    name: 'date',
+    component: date
   },
   {
     path: '/about',

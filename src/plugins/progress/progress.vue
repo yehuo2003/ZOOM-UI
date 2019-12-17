@@ -1,11 +1,11 @@
 <template>
     <div class="zoom-progress">
         <div class="zoom-progress-container">
-            <p :class="status" :style="{ width : ValProgress + '%' }" class="progress">
-                <b v-if="inside">{{ValProgress}}%</b>
+            <p :class="status" :style="{ width : Numprogress + '%' }" class="progress">
+                <b v-if="inside">{{Numprogress}}%</b>
             </p>
         </div>
-        <span v-if="!inside" class="zoom-icon">{{ValProgress}}%</span>
+        <span v-if="!inside" class="zoom-icon">{{Numprogress}}%</span>
     </div>
 </template>
 <script>
@@ -43,6 +43,11 @@ export default {
           endVal: null,
           inside: false,
           planList: []
+      }
+  },
+  computed: {
+      Numprogress() {
+          return Math.floor(Number(this.ValProgress));
       }
   },
   watch: {

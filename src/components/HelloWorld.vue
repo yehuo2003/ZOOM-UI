@@ -2,7 +2,7 @@
   <div class="hello">
     <zoom-row>
       <zoom-col span="6">
-        <zoom-carousel :op="imglist"></zoom-carousel>
+        <!-- <zoom-carousel :op="imglist"></zoom-carousel> -->
       </zoom-col>
         <zoom-alert ref="msg"></zoom-alert>
       <!-- <zoom-col span="3">
@@ -25,7 +25,7 @@
     <zoom-row>
       <!-- <zoom-panel> -->
         <zoom-col span="6">
-          <zoom-pager :total="104" :prepage="100" :show-page="10" v-model="sPage"></zoom-pager>
+          <!-- <zoom-pager :total="104" :prepage="100" :show-page="10" v-model="sPage"></zoom-pager> -->
           <zoom-form label-width="100">
             <zoom-form-item label="单选框:">
               <zoom-radio v-for="(item,index) of list" :key="index" :name="item.value" :checck="item.value" v-model="radioStatus" checkname="age">{{item.value}}</zoom-radio>
@@ -45,7 +45,7 @@
               <zoom-switch :op="switchOp"></zoom-switch>
             </zoom-form-item>
             <zoom-form-item label="下拉框">
-              <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
+              <zoom-dropdown v-model="active" :op="dropdownOp"></zoom-dropdown>
             </zoom-form-item>
             <zoom-form-item label="文本域">
               <zoom-textarea :op="textareaOp"></zoom-textarea>
@@ -103,12 +103,14 @@ export default Vue.extend({
   data() {
     return {
       sPage: 1,
+      active: '',
       dropdownOp: {
+        // isChecked: true,
         // isdisabled: true,
         placeHolder: '--请选择--',
         // defalut: '5',
         // readonly: true,
-        downData: [
+        data: [
           {value: '1', text: '深圳'},
           {value: '2', text: '长沙'},
           {value: '3', text: '武汉'},
@@ -126,13 +128,13 @@ export default Vue.extend({
         {value:'3', text: 333},
       ],
       imglist: {
-        width: '100%',
-        height: '350px',
+        width: '350px',
+        height: '600px',
         images: [
-          {src: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2158487696,149747733&fm=26&gp=0.jpg", title: "第一张图", url: "http://www.baidu.com"},
-          {src: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572786826634&di=55abcd40b5b142b295e35480c7ab8391&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2F9%2F57ce89c1773a5.jpg", title: "第二张图", url: "http://www.baidu.com"},
-          {src: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572786826634&di=49fedaac63bbf333409e0d51d38f3a5f&imgtype=0&src=http%3A%2F%2Fwww.luobou.com%2Fzhuti%2Fuploadpic%2F2016-6%2F201661715215436.jpg", title: "第三张图", url: "http://www.baidu.com"},
-          {src: "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572786826634&di=2a189283243a64dcf8ea8cd4406cbfab&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F0c75f87795561724670c5746a4fbca9d74c04b2f151eb-608nWl_fw658", title: "第四张图", url: "http://www.baidu.com"}
+          // {src: "http://bbsimg3.cnmo-img.com.cn/thumb/11_700x0/10541/10540433_201705_05_131012wxv7px42tko300w4.jpeg", title: "第一张图", url: "http://www.baidu.com"},
+          // {src: "http://bbsimg9.cnmo-img.com.cn/thumb/11_700x0/10541/10540439_201705_05_131021h0p6llj0zxprc932.jpeg", title: "第二张图", url: "http://www.baidu.com"},
+          // {src: "http://bbsimg5.cnmo-img.com.cn/thumb/11_700x0/10541/10540435_201705_05_131015xzkvfxf0ozt8xe54.jpeg", title: "第三张图", url: "http://www.baidu.com"},
+          // {src: "http://bbsimg4.cnmo-img.com.cn/thumb/11_700x0/10541/10540434_201705_05_131013jabaaxk1z1s8bzbb.jpeg", title: "第四张图", url: "http://www.baidu.com"}
         ],
       },
       dialogOp: {
@@ -244,6 +246,7 @@ export default Vue.extend({
         isdisabled: false,
         hue: 'yellow',
         onClick: () => {
+          console.log(this.active);
           // this.$refs['msg'].alert({
           //   title: '标题',
           //   content: '内容',

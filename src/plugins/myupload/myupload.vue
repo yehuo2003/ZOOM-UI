@@ -18,8 +18,9 @@
   <div class="upload-toolbar zoom-clear">
       <zoom-button @click="addFileClick">添加文件</zoom-button>
       <div class="upload-switch">
-          <zoom-radio checkname="list">列表模式</zoom-radio>
-          <zoom-radio checkname="list" checck>缩略图模式</zoom-radio>
+          <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
+          <!-- <zoom-radio checkname="list">列表模式</zoom-radio> -->
+          <!-- <zoom-radio checkname="list" checck>缩略图模式</zoom-radio> -->
       </div>
   </div>
   <div class="upload-content">
@@ -27,7 +28,7 @@
         <i class="zoom-icon icon-fodder"></i>
         <div>拖拽文件至此处</div>
     </div>
-    <!-- <ul v-show="List.length > 0" class="upload-file-list">
+    <ul v-show="List.length > 0" class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
                 <img v-if="item.type === 'image/png' " :src="item.url" :alt="item.name">
@@ -40,17 +41,21 @@
                 <a @click="remove(index)" class="zoom-icon icon-delete"></a>
             </div>
             <div class="file-size">
-                {{item.size}}
+                {{item.fileSize}}
             </div>
             <div class="file-status">
-                <zoom-progress :progress="item.progress"></zoom-progress>
+                <zoom-progress :progress="testprogress[index]"></zoom-progress>
             </div>
         </li>
-    </ul> -->
-    <zoom-grid v-show="List.length > 0" ref="uplod-grid" :op="gridOp"></zoom-grid>
+    </ul>
+    <!-- <zoom-grid v-show="List.length > 0" ref="uplod-grid" :op="gridOp"></zoom-grid> -->
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
+          <!-- <div class="file-status">
+              <span>第{{fileIndex}}个文件上传中,进度:</span>
+                <zoom-progress :progress="testprogress"></zoom-progress>
+            </div> -->
           <zoom-button hue="primary" @click="submit">开始上传</zoom-button>
           <!-- <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button> -->
@@ -64,27 +69,39 @@
 export default {
  name: 'my-upload',
  props: {
- name: String,
- action: {  // 要上传的服务器地址
-  type: String,
-  required: true
- },
- fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
-  type: Array,
-  default: []
- },
- data: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
- multiple: Boolean, //  是否多选
- limit: Number,     //  文件数量
- onChange: Function,    //监听文件变化，增减文件时都会被子组件调用
- onBefore: Function,    // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送
- onProgress: Function,  //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
- onSuccess: Function,   //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
- onFailed: Function,    //某文件上传失败会执行，index代表列表中第index个文件    uploadFailed(index, err)
- onFinished: Function   //所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }   onFinished(result)
+    name: String,
+    action: {  // 要上传的服务器地址
+    type: String,
+    required: true
+    },
+    fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
+    type: Array,
+    default: []
+    },
+    data: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
+    multiple: Boolean, //  是否多选
+    limit: Number,     //  文件数量
+    onChange: Function,    //监听文件变化，增减文件时都会被子组件调用
+    onBefore: Function,    // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送
+    onProgress: Function,  //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
+    onSuccess: Function,   //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
+    onFailed: Function,    //某文件上传失败会执行，index代表列表中第index个文件    uploadFailed(index, err)
+    onFinished: Function   //所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }   onFinished(result)
  },
  data() {
      return {
+         testList: [],
+         radioOp: {
+             name: 'list',
+             isdisabled: false,
+             data: [
+                 {text: '列表模式', value: 'listModel'},
+                 {text: '缩略图模式', value: 'imgModel', checked: true}
+             ]
+         },
+         testprogress: [],
+        //  fileIndex: 0,
+         active: '',    // 单选框
          successCount: 0,   //上传成功的文件数量
          errCount: 0,       //上传失败的文件数量
          size: '10GB',
@@ -398,7 +415,11 @@ export default {
             filename: _this.name || "file",
             action: _this.action,
             onProgress(e){
-                _this.onProgress(index, e);//闭包，将index存住
+                console.log(rawFile,'文件');
+                console.log(index, e, '触发');
+                _this.testprogress[index] = e.percent;
+                // _this.fileIndex = index;
+                // _this.onProgress(index, e);//闭包，将index存住
             },
             onSuccess(res){
                 _this.successCount += 1;
@@ -456,7 +477,7 @@ export default {
             try {
                 return JSON.parse(text);
             } catch (e) {
-                throw Error(`zoom-ui Error: ${e}`);
+                // throw Error(`zoom-ui Error: ${e}`);
                 return text;
             }
         }

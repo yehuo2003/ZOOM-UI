@@ -127,15 +127,15 @@ export default {
 </script>
 <style>
 .zoom-input .err-msg {
-    color: #fff;
-    font-size: 14px;
-    position: absolute;
-    z-index: 11;
-    right: -100px;
-    top: 0;
-    background: #ff4d4f;
-    padding: 5px;
-    border-radius: 5px;
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  z-index: 11;
+  right: -100px;
+  top: 0;
+  background: #ff4d4f;
+  padding: 5px;
+  border-radius: 5px;
 }
 .zoom-input .error {
   border: 1px solid red;
@@ -145,9 +145,9 @@ export default {
   display: block;
   float: left;
   color: #1890ff;
-  font-size: 16px;
+  font-size: 14px;
   width: 20px;
-  line-height: 30px;
+  line-height: 35px;
 }
 .zoom-input:hover .input-btn .icon-default.icon-close {
   display: block;

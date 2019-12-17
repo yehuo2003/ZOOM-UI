@@ -67,7 +67,6 @@ export default {
           break;
       }
       if (this.op && this.op.isdisabled) {
-        console.log(this.op.isdisabled, "this.op.isdisabled");
         this.isdisabled = !!this.op.isdisabled;
       }
       if (this.op && this.op.IconStyle) {

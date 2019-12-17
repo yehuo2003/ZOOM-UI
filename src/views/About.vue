@@ -38,14 +38,46 @@
     :on-finished="onFinished"
     >
     </my-upload>
+    <zoom-rate :op="rateOp" ref="rate"></zoom-rate>
+    <zoom-floatbar ref="bar" :op="barOp">
+      <h1>自定义</h1>
+      浮动框
+      好
+    </zoom-floatbar>
+    <zoom-userinfo :op="userOp" ref="user">
+      <ul>
+        <li @click="usetTest(1)">1号美女</li>
+        <li @click="usetTest(2)">2号美女</li>
+        <li @click="usetTest(3)">3号美女</li>
+        <li @click="usetTest(2)">2号美女</li>
+        <li @click="usetTest(1)">1号美女</li>
+      </ul>
+    </zoom-userinfo>
+    <zoom-button @click="test">测试</zoom-button>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      userOp: {
+        title: '1号美女',
+        img: 'http://img0.imgtn.bdimg.com/it/u=2964920801,3888518063&fm=26&gp=0.jpg'
+      },
+      barOp: {  //  浮动框
+        data: [
+          {text: '客服', icon: 'icon-service', onClick: val => {console.log(val);}},
+          {text: '电话', icon: 'icon-phone', url: 'wwww.baidu.com', target: 'blank'},
+          {text: '导航', icon: 'icon-nav'}
+        ]
+      },
+      rateOp: {
+        mode: 'xiao',
+        isdisabled: false,
+        data: ['很差', '差', '一般', '好', '很好'],
+      },
       // url: 'https://www.lagou.com/nearBy/updateMyResume',
-      url: 'http://127.0.0.1:8090/admin/dish/image',
+      url: 'http://127.0.0.1:8081/profile',
       fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
       param: {param1: '', param2: '' },//携带参数列表
       tagOp: {
@@ -197,6 +229,38 @@ export default {
 
   },
   methods: {
+    usetTest(num) {
+      let data = {
+        title: '',
+        img: ''
+      }
+      if (num === 1) {
+        data = {
+          title: '1号美女',
+          img: 'http://img0.imgtn.bdimg.com/it/u=2964920801,3888518063&fm=26&gp=0.jpg'
+        }
+      } else if  (num === 2) {
+        data = {
+          title: '2号美女',
+          img: 'http://img0.imgtn.bdimg.com/it/u=1764295227,2578268989&fm=26&gp=0.jpg'
+        }
+      } else {
+        data = {
+          title: '3号美女',
+          img: 'http://img0.imgtn.bdimg.com/it/u=3293099503,606929711&fm=26&gp=0.jpg'
+        }
+      }
+      this.$refs['user'].load(data);
+    },
+    test() {
+      let data = [
+          // {text: '客服', icon: 'icon-service', onClick: val => {console.log(val);}},
+          // {text: '电话', icon: 'icon-phone', url: 'wwww.baidu.com', target: 'blank'},
+          {text: '导航', icon: 'icon-nav'}
+        ]
+      this.$refs['bar'].load(data)
+      console.log(this.$refs['bar'].load(data), '--status');
+    },
     handleClick() {
       // this.$refs['msg'].alert('6666')
       //  let code = this.$refs['test'].testCode;
