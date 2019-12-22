@@ -1,7 +1,7 @@
 <template>
   <div @click.stop="bindEvent" ref="zoom-date" class="zoom-date">
-    <div class="zoom-input" @click.stop="op.isdisabled ? null : show = !show">
-      <input v-model="dateTime" :disabled="op.isdisabled" type="text" readonly/>
+    <div @click.stop="isdisabled ? null : show = !show" :class="isdisabled ? 'zoom-date-disabled' : '' " class="zoom-input">
+      <input v-model="dateTime" :disabled="isdisabled" type="text" readonly/>
       <div class="input-btn">
         <a class="zoom-icon icon-calendar"></a>
       </div>
@@ -61,9 +61,9 @@
 
         <div v-if="selectYear" class="agm-date-picker-year-panel zoom-date-picker">
           <div class="panel-list">
-            <div v-for="(y, index) of years" :key="'year_'+index" class="panel-item">
+            <div v-for="(y, index) of years" :key="'year_' + index" class="panel-item">
               <div
-                :class="{active: y===select.year}"
+                :class="{active: y === select.year}"
                 class="panel-item-inner"
                 @click.stop="pickYear(y)"
               >{{ y }}年</div>
@@ -76,7 +76,7 @@
             <div v-for="item of 12" :key="'month_' + item" class="panel-item">
               <div
                 :class="{active: item === select.month}"
-                @click.stop="pickMonth(index+1)"
+                @click.stop="pickMonth(item)"
                 class="panel-item-inner"
               >{{ item }}月</div>
             </div>
@@ -89,27 +89,16 @@
 <script>
 export default {
   name: "zoom-date",
-  filters: {
-    // 日期格式过滤器
-    dateFormat(val) {
-      if (!val) {
-        return "";
-      }
-      return `${val.year}-${val.month}-${val.date}`.replace(/\d+/g, a => {
-        return a.length === 4 ? a : a.length === 2 ? a : "0" + a;
-      });
-    }
-  },
   inheritAttrs: false,
   props: {
     op: {
       type: Object,
-      isdisabled: Boolean,//  是否禁用
+      isdisabled: Boolean,  //  是否禁用
       maxDate: String,  //  最大日期
       minDate: String,  //  最小日期
       onComplete: Function,  //  组件编译完成时执行的事件
       onRender: Function,  //  组件渲染完成时执行的事件
-      onShow: Function,   //  日期框弹出后执行的事件
+      onShow: Function,   //  选择日期框日期后执行的事件
       dateTime: {
         type: [Number, String],
         default() {
@@ -121,6 +110,7 @@ export default {
   data() {
     return {
       moment: '',
+      isdisabled: false,
       dateTime: '', //  显示的时间
       show: false, // 控制日历面板的显示与隐藏
       selectYear: false, // 控制年份的面板的显示和隐藏
@@ -143,20 +133,6 @@ export default {
       lastMonthEndDate: null, // 上个月的最后一天是几号
       list: [], // 日历的二维数组
       years: [], // 1900-2100
-      months: [
-        "1月",
-        "2月",
-        "3月",
-        "4月",
-        "5月",
-        "6月",
-        "7月",
-        "8月",
-        "9月",
-        "10月",
-        "11月",
-        "12月"
-      ]
     };
   },
   watch: {
@@ -179,10 +155,7 @@ export default {
         this.years = [];
         this.$nextTick(() => {
           let year = this.select.year;
-          let startYear = year - 6; // 获得年份列表： 1900-2100
-          for (let i = startYear; i < startYear + 12; i++) {
-            this.years.push(i);
-          }
+          this.setYear(year);
         });
       }
     },
@@ -197,6 +170,9 @@ export default {
   created() {
     if (this.op) {
       this.moment = this.op.dateTime;
+      if (this.op.isdisabled) {
+        this.isdisabled = this.op.isdisabled;
+      }
     } else {
       this.moment = new Date().getTime();
     }
@@ -217,16 +193,19 @@ export default {
     /**
      * 加载数据
      */
+    setYear(year) {
+      let startYear = year - 6; // 获得年份列表： 1900-2100
+      for (let i = startYear; i < startYear + 12; i++) {
+        this.years.push(i);
+      }
+    },
     load(time) {
       time = time || this.moment;
       this.transform(time);
       this.complete();
       const date = new Date();
       let year = date.getFullYear();
-      let startYear = year - 6; // 获得年份列表： 1900-2100
-      for (let i = startYear; i < startYear + 12; i++) {
-        this.years.push(i);
-      }
+      this.setYear(year);
     },
     /**
     * 将时间转化为具体的 年、月、日、星期
@@ -263,7 +242,7 @@ export default {
     /**
      * 格式化日期时间
      */
-    dateFormat2(val) {
+    dateFormat(val) {
       if (!val) {
         return "";
       }
@@ -297,7 +276,7 @@ export default {
                 * 剩下的行数
                 */ // 计算除了第一行剩下的天数
       const leftDays =
-        this.currentMonthEndDate - (7 - this.currentMonthFirstDay); // 剩下的星期数
+      this.currentMonthEndDate - (7 - this.currentMonthFirstDay); // 剩下的星期数
       const lineNumber = Math.ceil(leftDays / 7); // 包含下个月日历的天数
       const nextDays = 7 - (leftDays % 7);
       for (let i = 0; i < lineNumber; i++) {
@@ -428,16 +407,15 @@ export default {
     }, // 选取年
 
     pickYear(n) {
-      // this.transform(new Date(n, this.select.month - 1, this.select.date))
       this.select.year = n;
       this.selectYear = !this.selectYear;
-      this.selectMonth = true; // this.complete()
+      this.selectMonth = true;
     }, // 选取月
 
     pickMonth(n) {
       // this.transform(new Date(this.select.year, n - 1, this.select.date))
       this.select.month = n;
-      this.selectMonth = !this.selectMonth; // this.complete()
+      this.selectMonth = !this.selectMonth;
     }, // 更改选中时间并向父组件派发事件
 
     complete() {
@@ -449,9 +427,9 @@ export default {
         minutes: this.select.minutes,
         seconds: this.select.seconds
       };
-      this.dateTime = this.dateFormat2(this.current);
+      this.dateTime = this.dateFormat(this.current);
       this.$emit('input', this.dateTime);
-      if (this.dateTime.indexOf('NaN' > -1)) {
+      if (this.dateTime.indexOf('NaN') > -1) {
         throw Error('zoom-ui TypeError: 请检查入参是否为有效时间格式! ');
       }
     },
@@ -543,18 +521,20 @@ export default {
 .zoom-date .zoom-date-wrap .zoom-date-content table thead {
   line-height: 30px;
   font-size: 12px;
-  color: #999;
-}
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr {
-  line-height: 20px;
+  color: #333;
+  font-weight: bold;
 }
 .zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td {
+  line-height: 20px;
   font-size: 12px;
   text-align: center;
   cursor: pointer;
   border-radius: 3px;
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+}
+.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td:hover {
+  background: #eee;
 }
 .zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td.active,
 .zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td.active:hover {
@@ -590,40 +570,10 @@ export default {
   cursor: pointer;
   padding: 0 5px;
 }
-/* .zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td:hover {
-  background: #eee;
+.zoom-date .zoom-date-disabled .icon-calendar {
+  cursor: no-drop;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table .agm-date-picker-year-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  font-size: 14px;
-}
-.zoom-date .zoom-date-wrap .zoom-date-content table .agm-date-picker-year-panel .panel-list {
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  width: 33.33333%;
-  height: 25px;
-}
-.zoom-date .zoom-date-wrap .zoom-date-content table .agm-date-picker-year-panel .panel-list .panel-item-inner {
-  width: 80%;
-  text-align: center;
-  padding: 10px 0;
-  border-radius: 3px;
-  -webkit-transition: all .2s ease-in-out;
-  transition: all .2s ease-in-out;
+.zoom-date .zoom-input .icon-calendar {
   cursor: pointer;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table .agm-date-picker-year-panel .panel-list .panel-item-inner:hover,
-.zoom-date .zoom-date-wrap .zoom-date-content table .agm-date-picker-year-panel .panel-list .panel-item-inner:active {
-  background: #e1f0fe;
-} */
 </style>

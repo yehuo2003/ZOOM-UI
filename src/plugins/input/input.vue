@@ -109,6 +109,7 @@ export default {
     clear() {
       if (!this.options.isdisabled) {
         this.currentValue = "";
+        this.$emit('input', '');
       } else {
         throw Error("zoom-ui error: disabled状态下无法清除内容! ");
       }

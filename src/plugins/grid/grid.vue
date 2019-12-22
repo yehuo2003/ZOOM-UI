@@ -8,7 +8,10 @@
             <thead class="grid-head-content">
               <tr>
                 <!-- 表格宽度 -->
+                <!-- 是否设置了隐藏序列号 -->
                 <th
+                  @click="titleClick(item)"
+                  v-show="serial && item.fieId !== 'indexId'"
                   v-for="item of titleData"
                   :key="item.id"
                   :col="item.id"
@@ -37,11 +40,11 @@
       <div class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
         <!-- <div v-if="!bodyData" class="zoom-not-data"> -->
-          <p v-show="!showLoad">
+          <p v-show="!loading" class="no-text">
             <i class="zoom-icon icon-glass"></i>
             <span>暂无数据</span>
           </p>
-          <zoom-loading color="#1890ff" :show="showLoad"></zoom-loading>
+          <zoom-loading color="#1890ff" :show="loading"></zoom-loading>
         </div>
         <div class="grid-bodybox">
           <table class="grid-table grid-tbody">
@@ -55,6 +58,7 @@
                 class="grid-row"
               >
                 <td
+                  v-show=" name !== 'onClick' "
                   @click="itemClick($event, i, item, name)"
                   v-for="(i, name, index) of item"
                   :key="index"
@@ -63,7 +67,14 @@
                   class="grid-item"
                 >
                   <span class="grid-input">
-                    {{i === item.btns ? '' : i}}
+                    <!-- {{i === item.btns ? '' : i}} -->
+                    {{i === item.btns ? '' : name === 'checked' ? '' : i}}
+                    <!-- 如果是复选框, 就加载 -->
+                    <span v-if="name === 'checked'" @click.stop="itemClick($event, i, item, name)" class="zoom-checkbox">
+                      <label class="checkbox-item">
+                        <i class="zoom-icon" :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"></i>
+                      </label>
+                    </span>
                     <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
                     <span v-if="i === item.btns">
                       <a
@@ -96,6 +107,10 @@ export default {
   props: {
     op: {
       type: Object,
+      isChecked: {  // 是否开启复选框功能
+        type: Boolean,
+        default: false,
+      },
       hideIndex: {  // 是否隐藏序列号
         type: Boolean,
         default: false,
@@ -110,7 +125,7 @@ export default {
           return [];
         }
       },
-      datas: {
+      data: {
         type: Array,
         default() {
           return {};
@@ -124,7 +139,7 @@ export default {
     return {
       tips: false,
       serial: false, //  是否显示序列号
-      showLoad: false, //  loading
+      loading: false, //  loading
       surplus: [], //   剩余数据
       showPager: false,
       defaultPagerOp: {
@@ -143,6 +158,27 @@ export default {
     if (this.op && this.op.beforeLoad) {
       this.op.beforeLoad();
     } else {
+      // 判断是否开启复选框功能
+      if (this.op.isChecked) {
+        let checkObj = {
+          fieId: 'checked',
+          header: '全选/取消'
+        }
+        let count = 0;
+        this.op.title.forEach(item => {
+          if (item.fieId === 'checked') {
+            count += 1;
+          }
+        })
+        // 防止重载
+        if (count === 0) {
+          if (this.op.title.length && this.op.title[0].fieId === 'indexId') {
+            this.op.title.splice(1, 0, checkObj);
+          } else {
+            this.op.title.splice(0, 0, checkObj);
+          }
+        }
+      }
       this.load();
     }
   },
@@ -156,23 +192,28 @@ export default {
       }
       this.$nextTick(() => {
         data.forEach(item => {
-          if (item.minWidth && item.fieId) {
+          if (item.fieId) {
             let arr = document.querySelectorAll(`[fieId=${item.fieId}]`);
             arr.forEach(i => {
               // 如果用户设置了不显示序列号选项 则隐藏
               if (item.fieId === 'indexId' && this.serial) {
                 $Z('[col="1"]')[0].style = i.style = 'display: none;';
               } else {
-                // 判断是否有自定义样式
-              if (item.css && typeof item.css === "string") {
-                i.classList.add(item.css);
-              }
-            //   判断是否开启tip 并且有tip属性
-              if (item.tip && this.tips) {
-                i.classList.add("zoom-tip");
-              }
-            //   设置列宽
-              i.style = `width: ${item.minWidth}%;`;
+                if (item.fieId === 'checked') {
+                  $Z('[col="2"]')[0].style = i.style = `width: ${15}%; text-align: center;`;
+                }
+              // 判断是否有自定义样式
+                if (item.css && typeof item.css === "string") {
+                  i.classList.add(item.css);
+                }
+              //   判断是否开启tip 并且有tip属性
+                if (item.tip && this.tips) {
+                  i.classList.add("zoom-tip");
+                }
+              //   设置列宽
+                if (item.minWidth) {
+                  i.style = `width: ${item.minWidth}%;`;
+                }
               }
             });
           }
@@ -181,11 +222,9 @@ export default {
       this.titleData = data;
     },
     load(gridData) {
-      // 看用户是否设置了隐藏序列号
       if (this.op && this.op.hideIndex) {
         this.serial = this.op.hideIndex;
       }
-      this.showLoad = true;
       if (!this.op) {
         return;
       }
@@ -195,6 +234,7 @@ export default {
         // let fieIdArr = ["indexId"];
         let fieIdArr = [];
         let btns = [];
+        let checked = '';
         title.forEach((item, index) => {
           titleData.push({
             id: index + 1,
@@ -209,6 +249,10 @@ export default {
           if (item.fieId) {
             fieIdArr.push(item.fieId);
           }
+          // 如果有复选框功能就先打开 等下再设置成false
+          if (item.fieId === 'checked') {
+            checked = true;
+          }
           // 如果有按钮就给每列加上
           if (item.btns) {
             btns = item.btns;
@@ -217,20 +261,24 @@ export default {
         this.titleData = titleData;
         // 如果内容部分有传值
         let data = [];
+        // 看用户是否设置了隐藏序列号
         if (gridData) {
           data = gridData;
-        } else if (this.op.datas) {
-          data = this.op.datas;
+        } else if (this.op.data) {
+          data = this.op.data;
         } else {
           return;
         }
         let dataArr = [];
-        // 循环先判断datas数组里每个对象里key值是否和title里key值对应
+        // 循环先判断data数组里每个对象里key值是否和title里key值对应
         data.forEach((item, index) => {
           let obj = {};
           // 设置索引值
           obj.indexId = index + 1;
-          // obj.index = index + 1;
+          // 是否设置复选功能
+          if (checked) {
+            obj.checked = false;
+          }
           // 是否有设置按钮
           if (btns && btns.length) {
             obj.btns = btns;
@@ -264,9 +312,13 @@ export default {
         //   this.bodyData = dataArr;
         // }
         this.bodyData = dataArr;
-        this.showLoad = false;
+        // this.loading = false;
       }
       this.setWidth();
+    },
+    // 开启loading效果
+    showLoad(show) {
+      this.loading = show;
     },
     //   排序方法
     compare(fun, property) {
@@ -285,6 +337,53 @@ export default {
       let data = this.bodyData;
       let arr = data.sort(this.compare(fun, "indexId"));
     },
+    // title 点击 全选/取消 功能
+    titleClick(item) {
+      if (item.title === '全选/取消') {
+        let count = 0;
+        // 遍历查看有几个是选中的
+        this.bodyData.forEach(item => {
+          if (item.checked) {
+            count += 1;
+          }
+        })
+        // 如果包含有未选中的, 则全部选中
+        if (this.bodyData.length > count) {
+          this.bodyData.forEach(item => {
+            item.checked = true;
+          })
+        } else {
+          this.bodyData.forEach(item => {
+            item.checked = false;
+          })
+        }
+      }
+    },
+    // 获取当前数据
+    getData() {
+      let list = [];
+      let arr = this.clone(this.bodyData);
+      if (this.op.isChecked) {
+        // 如果是复选框 就只返回选中的数据
+        arr.forEach(item => {
+          if (item.onClick) {
+            delete item.onClick;
+          }
+          if (item.checked) {
+            delete item.checked;
+            list.push(item);
+          }
+        })
+      } else {
+        arr.forEach(item => {
+          if (item.onClick) {
+            delete item.onClick;
+          }
+        })
+        list = this.bodyData;
+      }
+      return list;
+    },
     // 行点击事件
     itemClick(dom, elemnt, col, fieId) {
       // 防止改变原数据
@@ -293,6 +392,10 @@ export default {
         let value = JSON.parse(JSON.stringify(col));
         delete value.onClick;
         col.onClick(dom, elemnt, value, fieId);
+      }
+      // 如果有复选框
+      if (this.op && this.op.isChecked) {
+        col.checked = !col.checked;
       }
     },
     // 按钮点击事件
@@ -368,18 +471,24 @@ export default {
   line-height: 20px;
   color: #1890ff;
 }
-.grid-body .zoom-not-data p span {
+.grid-body .zoom-not-data .no-text span {
   display: block;
 }
-.grid-body .zoom-not-data p .zoom-icon {
-    font-size: 4em;
-    font-weight: bold;
+.grid-body .zoom-not-data .no-text .zoom-icon {
+  font-size: 4em;
+  font-weight: bold;
 }
-.grid-body .zoom-not-data p {
-  padding: 50px 0;
+.grid-body .zoom-not-data .no-text,
+.grid-body .zoom-not-data .zoom-loading {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
 }
 .grid-body .zoom-not-data {
+  position: relative;
   text-align: center;
+  min-height: 300px;
 }
 .grid-tbody tbody tr:nth-child(odd),
 .grid-tfoot tbody tr:nth-child(odd),

@@ -1,11 +1,11 @@
 <template>
-  <div v-show="show" id="zoom-loading" :style="'color:' + color + ';border: 1px solid ' + color + ';' ">
-    <p>loading</p>
-    <div :style="'background:' + color + ';' " class="zoom-loading loading-one"></div>
-    <div :style="'background:' + color + ';' " class="zoom-loading loading-two"></div>
-    <div :style="'background:' + color + ';' " class="zoom-loading loading-three"></div>
-    <div :style="'background:' + color + ';' " class="zoom-loading loading-four"></div>
-    <div :style="'background:' + color + ';' " class="zoom-loading loading-five"></div>
+  <div v-show="show" class="zoom-loading" :style="'color:' + color + ';border: 1px solid ' + color + ';' ">
+    <div class="load-text">loading</div>
+    <div :style="'background:' + color + ';' " class="loading-item loading-one"></div>
+    <div :style="'background:' + color + ';' " class="loading-item loading-two"></div>
+    <div :style="'background:' + color + ';' " class="loading-item loading-three"></div>
+    <div :style="'background:' + color + ';' " class="loading-item loading-four"></div>
+    <div :style="'background:' + color + ';' " class="loading-item loading-five"></div>
   </div>
 </template>
 <script>
@@ -24,30 +24,27 @@ export default {
 };
 </script>
 <style>
-#zoom-loading{
+.zoom-loading {
   margin: 0 auto;
   width: 180px;
   padding-left: 20px;
   height: 55px;
-  /* color: #00ff00; */
   font-size: 25px;
   font-weight: bold;
-  /* border: 1px solid #00ff00; */
   border-radius: 5px;
   animation: blink 2s infinite ease-in-out;
 }
-#zoom-loading p {
+.zoom-loading .load-text {
   float: left;
   line-height: 50px;
   padding-right: 5px;
 }
-.zoom-loading{
+.zoom-loading .loading-item {
     width: 5px;
     height: 35px;
     float: left;
     margin: 1px;
     margin-top: 10px;
-    /* background-color: #00ff00; */
     animation: loading 1s infinite ease-in-out;/*animation：动画名称 持续时间 动画速度曲线 延迟 执行多少次 是否正反方向轮流播放*/
 }
 .loading-two{
