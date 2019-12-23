@@ -19,8 +19,6 @@
       <zoom-button @click="addFileClick">添加文件</zoom-button>
       <div class="upload-switch">
           <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
-          <!-- <zoom-radio checkname="list">列表模式</zoom-radio> -->
-          <!-- <zoom-radio checkname="list" checck>缩略图模式</zoom-radio> -->
       </div>
   </div>
   <div class="upload-content">
@@ -31,7 +29,7 @@
     <ul v-show="List.length > 0" class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
-                <img v-if="item.type === 'image/png' " :src="item.url" :alt="item.name">
+                <img v-if="item.type && item.type.indexOf('image') > -1" :src="item.url" :alt="item.name">
                 <span v-else class="zoom-icon icon-channel"></span>
             </div>
             <div class="file-name" title="">
@@ -43,19 +41,20 @@
             <div class="file-size">
                 {{item.fileSize}}
             </div>
+            <!-- 上传成功后显示 -->
+            <div v-show="item.status === 'success' " class="file-success">
+                <i class="zoom-icon icon-success-fill"></i>
+            </div>
             <div class="file-status">
-                <zoom-progress :progress="testprogress[index]"></zoom-progress>
+                <zoom-progress :progress="testprogress[index].progress"></zoom-progress>
             </div>
         </li>
     </ul>
     <!-- <zoom-grid v-show="List.length > 0" ref="uplod-grid" :op="gridOp"></zoom-grid> -->
+    <zoom-grid v-show="false" ref="uplod-grid" :op="gridOp"></zoom-grid>
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
-          <!-- <div class="file-status">
-              <span>第{{fileIndex}}个文件上传中,进度:</span>
-                <zoom-progress :progress="testprogress"></zoom-progress>
-            </div> -->
           <zoom-button hue="primary" @click="submit">开始上传</zoom-button>
           <!-- <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button> -->
@@ -71,12 +70,14 @@ export default {
  props: {
     name: String,
     action: {  // 要上传的服务器地址
-    type: String,
-    required: true
+        type: String,
+        required: true
     },
     fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
-    type: Array,
-    default: []
+        type: Array,
+        default: function() {
+          return [];
+        }
     },
     data: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
     multiple: Boolean, //  是否多选
@@ -100,7 +101,6 @@ export default {
              ]
          },
          testprogress: [],
-        //  fileIndex: 0,
          active: '',    // 单选框
          successCount: 0,   //上传成功的文件数量
          errCount: 0,       //上传失败的文件数量
@@ -126,7 +126,6 @@ export default {
                             },
                             onClick: val => {
                                 this.remove(val.indexId - 1);
-                                console.log('点击的当前行是:', val);
                             }
                         }
                     ],
@@ -188,7 +187,6 @@ export default {
             if (data.length < 1) {
                 return;  // 检测是否有文件拖拽到页面
             }
-            console.log(data)
             this.addFile({target: {files: [data]}})//上传文件的方法
         }
         this.$refs.select_frame.ondragenter = (e) => {
@@ -235,7 +233,6 @@ export default {
         }
         if(isNaN(size)) {
             throw Error('zoom-ui TypeError: size类型错误, 必须为数字, 或以KB, MB, GB等形式结尾字符串');
-            return
         } else {
             if (file && size) {
                 let fileSize = file.size;
@@ -244,16 +241,23 @@ export default {
                 //     return false
                 // }
                 if(fileSize > size * 1024) {
-                    console.log(`文件大小不能大于${this.size}!`);
+                    this.$refs['upload-warn'].alert({
+                        title: '提示',
+                        content: `文件大小不能大于${this.size}!`,
+                        type: 'warning'
+                    })
                     return false;
                 } else if (fileSize <= 0) {
-                    console.log(`文件大小不能为0!`);
+                    this.$refs['upload-warn'].alert({
+                        title: '提示',
+                        content: '文件大小不能为0! ',
+                        type: 'warning'
+                    })
                     return false;
                 } else {
                     return true;
                 }
             } else {
-                console.log('成功');
                 return true
             }
             this.size = size;
@@ -280,10 +284,13 @@ export default {
                 files[i].fileName = files[i].name;  // 文件名
                 files[i].url = URL.createObjectURL(files[i]);//创建blob地址，不然图片怎么展示？
                 files[i].status = 'ready';//开始想给文件一个字段表示上传进行的步骤的，后面好像也没去用......
-                files[i].progress = 0;    // 进度
                 files[i].id = (Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5);    // 随机id
                 files[i].fileSize = fileSize;   //  给用户展示的文件大小
                 files[i].fileDate = this.dateFormat("YYYY-mm-dd HH:MM", files[i].lastModifiedDate); // 格式化日期 展示给用户看
+                let obj = {     //  文件对象比较特殊 直接添加progress不生效 只能用一个其他数组代替,删除时候也删除相应下标的数据
+                    progress: 0
+                }
+                this.testprogress.push(obj);
             } else {
                 return;
             }
@@ -300,8 +307,6 @@ export default {
                 fileList = fileList.slice(len - limit);
             }
         } else {//单选时，只取最后一个文件。注意这里没写成fileList = files;是因为files本身就有多个元素（比如选择文件时一下子框了一堆）时，也只要一个
-            // fileList = [files[0]];
-            // fileList = [files[0]];
             fileList = files;
         }
         let List = [];
@@ -323,16 +328,16 @@ export default {
         this.List = Array.from(new Set(List));
         this.$refs['uplod-grid'].load(this.List);
         // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
-        // this.$parent.fileList.push(fileList);
-        // this.fileList = this.$parent.fileList;
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
+        debugger
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
         let fileId = fileList[index].id;
         let files = this.$refs['zoom-upload'].files;
         let len = files.length;
+        this.testprogress.splice(index, 1);
         // 把已经删除的文件状态标记为delete 因为文件对象无法直接删除
         if(fileList.length){
             for (var i = 0; i<len; i ++) {
@@ -356,7 +361,6 @@ export default {
                 }
             })
             this.List = fileList;
-            // this.onChange(this.List);
         }
     },
     // 提交上传 这里使用了两种方式，fetch和原生方式，由于fetch不支持获取上传的进度，如果不需要进度条或者自己模拟进度或者XMLHttpRequest对象不存在的时候，使用fetch请求上传逻辑会更简单一些
@@ -415,19 +419,17 @@ export default {
             filename: _this.name || "file",
             action: _this.action,
             onProgress(e){
-                console.log(rawFile,'文件');
-                console.log(index, e, '触发');
-                _this.testprogress[index] = e.percent;
-                // _this.fileIndex = index;
-                // _this.onProgress(index, e);//闭包，将index存住
+                _this.$set(_this.testprogress[index], 'progress', e.percent);
+                _this.onProgress(index, e);//闭包，将index存住
             },
             onSuccess(res){
                 _this.successCount += 1;
                 rawFile.status = 'success';
                 _this.onSuccess(index, res);
+                // 成功后删除
+                // _this.remove(index);
             },
             onError(err){
-                console.warn(err);
                 _this.errCount += 1;
                 rawFile.status = 'error';
                 _this.onFailed(index, err);
@@ -436,7 +438,7 @@ export default {
         let len = this.List.length;
         let send = options => {
             for(let i = 0; i < len; i++){
-                if (options[i].file.status !== 'delete') {
+                if (options[i].file.status === 'ready') {
                     _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
                 }
             }
@@ -477,7 +479,6 @@ export default {
             try {
                 return JSON.parse(text);
             } catch (e) {
-                // throw Error(`zoom-ui Error: ${e}`);
                 return text;
             }
         }
@@ -495,14 +496,9 @@ export default {
                 if (e.total > 0) {
                     e.percent = e.loaded / e.total * 100;
                 }
-                // _this.proOp.progress = e.percent;
-                option.file.progress = e.percent;
-                _this.$set(option.file, 'progress', e.percent);
                 option.onProgress(e);
             };
         }
-        // option.file.progress = 30;
-        // console.log('progress值是:', option.file.progress);
         var formData = new FormData();
 
         if (option.data) {
@@ -545,13 +541,40 @@ export default {
     // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送。
     // 代码部分完了，使用时只要有了on-progress属性并且XMLHttpRequest对象可访问，就会使用原生方式发送请求，否则就用fetch发送请求（不展示进度）。
     checkIfCanUpload(){
-        return this.fileList.length ? (this.onBefore && this.onBefore() || !this.onBefore) : false;
+        return this.List.length ? (this.onBefore && this.onBefore() || !this.onBefore) : false;
     }
  }
 }
 </script>
 <style>
-.file-status .zoom-progress-container {
+.zoom-file-upload .upload-content .file-success .icon-success-fill {
+    color: #52c41a;
+    font-size: 50px;
+    position: relative;
+    top: 10px;
+    z-index: 3;
+}
+.zoom-file-upload .upload-content .file-success::after {
+    content: "";
+    width: 100%;
+    height: 75%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    filter: blur(23px);
+    background: #fff;
+    opacity: .8;
+    z-index: 2;
+}
+.zoom-file-upload .upload-content .file-success {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+}
+.zoom-file-upload .upload-content .file-status .zoom-progress-container {
     height: 2px;
 }
 .upload-content .upload-file .file-status .zoom-progress span {

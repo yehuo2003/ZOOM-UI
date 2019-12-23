@@ -18,6 +18,7 @@
       @input="Oninput"
       :type="options.type"
       :placeholder="options.placeHolder"
+      :readonly="options.readonly"
       :disabled="options.isdisabled"
     />
     <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
@@ -43,6 +44,10 @@ export default {
         default: null
       },
       isdisabled: {
+        type: Boolean,
+        default: false
+      },
+      readonly: { // 是否禁止输入默认false
         type: Boolean,
         default: false
       },
