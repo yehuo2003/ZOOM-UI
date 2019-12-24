@@ -34,11 +34,12 @@
     :on-progress="uploadProgress"
     :on-success="uploadSuccess"
     :on-failed="uploadFailed"
-    :limit="5"
+    :limit="10"
     :on-finished="onFinished"
+    :fileSize="size"
     >
     </my-upload>
-    <zoom-rate :op="rateOp" ref="rate"></zoom-rate>
+    <!-- <zoom-rate :op="rateOp" ref="rate"></zoom-rate>
     <zoom-floatbar ref="bar" :op="barOp">
       <h1>自定义</h1>
       浮动框
@@ -52,7 +53,7 @@
         <li @click="usetTest(2)">2号美女</li>
         <li @click="usetTest(1)">1号美女</li>
       </ul>
-    </zoom-userinfo>
+    </zoom-userinfo> -->
     <zoom-button @click="test">测试</zoom-button>
   </div>
 </template>
@@ -60,6 +61,8 @@
 export default {
   data() {
     return {
+      // limit: 2,
+      size: '10GB',
       userOp: {
         title: '1号美女',
         img: 'http://img0.imgtn.bdimg.com/it/u=2964920801,3888518063&fm=26&gp=0.jpg'

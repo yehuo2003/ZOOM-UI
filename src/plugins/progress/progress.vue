@@ -1,7 +1,7 @@
 <template>
     <div class="zoom-progress">
         <div class="zoom-progress-container">
-            <p :class="status" :style="{ width : Numprogress + '%' }" class="progress">
+            <p :class="statusProgress" :style="{ width : Numprogress + '%' }" class="progress">
                 <b v-if="inside">{{Numprogress}}%</b>
             </p>
         </div>
@@ -13,6 +13,7 @@ export default {
   name: "zoom-progress",
   props: {
       progress: Number,
+      status: String,
       op: {
           status: String,   // 开始时候的状态
           planList: Array,
@@ -37,7 +38,7 @@ export default {
   },
   data() {
       return {
-          status: '',
+          statusProgress: '',
           ValProgress: 0,
           start: 0,
           endVal: null,
@@ -51,6 +52,10 @@ export default {
       }
   },
   watch: {
+    //   监听父组件状态变化
+      status(newVal, oldVal) {
+          this.statusProgress = newVal;
+      },
       progress(newVal, oldVal) {
           this.ValProgress = newVal;
       },
@@ -69,7 +74,7 @@ export default {
             let data = this.planList[this.start];
             // 达到或超过临界点时变色
             if (this.ValProgress >= data.progress) {
-                this.status = data.status;
+                this.statusProgress = data.status;
                 this.start += 1;
             }
         }
@@ -93,7 +98,9 @@ export default {
               this.planList = this.op.planList;
           }
           if (this.op.status) {
-              this.status = this.op.status;
+              this.statusProgress = this.op.status;
+          } else if (this.status) {
+              this.statusProgress = this.status;
           }
           if (this.op.automatic) {
             //   结束值
@@ -145,9 +152,11 @@ export default {
 .progress.success {
     background: #389e0d;
 }
+.progress.error:hover,
 .progress.danger:hover {
     background: #ff4d4f;
 }
+.progress.error,
 .progress.danger {
     background: #cf1322;
 }

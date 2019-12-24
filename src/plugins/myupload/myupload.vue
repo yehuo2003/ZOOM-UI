@@ -4,7 +4,8 @@
      <div class="upload-title">选择文件</div>
      <div class="alert-upload upload-info">
         <i class="zoom-icon close-alert icon-hint"></i>
-        最多上传两个文件, 每个文件最大{{size}}
+        <span>最多上传{{limit}}个文件</span>
+        <span v-if="size">, 每个文件最大{{size}}</span>
      </div>
      <div v-show="successCount" class="alert-upload upload-success">
         <i class="zoom-icon close-alert icon-success"></i>
@@ -21,12 +22,12 @@
           <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
       </div>
   </div>
-  <div class="upload-content">
-    <div v-show="List.length === 0" ref='select_frame'  ondragstart="return false" class="upload-text">
+  <div class="upload-content" ref='select_frame'  ondragstart="return false">
+    <div v-show="List.length === 0" class="upload-text">
         <i class="zoom-icon icon-fodder"></i>
         <div>拖拽文件至此处</div>
     </div>
-    <ul v-show="List.length > 0" class="upload-file-list">
+    <ul v-show="List.length > 0 && active === 'imgModel' " class="upload-file-list">
         <li v-for="(item, index) of List" :key="index" class="upload-file">
             <div class="upload-item">
                 <img v-if="item.type && item.type.indexOf('image') > -1" :src="item.url" :alt="item.name">
@@ -46,12 +47,86 @@
                 <i class="zoom-icon icon-success-fill"></i>
             </div>
             <div class="file-status">
-                <zoom-progress :progress="testprogress[index].progress"></zoom-progress>
+                <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
             </div>
         </li>
     </ul>
-    <!-- <zoom-grid v-show="List.length > 0" ref="uplod-grid" :op="gridOp"></zoom-grid> -->
-    <zoom-grid v-show="false" ref="uplod-grid" :op="gridOp"></zoom-grid>
+
+    <div v-show="List.length > 0 && active === 'listModel' " class="zoom-grid">
+        <div class="zoom-grid-body">
+            <!-- 表头 -->
+            <div class="grid-head">
+                <div class="grid-headbox">
+                    <table class="grid-table grid-thead">
+                        <thead class="grid-head-content">
+                            <tr>
+                                <th v-for="item of title" :key="item.id" class="grid-item" :style="'width: ' + item.width + '%;' ">
+                                    <span class="thead-title">{{item.text}}</span>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <!-- 内容 -->
+            <div class="grid-body">
+                <div class="grid-bodybox">
+                    <table class="grid-table grid-tbody">
+                        <tbody class="grid-body-content">
+                            <tr v-for="(item, index) of List" :key="index" class="grid-row">
+                                <td class="grid-item" style="width: 30%;">
+                                    <span class="grid-input">
+                                        {{index + 1}}
+                                    </span>
+                                </td>
+                                <td class="grid-item" style="width: 30%;">
+                                    <span class="grid-input">
+                                        <span>
+                                            <a title="删除文件" class="zoom-icon">
+                                                <span @click="remove(index)" class="zoom-icon icon-delete"></span>
+                                            </a>
+                                        </span>
+                                    </span>
+                                </td>
+                                <td :zoom-tip="item.fileName" class="grid-item zoom-tip" style="width: 100%;">
+                                    <span class="grid-input">
+                                        {{item.fileName}}
+                                    </span>
+                                </td>
+                                <td class="grid-item" style="width: 50%;">
+                                    <span class="grid-input">
+                                        {{formatStatus(item.status)}}
+                                    </span>
+                                </td>
+                                <td class="grid-item" style="width: 50%;">
+                                    <span class="grid-input">
+                                        <!-- 上传进度 -->
+                                        <zoom-progress  :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+                                    </span>
+                                </td>
+                                <td class="grid-item" style="width: 40%;">
+                                    <span class="grid-input">
+                                        {{item.fileSize}}
+                                    </span>
+                                </td>
+                                <td class="grid-item" style="width: 60%;">
+                                    <span class="grid-input">
+                                        {{item.fileDate}}
+                                    </span>
+                                </td>
+                                <td :zoom-tip="item.type" class="grid-item zoom-tip" style="width: 120%;">
+                                    <span class="grid-input">
+                                        {{item.type}}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
@@ -62,6 +137,9 @@
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
   <zoom-alert ref="upload-warn"></zoom-alert>
+  <zoom-dialog-box :show="visibility" @close="visibility=false">
+      确认要删除该文件吗?
+  </zoom-dialog-box>
 </div>
 </template>
 <script>
@@ -69,6 +147,7 @@ export default {
  name: 'my-upload',
  props: {
     name: String,
+    fileSize: String,   //  文件大小 如 10M 10KB 10kb
     action: {  // 要上传的服务器地址
         type: String,
         required: true
@@ -91,13 +170,30 @@ export default {
  },
  data() {
      return {
+         visibility: false,
+         dialogOp: {
+            showBtn: true,
+            onClick: (index)=> {
+                console.log(666666, index);
+            }
+         },
+         title: [
+             {id: 1, text: '编号', width: 30},
+             {id: 2, text: '操作', width: 30},
+             {id: 3, text: '文件名', width: 100},
+             {id: 4, text: '状态', width: 50},
+             {id: 5, text: '上传进度', width: 50},
+             {id: 6, text: '文件大小', width: 40},
+             {id: 7, text: '修改日期', width: 60},
+             {id: 8, text: '文件件类型', width: 120}
+         ],
          testList: [],
          radioOp: {
              name: 'list',
              isdisabled: false,
              data: [
-                 {text: '列表模式', value: 'listModel'},
-                 {text: '缩略图模式', value: 'imgModel', checked: true}
+                 {text: '列表模式', value: 'listModel', checked: true},
+                 {text: '缩略图模式', value: 'imgModel'}
              ]
          },
          testprogress: [],
@@ -107,64 +203,6 @@ export default {
          size: '10GB',
          filelist: [],
          List: [],
-         gridOp: {
-            title: [
-                {
-                    fieId: 'indexId',
-                    header: '编号',
-                    width: 30,
-                    sort: true
-                },
-                {
-                    fieId: 'btns',
-                    header: '操作',
-                    btns: [
-                        {
-                            title: '删除文件',
-                            css: {
-                            icon: 'icon-delete'
-                            },
-                            onClick: val => {
-                                this.remove(val.indexId - 1);
-                            }
-                        }
-                    ],
-                    width: 30
-                },
-                {
-                    fieId: 'fileName',
-                    header: '文件名',
-                    width: 100
-                },
-                {
-                    fieId: 'status',
-                    header: '状态',
-                    width: 50
-                },
-                {
-                    fieId: 'progress',
-                    header: '上传进度',
-                    width: 50
-                },
-                 {
-                    fieId: 'fileSize',
-                    header: '文件大小',
-                    width: 50
-                },
-                {
-                    fieId: 'fileDate',
-                    header: '修改日期',
-                    width: 100
-                },
-                {
-                    fieId: 'type',
-                    header: '文件类型',
-                    tip: true,
-                    width: 100
-                },
-            ],
-            datas: [],
-         }
      }
  },
  watch: {
@@ -172,7 +210,11 @@ export default {
          this.successCount = 0;
          this.errCount = 0;
          this.onChange(newVal);
-         this.$refs['uplod-grid'].load(this.List);
+     }
+ },
+ created() {
+     if (this.fileSize) {
+         this.size = this.fileSize;
      }
  },
  mounted() {
@@ -198,6 +240,16 @@ export default {
         }
  },
  methods: {
+    //  格式化状态
+    formatStatus(val) {
+        if (val === 'success') {
+            return '成功'
+        } else if (val === 'error') {
+            return '失败'
+        } else {
+            return '等待上传'
+        }
+    },
     //  添加文件
     addFileClick() {
         this.$refs['zoom-upload'].click()
@@ -326,12 +378,11 @@ export default {
             }
         })
         this.List = Array.from(new Set(List));
-        this.$refs['uplod-grid'].load(this.List);
         // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
-        debugger
+        // this.visibility= true;
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
         let fileId = fileList[index].id;
@@ -547,6 +598,12 @@ export default {
 }
 </script>
 <style>
+.zoom-file-upload .upload-content th.grid-item:first-child {
+    text-align: center;
+}
+.zoom-file-upload .upload-content .grid-input .zoom-progress {
+    line-height: 0;
+}
 .zoom-file-upload .upload-content .file-success .icon-success-fill {
     color: #52c41a;
     font-size: 50px;

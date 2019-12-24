@@ -11,7 +11,6 @@
                 <!-- 是否设置了隐藏序列号 -->
                 <th
                   @click="titleClick(item)"
-                  v-show="serial && item.fieId !== 'indexId'"
                   v-for="item of titleData"
                   :key="item.id"
                   :col="item.id"
@@ -39,7 +38,6 @@
       <!-- 内容 -->
       <div class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
-        <!-- <div v-if="!bodyData" class="zoom-not-data"> -->
           <p v-show="!loading" class="no-text">
             <i class="zoom-icon icon-glass"></i>
             <span>暂无数据</span>
@@ -194,10 +192,18 @@ export default {
         data.forEach(item => {
           if (item.fieId) {
             let arr = document.querySelectorAll(`[fieId=${item.fieId}]`);
+            let col1Count = 0;
             arr.forEach(i => {
               // 如果用户设置了不显示序列号选项 则隐藏
               if (item.fieId === 'indexId' && this.serial) {
-                $Z('[col="1"]')[0].style = i.style = 'display: none;';
+                i.style = 'display: none;'
+                if (col1Count === 0) {
+                  col1Count += 1;
+                  let col1 = $Z('[col="1"]');
+                  for(let i = 0; i < col1.length; i++) {
+                    col1[i].style = 'display: none;'
+                  }
+                }
               } else {
                 if (item.fieId === 'checked') {
                   $Z('[col="2"]')[0].style = i.style = `width: ${15}%; text-align: center;`;
@@ -414,23 +420,27 @@ export default {
 .grid-body-content .zoom-tip {
   position: relative;
 }
-.grid-body-content > tr:first-child td.zoom-tip::before {
-  bottom: -10% !important;
-  transform: rotate(180deg) !important;
+.grid-body-content > tr.grid-row:first-child td.zoom-tip::before {
+  bottom: -10%;
+  margin-bottom: 3px;
+  transform: rotate(180deg);
 }
-.grid-body-content > tr:first-child td.zoom-tip::after {
-  bottom: -166% !important;
+.grid-body-content > tr.grid-row.grid-row:first-child td.zoom-tip::after {
+  bottom: -166%;
+  margin-bottom: 20px;
+  z-index: 3;
 }
 .grid-body-content .zoom-tip::after,
-.grid-body-content > tr:first-child td.zoom-tip::after {
+.grid-body-content > tr.grid-row:first-child td.zoom-tip::after {
   content: attr(zoom-tip);
   display: none;
   position: absolute;
   padding: 5px 10px;
   left: 15%;
   bottom: 100%;
-  width: 150px;
-  margin-bottom: 12px;
+  min-width: 150px;
+  line-height: 20px;
+  min-height: 30px;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
   font-size: 12px;
@@ -448,7 +458,7 @@ export default {
   bottom: 100%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  margin-bottom: 3px;
+  margin-bottom: -7px;
   width: 0;
   height: 0;
   border-left: 6px solid transparent;
