@@ -1,3 +1,4 @@
+// import Vue from 'vue'
 import '../assets/fontIcon/iconfont.css'
 import './dom.js'
 
@@ -69,6 +70,24 @@ const install = Vue => {
         const config = requireComponent(component);
         // 拿到组件名
         const componentName = config.default.name;
+        // 全局注册弹出框组件
+        if (componentName === 'zoom-popup') {
+            const Popup = config.default;
+            const PopupBox = Vue.extend(Popup);
+            Popup.install = function (data) {
+                let instance = new PopupBox({
+                    data
+                }).$mount()
+
+                document.body.appendChild(instance.$el)
+
+                Vue.nextTick(() => {
+                    instance.show = true
+                    // show 和弹窗组件里的show对应，用于控制显隐
+                })
+            }
+            Vue.prototype.$popup = Popup.install;
+        }
 
         Vue.component(componentName, config.default || config);
     })
@@ -76,4 +95,6 @@ const install = Vue => {
 
 export default {
     install
+    // ,
+    // Popup
 }

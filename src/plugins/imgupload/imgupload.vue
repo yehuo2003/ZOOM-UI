@@ -23,7 +23,7 @@
 </template>
 <script>
 export default {
-  name: "zoom-upload",
+  name: "zoom-img-upload",
   props: {
     op: Object
   },

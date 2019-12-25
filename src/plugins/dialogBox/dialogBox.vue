@@ -24,7 +24,7 @@ export default {
       },
       width: {
         type: String,
-        default: '30%'
+        default: ''
       },
       show: {
           type: Boolean,
@@ -98,7 +98,7 @@ export default {
     color: #5a5e66;
     font-size: 14px;
     overflow: auto;
-    min-height: 65vh;
+    /* min-height: 65vh; */
 }
 .zoom-dialog-box .dialog-box .dialog-header a {
     float: right;

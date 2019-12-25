@@ -22,6 +22,7 @@ export default {
   name: "zoom-button",
   props: {
     op: Object,
+    disabled: Boolean,
     onClick: Function,
     hue: String
   },
@@ -36,7 +37,7 @@ export default {
   created() {
     if (this.op || this.hue) {
       let hue = this.op ? this.op.hue : this.hue;
-      if (!typeof hue == "string") {
+      if (hue && typeof hue !== "string") {
         throw Error("zoom-ui error: hue 的类型需要传入字符串");
         return;
       }
@@ -68,6 +69,9 @@ export default {
       }
       if (this.op && this.op.isdisabled) {
         this.isdisabled = !!this.op.isdisabled;
+      }
+      if (this.disabled) {
+        this.isdisabled = !!this.disabled;
       }
       if (this.op && this.op.IconStyle) {
         if (this.op.IconStyle.indexOf("icon") > -1) {
@@ -213,10 +217,11 @@ export default {
 .btn .zoom-btn[disabled]:active {
   background: #d9d9d9;
   border-color: #d9d9d9;
+  color: #fff;
 }
 .zoom-btn {
   min-width: 80px;
-  min-width: 120px;
+  max-width: 120px;
   height: 30px;
   line-height: 30px;
   border: 1px solid #d9d9d9;

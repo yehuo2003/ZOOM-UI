@@ -24,21 +24,7 @@
     </zoom-tabs> -->
     <!-- <zoom-tree-menu :op="navOp"></zoom-tree-menu> -->
     <!-- <zoom-transfer></zoom-transfer> -->
-    <my-upload
-    :action="url"
-    multiple
-    ref="myUpload"
-    :file-list="fileList"
-    :data="param"
-    :on-change="onChange"
-    :on-progress="uploadProgress"
-    :on-success="uploadSuccess"
-    :on-failed="uploadFailed"
-    :limit="10"
-    :on-finished="onFinished"
-    :fileSize="size"
-    >
-    </my-upload>
+    <zoom-file-upload :op="uploadOp"></zoom-file-upload>
     <!-- <zoom-rate :op="rateOp" ref="rate"></zoom-rate>
     <zoom-floatbar ref="bar" :op="barOp">
       <h1>自定义</h1>
@@ -61,8 +47,34 @@
 export default {
   data() {
     return {
-      // limit: 2,
-      size: '10GB',
+      uploadOp: {
+        limit: 5,
+        fileSize: '50MB',
+        multiple: true,
+        closeProgress: false,
+        url: 'http://127.0.0.1:8081/profile',
+        fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
+        params: {param1: '自定义参数1', param2: '自定义参数2' },//携带参数列表
+        onChange: fileList => {//监听文件变化，增减文件时都会被子组件调用
+          console.log('New文件变化了onChange', fileList);
+        },
+        onProgress: (index, e) => {//上传进度，上传时会不断被触发，需要进度指示时会很有用
+          console.log(index, e, 'New上传进度被触发uploadProgress');
+        },
+        onSuccess: (index, response) => {// 某个文件上传成功都会执行该方法，index代表列表中第index个文件
+          console.log(index, response, 'New文件上传成功uploadSuccess');
+        },
+        onFailed: (index, err) => {//某文件上传失败会执行，index代表列表中第index个文件
+          console.log(index, err, 'New上传失败了uploadFailed');
+        },
+        onFinished: result => {//所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }
+          console.log('New onFinished上传完毕,结果是:',result);
+        },
+        onBefore: file => {
+          console.log('onBefore 触发', file);
+          return true
+        }
+      },
       userOp: {
         title: '1号美女',
         img: 'http://img0.imgtn.bdimg.com/it/u=2964920801,3888518063&fm=26&gp=0.jpg'
@@ -80,9 +92,7 @@ export default {
         data: ['很差', '差', '一般', '好', '很好'],
       },
       // url: 'https://www.lagou.com/nearBy/updateMyResume',
-      url: 'http://127.0.0.1:8081/profile',
-      fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
-      param: {param1: '', param2: '' },//携带参数列表
+
       tagOp: {
         addTag: true,
         title: '添加',
@@ -256,13 +266,24 @@ export default {
       this.$refs['user'].load(data);
     },
     test() {
-      let data = [
-          // {text: '客服', icon: 'icon-service', onClick: val => {console.log(val);}},
-          // {text: '电话', icon: 'icon-phone', url: 'wwww.baidu.com', target: 'blank'},
-          {text: '导航', icon: 'icon-nav'}
-        ]
-      this.$refs['bar'].load(data)
-      console.log(this.$refs['bar'].load(data), '--status');
+      this.$popup({
+        // imgUrl: require('../../../static/images/shadow.png'), // 顶部图片
+        title: '我是标题',
+        content: '我是内容',
+        btnText: '我是按钮',
+        click: () => {
+          // 点击按钮事件
+          console.log(666);
+          // this.$router.push('……')
+        }
+      })
+      // let data = [
+      //     // {text: '客服', icon: 'icon-service', onClick: val => {console.log(val);}},
+      //     // {text: '电话', icon: 'icon-phone', url: 'wwww.baidu.com', target: 'blank'},
+      //     {text: '导航', icon: 'icon-nav'}
+      //   ]
+      // this.$refs['bar'].load(data)
+      // console.log(this.$refs['bar'].load(data), '--status');
     },
     handleClick() {
       // this.$refs['msg'].alert('6666')
@@ -279,29 +300,9 @@ export default {
       //   this.$refs['grid'].load(data);
       // console.log(this.$refs['tag'].tagList, 'tagList');
     },
-    onChange(fileList){//监听文件变化，增减文件时都会被子组件调用
-      this.fileList = [...fileList];
-      console.log('文件变化了onChange', this.fileList);
-    },
-    uploadSuccess(index, response){//某个文件上传成功都会执行该方法，index代表列表中第index个文件
-      console.log(index, response, '文件上传成功uploadSuccess');
-    },
     upload(){//触发子组件的上传方法
       this.$refs.myUpload.submit();
     },
-    removeFile(index){//移除某文件
-      this.$refs.myUpload.remove(index);
-    },
-    uploadProgress(index, progress){//上传进度，上传时会不断被触发，需要进度指示时会很有用
-      const{ percent } = progress;
-      console.log(index, percent, '上传进度被触发uploadProgress');
-    },
-    uploadFailed(index, err){//某文件上传失败会执行，index代表列表中第index个文件
-      console.log(index, err, '上传失败了uploadFailed');
-    },
-    onFinished(result){//所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }
-      console.log('onFinished上传完毕,结果是:',result);
-    }
   }
 }
 </script>

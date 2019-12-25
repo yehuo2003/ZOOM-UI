@@ -4,8 +4,8 @@
      <div class="upload-title">选择文件</div>
      <div class="alert-upload upload-info">
         <i class="zoom-icon close-alert icon-hint"></i>
-        <span>最多上传{{limit}}个文件</span>
-        <span v-if="size">, 每个文件最大{{size}}</span>
+        <span v-if="limit">最多上传{{limit}}个文件!</span>
+        <span v-if="size">每个文件最大{{size}}</span>
      </div>
      <div v-show="successCount" class="alert-upload upload-success">
         <i class="zoom-icon close-alert icon-success"></i>
@@ -17,14 +17,14 @@
      </div>
   </div>
   <div class="upload-toolbar zoom-clear">
-      <zoom-button @click="addFileClick">添加文件</zoom-button>
+      <zoom-button ref="addUpload" @click="addFileClick">添加文件</zoom-button>
       <div class="upload-switch">
           <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
       </div>
   </div>
   <div class="upload-content" ref='select_frame'  ondragstart="return false">
     <div v-show="List.length === 0" class="upload-text">
-        <i class="zoom-icon icon-fodder"></i>
+        <i class="zoom-icon icon-edit"></i>
         <div>拖拽文件至此处</div>
     </div>
     <ul v-show="List.length > 0 && active === 'imgModel' " class="upload-file-list">
@@ -37,7 +37,7 @@
                 <span class="file-name-wrapper">{{item.name}}</span>
             </div>
             <div class="file-close">
-                <a @click="remove(index)" class="zoom-icon icon-delete"></a>
+                <a @click="removeConfirmation(index)" class="zoom-icon icon-delete"></a>
             </div>
             <div class="file-size">
                 {{item.fileSize}}
@@ -46,7 +46,7 @@
             <div v-show="item.status === 'success' " class="file-success">
                 <i class="zoom-icon icon-success-fill"></i>
             </div>
-            <div class="file-status">
+            <div v-if="!closeProgress" class="file-status">
                 <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
             </div>
         </li>
@@ -60,7 +60,7 @@
                     <table class="grid-table grid-thead">
                         <thead class="grid-head-content">
                             <tr>
-                                <th v-for="item of title" :key="item.id" class="grid-item" :style="'width: ' + item.width + '%;' ">
+                                <th v-show="closeProgress && item.id !== 5 || !closeProgress" v-for="item of title" :key="item.id" class="grid-item" :style="'width: ' + item.width + '%;' ">
                                     <span class="thead-title">{{item.text}}</span>
                                 </th>
                             </tr>
@@ -83,7 +83,7 @@
                                     <span class="grid-input">
                                         <span>
                                             <a title="删除文件" class="zoom-icon">
-                                                <span @click="remove(index)" class="zoom-icon icon-delete"></span>
+                                                <span @click="removeConfirmation(index)" class="zoom-icon icon-delete"></span>
                                             </a>
                                         </span>
                                     </span>
@@ -98,10 +98,10 @@
                                         {{formatStatus(item.status)}}
                                     </span>
                                 </td>
-                                <td class="grid-item" style="width: 50%;">
+                                <td  v-if="!closeProgress" class="grid-item" style="width: 50%;">
                                     <span class="grid-input">
                                         <!-- 上传进度 -->
-                                        <zoom-progress  :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+                                        <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
                                     </span>
                                 </td>
                                 <td class="grid-item" style="width: 40%;">
@@ -130,51 +130,62 @@
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
-          <zoom-button hue="primary" @click="submit">开始上传</zoom-button>
+          <zoom-button :disabled="true" ref="startUpload" hue="primary" @click="submit">开始上传</zoom-button>
           <!-- <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button> -->
       </div>
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
   <zoom-alert ref="upload-warn"></zoom-alert>
-  <zoom-dialog-box :show="visibility" @close="visibility=false">
+  <zoom-dialog-box :show="visibility" :op="dialogOp" @close="visibility = false">
       确认要删除该文件吗?
   </zoom-dialog-box>
 </div>
 </template>
 <script>
 export default {
- name: 'my-upload',
+ name: 'zoom-file-upload',
  props: {
+    op: {
+        type: Object,
+        url: {  // 要上传的服务器地址
+            type: String,
+            required: true
+        },
+        fileSize: String,   //  文件大小 如 10M 10KB 10kb
+        fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
+            type: Array,
+            default: function() {
+            return [];
+            }
+        },
+        closeProgress: Boolean, //  是否关闭进度条, 默认false 默认提交方法方法xhrSubmit, 如果设置tru将使用fetchSubmit
+        params: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
+        multiple: Boolean, //  是否多选
+        limit: Number,     //  文件数量
+        onChange: Function,    //监听文件变化，增减文件时都会被子组件调用
+        onProgress: Function,  //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
+        onSuccess: Function,   //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
+        onFailed: Function,    //某文件上传失败会执行，index代表列表中第index个文件    uploadFailed(index, err)
+        onBefore: Function,    // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送
+        onFinished: Function   //所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }   onFinished(result)
+    },
     name: String,
-    fileSize: String,   //  文件大小 如 10M 10KB 10kb
-    action: {  // 要上传的服务器地址
-        type: String,
-        required: true
-    },
-    fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
-        type: Array,
-        default: function() {
-          return [];
-        }
-    },
-    data: Object,  //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
-    multiple: Boolean, //  是否多选
-    limit: Number,     //  文件数量
-    onChange: Function,    //监听文件变化，增减文件时都会被子组件调用
-    onBefore: Function,    // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送
-    onProgress: Function,  //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
-    onSuccess: Function,   //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
-    onFailed: Function,    //某文件上传失败会执行，index代表列表中第index个文件    uploadFailed(index, err)
-    onFinished: Function   //所有文件上传完毕后（无论成败）执行，result: { success: 成功数目, failed: 失败数目 }   onFinished(result)
  },
  data() {
      return {
+         limit: 0,  //  文件数量
+         data: {},  //  上传时携带的参数
+         action: '',    //  要上传的服务器地址
+         closeProgress: false,  //  为true关闭进度条
+         multiple: false,   //  是否多选
          visibility: false,
+         removeId: 0,   //  删除时需要传的下标, 临时存放
          dialogOp: {
             showBtn: true,
-            onClick: (index)=> {
-                console.log(666666, index);
+            onClick: ()=> {
+                this.remove(this.removeId);
+                this.visibility = false;
             }
          },
          title: [
@@ -209,35 +220,67 @@ export default {
      List(newVal, oldVal) {
          this.successCount = 0;
          this.errCount = 0;
-         this.onChange(newVal);
+         if (this.op && this.op.onChange) {
+             this.op.onChange(newVal);
+         }
+        //  如果没有要上传的文件, 开始上传 按钮禁用
+        if (newVal.length > 0) {
+            this.$refs['startUpload'].isdisabled = false;
+        } else {
+            this.$refs['startUpload'].isdisabled = true;
+        }
+        // 如果文件数量大于等于limit, 禁用 添加文件 按钮
+        if (newVal.length >= this.limit) {
+            this.List.length = this.limit;
+            this.$refs['addUpload'].isdisabled = true;
+        } else {
+            this.$refs['addUpload'].isdisabled = false;
+        }
      }
  },
  created() {
-     if (this.fileSize) {
-         this.size = this.fileSize;
+     if (this.op) {
+        if (this.op.url) {
+            this.action = this.op.url;
+        }
+        if (this.op.fileSize) {
+            this.size = this.op.fileSize;
+        }
+        if (this.op.params) {
+            this.data = this.op.params;
+        }
+        if (this.op.multiple) {
+            this.multiple = this.op.multiple;
+        }
+        if (this.op.limit) {
+            this.limit = this.op.limit;
+        }
+        if (this.op.closeProgress) {
+            this.closeProgress = this.op.closeProgress;
+        }
      }
  },
  mounted() {
-     this.successCount = 0;
-     this.errCount = 0;
-     this.$refs.select_frame.ondragleave = (e) => {
-            e.preventDefault();  // 阻止离开时的浏览器默认行为
+    this.successCount = 0;
+    this.errCount = 0;
+    this.$refs['select_frame'].ondragleave = e => {
+        e.preventDefault();  // 阻止离开时的浏览器默认行为
+    }
+    this.$refs['select_frame'].ondrop = e => {
+        e.preventDefault();    // 阻止拖放后的浏览器默认行为
+        const data = e.dataTransfer.files[0];  // 获取文件对象
+        if (data.length < 1) {
+            return;  // 检测是否有文件拖拽到页面
         }
-        this.$refs.select_frame.ondrop = (e) => {
-            e.preventDefault();    // 阻止拖放后的浏览器默认行为
-            const data = e.dataTransfer.files[0];  // 获取文件对象
-            if (data.length < 1) {
-                return;  // 检测是否有文件拖拽到页面
-            }
-            this.addFile({target: {files: [data]}})//上传文件的方法
-        }
-        this.$refs.select_frame.ondragenter = (e) => {
-            e.preventDefault();  // 阻止拖入时的浏览器默认行为
-            this.$refs.select_frame.border = '2px dashed red'
-        }
-        this.$refs.select_frame.ondragover = (e) => {
-            e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
-        }
+        this.addFile({target: {files: [data]}})//上传文件的方法
+    }
+    this.$refs['select_frame'].ondragenter = e => {
+        e.preventDefault();  // 阻止拖入时的浏览器默认行为
+        this.$refs['select_frame'].border = '2px dashed red'
+    }
+    this.$refs['select_frame'].ondragover = e => {
+        e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
+    }
  },
  methods: {
     //  格式化状态
@@ -246,6 +289,8 @@ export default {
             return '成功'
         } else if (val === 'error') {
             return '失败'
+        } else if (val === 'start') {
+            return '上传中'
         } else {
             return '等待上传'
         }
@@ -380,6 +425,11 @@ export default {
         this.List = Array.from(new Set(List));
         // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
     },
+    // 移除文件 中转方法
+    removeConfirmation(index) {
+        this.removeId = index;
+        this.visibility = true;
+    },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index){
         // this.visibility= true;
@@ -415,11 +465,11 @@ export default {
         }
     },
     // 提交上传 这里使用了两种方式，fetch和原生方式，由于fetch不支持获取上传的进度，如果不需要进度条或者自己模拟进度或者XMLHttpRequest对象不存在的时候，使用fetch请求上传逻辑会更简单一些
-    submit(){
+    submit() {
         this.successCount = 0;
         this.errCount = 0;
         if(this.checkIfCanUpload()){
-            if(this.onProgress && typeof XMLHttpRequest !== 'undefined')
+            if(!this.closeProgress && typeof XMLHttpRequest !== 'undefined')
                 this.xhrSubmit();
             else
                 this.fetchSubmit();
@@ -432,9 +482,9 @@ export default {
         }
     },
     // 4.基于上传的两套逻辑，这里封装了两个方法xhrSubmit和fetchSubmit
-    fetchSubmit(){
+    fetchSubmit() {
         let keys = Object.keys(this.data), values = Object.values(this.data), action = this.action;
-        const promises = this.fileList.map(each => {
+        const promises = this.List.map(each => {
             each.status = "uploading";
             let data = new FormData();
             data.append(this.name || 'file', each);
@@ -445,25 +495,38 @@ export default {
                     "Content-Type" : "application/x-www-form-urlencoded"
                 },
                 body: data
-            }).then(res => res.text()).then(res => JSON.parse(res));//这里res.text()是根据返回值类型使用的，应该视情况而定
+            }).then(res => {    //这里res.text()是根据返回值类型使用的，应该视情况而定
+                res.text()
+            }).then(res => {
+                JSON.parse(res)
+            }).catch(err => {
+                throw Error('zoom-ui Error: ' + err);
+            })
         });
         Promise.all(promises).then(resArray => {//多线程同时开始，如果并发数有限制，可以使用同步的方式一个一个传，这里不再赘述。
             let success = 0, failed = 0;
             resArray.forEach((res, index) => {
-                if(res.code == 1){
+                if (res.code == 1) {
                     success++;         //统计上传成功的个数，由索引可以知道哪些成功了
-                    this.onSuccess(index, res);
-                }else if(res.code == 520){   //约定失败的返回值是520
+                    if (this.op && this.op.onSuccess) {
+                        this.op.onSuccess(index, res);
+                    }
+                } else if (res.code == 520) {   //约定失败的返回值是520
                     failed++;         //统计上传失败的个数，由索引可以知道哪些失败了
-                    this.onFailed(index, res);
+                    if (this.op && this.op.onFailed) {
+                        this.op.onFailed(index, res);
+                    }
                 }
             });
             return { success, failed };   //上传结束，将结果传递到下文
-        }).then(this.onFinished);      //把上传总结果返回
+        }).then( res => {
+            if (this.op && this.op.onFinished) {
+                this.op.onFinished(res);
+            }
+        });      //把上传总结果返回
     },
     xhrSubmit(){
         const _this = this;
-        // let options = this.fileList.map((rawFile, index) => ({
         let options = this.List.map((rawFile, index) => ({
             file: rawFile,
             data: _this.data,
@@ -471,25 +534,32 @@ export default {
             action: _this.action,
             onProgress(e){
                 _this.$set(_this.testprogress[index], 'progress', e.percent);
-                _this.onProgress(index, e);//闭包，将index存住
+                if (_this.op && _this.op.onProgress) {
+                    _this.op.onProgress(index, e); //闭包，将index存住
+                }
             },
             onSuccess(res){
                 _this.successCount += 1;
                 rawFile.status = 'success';
-                _this.onSuccess(index, res);
+                if (_this.op && _this.op.onSuccess) {
+                    _this.op.onSuccess(index, res);
+                }
                 // 成功后删除
                 // _this.remove(index);
             },
             onError(err){
                 _this.errCount += 1;
                 rawFile.status = 'error';
-                _this.onFailed(index, err);
+                if (_this.op && _this.op.onFailed) {
+                    _this.op.onFailed(index, err);
+                }
             }
         }));
         let len = this.List.length;
         let send = options => {
             for(let i = 0; i < len; i++){
                 if (options[i].file.status === 'ready') {
+                    options[i].file.status = 'start'
                     _this.sendRequest(options[i]);//这里用了个异步方法，按次序执行this.sendRequest方法，参数为文件列表包装的每个对象，this.sendRequest下面紧接着介绍
                 }
             }
@@ -592,7 +662,7 @@ export default {
     // 如果父组件定义了onBefore方法且返回了false，或者文件列表为空，请求就不会发送。
     // 代码部分完了，使用时只要有了on-progress属性并且XMLHttpRequest对象可访问，就会使用原生方式发送请求，否则就用fetch发送请求（不展示进度）。
     checkIfCanUpload(){
-        return this.List.length ? (this.onBefore && this.onBefore() || !this.onBefore) : false;
+        return this.List.length ? (this.op && this.op.onBefore && this.op.onBefore(this.List) || !this.op.onBefore) : false;
     }
  }
 }
@@ -648,7 +718,7 @@ export default {
     z-index: 11;
     cursor: pointer;
     position: absolute;
-    bottom: 5px;
+    bottom: 2px;
     right: 5px;
 }
 .upload-content .upload-file .file-name {

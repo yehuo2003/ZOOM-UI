@@ -426,8 +426,9 @@ export default {
   transform: rotate(180deg);
 }
 .grid-body-content > tr.grid-row.grid-row:first-child td.zoom-tip::after {
-  bottom: -166%;
-  margin-bottom: 20px;
+  bottom: -130%;
+  /* margin-bottom: 20px; */
+  margin-bottom: 10px;
   z-index: 3;
 }
 .grid-body-content .zoom-tip::after,
@@ -435,6 +436,7 @@ export default {
   content: attr(zoom-tip);
   display: none;
   position: absolute;
+  margin-bottom: 0;
   padding: 5px 10px;
   left: 15%;
   bottom: 100%;
