@@ -68,7 +68,7 @@
         <zoom-card>
           <zoom-header>上传图片组件</zoom-header>
           <zoom-container>
-            <zoom-upload :op="uploadOp" @imgData="getName"></zoom-upload>
+            <zoom-img-upload :op="uploadOp" @imgData="getName"></zoom-img-upload>
           </zoom-container>
           <zoom-footer>
             <span class="zoom-icon icon-RectangleCopy1"></span>

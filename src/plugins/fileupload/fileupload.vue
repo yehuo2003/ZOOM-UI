@@ -137,9 +137,6 @@
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
   <zoom-alert ref="upload-warn"></zoom-alert>
-  <zoom-dialog-box :show="visibility" :op="dialogOp" @close="visibility = false">
-      确认要删除该文件吗?
-  </zoom-dialog-box>
 </div>
 </template>
 <script>
@@ -179,15 +176,6 @@ export default {
          action: '',    //  要上传的服务器地址
          closeProgress: false,  //  为true关闭进度条
          multiple: false,   //  是否多选
-         visibility: false,
-         removeId: 0,   //  删除时需要传的下标, 临时存放
-         dialogOp: {
-            showBtn: true,
-            onClick: ()=> {
-                this.remove(this.removeId);
-                this.visibility = false;
-            }
-         },
          title: [
              {id: 1, text: '编号', width: 30},
              {id: 2, text: '操作', width: 30},
@@ -263,10 +251,11 @@ export default {
  mounted() {
     this.successCount = 0;
     this.errCount = 0;
-    this.$refs['select_frame'].ondragleave = e => {
+    let select_frame = this.$refs['select_frame'];
+    select_frame.ondragleave = e => {
         e.preventDefault();  // 阻止离开时的浏览器默认行为
     }
-    this.$refs['select_frame'].ondrop = e => {
+    select_frame.ondrop = e => {
         e.preventDefault();    // 阻止拖放后的浏览器默认行为
         const data = e.dataTransfer.files[0];  // 获取文件对象
         if (data.length < 1) {
@@ -274,25 +263,26 @@ export default {
         }
         this.addFile({target: {files: [data]}})//上传文件的方法
     }
-    this.$refs['select_frame'].ondragenter = e => {
+    select_frame.ondragenter = e => {
         e.preventDefault();  // 阻止拖入时的浏览器默认行为
-        this.$refs['select_frame'].border = '2px dashed red'
+        select_frame.border = '2px dashed red'
     }
-    this.$refs['select_frame'].ondragover = e => {
+    select_frame.ondragover = e => {
         e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
     }
  },
  methods: {
     //  格式化状态
     formatStatus(val) {
-        if (val === 'success') {
-            return '成功'
-        } else if (val === 'error') {
-            return '失败'
-        } else if (val === 'start') {
-            return '上传中'
-        } else {
-            return '等待上传'
+        switch (val) {
+            case 'success':
+                return '成功';
+            case 'error':
+                return '失败';
+            case 'start':
+                return '上传中';
+            default:
+                return '等待上传';
         }
     },
     //  添加文件
@@ -427,41 +417,48 @@ export default {
     },
     // 移除文件 中转方法
     removeConfirmation(index) {
-        this.removeId = index;
-        this.visibility = true;
+        this.$popup({
+            content: '确认要删除该文件吗?',
+            status: 'primary',
+            onClick: () => {
+                this.remove(index);
+            }
+        })
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
-    remove(index){
-        // this.visibility= true;
+    remove(index) {
+        console.log(index,'------index');
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
-        let fileId = fileList[index].id;
-        let files = this.$refs['zoom-upload'].files;
-        let len = files.length;
-        this.testprogress.splice(index, 1);
-        // 把已经删除的文件状态标记为delete 因为文件对象无法直接删除
-        if(fileList.length){
-            for (var i = 0; i<len; i ++) {
-                if (files[i].fileId === fileId) {
-                    // 标记当前文件状态
-                    this.$refs['zoom-upload'].files[i].status = 'delete';
-                    break;
+        if (fileList[index]) {
+            let fileId = fileList[index].id;
+            let files = this.$refs['zoom-upload'].files;
+            let len = files.length;
+            this.testprogress.splice(index, 1);
+            // 把已经删除的文件状态标记为delete 因为文件对象无法直接删除
+            if(fileList.length){
+                for (var i = 0; i<len; i ++) {
+                    if (files[i].fileId === fileId) {
+                        // 标记当前文件状态
+                        this.$refs['zoom-upload'].files[i].status = 'delete';
+                        break;
+                    }
                 }
+                fileList.splice(index, 1);
+                // 把已经删除的文件状态标记为delete
+                this.filelist.forEach(item => {
+                    if (item.length === 1) {
+                        item.status = 'delete';
+                    } else {
+                        item.forEach(i => {
+                            if(fileId === i.id) {
+                                i.status = 'delete';
+                            }
+                        })
+                    }
+                })
+                this.List = fileList;
             }
-            fileList.splice(index, 1);
-            // 把已经删除的文件状态标记为delete
-            this.filelist.forEach(item => {
-                if (item.length === 1) {
-                    item.status = 'delete';
-                } else {
-                    item.forEach(i => {
-                        if(fileId === i.id) {
-                            i.status = 'delete';
-                        }
-                    })
-                }
-            })
-            this.List = fileList;
         }
     },
     // 提交上传 这里使用了两种方式，fetch和原生方式，由于fetch不支持获取上传的进度，如果不需要进度条或者自己模拟进度或者XMLHttpRequest对象不存在的时候，使用fetch请求上传逻辑会更简单一些
@@ -483,9 +480,11 @@ export default {
     },
     // 4.基于上传的两套逻辑，这里封装了两个方法xhrSubmit和fetchSubmit
     fetchSubmit() {
+        this.successCount = 0;
+        this.errCount = 0;
         let keys = Object.keys(this.data), values = Object.values(this.data), action = this.action;
         const promises = this.List.map(each => {
-            each.status = "uploading";
+            each.status = "start";
             let data = new FormData();
             data.append(this.name || 'file', each);
             keys.forEach((one, index) => data.append(one, values[index]));
@@ -496,27 +495,34 @@ export default {
                 },
                 body: data
             }).then(res => {    //这里res.text()是根据返回值类型使用的，应该视情况而定
-                res.text()
-            }).then(res => {
-                JSON.parse(res)
+                res.text();
+                if (res.status === 200) {
+                    each.status = 'success';
+                } else {
+                    each.status = 'error';
+                }
             }).catch(err => {
-                throw Error('zoom-ui Error: ' + err);
+                console.error('zoom-ui Error: ', err);
             })
         });
         Promise.all(promises).then(resArray => {//多线程同时开始，如果并发数有限制，可以使用同步的方式一个一个传，这里不再赘述。
             let success = 0, failed = 0;
             resArray.forEach((res, index) => {
-                if (res.code == 1) {
+                if (res.code === 1) {
                     success++;         //统计上传成功的个数，由索引可以知道哪些成功了
+                    this.List[index].status = 'success';
                     if (this.op && this.op.onSuccess) {
                         this.op.onSuccess(index, res);
                     }
-                } else if (res.code == 520) {   //约定失败的返回值是520
+                } else {
                     failed++;         //统计上传失败的个数，由索引可以知道哪些失败了
+                    this.List[index].status = 'error';
                     if (this.op && this.op.onFailed) {
                         this.op.onFailed(index, res);
                     }
                 }
+                this.successCount = success;
+                this.errCount = failed;
             });
             return { success, failed };   //上传结束，将结果传递到下文
         }).then( res => {

@@ -10,6 +10,23 @@ const install = Vue => {
             el.focus();
         }
     })
+    Vue.directive('drag', {
+        inserted: function(el) {
+            el.onmousedown = function(e) {
+                var disx = e.pageX - el.offsetLeft;
+                var disy = e.pageY - el.offsetTop;
+
+                document.onmousemove = function(e) {
+                    el.style.left = e.pageX - disx + 'px';
+                    el.style.top = e.pageY - disy + 'px';
+                }
+
+                document.onmouseup = function() {
+                    document.onmousemove = document.onmouseup = null;
+                }
+            }
+        }
+    })
     Vue.prototype.dateFormat= function(fmt, date) {
         let ret;
         let opt = {
