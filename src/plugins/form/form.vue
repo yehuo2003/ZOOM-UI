@@ -14,7 +14,7 @@ export default {
         // 获取指定form中所有的<input>对象
         getElements(formId) {
             formId = formId || 'zoom-form';
-            let form = this.$id(formId);
+            let form = this.$zoom.$id(formId);
             let elements = new Array();
             let tagElements = form.getElementsByTagName('input');
             for (var i = 0; i < tagElements.length; i ++) {

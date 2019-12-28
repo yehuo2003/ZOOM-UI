@@ -43,7 +43,7 @@ export default {
                 }
                 list.push(item);
             })
-            this.list = this.clone(list);
+            this.list = this.$zoom.clone(list);
             this.sendVal();
         }
         if (this.op.isdisabled) {
@@ -63,7 +63,7 @@ export default {
                 }
                 list.push(item);
             })
-            this.list = this.clone(list);
+            this.list = this.$zoom.clone(list);
             this.sendVal();
           }
       },

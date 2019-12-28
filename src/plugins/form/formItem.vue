@@ -21,7 +21,7 @@ export default {
     },
     mounted() {
         this.text = this.label;
-        let form = this.$id('zoom-form');
+        let form = this.$zoom.$id('zoom-form');
         if (form && form.getAttribute('label')) {
             this.labelWidth = `width: ${form.getAttribute('label')}px;`;
         }

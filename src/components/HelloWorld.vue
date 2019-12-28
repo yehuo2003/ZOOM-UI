@@ -63,7 +63,6 @@
       <zoom-col span="6">
         <zoom-input></zoom-input>
       </zoom-col>
-      <zoom-alert ref="msg"></zoom-alert>
       <zoom-col lg="5" md="7" sm="8" xs="12">
         <zoom-card>
           <zoom-header>上传图片组件</zoom-header>
@@ -178,7 +177,7 @@ export default Vue.extend({
         type: 'text',
         IconStyle: 'icon-add',
         onClick:()=> {
-          // this.$refs['msg'].alert({
+          // this.$zoom.alert({
           //   title: '自定义标题',
           //   content: '自定义内容',
           //   type: 'error'
@@ -247,7 +246,7 @@ export default Vue.extend({
         hue: 'yellow',
         onClick: () => {
           console.log(this.active);
-          // this.$refs['msg'].alert({
+          // this.$zoom.alert({
           //   title: '标题',
           //   content: '内容',
           //   type: 'primary'

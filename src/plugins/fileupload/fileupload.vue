@@ -43,8 +43,8 @@
                 {{item.fileSize}}
             </div>
             <!-- 上传成功后显示 -->
-            <div v-show="item.status === 'success' " class="file-success">
-                <i class="zoom-icon icon-success-fill"></i>
+            <div v-show="item.status === 'success' || item.status === 'error' " class="file-response">
+                <i :class="item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' " class="zoom-icon"></i>
             </div>
             <div v-if="!closeProgress" class="file-status">
                 <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
@@ -136,7 +136,6 @@
       </div>
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
-  <zoom-alert ref="upload-warn"></zoom-alert>
 </div>
 </template>
 <script>
@@ -217,7 +216,7 @@ export default {
         } else {
             this.$refs['startUpload'].isdisabled = true;
         }
-        // 如果文件数量大于等于limit, 禁用 添加文件 按钮
+        // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
         if (newVal.length >= this.limit) {
             this.List.length = this.limit;
             this.$refs['addUpload'].isdisabled = true;
@@ -328,14 +327,14 @@ export default {
                 //     return false
                 // }
                 if(fileSize > size * 1024) {
-                    this.$refs['upload-warn'].alert({
+                    this.$zoom.alert({
                         title: '提示',
                         content: `文件大小不能大于${this.size}!`,
                         type: 'warning'
                     })
                     return false;
                 } else if (fileSize <= 0) {
-                    this.$refs['upload-warn'].alert({
+                    this.$zoom.alert({
                         title: '提示',
                         content: '文件大小不能为0! ',
                         type: 'warning'
@@ -367,13 +366,12 @@ export default {
                 } else {
                     fileSize = size + 'B';
                 }
-                // filesDate = dateFormat
                 files[i].fileName = files[i].name;  // 文件名
                 files[i].url = URL.createObjectURL(files[i]);//创建blob地址，不然图片怎么展示？
                 files[i].status = 'ready';//开始想给文件一个字段表示上传进行的步骤的，后面好像也没去用......
                 files[i].id = (Math.random()*10000000).toString(16).substr(0,4)+'-'+(new Date()).getTime()+'-'+Math.random().toString().substr(2,5);    // 随机id
                 files[i].fileSize = fileSize;   //  给用户展示的文件大小
-                files[i].fileDate = this.dateFormat("YYYY-mm-dd HH:MM", files[i].lastModifiedDate); // 格式化日期 展示给用户看
+                files[i].fileDate = this.$zoom.dateFormat("YYYY-mm-dd HH:MM", files[i].lastModifiedDate); // 格式化日期 展示给用户看
                 let obj = {     //  文件对象比较特殊 直接添加progress不生效 只能用一个其他数组代替,删除时候也删除相应下标的数据
                     progress: 0
                 }
@@ -417,7 +415,7 @@ export default {
     },
     // 移除文件 中转方法
     removeConfirmation(index) {
-        this.$popup({
+        this.$zoom.popup({
             content: '确认要删除该文件吗?',
             status: 'primary',
             onClick: () => {
@@ -427,7 +425,6 @@ export default {
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index) {
-        console.log(index,'------index');
         // let fileList = [...this.fileList];
         let fileList = [...this.List];
         if (fileList[index]) {
@@ -471,12 +468,15 @@ export default {
             else
                 this.fetchSubmit();
         } else {
-            this.$refs['upload-warn'].alert({
+            this.$zoom.alert({
                 title: '提示',
                 content: '请检查要上传文件',
                 type: 'warning'
             })
         }
+        setTimeout(() => {
+            this.$refs['startUpload'].isdisabled = true;
+        });
     },
     // 4.基于上传的两套逻辑，这里封装了两个方法xhrSubmit和fetchSubmit
     fetchSubmit() {
@@ -680,14 +680,19 @@ export default {
 .zoom-file-upload .upload-content .grid-input .zoom-progress {
     line-height: 0;
 }
-.zoom-file-upload .upload-content .file-success .icon-success-fill {
-    color: #52c41a;
+.zoom-file-upload .upload-content .file-response .zoom-icon {
     font-size: 50px;
     position: relative;
     top: 10px;
     z-index: 3;
 }
-.zoom-file-upload .upload-content .file-success::after {
+.zoom-file-upload .upload-content .file-response .icon-close-fill {
+    color: #f5222d;
+}
+.zoom-file-upload .upload-content .file-response .icon-success-fill {
+    color: #52c41a;
+}
+.zoom-file-upload .upload-content .file-response::after {
     content: "";
     width: 100%;
     height: 75%;
@@ -699,7 +704,7 @@ export default {
     opacity: .8;
     z-index: 2;
 }
-.zoom-file-upload .upload-content .file-success {
+.zoom-file-upload .upload-content .file-response {
     position: absolute;
     text-align: center;
     width: 100%;

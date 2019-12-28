@@ -4,7 +4,7 @@
       <div class="popup-modal-box">
         <div class="popup-modal-header">
           <span class="modal-title">{{title}}</span>
-          <i @click="show = false" class="zoom-icon icon-close"></i>
+          <i @click="close" class="zoom-icon icon-close"></i>
         </div>
         <div class="popup-modal-body">
           <div class="popup-status">
@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="popup-modal-footer">
-          <zoom-button @click="show = false">取消</zoom-button>
+          <zoom-button @click="close">取消</zoom-button>
           <zoom-button @click="btnClick" hue="primary">{{btnText}}</zoom-button>
         </div>
       </div>
@@ -35,8 +35,7 @@ export default {
       container: null,
       status: null,
       css: 'icon-query-fill',
-      btnText: '确认',
-      click: Function
+      btnText: '确认'
     }
   },
   created () {
@@ -93,20 +92,27 @@ export default {
     })
   },
   methods: {
+    // 关闭弹框方法
+    close() {
+      this.show = false;
+      window.removeEventListener('keyup', this.keyEnd, true);
+    },
     keyEnd() {
       // 27 是 Esc事件 13是回车, 点击完了就可以销毁了
       if (event.keyCode === 27) {
-        this.show = false;
+        this.close();
       } else if (event.keyCode === 13){
         this.btnClick();
       } else {
         return;
       }
-      window.removeEventListener('keyup', this.keyEnd, true);
+      this.close();
     },
     btnClick () {
-      this.onClick();
-      this.show = false;
+      if (this.onClick) {
+        this.onClick();
+      }
+      this.close();
     }
   }
 }

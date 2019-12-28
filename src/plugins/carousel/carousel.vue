@@ -59,8 +59,8 @@ export default {
     this.id = Math.random();
   },
   mounted() {
-    if (this.$id("zoom-carousel"+this.id) && this.op) {
-        let style = this.$id("zoom-carousel"+this.id).style
+    if (this.$zoom.$id("zoom-carousel" + this.id ) && this.op) {
+        let style = this.$zoom.$id("zoom-carousel" + this.id).style
         style.width = this.op.width;
         style.height = this.op.height;
         style.top = this.op.height / 2 - 1;

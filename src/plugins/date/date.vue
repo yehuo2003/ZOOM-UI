@@ -242,7 +242,7 @@ export default {
     /**
      * 格式化日期时间
      */
-    dateFormat(val) {
+    formatDate(val) {
       if (!val) {
         return "";
       }
@@ -427,7 +427,7 @@ export default {
         minutes: this.select.minutes,
         seconds: this.select.seconds
       };
-      this.dateTime = this.dateFormat(this.current);
+      this.dateTime = this.formatDate(this.current);
       this.$emit('input', this.dateTime);
       if (this.dateTime.indexOf('NaN') > -1) {
         throw Error('zoom-ui TypeError: 请检查入参是否为有效时间格式! ');

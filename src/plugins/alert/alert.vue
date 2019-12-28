@@ -1,5 +1,5 @@
 <template>
-  <div :class="lager ? 'alert-lager' : '' ">
+  <div v-if="show" :class="lager ? 'alert-lager' : '' ">
       <div class="zoom-alert" :class="msgStatus">
           <div v-if="!lager" class="msg-warpper">
               <span v-if="IconStyle" class="zoom-icon icon-alert" :class="IconStyle"></span>
@@ -26,26 +26,73 @@ export default {
     },
     data() {
         return {
-            title: '',
             content: '',
+            show: false,
+            title: '',
+            type: '',
+            time: 2000,
             lager: false,
             IconStyle: false,
             msgStatus: false
         }
     },
     created() {
-        if (this.size && this.size == 'lager') {
-            this.lager = true;
-        } else {
-            this.lager = false;
+        if (this.content || this.title) {
+            this.show = true;
+            let msgStatus = 'active alert-';
+            if (this.title) {
+                this.lager = true;
+            }
+            if (this.type) {
+                msgStatus += this.type;
+                switch (this.type) {
+                    case 'success':
+                        this.IconStyle = 'icon-success';
+                        break;
+                    case 'danger':
+                        this.IconStyle = 'icon-close';
+                        break;
+                    case 'error':
+                        this.IconStyle = 'icon-close';
+                        break;
+                    case 'warning':
+                        this.IconStyle = 'icon-warning';
+                        break;
+                    case 'primary':
+                        this.IconStyle = 'icon-query';
+                        break;
+                    case 'info':
+                        this.IconStyle = 'icon-stop';
+                        break;
+                    default:
+                        this.IconStyle = false;
+                }
+            }
+            setTimeout(() => {
+                 this.msgStatus = msgStatus;
+            });
         }
+        let time = this.time || 2000;
+        if (typeof time !== 'number') {
+            throw Error(`zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `);
+        }
+        setTimeout(() => {
+            this.close();
+        }, time);
+        // if (this.size && this.size == 'lager') {
+        //     this.lager = true;
+        // } else {
+        //     this.lager = false;
+        // }
     },
     methods: {
         close() {
             this.msgStatus = this.lager = false;
+            setTimeout(() => {
+             this.show = false;
+            },500);
         },
         testing(obj, time) {
-
             let cls = 'active alert-';
             if (typeof obj === 'object') {
                 this.title = obj.title;
@@ -143,6 +190,16 @@ export default {
     border: 1px solid #95de64;
     color: #333;
 }
+/* info */
+.alert-info .icon-alert,
+.alert-info .close-alert {
+    color: #fff;
+}
+.zoom-alert.alert-info {
+    background: rgba(0, 0, 0, .5);
+    border: 1px solid #eee;
+    color: #fff;
+}
 /* warning */
 .alert-warning .icon-alert,
 .alert-warning .close-alert {
@@ -156,10 +213,13 @@ export default {
 }
 /* error */
 .alert-error .icon-alert,
-.alert-error .close-alert
+.alert-error .close-alert,
+.alert-danger .icon-alert,
+.alert-danger .close-alert
 {
     color: #f5222d;
 }
+.zoom-alert.alert-danger,
 .zoom-alert.alert-error {
     background: #fff1f0;
     border: 1px solid #ff7875;

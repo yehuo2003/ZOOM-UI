@@ -27,7 +27,9 @@ const install = Vue => {
             }
         }
     })
-    Vue.prototype.dateFormat= function(fmt, date) {
+    // 自定义方法
+    Vue.prototype.$zoom = {};
+    Vue.prototype.$zoom.dateFormat = function(fmt, date) {
         let ret;
         let opt = {
             "Y+": date.getFullYear().toString(),        // 年
@@ -50,7 +52,7 @@ const install = Vue => {
         return fmt;
     }
     // 深拷贝方法
-    Vue.prototype.clone = function(obj) {
+    Vue.prototype.$zoom.clone = function(obj) {
         let clonedObj;
         // 判断直接数据类型
         if (['number', 'string', 'boolean', 'undefined', 'symbol',].includes(typeof obj)
@@ -61,23 +63,23 @@ const install = Vue => {
         const constructor = obj.constructor || Object;
         clonedObj = new constructor();
         Object.entries(obj).forEach(([key, value]) => {
-            clonedObj[key] = Vue.prototype.clone(value);
+            clonedObj[key] = this.clone(value);
         })
         return clonedObj;
     }
-    Vue.prototype.$id = function(id) {
+    Vue.prototype.$zoom.$id = function(id) {
         return document.getElementById(id);
     }
     // 随机数
-    Vue.prototype.$rn = function(min,max){
+    Vue.prototype.$zoom.$rn = function(min,max){
         var n = Math.random()*(max-min)+min;
         return Math.floor(n)
     }
     // 随机颜色
-    Vue.prototype.$rc = function(min,max){
-        var r = this.$rn(min,max);
-        var g = this.$rn(min,max);
-        var b = this.$rn(min,max);
+    Vue.prototype.$zoom.$rc = function(min,max){
+        var r = this.$zoom.$rn(min,max);
+        var g = this.$zoom.$rn(min,max);
+        var b = this.$zoom.$rn(min,max);
         return `rgb(${r},${g},${b})`
     }
     if (install.installed) return;
@@ -103,9 +105,25 @@ const install = Vue => {
                     // show 和弹窗组件里的show对应，用于控制显隐
                 })
             }
-            Vue.prototype.$popup = Popup.install;
+            Vue.prototype.$zoom.popup = Popup.install;
         }
+        if (componentName === 'zoom-alert') {
+            const Alert = config.default;
+            const AlertBox = Vue.extend(Alert);
+            Alert.install = function (data) {
+                let instance = new AlertBox({
+                    data
+                }).$mount()
 
+                document.body.appendChild(instance.$el)
+
+                Vue.nextTick(() => {
+                    instance.show = true
+                    // show 和弹窗组件里的show对应，用于控制显隐
+                })
+            }
+            Vue.prototype.$zoom.alert = Alert.install;
+        }
         Vue.component(componentName, config.default || config);
     })
 }

@@ -368,7 +368,7 @@ export default {
     // 获取当前数据
     getData() {
       let list = [];
-      let arr = this.clone(this.bodyData);
+      let arr = this.$zoom.clone(this.bodyData);
       if (this.op.isChecked) {
         // 如果是复选框 就只返回选中的数据
         arr.forEach(item => {

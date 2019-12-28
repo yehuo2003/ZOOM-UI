@@ -266,17 +266,21 @@ export default {
       this.$refs['user'].load(data);
     },
     test() {
-      this.$popup({
-        // imgUrl: require('../../../static/images/shadow.png'), // 顶部图片
-        title: '我是标题',
-        content: '我是内容',
-        btnText: '我是按钮',
-        click: () => {
-          // 点击按钮事件
-          console.log(666);
-          // this.$router.push('……')
-        }
+      this.$zoom.alert({
+        title: '标题自定义',
+        content: '自定义内容',
+        type: 'warning',
+        time: 5000
       })
+      // this.$zoom.popup({
+      //   title: '我是标题',
+      //   content: '我是内容',
+      //   btnText: '我是按钮',
+      //   onClick: () => {
+      //     // 点击按钮事件
+      //     console.log(666);
+      //   }
+      // })
       // let data = [
       //     // {text: '客服', icon: 'icon-service', onClick: val => {console.log(val);}},
       //     // {text: '电话', icon: 'icon-phone', url: 'wwww.baidu.com', target: 'blank'},
@@ -286,7 +290,7 @@ export default {
       // console.log(this.$refs['bar'].load(data), '--status');
     },
     handleClick() {
-      // this.$refs['msg'].alert('6666')
+      // this.$zoom.alert('6666')
       //  let code = this.$refs['test'].testCode;
       //  console.log(code);
       // let data = [

@@ -82,7 +82,7 @@ export default {
                     data.push(item);
                 });
                 // 调用深拷贝方法
-                this.treeList = this.clone(data);
+                this.treeList = this.$zoom.clone(data);
             }
             if (this.op.width) {
                 this.Width = this.op.width;

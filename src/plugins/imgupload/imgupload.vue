@@ -10,7 +10,6 @@
         </a>
       </li>
     </ul>
-    <zoom-alert ref="msg"></zoom-alert>
     <input
       type="file"
       id="zoom-upload-file"
@@ -75,13 +74,16 @@ export default {
     },
     //   上传图片点击事件
     imgClick() {
-        this.$id('zoom-upload-file').click();
+        this.$zoom.$id('zoom-upload-file').click();
     },
     // 上传失败
     defeated(msg) {
         this.deleteFile();
         if (msg) {
-            this.$refs['msg'].msgPlugin(msg);
+            this.$zoom.alert({
+                content: msg,
+                type: 'danger'
+            })
             throw Error('zoom-ui error:',msg);
         }
         if (this.op && this.op.defeatedEvent) {
@@ -103,7 +105,7 @@ export default {
                 return
             }
         }
-        let files = this.$id('zoom-upload-file').files[0];
+        let files = this.$zoom.$id('zoom-upload-file').files[0];
         let name = files.name;
         let arr = name.split('.');
         let fileSize = 0;
@@ -154,7 +156,7 @@ export default {
     },
     // 删除图片
     deleteFile() {
-        this.$id('zoom-upload-file').value = '';
+        this.$zoom.$id('zoom-upload-file').value = '';
         this.coverPicture = this.fileName = ''
         this.showFile = false;
         if (this.op && this.op.deleteEvent) {

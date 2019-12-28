@@ -150,7 +150,7 @@ export default {
             }
             list.push(item);
         })
-        this.op.data = this.clone(list);
+        this.op.data = this.$zoom.clone(list);
       }
       this.options = this.op;
       if (!this.options.data) {
@@ -182,7 +182,7 @@ export default {
         this.$emit('input', e.value);
         this.showDown = false;
       } else {
-        let list = this.clone(this.list);
+        let list = this.$zoom.clone(this.list);
         let str = ''; //  展示的数据
         let lst = []; //  返回给父组件的
         if (!e.checked) {
