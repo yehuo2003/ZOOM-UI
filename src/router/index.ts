@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Icon from '../views/Icon.vue'
 import date from '../views/date.vue'
+import photoUI from '../views/photoUI.vue'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,11 @@ const routes = [
     path: '/Icon',
     name: 'Icon',
     component: Icon
+  },
+  {
+    path: '/photoUI',
+    name: 'photoUI',
+    component: photoUI
   },
   {
     path: '/date',
