@@ -17,7 +17,7 @@
         </div>
         <div class="popup-modal-footer">
           <zoom-button @click="close">取消</zoom-button>
-          <zoom-button @click="btnClick" hue="primary">{{btnText}}</zoom-button>
+          <zoom-button @click="btnClick" type="primary">{{btnText}}</zoom-button>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@ export default {
   color: #333;
 }
 /* 全局弹框 */
-.zoom-popup .popup-modal-footer .btn {
+.zoom-popup .popup-modal-footer .zoom-btn {
   margin-left: 10px;
 }
 .zoom-popup .popup-modal-footer {

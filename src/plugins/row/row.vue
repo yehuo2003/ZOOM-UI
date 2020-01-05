@@ -1,11 +1,52 @@
 <template>
-  <div class="zoom-row">
+  <div :class="cls" class="zoom-row">
       <slot></slot>
   </div>
 </template>
 <script>
 export default {
-    name: 'zoom-row'
+    name: 'zoom-row',
+    props: {
+        flex: [String, Boolean],   //  弹性布局 IE可能存在兼容性问题
+        justify: String,   //  排列方式
+        align: String,     //  对齐方式
+    },
+    data() {
+        return {
+            cls: ''
+        }
+    },
+    created() {
+        if (this.flex) {
+            let cls = 'row-flex';
+            if (this.justify) {
+                // 排序方式 只提供这四种属性
+                let justifyArr = ['center', 'end', 'space-between', 'space-around'];
+                cls += this.test(this.justify, justifyArr, ' row-justify-');
+            }
+            if (this.align) {
+                // 对齐方式
+                let alignArr = ['top', 'middle', 'bottom'];
+                cls += this.test(this.align, alignArr, ' row-align-');
+            }
+            this.cls = cls;
+        }
+    },
+    methods: {
+        test(str, arr, css) {
+            // 验证用户输入的排列方式是否有误
+            if (arr.includes(str)) {
+                if (str === 'space-between' || str === 'between') {
+                    css = ' col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12';
+                } else {
+                    css += str;
+                }
+                return css;
+            } else {
+                throw Error('zoom-ui TypeError: zoom-row属性输入有误, 请根据手册检查语法');
+            }
+        }
+    }
 }
 </script>
 <style>
@@ -24,15 +65,57 @@ textarea{ resize:vertical;}
 input, select, textarea{ font-family:"\5FAE\8F6F\96C5\9ED1","Microsoft Yahei","Arial"; background-color:#fff; margin:0; padding:0; outline:none;box-sizing: border-box;}
 .zoom-row {
     margin-bottom: 20px;
-    margin-right: -10px;
-    margin-left: -10px;
+    /* margin-right: -10px;
+    margin-left: -10px; */
     width: 100%;
 }
-.zoom-clear::after,
+.zoom-row.row-flex {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+.zoom-row::after,.zoom-row::before {
+    content: "";
+    display: table;
+}
 .zoom-row::after {
-    content: " ";
-    display: block;
     clear: both;
+}
+.zoom-row.row-justify-start {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+.zoom-row.row-justify-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.zoom-row.row-justify-end {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+.zoom-row.row-around,
+.zoom-row.row-space-around,
+.zoom-row.row-justify-space-around {
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+.zoom-row.row-align-bottom {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+}
+.zoom-row.row-align-middle {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.zoom-row.row-align-top {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: start;
 }
 [class*=zoom-],*,::after,::before {
     -webkit-box-sizing: border-box;

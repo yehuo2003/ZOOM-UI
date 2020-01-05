@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Icon from '../views/Icon.vue'
 import date from '../views/date.vue'
 import photoUI from '../views/photoUI.vue'
+import layou from '../views/layou.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/date',
     name: 'date',
     component: date
+  },
+  {
+    path: '/layou',
+    name: 'layou',
+    component: layou
   },
   {
     path: '/about',

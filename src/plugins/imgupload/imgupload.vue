@@ -49,7 +49,7 @@ export default {
     loadData() {
         if (this.op) {
           if (this.op.isdisabled) this.btnOp.isdisabled = this.op.isdisabled;
-          if (this.op.hue) this.btnOp.hue = this.op.hue;
+          if (this.op.type) this.btnOp.type = this.op.type;
           if (this.op.content) this.text = this.op.content;
           if (this.op.custom) this.link = this.op.custom;
           if (this.op.customdel) this.del = this.op.customdel;

@@ -36,7 +36,7 @@ export default {
           showBtn: true,
           visibility: false,
           quitOp: {
-              hue: "primary",
+              type: "primary",
               onClick: () => {
                   this.handleClick();
               }
@@ -81,7 +81,7 @@ export default {
 };
 </script>
 <style>
-.zoom-dialog-box .dialog-box .dialog-footer .btn {
+.zoom-dialog-box .dialog-box .dialog-footer .zoom-btn {
     padding: 0 10px;
 }
 .zoom-dialog-box .dialog-box .dialog-footer {

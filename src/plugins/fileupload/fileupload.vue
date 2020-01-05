@@ -130,7 +130,7 @@
   </div>
   <div class="upload-footer">
       <div class="upload-btns">
-          <zoom-button :disabled="true" ref="startUpload" hue="primary" @click="submit">开始上传</zoom-button>
+          <zoom-button :disabled="true" ref="startUpload" type="primary" @click="submit">开始上传</zoom-button>
           <!-- <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button> -->
       </div>
@@ -798,7 +798,7 @@ export default {
     max-height: 260px;
     border: 1px solid #d9d9d9;
 }
-.zoom-file-upload .upload-toolbar .btn {
+.zoom-file-upload .upload-toolbar .zoom-btn {
     float: left;
 }
 .zoom-file-upload .upload-toolbar .upload-switch {

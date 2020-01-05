@@ -71,7 +71,7 @@
           </zoom-container>
           <zoom-footer>
             <span class="zoom-icon icon-RectangleCopy1"></span>
-            <zoom-button hue="green" :op="btnOp">
+            <zoom-button type="green" :op="btnOp">
               提交
             </zoom-button>
           </zoom-footer>
@@ -206,7 +206,7 @@ export default Vue.extend({
       name: '',
       uploadOp: {
         isdisabled: false,  //是否禁用
-        hue: 'warning',     //颜色状态
+        type: 'warning',     //颜色状态
         content: '上传图片',
         // custom: '<span>自定义按钮</span>',         //自定义图标
         // customdel: '<span>删除</span>',
@@ -230,7 +230,7 @@ export default Vue.extend({
       },
       btnOp: {
         isdisabled: false,
-        // hue: 'info',
+        // type: 'info',
         onClick: () => {
           console.log(this.radioStatus);
           // this.$refs['msg'].msage('小弹框', 2000);
@@ -243,7 +243,7 @@ export default Vue.extend({
       },
       bigOp: {
         isdisabled: false,
-        hue: 'yellow',
+        type: 'yellow',
         onClick: () => {
           console.log(this.active);
           // this.$zoom.alert({
