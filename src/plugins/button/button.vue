@@ -21,11 +21,21 @@ export default {
     op: Object,
     disabled: Boolean,
     onClick: Function,
-    type: String
+    type: String,
+    resetTime: {  //  点击按钮后 禁用的时间, 默认1秒
+      type: [String, Number],
+      default: 1000
+    },
+    shape: {  //  形状, plain平角 round 圆角  circle圆形
+      type: String,
+      default: 'plain'
+    }
   },
   data() {
     return {
       css: "",
+      shapeType: 'plain', //  按钮形状
+      time: 1000, //  点击按钮后禁用的时间
       isdisabled: false,
       showIcon: false,
       IconStyle: ""
@@ -83,6 +93,28 @@ export default {
     if (this.disabled) {
       this.isdisabled = !!this.disabled;
     }
+    // 如果设置了重置按钮时间
+    if (this.op && this.op.resetTime) {
+      this.time = this.op.resetTime;
+    } else {
+      this.time = this.resetTime;
+    }
+    // 按钮样式
+    let shape = '';
+    let shapeArr = ['plain', 'round', 'circle'];
+    if (this.op && this.op.shape) {
+      shape = this.op.shape;
+    } else {
+      shape = this.shape;
+    }
+    if (shapeArr.includes(shape)) {
+      // 添加到css样式
+      if (shape !== 'plain') {
+        this.css += ` zoom-${shape}`;
+      }
+    } else {
+      throw Error(`zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`);
+    }
   },
   methods: {
     handleChild(e) {
@@ -92,7 +124,11 @@ export default {
       this.$emit(e);
     },
     handleClick() {
-      if (this.op && this.op.onClick) {
+      this.isdisabled = true;
+      setTimeout(() => {
+        this.isdisabled = false;
+      }, this.time);
+      if (this.op && this.op.onClick && !this.isdisabled) {
         if (typeof this.op.onClick === "function") {
           this.op.onClick();
         } else {
@@ -106,6 +142,51 @@ export default {
 };
 </script>
 <style>
+.zoom-btn {
+  min-width: 80px;
+  max-width: 120px;
+  height: 30px;
+  line-height: 30px;
+  display: inline-block;
+  border: 1px solid #d9d9d9;
+  color: #1890ff;
+  border-radius: 2px;
+  background: #ffffff;
+  font-size: 12px;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  -ms-user-select: none;
+  -o-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-transition: border 0.3s, color 0.3s, background 0.3s;
+  transition: border 0.3s, color 0.3s, background 0.3s;
+  outline: 0;
+}
+.zoom-btn:hover,
+.zoom-btn:focus {
+  border: 1px solid #1890ff;
+  background: #ffffff;
+}
+.zoom-btn:active {
+  border: 1px solid #1890ff;
+  background: #e6f7ff;
+}
+.zoom-btn.zoom-icon {
+  font-size: 12px;
+}
+.zoom-btn.zoom-circle {
+  border-radius: 50%;
+  min-width: 30px;
+  min-height: 30px;
+}
+.zoom-btn.zoom-round {
+  border-radius: 30px;
+}
 /* primary */
 .zoom-btn.primary[disabled],
 .zoom-btn.primary[disabled]:hover,
@@ -135,6 +216,7 @@ export default {
 .zoom-btn.danger[disabled]:active {
   background: #d8bab5;
   border-color: #d8bab5;
+  color: #eee;
 }
 .zoom-btn.danger {
   background: #f5222d;
@@ -179,6 +261,7 @@ export default {
 .zoom-btn.info[disabled]:active {
   background: #f5f5f5;
   border-color: #d9d9d9;
+  color: #d9d9d9;
 }
 .zoom-btn.info {
   background: #333;
@@ -217,43 +300,6 @@ export default {
 .zoom-btn[disabled]:active {
   background: #d9d9d9;
   border-color: #d9d9d9;
-  /* color: #fff; */
-}
-.zoom-btn {
-  min-width: 80px;
-  max-width: 120px;
-  height: 30px;
-  line-height: 30px;
-  display: inline-block;
-  border: 1px solid #d9d9d9;
-  color: #1890ff;
-  border-radius: 2px;
-  background: #ffffff;
-  font-size: 12px;
-  padding: 0 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  -ms-user-select: none;
-  -o-user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
-  -webkit-transition: border 0.3s, color 0.3s, background 0.3s;
-  transition: border 0.3s, color 0.3s, background 0.3s;
-  outline: 0;
-}
-.zoom-btn:hover,
-.zoom-btn:focus {
-  border: 1px solid #1890ff;
-  background: #ffffff;
-}
-.zoom-btn:active {
-  border: 1px solid #1890ff;
-  background: #e6f7ff;
-}
-.zoom-btn.zoom-icon {
-  font-size: 12px;
+  color: #fff;
 }
 </style>
