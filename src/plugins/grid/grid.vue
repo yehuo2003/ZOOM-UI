@@ -157,7 +157,7 @@ export default {
       this.op.beforeLoad();
     } else {
       // 判断是否开启复选框功能
-      if (this.op.isChecked) {
+      if (this.op && this.op.isChecked) {
         let checkObj = {
           fieId: 'checked',
           header: '全选/取消'
@@ -369,7 +369,7 @@ export default {
     getData() {
       let list = [];
       let arr = this.$zoom.clone(this.bodyData);
-      if (this.op.isChecked) {
+      if (this.op && this.op.isChecked) {
         // 如果是复选框 就只返回选中的数据
         arr.forEach(item => {
           if (item.onClick) {

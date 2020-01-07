@@ -13,7 +13,6 @@
       </span>
 
       <span :class="{ 'disabled': changeStart + showPage - 1 == pages}" @click="nextPageHandle" class="zoom-next">&gt;</span>
-
       <span v-if="mode !== 'mini' " class="jump">
           前往
           <input type="text" v-model="val" @keydown.enter="jump">
@@ -28,7 +27,9 @@ export default {
     op: {
        type: Object,
        pageSize: Array,
-       skip: Function,
+       pageSizeSkip: Function,  // 每页大小的下拉框数据发生改变事件
+       beforeSkip: Function,  // 页面跳转前事件
+       skip: Function,  // 监听当前页变化
        pageVal: {
            type: Object,
            total: {  // 总条数
@@ -54,16 +55,20 @@ export default {
     return {
         mode: 'Number',
         value: 0,
-        showPage: 1,
-        total: 1,
+        showPage: 1,// 要展示多少页
+        total: 1,   //  总数
+        currentPage: 1, //记录当前页
         dropOp: {
             readonly: true,
             hideClose: true,
             isdisable: false,
-            default: 5,
+            default: 10,
             onClick: (val) => {
-                this.dropOp.default = val.value;
+                this.op.pageVal.pageSize = this.dropOp.default = val.value;
                 this.setPager();
+                if (this.op && this.op.pageSizeSkip) {
+                    this.op.pageSizeSkip(val.value, this.op.pageVal);
+                }
             },
             data: [
                 {value: 5, text: '5'},
@@ -74,48 +79,30 @@ export default {
         pageSizes: [],
         pages: Math.ceil(this.total/this.prepage),//计算需要展示的总页数
         val: '',//记录输入框中的值
-        currentPage: 1,//记录当前页
         posPage: Math.floor(this.showPage/2) + 1,//超过这个页码时，固定显示的位置
         start: 1,//第一个页码的开始数字
     }
   },
   created() {
-    //   计算页码位置
-    if (this.op) {
-        // 判断是否有配置OP
-        if (this.op.pageSizes) {
-            // 配置分页的下拉框数据
-            let pageSizes = [];
-            this.op.pageSizes.forEach(item => {
-                pageSizes.push({ value: item, text: item });
-            });
-            this.dropOp.default = pageSizes[0].value;
-        }
-        // 对分页总条数赋值
-        if (this.op.pageVal) {
-            this.total = this.op.pageVal.total;
-            if (this.op.pageVal.pageSize) {
-                this.dropOp.default = this.op.pageVal.pageSize;
-            }
-            // 设置页码当前页
-            if (this.op.pageVal.curPage) {
-                this.currentPage = this.op.pageVal.curPage;
-            }
-        }
-        // 是否迷你模式
-        if (this.op.mode) {
-            this.mode = this.op.mode;
-        }
-    }
-    this.setPager();
-    this.posPage = Math.floor(this.showPage/2) + 1;
+    this.load();
   },
   watch: {
       currentPage(val, old) {
           if (this.op.skip) {
             //   监听当前页
-              this.op.skip(val, this.op.pageVal);
+            this.op.pageVal.curPage = val;
+            this.op.skip(val, this.op.pageVal);
           }
+      },
+      total(val, old) {
+        //   当总数发生变化时候
+        this.op.pageVal.total = val;
+        this.setPager();
+      },
+      pageSize(val, old) {
+         //   每页大小发生变化时候
+        this.op.pageVal.pageSize = val;
+        this.setPager();
       }
   },
   computed:{
@@ -135,6 +122,46 @@ export default {
     }
   },
   methods:{
+    //   动态设置数据
+    load(data) {
+        if (data) {
+            // data需要是一个对象
+            if (typeof data === 'object') {
+                this.op.pageVal = data;
+            } else {
+                throw Error(`zoom-ui TypeError: ${data}语法错误, 请参考zoom-ui手册检查语法! `)
+            }
+        }
+        //   计算页码位置
+        if (this.op) {
+            // 判断是否有配置OP
+            if (this.op.pageSizes) {
+                // 配置分页的下拉框数据
+                let pageSizes = [];
+                this.op.pageSizes.forEach(item => {
+                    pageSizes.push({ value: item, text: item });
+                });
+                this.dropOp.default = pageSizes[0].value;
+            }
+            // 对分页总条数赋值
+            if (this.op.pageVal) {
+                this.total = this.op.pageVal.total;
+                if (this.op.pageVal.pageSize) {
+                    this.dropOp.default = this.op.pageVal.pageSize;
+                }
+                // 设置页码当前页
+                if (this.op.pageVal.curPage) {
+                    this.currentPage = this.op.pageVal.curPage;
+                }
+            }
+            // 是否迷你模式
+            if (this.op.mode) {
+                this.mode = this.op.mode;
+            }
+        }
+        this.setPager();
+        this.posPage = Math.floor(this.showPage/2) + 1;
+    },
     // 设置当前显示页
     setPager() {
         this.pageSize = this.dropOp.default;
@@ -241,7 +268,7 @@ export default {
     cursor: default;
 }
 
-.zoom-pager span.zoom-prev.disabled, .zoom-pager span.next.disabled {
+.zoom-pager span.zoom-prev.disabled, .zoom-pager span.zoom-next.disabled {
     color: #cccccc;
     cursor: not-allowed;
 }
