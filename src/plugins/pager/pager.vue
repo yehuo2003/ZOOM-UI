@@ -1,9 +1,9 @@
 <template>
   <div class="zoom-pager">
       <span v-if="mode !== 'mini' " class="pager-total">
-          共{{total}}条
-          <zoom-dropdown :op="dropOp"></zoom-dropdown>
-          条/页
+        共{{total}}条
+        <zoom-dropdown :op="dropOp"></zoom-dropdown>
+        条/页
       </span>
 
       <span :class="{ 'disabled': changeStart == 1}" @click="prePageHandle" class="zoom-prev">&lt;</span>
@@ -13,10 +13,10 @@
       </span>
 
       <span :class="{ 'disabled': changeStart + showPage - 1 == pages}" @click="nextPageHandle" class="zoom-next">&gt;</span>
-      <span v-if="mode !== 'mini' " class="jump">
-          前往
-          <input type="text" v-model="val" @keydown.enter="jump">
-          页
+      <span v-if="mode !== 'mini' " class="pager-jump">
+        <a @click="jump">前往</a>
+        <input type="text" v-model="val" @keydown.enter="jump">
+        <a @click="jump">页</a>
       </span>
   </div>
 </template>
@@ -220,6 +220,16 @@ export default {
 };
 </script>
 <style>
+.zoom-pager .pager-jump input {
+    margin: 0 5px;
+}
+.zoom-pager .pager-jump a:hover {
+    color: #1890ff;
+    cursor: pointer;
+}
+.zoom-pager .pager-jump a {
+    color: #333;
+}
 .zoom-pager .zoom-input .input-btn {
     height: 25px;
     top: -5px;
@@ -243,6 +253,7 @@ export default {
 
 .zoom-pager span {
     margin: 0 10px;
+    font-size: 14px;
 }
 
 .zoom-pager span.page, .zoom-pager span.zoom-prev, .zoom-pager span.zoom-next {

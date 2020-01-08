@@ -1,13 +1,22 @@
 <template>
   <div>
+    <zoom-notice></zoom-notice>
     <zoom-grid ref="grid" :op="gridOp"></zoom-grid>
     <zoom-pager ref="page" :op="pageOp"></zoom-pager>
+    <zoom-slider :min=0 :max=500 v-model="per"></zoom-slider>
+    <!-- <zoom-slider :op="sliderOp" v-model="per"></zoom-slider> -->
+    <zoom-button @click="test">进度条</zoom-button>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      sliderOp: {
+        min: 0,
+        max: 50
+      },
+      per: 0,
       list: [
           {name: '林主明', age: 27, gender: '男', city: '深圳', phone: 13666990716},
           {name: '张三丰', age: 130, gender: '男', city: '武当', phone: 13876935716},
@@ -84,6 +93,9 @@ export default {
     this.loadData();
   },
   methods: {
+    test() {
+      console.log(this.per);
+    },
     loadData() {
       let pages = {
         total: this.list.length,

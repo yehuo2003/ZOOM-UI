@@ -427,7 +427,6 @@ export default {
 }
 .grid-body-content > tr.grid-row.grid-row:first-child td.zoom-tip::after {
   bottom: -130%;
-  /* margin-bottom: 20px; */
   margin-bottom: 10px;
   z-index: 3;
 }
@@ -510,10 +509,10 @@ export default {
 .grid-tbody tbody tr:hover,
 .grid-tfoot tbody tr:hover,
 .grid-thead tbody tr:hover {
-  background: #e4ecef;
+  background: #e6f7ff;
 }
 .grid-tbody .grid-row.active {
-  background: #e6f7ff;
+  background: #e4ecef;
 }
 .zoom-grid .grid-table tbody tr td .grid-input {
   position: relative;
