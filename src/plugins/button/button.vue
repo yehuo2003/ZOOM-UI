@@ -24,7 +24,7 @@ export default {
     type: String,
     resetTime: {  //  点击按钮后 禁用的时间, 默认1秒
       type: [String, Number],
-      default: 1000
+      default: 800
     },
     shape: {  //  形状, plain平角 round 圆角  circle圆形
       type: String,

@@ -5,6 +5,7 @@
     <zoom-pager ref="page" :op="pageOp"></zoom-pager>
     <zoom-slider :min=0 :max=500 v-model="per"></zoom-slider>
     <!-- <zoom-slider :op="sliderOp" v-model="per"></zoom-slider> -->
+    <zoom-logout></zoom-logout>
     <zoom-button @click="test">进度条</zoom-button>
   </div>
 </template>
