@@ -219,7 +219,15 @@ export default {
     }
   },
   mounted () {
-    this.$img = this.$refs["img"];
+    if (this.$refs['img']) {
+      this.$img = this.$refs['img'];
+      this.$nextTick(() => {
+        // 如果用户没设置放大镜宽度, 放大镜宽度默认为照片的三分之一大小
+        if(!this.op.width) {
+          this.width = Math.floor(this.$refs['img'].width / 3);
+        }
+      });
+    }
   },
   methods: {
     handlerUrlChange () {

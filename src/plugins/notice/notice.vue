@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="rolling-container">
-        <div :style=" 'animation: scrollChild ' + rollTime + 'ms linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="rolling-container-body">
+        <div :style=" 'animation: scrollChild ' + rollTime + ' linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="rolling-container-body">
           <slot></slot>
         </div>
       </div>
@@ -16,7 +16,7 @@
       <div class="notice-header">
         <i class="zoom-icon" :class="icon ? icon : 'icon-trumpet' "></i>
       </div>
-      <div :style=" 'animation: marquee ' + rollTime + 'ms linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="notice-marquee">
+      <div :style=" 'animation: marquee ' + rollTime + ' linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="notice-marquee">
         <slot></slot>
       </div>
     </div>
@@ -40,12 +40,13 @@ export default {
   data() {
     return {
       vertical: false,  //  是否垂直
-      rollTime: 10000,  //  滚动时间
+      rollTime: '10000ms',  //  滚动时间
       icon: null,
       isSuspend: true //  鼠标经过时暂停
     }
   },
   created() {
+    let time = null;
     if (this.op) {
       // 是否垂直
       if (this.op.vertical) {
@@ -55,7 +56,7 @@ export default {
       }
       // 滚动时间
       if (this.op.time) {
-        this.rollTime = this.op.time;
+        time = this.op.time;
       }
       if (this.op.notSuspend) {
         this.isSuspend = false;
@@ -69,7 +70,15 @@ export default {
         this.icon = this.op.IconStyle
       }
     } else {
-      this.rollTime = this.time;
+      time = this.time;
+    }
+    if (time) {
+      // 判断用户传的time类型
+      if (typeof time === 'string' && time.indexOf('s') > -1) {
+        this.rollTime = time;
+      } else if (typeof time === 'number') {
+        this.rollTime = time + 'ms';
+      }
     }
   }
 };
@@ -98,10 +107,10 @@ export default {
 }
 @keyframes marquee {
   0% {
-    text-indent: 27.5em;
+    text-indent: 100%;
   }
   100% {
-    text-indent: -105em;
+    text-indent: -100%;
   }
 }
 /* 垂直滚动 */

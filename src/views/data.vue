@@ -5,7 +5,7 @@
     <zoom-pager ref="page" :op="pageOp"></zoom-pager>
     <zoom-slider :min=0 :max=500 v-model="per"></zoom-slider>
     <!-- <zoom-slider :op="sliderOp" v-model="per"></zoom-slider> -->
-    <zoom-logout></zoom-logout>
+    <zoom-logout :op="logOp"></zoom-logout>
     <zoom-button @click="test">进度条</zoom-button>
   </div>
 </template>
@@ -13,6 +13,14 @@
 export default {
   data() {
     return {
+      logOp: {
+        text: '退出',
+        url: 'http://www.baidu.com',
+        point: '确定要退出吗?',
+        onClick: () => {
+          console.log(666);
+        }
+      },
       sliderOp: {
         min: 0,
         max: 50

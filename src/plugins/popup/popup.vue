@@ -8,7 +8,7 @@
         </div>
         <div class="popup-modal-body">
           <div class="popup-status">
-            <i v-if="status" :class="css ? css : 'icon-query-fill' " class="zoom-icon"></i>
+            <i v-if="type" :class="css ? css : 'icon-query-fill' " class="zoom-icon"></i>
           </div>
           <div v-if="container" v-html="container" class="popup-container"></div>
           <div v-else class="popup-content">
@@ -33,13 +33,13 @@ export default {
       title: '提示',
       content: '',
       container: null,
-      status: null,
+      type: null,
       css: 'icon-query-fill',
       btnText: '确认'
     }
   },
   created () {
-    switch (this.status) {
+    switch (this.type) {
       case "err":
         this.css = "icon-close-fill";
         break;
@@ -83,7 +83,7 @@ export default {
         this.css = "icon-query-fill";
         break;
       default:
-        this.css = this.status;
+        this.css = this.type;
         break;
     }
     this.$nextTick(() => {

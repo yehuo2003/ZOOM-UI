@@ -1,163 +1,74 @@
 <template>
-    <!--/*外层最大容器*/-->
-		<div class="wrap">
-	<!--	/*包裹所有元素的容器*/-->
-      <div class="cube">
-        <!--前面图片 -->
-        <div class="out_front">
-          <img src="./img/1.jpg" class="pic">
-        </div>
-        <!--后面图片 -->
-        <div class="out_back">
-          <img src="./img/2.jpg" class="pic">
-        </div>
-        <!--左图片 -->
-        <div class="out_left">
-          <img src="./img/3.jpg" class="pic">
-        </div>
-        <div class="out_right">
-          <img src="./img/4.jpg" class="pic">
-        </div>
-        <div class="out_top">
-          <img src="./img/5.jpg" class="pic">
-        </div>
-        <div class="out_bottom">
-          <img src="./img/6.jpg" class="pic">
-        </div>
-        <!--小正方体 -->
-        <span class="in_front">
-          <img src="./img/7.jpg" class="in_pic">
-        </span>
-        <span class="in_back">
-            <img src="./img/8.jpg" class="in_pic">
-        </span>
-        <span class="in_left">
-          <img src="./img/9.jpg" class="in_pic">
-        </span>
-        <span class="in_right">
-          <img src="./img/10.jpg" class="in_pic">
-        </span>
-        <span class="in_top">
-          <img src="./img/11.jpg" class="in_pic">
-        </span>
-        <span class="in_bottom">
-          <img src="./img/12.jpg" class="in_pic">
-        </span>
-      </div>
-		</div>
+	<div>
+		<zoom-form>
+			<zoom-form-item label="姓名">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="年龄">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="班级">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="电话">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="联系地址">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="爱好">
+				<zoom-input></zoom-input>
+			</zoom-form-item>
+			<zoom-form-item label="验证码">
+				<zoom-captcha :op="testOp"></zoom-captcha>
+			</zoom-form-item>
+		</zoom-form>
+		<!-- <zoom-gallery :op="galleryOp"></zoom-gallery> -->
+	</div>
 </template>
 <script>
 export default {
   data() {
     return {
-
+			num: 0,
+			testOp: {
+				onSuccess: () => {
+					console.log('验证成功父组件接收');
+				},
+				onFailed: () => {
+					console.log('验证失败父组件接收');
+				},
+				RandomSrc:() => {
+					// this.num += 1;
+					// let src = '';
+					// if (this.num % 2 === 0) {
+					// 	src = 'http://necaptcha.nosdn.127.net/1de51d7763b14843a4749c48aacb7d5e.jpg';
+					// } else if (this.num % 2 === 1) {
+					// 	src = 'http://necaptcha.nosdn.127.net/6a5267d603004f2ca5c7a88e8cbc4916.jpg';
+					// } else {
+					// 	src = 'http://necaptcha.nosdn.127.net/d790d311e38241f986f8779605962e9f.jpg';
+					// }
+					// return src;
+					return 'https://uploadbeta.com/api/pictures/random/?key=BingEverydayWallpaperPicture'
+				}
+			},
+			galleryOp: {
+				showZoom: true,
+				data: [
+					require('../assets/img/lordea-home-01-min.jpg'),
+					require('../assets/img/lordea-home-02-min.jpg'),
+					require('../assets/img/lordea-home-03-min.jpg'),
+					require('../assets/img/lordea-home-04-min.jpg'),
+					require('../assets/img/lordea-home-05-min.jpg'),
+					require('../assets/img/lordea-home-06-min.jpg'),
+					require('../assets/img/lordea-home-07-min.jpg'),
+					require('../assets/img/lordea-home-08-min.jpg'),
+				]
+			}
     }
   }
 }
 </script>
 <style>
-/*最外层容器样式*/
-.wrap{
-	width: 200px;
-	height: 200px;
-	/*改变左右上下,图片方块移动*/
-	margin: 150px 360px;
-	position: relative;
 
-}
-/*包裹所有容器样式*/
-.cube{
-	width: 200px;
-	height: 200px;
-	margin: 0 auto;
-	transform-style: preserve-3d;
-	transform: rotateX(-30deg) rotateY(-80deg);
-	-webkit-animation: rotate 20s infinite;
-	/*匀速*/
-	animation-timing-function: linear;
-}
-@-webkit-keyframes rotate{
-	from{transform: rotateX(0deg) rotateY(0deg);}
-	to{transform: rotateX(360deg) rotateY(360deg);}
-}
-.cube div{
-	position: absolute;
-	width: 200px;
-	height: 200px;
-	opacity: 0.8;
-	transition: all .4s;
-}
-/*定义所有图片样式*/
-.pic{
-	width: 200px;
-	height: 200px;
-}
-.cube .out_front{
-	transform: rotateY(0deg) translateZ(100px);
-}
-.cube .out_back{
-	transform: translateZ(-100px) rotateY(180deg);
-}
-.cube .out_left{
-	transform: rotateY(90deg) translateZ(100px);
-}
-.cube .out_right{
-	transform: rotateY(-90deg) translateZ(100px);
-}
-.cube .out_top{
-	transform: rotateX(90deg) translateZ(100px);
-}
-.cube .out_bottom{
-	transform: rotateX(-90deg) translateZ(100px);
-}
-/*定义小正方体样式*/
-.cube span{
-	display: bloack;
-	width: 100px;
-	height: 100px;
-	position: absolute;
-	top: 50px;
-	left: 50px;
-}
-.cube .in_pic{
-	width: 100px;
-	height: 100px;
-}
-.cube .in_front{
-	transform: rotateY(0deg) translateZ(50px);
-}
-.cube .in_back{
-	transform: translateZ(-50px) rotateY(180deg);
-}
-.cube .in_left{
-	transform: rotateY(90deg) translateZ(50px);
-}
-.cube .in_right{
-	transform: rotateY(-90deg) translateZ(50px);
-}
-.cube .in_top{
-	transform: rotateX(90deg) translateZ(50px);
-}
-.cube .in_bottom{
-	transform: rotateX(-90deg) translateZ(50px);
-}
-/*鼠标移入后样式*/
-.cube:hover .out_front{
-	transform: rotateY(0deg) translateZ(200px);
-}
-.cube:hover .out_back{
-	transform: translateZ(-200px) rotateY(180deg);
-}
-.cube:hover .out_left{
-	transform: rotateY(90deg) translateZ(200px);
-}
-.cube:hover .out_right{
-	transform: rotateY(-90deg) translateZ(200px);
-}
-.cube:hover .out_top{
-	transform: rotateX(90deg) translateZ(200px);
-}
-.cube:hover .out_bottom{
-	transform: rotateX(-90deg) translateZ(200px);
-}
 </style>

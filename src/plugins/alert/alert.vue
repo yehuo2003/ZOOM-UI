@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" :class="lager ? 'alert-lager' : '' ">
       <div class="zoom-alert" :class="msgStatus">
-          <div v-if="!lager" class="msg-warpper">
+          <div v-if="!lager" class="zoom-alert-warpper">
               <span v-if="IconStyle" class="zoom-icon icon-alert" :class="IconStyle"></span>
                   {{content}}
           </div>
@@ -235,13 +235,13 @@ export default {
     border: 1px solid #91d5ff;
     color: #333;
 }
-.msg-warpper {
-    padding: 0 20px;
+.zoom-alert-warpper {
+    padding: 0 22px;
 }
 .zoom-alert .icon-alert {
     font-size: 16px;
     position: absolute;
-    left: 10px;
+    left: 3px;
 }
 .zoom-alert {
     position: absolute;
