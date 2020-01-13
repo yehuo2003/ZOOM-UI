@@ -1,18 +1,18 @@
 <template>
-    <button
-     @click="handleChild('click')"
-     @mousedown="handleChild('mousedownChild')"
-     @mouseenter="handleChild('mouseenterChild')"
-     @mouseleave="handleChild('mouseleaveChild')"
-     @mousemove="handleChild('mousemoveChild')"
-     @mouseout="handleChild('mouseoutChild')"
-     @mouseover="handleChild('mouseoverChild')"
-     @keydown="handleChild('keydownChild')"
-     @keyup="handleChild('keyupChild')"
-     class="zoom-btn" :class="css" :disabled="isdisabled">
-      <slot></slot>
-      <i v-if="showIcon" class="zoom-icon" :class="IconStyle"></i>
-    </button>
+  <button
+    @click="handleChild('click')"
+    @mousedown="handleChild('mousedownChild')"
+    @mouseenter="handleChild('mouseenterChild')"
+    @mouseleave="handleChild('mouseleaveChild')"
+    @mousemove="handleChild('mousemoveChild')"
+    @mouseout="handleChild('mouseoutChild')"
+    @mouseover="handleChild('mouseoverChild')"
+    @keydown="handleChild('keydownChild')"
+    @keyup="handleChild('keyupChild')"
+    class="zoom-btn" :class="css" :disabled="isdisabled">
+    <slot></slot>
+    <i v-if="showIcon" class="zoom-icon" :class="IconStyle"></i>
+  </button>
 </template>
 <script>
 export default {
@@ -24,7 +24,7 @@ export default {
     type: String,
     resetTime: {  //  点击按钮后 禁用的时间, 默认1秒
       type: [String, Number],
-      default: 800
+      default: 1000
     },
     shape: {  //  形状, plain平角 round 圆角  circle圆形
       type: String,
@@ -100,18 +100,18 @@ export default {
       this.time = this.resetTime;
     }
     // 按钮样式
-    let shape = '';
+    let shape = null;
     let shapeArr = ['plain', 'round', 'circle'];
     if (this.op && this.op.shape) {
       shape = this.op.shape;
     } else {
       shape = this.shape;
     }
-    if (shapeArr.includes(shape)) {
-      // 添加到css样式
-      if (shape !== 'plain') {
+    if (shape) {
+      if (shapeArr.includes(shape)) {
+        // 添加到css样式
         this.css += ` zoom-${shape}`;
-      }
+    }
     } else {
       throw Error(`zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`);
     }
@@ -195,6 +195,7 @@ export default {
   background: #d9d9d9;
   border-color: #d9d9d9;
 }
+.zoom-btn.zoom-plain.primary:hover,
 .zoom-btn.primary {
   background: #1890ff;
   border-color: #1890ff;
@@ -218,6 +219,7 @@ export default {
   border-color: #d8bab5;
   color: #eee;
 }
+.zoom-btn.zoom-plain.danger:hover,
 .zoom-btn.danger {
   background: #f5222d;
   border-color: #f5222d;
@@ -240,6 +242,7 @@ export default {
   background: #a6c3b9;
   border-color: #a6c3b9;
 }
+.zoom-btn.zoom-plain.success:hover,
 .zoom-btn.success {
   background: #52c41a;
   border-color: #52c41a;
@@ -263,6 +266,7 @@ export default {
   border-color: #d9d9d9;
   color: #d9d9d9;
 }
+.zoom-btn.zoom-plain.info:hover,
 .zoom-btn.info {
   background: #333;
   border-color: #333;
@@ -282,6 +286,7 @@ export default {
   background: #d3c6a2;
   border-color: #d3c6a2;
 }
+.zoom-btn.zoom-plain.warning:hover,
 .zoom-btn.warning {
   background: #faad14;
   border-color: #faad14;
@@ -301,5 +306,71 @@ export default {
   background: #d9d9d9;
   border-color: #d9d9d9;
   color: #fff;
+}
+/* shape样式 */
+.zoom-btn.zoom-plain.primary {
+  color: #1890ff;
+  background: rgba(24, 144, 255, .06);
+  border-color: #1890ff;
+}
+.zoom-btn.zoom-plain.primary[disabled],
+.zoom-btn.zoom-plain.primary[disabled]:hover,
+.zoom-btn.zoom-plain.primary[disabled]:focus,
+.zoom-btn.zoom-plain.primary[disabled]:active {
+  color: #bfbfbf;
+  background: hsla(0, 0%, 75%, .1);
+  border-color: #d9d9d9;
+}
+.zoom-btn.zoom-plain.success {
+  color: #52c41a;
+  background: rgba(82, 196, 26, .06);
+  border-color: #52c41a;
+}
+.zoom-btn.zoom-plain.success[disabled],
+.zoom-btn.zoom-plain.success[disabled]:hover,
+.zoom-btn.zoom-plain.success[disabled]:focus,
+.zoom-btn.zoom-plain.success[disabled]:active {
+  color: #a6c3b9;
+  background: rgba(166, 195, 185, .1);
+  border-color: #a6c3b9;
+}
+.zoom-btn.zoom-plain.info {
+  color: #333;
+  background: rgba(51, 51, 51, .06);
+  border-color: #333;
+}
+.zoom-btn.zoom-plain.info[disabled],
+.zoom-btn.zoom-plain.info[disabled]:hover,
+.zoom-btn.zoom-plain.info[disabled]:focus,
+.zoom-btn.zoom-plain.info[disabled]:active {
+  color: #bfbfbf;
+  background: hsla(0, 0%, 75%, .1);
+  border-color: #bfbfbf;
+}
+.zoom-btn.zoom-plain.warning {
+  color: #faad14;
+  background: rgba(250, 173, 20, .06);
+  border-color: #faad14;
+}
+.zoom-btn.zoom-plain.warning[disabled],
+.zoom-btn.zoom-plain.warning[disabled]:hover,
+.zoom-btn.zoom-plain.warning[disabled]:focus,
+.zoom-btn.zoom-plain.warning[disabled]:active {
+  color: #d3c6a2;
+  background: hsla(44, 36%, 73%, .1);
+  border-color: #d3c6a2;
+}
+.zoom-btn.zoom-plain.danger {
+  color: #f5222d;
+  background: rgba(245, 34, 45, .06);
+  border-color: #f5222d;
+}
+.zoom-btn.zoom-plain.danger[disabled],
+.zoom-btn.zoom-plain.danger[disabled]:hover,
+.zoom-btn.zoom-plain.danger[disabled]:focus,
+.zoom-btn.zoom-plain.danger[disabled]:active {
+  color: #d8bab5;
+  background: hsla(9, 31%, 78%, .1);
+  border-color: #d8bab5;
 }
 </style>

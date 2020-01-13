@@ -15,7 +15,6 @@ export default {
     return {
       logOp: {
         text: '退出',
-        url: 'http://www.baidu.com',
         point: '确定要退出吗?',
         onClick: () => {
           console.log(666);

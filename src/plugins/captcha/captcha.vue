@@ -1,5 +1,5 @@
 <template>
-  <div :class=" disabled ? 'disabled-captcha-model' : '' " class="captcha-model">
+  <div :class="[ hide ? 'captcha-hide' : '', disabled ? 'disabled-captcha-model' : '' ]" class="captcha-model">
     <div class="captcha-header">
       <span>请完成安全验证</span>
     </div>
@@ -7,7 +7,7 @@
     <div class="captcha-content">
       <div class="sliding-pictures">
         <div ref="captcha">
-          <i class="zoom-icon icon-refresh" @click="onRefresh" title="刷新验证码"></i>
+          <i v-if="!disabled" class="zoom-icon icon-refresh" @click="reset" title="刷新验证码"></i>
         </div>
       </div>
     </div>
@@ -30,6 +30,7 @@ export default {
   props: {
     op: {
       type: Object,
+      show: Boolean,  //  为true时, 总是显示
       disabled: Boolean, //  是否禁用 默认false, 验证成功后自动为true
       RandomSrc: Function, //  父组件生成随机图片的方法
       onSuccess: Function, //  监听验证成功的回调
@@ -38,6 +39,7 @@ export default {
   },
   data() {
     return {
+      hide: true,
       disabled: false,
       cv: {
         w: 310,
@@ -66,6 +68,11 @@ export default {
   mounted() {
     this.disabled = true;
     this.init();
+    if (this.op && this.op.show) {
+      this.hide = false;
+    } else {
+      this.hide = true;
+    }
     this.$nextTick(() => {
       setTimeout(() => {
         if (this.op.disabled) {
@@ -81,9 +88,6 @@ export default {
       this.canvasInit();
       this.initImg();
       this.bindEvents();
-    },
-    onRefresh() {
-      this.reset();
     },
     onSuccess() {
       if (this.op.onSuccess) {
@@ -126,7 +130,6 @@ export default {
         originX = e.clientX || e.touches[0].clientX;
         originY = e.clientY || e.touches[0].clientY;
         isMouseDown = true;
-        console.log(originX);
       };
 
       const handleDragMove = e => {
@@ -348,30 +351,28 @@ export default {
 .captcha-model .captcha-wrap {
   position: absolute;
   width: 100%;
-  height: 105%;
+  height: 102%;
   z-index: 999;
   cursor: no-drop;
+  background: #d9d9d9;
+  opacity: .5;
+  top: 0;
 }
-.captcha-model:hover .captcha-header,
-.captcha-model:hover .captcha-content {
+.captcha-hide:not(.disabled-captcha-model):hover .captcha-header,
+.captcha-hide:not(.disabled-captcha-model):hover .captcha-content {
   display: block;
 }
-.disabled-captcha-model:hover .captcha-header,
-.disabled-captcha-model:hover .captcha-content {
-  display: none;
-}
-.captcha-model .captcha-header,
-.disabled-captcha-model .captcha-header,
-.disabled-captcha-model .captcha-content,
-.captcha-model .captcha-content {
+.captcha-hide .captcha-header,
+.captcha-hide .captcha-content {
+  position: absolute;
   display: none;
 }
 .zoom-block {
   position: absolute;
-  left: 0;
-  top: 0;
   cursor: pointer;
   cursor: grab;
+  left: 0;
+  top: 0;
 }
 
 .zoom-block:active {
@@ -403,7 +404,7 @@ export default {
   border-width: 1px;
 }
 
-.sliderContainer_success .slider {
+.sliderContainer.sliderContainer_success .slider {
   height: 38px;
   top: -1px;
   margin-left: -1px;
@@ -411,30 +412,30 @@ export default {
   background-color: #52ccba !important;
 }
 
-.sliderContainer_success .sliderMask {
+.sliderContainer.sliderContainer_success .sliderMask {
   height: 38px;
   border: 1px solid #52ccba;
   background-color: #d2f4ef;
 }
 
-.sliderContainer_success .sliderIcon {
+.sliderContainer.sliderContainer_success .sliderIcon {
   background-position: 0 0 !important;
 }
 
-.sliderContainer_fail .slider {
+.sliderContainer.sliderContainer_fail .slider {
   height: 38px;
   top: -1px;
   border: 1px solid #f57a7a;
   background-color: #f57a7a !important;
 }
 
-.sliderContainer_fail .sliderMask {
+.sliderContainer.sliderContainer_fail .sliderMask {
   height: 38px;
   border: 1px solid #f57a7a;
   background-color: #fce1e1;
 }
 
-.sliderContainer_fail .sliderIcon {
+.sliderContainer.sliderContainer_fail .sliderIcon {
   top: 14px;
   background-position: 0 -82px !important;
 }
@@ -444,7 +445,7 @@ export default {
   display: none;
 }
 
-.sliderMask {
+.sliderContainer .sliderMask {
   position: absolute;
   left: 0;
   top: 0;
@@ -453,7 +454,7 @@ export default {
   background: #d1e9fe;
 }
 
-.slider {
+.sliderContainer .slider {
   position: absolute;
   top: 0;
   left: 0;
@@ -466,19 +467,19 @@ export default {
   cursor: grab;
 }
 
-.slider:active {
+.sliderContainer .slider:active {
   cursor: grabbing;
 }
 
-.slider:hover {
+.sliderContainer .slider:hover {
   background: #1991fa;
 }
 
-.slider:hover .sliderIcon {
+.sliderContainer .slider:hover .sliderIcon {
   background-position: 0 -13px;
 }
 
-.sliderIcon {
+.sliderContainer .sliderIcon {
   position: absolute;
   top: 15px;
   left: 13px;
@@ -497,11 +498,10 @@ export default {
   background: #fff;
   width: 100%;
   line-height: 20px;
+  bottom: 199px;
 }
 .captcha-model .captcha-content {
   padding-top: 0.1rem;
-
-  position: absolute;
   bottom: 40px;
 }
 .captcha-model .captcha-content .sliding-pictures {
@@ -529,5 +529,10 @@ export default {
   width: 310px;
   display: inline-block;
   position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>
