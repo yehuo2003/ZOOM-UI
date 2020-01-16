@@ -148,6 +148,7 @@ export default {
             type: String,
             required: true
         },
+        fileType: String,   //  文件类型, 如  image png
         fileSize: String,   //  文件大小 如 10M 10KB 10kb
         fileList: {    //  上传文件列表，无论单选还是支持多选，文件都以列表格式保存
             type: Array,
@@ -172,6 +173,7 @@ export default {
      return {
          limit: 0,  //  文件数量
          data: {},  //  上传时携带的参数
+         fileType: '',  //  文件类型
          action: '',    //  要上传的服务器地址
          closeProgress: false,  //  为true关闭进度条
          multiple: false,   //  是否多选
@@ -245,6 +247,9 @@ export default {
         if (this.op.closeProgress) {
             this.closeProgress = this.op.closeProgress;
         }
+        if (this.op.fileType) {
+            this.fileType = this.op.fileType;
+        }
      }
  },
  mounted() {
@@ -292,6 +297,16 @@ export default {
     testSize(file) {
         if (!this.size) {
             return true
+        }
+        if (this.fileType) {
+            if (file.type.indexOf(this.fileType) === -1) {
+                this.$zoom.alert({
+                    title: '提示',
+                    content: `${file.name}的文件类型${file.type}错误, 请传入${this.fileType}类型文件`,
+                    type: 'warning'
+                })
+                return false;
+            }
         }
         let self = this;
         function test(unit) {
@@ -404,10 +419,6 @@ export default {
                         List.push(i)
                     }
                 })
-            } else {
-                if (item[0].status !== 'delete') {
-                    List.push(item[0])
-                }
             }
         })
         this.List = Array.from(new Set(List));

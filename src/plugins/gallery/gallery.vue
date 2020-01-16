@@ -61,18 +61,18 @@ export default {
         this.changePhoto(0);
         this.$nextTick(() => {
           // 监听左右箭头事件
-          window.addEventListener("keydown", this.keyDown, true);
+          window.addEventListener("keyup", this.keyUp, true);
         });
       }
     }
   },
   destroyed() {
     // 注销时候销毁
-    window.removeEventListener("keydown", this.keyDown, true);
+    window.removeEventListener("keyup", this.keyUp, true);
   },
   methods: {
     // 监听键盘事件
-    keyDown() {
+    keyUp() {
       if (event.which === 37) {
         this.clickPhoto("gallery-prev");
       }

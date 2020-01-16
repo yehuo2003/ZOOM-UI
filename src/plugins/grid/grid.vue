@@ -19,14 +19,8 @@
                   class="grid-item"
                 >
                   <div v-if="item.sort" class="zoom-sort">
-                    <span
-                      @click="sortClick('up', item)"
-                      class="asc zoom-icon icon-up-fill"
-                    ></span>
-                    <span
-                      @click="sortClick('down', item)"
-                      class="asc zoom-icon icon-down-fill"
-                    ></span>
+                    <span @click="sortClick('up', item)" class="asc zoom-icon icon-up-fill"></span>
+                    <span @click="sortClick('down', item)" class="asc zoom-icon icon-down-fill"></span>
                   </div>
                   <span class="thead-title">{{item.title}}</span>
                 </th>
@@ -36,7 +30,7 @@
         </div>
       </div>
       <!-- 内容 -->
-      <div class="grid-body">
+      <div :style=" 'height :' + height + ';' " :class="height ? 'rolling' : '' " class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
           <p v-show="!loading" class="no-text">
             <i class="zoom-icon icon-glass"></i>
@@ -44,7 +38,7 @@
           </p>
           <zoom-loading color="#1890ff" :show="loading"></zoom-loading>
         </div>
-        <div class="grid-bodybox">
+        <div class="grid-body-box">
           <table class="grid-table grid-tbody">
             <tbody class="grid-body-content">
               <tr
@@ -68,9 +62,16 @@
                     <!-- {{i === item.btns ? '' : i}} -->
                     {{i === item.btns ? '' : name === 'checked' ? '' : i}}
                     <!-- 如果是复选框, 就加载 -->
-                    <span v-if="name === 'checked'" @click.stop="itemClick($event, i, item, name)" class="zoom-checkbox">
+                    <span
+                      v-if="name === 'checked'"
+                      @click.stop="itemClick($event, i, item, name)"
+                      class="zoom-checkbox"
+                    >
                       <label class="checkbox-item">
-                        <i class="zoom-icon" :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"></i>
+                        <i
+                          class="zoom-icon"
+                          :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"
+                        ></i>
                       </label>
                     </span>
                     <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
@@ -105,19 +106,24 @@ export default {
   props: {
     op: {
       type: Object,
-      isChecked: {  // 是否开启复选框功能
-        type: Boolean,
-        default: false,
-      },
-      hideIndex: {  // 是否隐藏序列号
-        type: Boolean,
-        default: false,
-      },
-      tip: {   // 是否显示tip
+      isChecked: {
+        // 是否开启复选框功能
         type: Boolean,
         default: false
       },
-      title: {  // 表格头部数据
+      hideIndex: {
+        // 是否隐藏序列号
+        type: Boolean,
+        default: false
+      },
+      tip: {
+        // 是否显示tip
+        type: Boolean,
+        default: false
+      },
+      height: String, //  表格内容高度 如果设置了,当表格高度溢出将显示滚动条
+      title: {
+        // 表格头部数据
         type: Array,
         default() {
           return [];
@@ -136,6 +142,7 @@ export default {
   data() {
     return {
       tips: false,
+      height: null, //  表格内容高度
       serial: false, //  是否显示序列号
       loading: false, //  loading
       surplus: [], //   剩余数据
@@ -156,21 +163,25 @@ export default {
     if (this.op && this.op.beforeLoad) {
       this.op.beforeLoad();
     } else {
+      // 判断是否设置了高度
+      if (this.op && this.op.height) {
+        this.height = this.op.height;
+      }
       // 判断是否开启复选框功能
       if (this.op && this.op.isChecked) {
         let checkObj = {
-          fieId: 'checked',
-          header: '全选/取消'
-        }
+          fieId: "checked",
+          header: "全选/取消"
+        };
         let count = 0;
         this.op.title.forEach(item => {
-          if (item.fieId === 'checked') {
+          if (item.fieId === "checked") {
             count += 1;
           }
-        })
+        });
         // 防止重载
         if (count === 0) {
-          if (this.op.title.length && this.op.title[0].fieId === 'indexId') {
+          if (this.op.title.length && this.op.title[0].fieId === "indexId") {
             this.op.title.splice(1, 0, checkObj);
           } else {
             this.op.title.splice(0, 0, checkObj);
@@ -195,28 +206,30 @@ export default {
             let col1Count = 0;
             arr.forEach(i => {
               // 如果用户设置了不显示序列号选项 则隐藏
-              if (item.fieId === 'indexId' && this.serial) {
-                i.style = 'display: none;'
+              if (item.fieId === "indexId" && this.serial) {
+                i.style = "display: none;";
                 if (col1Count === 0) {
                   col1Count += 1;
                   let col1 = $Z('[col="1"]');
-                  for(let i = 0; i < col1.length; i++) {
-                    col1[i].style = 'display: none;'
+                  for (let i = 0; i < col1.length; i++) {
+                    col1[i].style = "display: none;";
                   }
                 }
               } else {
-                if (item.fieId === 'checked') {
-                  $Z('[col="2"]')[0].style = i.style = `width: ${15}%; text-align: center;`;
+                if (item.fieId === "checked") {
+                  $Z(
+                    '[col="2"]'
+                  )[0].style = i.style = `width: ${15}%; text-align: center;`;
                 }
-              // 判断是否有自定义样式
+                // 判断是否有自定义样式
                 if (item.css && typeof item.css === "string") {
                   i.classList.add(item.css);
                 }
-              //   判断是否开启tip 并且有tip属性
+                //   判断是否开启tip 并且有tip属性
                 if (item.tip && this.tips) {
                   i.classList.add("zoom-tip");
                 }
-              //   设置列宽
+                //   设置列宽
                 if (item.minWidth) {
                   i.style = `width: ${item.minWidth}%;`;
                 }
@@ -240,7 +253,7 @@ export default {
         // let fieIdArr = ["indexId"];
         let fieIdArr = [];
         let btns = [];
-        let checked = '';
+        let checked = "";
         title.forEach((item, index) => {
           titleData.push({
             id: index + 1,
@@ -256,7 +269,7 @@ export default {
             fieIdArr.push(item.fieId);
           }
           // 如果有复选框功能就先打开 等下再设置成false
-          if (item.fieId === 'checked') {
+          if (item.fieId === "checked") {
             checked = true;
           }
           // 如果有按钮就给每列加上
@@ -345,23 +358,23 @@ export default {
     },
     // title 点击 全选/取消 功能
     titleClick(item) {
-      if (item.title === '全选/取消') {
+      if (item.title === "全选/取消") {
         let count = 0;
         // 遍历查看有几个是选中的
         this.bodyData.forEach(item => {
           if (item.checked) {
             count += 1;
           }
-        })
+        });
         // 如果包含有未选中的, 则全部选中
         if (this.bodyData.length > count) {
           this.bodyData.forEach(item => {
             item.checked = true;
-          })
+          });
         } else {
           this.bodyData.forEach(item => {
             item.checked = false;
-          })
+          });
         }
       }
     },
@@ -379,13 +392,13 @@ export default {
             delete item.checked;
             list.push(item);
           }
-        })
+        });
       } else {
         arr.forEach(item => {
           if (item.onClick) {
             delete item.onClick;
           }
-        })
+        });
         list = this.bodyData;
       }
       return list;
@@ -472,12 +485,12 @@ export default {
 .zoom-tip:hover::before {
   display: block;
 }
-.grid-bodybox .grid-input .zoom-icon span:hover {
+.grid-body-box .grid-input .zoom-icon span:hover {
   cursor: pointer;
   font-weight: bold;
   color: #096dd9;
 }
-.grid-bodybox .grid-input .zoom-icon span {
+.grid-body-box .grid-input .zoom-icon span {
   font-size: 20px;
   line-height: 20px;
   color: #1890ff;
@@ -666,6 +679,10 @@ export default {
 .grid-thead {
   table-layout: fixed;
   width: 100%;
+}
+.grid-body.rolling {
+  position: relative;
+  overflow-y: auto;
 }
 .grid-head .grid-headbox {
   border-top: none;

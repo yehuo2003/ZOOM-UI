@@ -15,7 +15,7 @@
       <span :class="{ 'disabled': changeStart + showPage - 1 == pages}" @click="nextPageHandle" class="zoom-next">&gt;</span>
       <span v-if="mode !== 'mini' " class="pager-jump">
         <a @click="jump">前往</a>
-        <input type="text" v-model="val" @keydown.enter="jump">
+        <input type="text" v-model="val" @keyup.enter="jump">
         <a @click="jump">页</a>
       </span>
   </div>
