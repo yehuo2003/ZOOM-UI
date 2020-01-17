@@ -1,139 +1,159 @@
 <template>
 <div class="zoom-file-upload">
-  <div class="upload-header">
-     <div class="upload-title">选择文件</div>
-     <div class="alert-upload upload-info">
-        <i class="zoom-icon close-alert icon-hint"></i>
-        <span v-if="limit">最多上传{{limit}}个文件!</span>
-        <span v-if="size">每个文件最大{{size}}</span>
-     </div>
-     <div v-show="successCount" class="alert-upload upload-success">
-        <i class="zoom-icon close-alert icon-success"></i>
-        上传成功{{successCount}}个文件
-     </div>
-     <div v-show="errCount" class="alert-upload upload-error">
-        <i class="zoom-icon close-alert icon-close"></i>
-        上传失败{{errCount}}个文件!
-     </div>
-  </div>
-  <div class="upload-toolbar zoom-clear">
-      <zoom-button ref="addUpload" @click="addFileClick">添加文件</zoom-button>
-      <div class="upload-switch">
-          <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
+  <div v-if="custom" class="upload-custom">
+      <div @click="addFileClick" class="custom-header">
+          <slot></slot>
+      </div>
+      <div class="custom-content">
+          <ul v-show="List.length > 0" class="upload-list">
+              <li v-for="(item, index) of List" :key="index" :class="setStatus(item.status)" class="upload-list-item">
+                  <a class="item name">
+                    <i :class="item.type && item.type.indexOf('image') > -1 ? 'icon-img' : 'icon-channel' " class="zoom-icon"></i>
+                    <span>{{item.name}}</span>
+                    <i @click="removeConfirmation(index)" class="zoom-icon icon-close-plus"></i>
+                  </a>
+                  <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+                  <span v-show=" item.status === 'success' || item.status === 'error' " :class=" item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' " class="zoom-icon"></span>
+              </li>
+          </ul>
       </div>
   </div>
-  <div class="upload-content" ref='select_frame'  ondragstart="return false">
-    <div v-show="List.length === 0" class="upload-text">
-        <i class="zoom-icon icon-edit"></i>
-        <div>拖拽文件至此处</div>
+  <div>
+    <div class="upload-header">
+        <div class="upload-title">选择文件</div>
+        <div class="alert-upload upload-info">
+            <i class="zoom-icon close-alert icon-hint"></i>
+            <span v-if="limit">最多上传{{limit}}个文件!</span>
+            <span v-if="size">每个文件最大{{size}}</span>
+        </div>
+        <div v-show="successCount" class="alert-upload upload-success">
+            <i class="zoom-icon close-alert icon-success"></i>
+            上传成功{{successCount}}个文件
+        </div>
+        <div v-show="errCount" class="alert-upload upload-error">
+            <i class="zoom-icon close-alert icon-close"></i>
+            上传失败{{errCount}}个文件!
+        </div>
     </div>
-    <ul v-show="List.length > 0 && active === 'imgModel' " class="upload-file-list">
-        <li v-for="(item, index) of List" :key="index" class="upload-file">
-            <div class="upload-item">
-                <img v-if="item.type && item.type.indexOf('image') > -1" :src="item.url" :alt="item.name">
-                <span v-else class="zoom-icon icon-channel"></span>
-            </div>
-            <div class="file-name" title="">
-                <span class="file-name-wrapper">{{item.name}}</span>
-            </div>
-            <div class="file-close">
-                <a @click="removeConfirmation(index)" class="zoom-icon icon-delete"></a>
-            </div>
-            <div class="file-size">
-                {{item.fileSize}}
-            </div>
-            <!-- 上传成功后显示 -->
-            <div v-show="item.status === 'success' || item.status === 'error' " class="file-response">
-                <i :class="item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' " class="zoom-icon"></i>
-            </div>
-            <div v-if="!closeProgress" class="file-status">
-                <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
-            </div>
-        </li>
-    </ul>
-
-    <div v-show="List.length > 0 && active === 'listModel' " class="zoom-grid">
-        <div class="zoom-grid-body">
-            <!-- 表头 -->
-            <div class="grid-head">
-                <div class="grid-headbox">
-                    <table class="grid-table grid-thead">
-                        <thead class="grid-head-content">
-                            <tr>
-                                <th v-show="closeProgress && item.id !== 5 || !closeProgress" v-for="item of title" :key="item.id" class="grid-item" :style="'width: ' + item.width + '%;' ">
-                                    <span class="thead-title">{{item.text}}</span>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
+    <div class="upload-toolbar zoom-clear">
+        <zoom-button ref="addUpload" @click="addFileClick">添加文件</zoom-button>
+        <div class="upload-switch">
+            <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
+        </div>
+    </div>
+    <div class="upload-content" ref='select_frame'  ondragstart="return false">
+        <div v-show="List.length === 0" class="upload-text">
+            <i class="zoom-icon icon-edit"></i>
+            <div>拖拽文件至此处</div>
+        </div>
+        <ul v-show="List.length > 0 && active === 'imgModel' " class="upload-file-list">
+            <li v-for="(item, index) of List" :key="index" class="upload-file">
+                <div class="upload-item">
+                    <img v-if="item.type && item.type.indexOf('image') > -1" :src="item.url" :alt="item.name">
+                    <span v-else class="zoom-icon icon-channel"></span>
                 </div>
-            </div>
-            <!-- 内容 -->
-            <div class="grid-body">
-                <div class="grid-bodybox">
-                    <table class="grid-table grid-tbody">
-                        <tbody class="grid-body-content">
-                            <tr v-for="(item, index) of List" :key="index" class="grid-row">
-                                <td class="grid-item" style="width: 30%;">
-                                    <span class="grid-input">
-                                        {{index + 1}}
-                                    </span>
-                                </td>
-                                <td class="grid-item" style="width: 30%;">
-                                    <span class="grid-input">
-                                        <span>
-                                            <a title="删除文件" class="zoom-icon">
-                                                <span @click="removeConfirmation(index)" class="zoom-icon icon-delete"></span>
-                                            </a>
+                <div class="file-name" title="">
+                    <span class="file-name-wrapper">{{item.name}}</span>
+                </div>
+                <div class="file-close">
+                    <a @click="removeConfirmation(index)" class="zoom-icon icon-delete"></a>
+                </div>
+                <div class="file-size">
+                    {{item.fileSize}}
+                </div>
+                <!-- 上传成功后显示 -->
+                <div v-show="item.status === 'success' || item.status === 'error' " class="file-response">
+                    <i :class="item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' " class="zoom-icon"></i>
+                </div>
+                <div v-if="!closeProgress" class="file-status">
+                    <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+                </div>
+            </li>
+        </ul>
+
+        <div v-show="List.length > 0 && active === 'listModel' " class="zoom-grid">
+            <div class="zoom-grid-body">
+                <!-- 表头 -->
+                <div class="grid-head">
+                    <div class="grid-headbox">
+                        <table class="grid-table grid-thead">
+                            <thead class="grid-head-content">
+                                <tr>
+                                    <th v-show="closeProgress && item.id !== 5 || !closeProgress" v-for="item of title" :key="item.id" class="grid-item" :style="'width: ' + item.width + '%;' ">
+                                        <span class="thead-title">{{item.text}}</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <!-- 内容 -->
+                <div class="grid-body">
+                    <div class="grid-bodybox">
+                        <table class="grid-table grid-tbody">
+                            <tbody class="grid-body-content">
+                                <tr v-for="(item, index) of List" :key="index" class="grid-row">
+                                    <td class="grid-item" style="width: 30%;">
+                                        <span class="grid-input">
+                                            {{index + 1}}
                                         </span>
-                                    </span>
-                                </td>
-                                <td :zoom-tip="item.fileName" class="grid-item zoom-tip" style="width: 100%;">
-                                    <span class="grid-input">
-                                        {{item.fileName}}
-                                    </span>
-                                </td>
-                                <td class="grid-item" style="width: 50%;">
-                                    <span class="grid-input">
-                                        {{formatStatus(item.status)}}
-                                    </span>
-                                </td>
-                                <td  v-if="!closeProgress" class="grid-item" style="width: 50%;">
-                                    <span class="grid-input">
-                                        <!-- 上传进度 -->
-                                        <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
-                                    </span>
-                                </td>
-                                <td class="grid-item" style="width: 40%;">
-                                    <span class="grid-input">
-                                        {{item.fileSize}}
-                                    </span>
-                                </td>
-                                <td class="grid-item" style="width: 60%;">
-                                    <span class="grid-input">
-                                        {{item.fileDate}}
-                                    </span>
-                                </td>
-                                <td :zoom-tip="item.type" class="grid-item zoom-tip" style="width: 120%;">
-                                    <span class="grid-input">
-                                        {{item.type}}
-                                    </span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    </td>
+                                    <td class="grid-item" style="width: 30%;">
+                                        <span class="grid-input">
+                                            <span>
+                                                <a title="删除文件" class="zoom-icon">
+                                                    <span @click="removeConfirmation(index)" class="zoom-icon icon-delete"></span>
+                                                </a>
+                                            </span>
+                                        </span>
+                                    </td>
+                                    <td :zoom-tip="item.fileName" class="grid-item zoom-tip" style="width: 100%;">
+                                        <span class="grid-input">
+                                            {{item.fileName}}
+                                        </span>
+                                    </td>
+                                    <td class="grid-item" style="width: 50%;">
+                                        <span class="grid-input">
+                                            {{formatStatus(item.status)}}
+                                        </span>
+                                    </td>
+                                    <td  v-if="!closeProgress" class="grid-item" style="width: 50%;">
+                                        <span class="grid-input">
+                                            <!-- 上传进度 -->
+                                            <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+                                        </span>
+                                    </td>
+                                    <td class="grid-item" style="width: 40%;">
+                                        <span class="grid-input">
+                                            {{item.fileSize}}
+                                        </span>
+                                    </td>
+                                    <td class="grid-item" style="width: 60%;">
+                                        <span class="grid-input">
+                                            {{item.fileDate}}
+                                        </span>
+                                    </td>
+                                    <td :zoom-tip="item.type" class="grid-item zoom-tip" style="width: 120%;">
+                                        <span class="grid-input">
+                                            {{item.type}}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-  </div>
-  <div class="upload-footer">
-      <div class="upload-btns">
-          <zoom-button :disabled="true" ref="startUpload" type="primary" @click="submit">开始上传</zoom-button>
-          <!-- <zoom-button>停止上传</zoom-button>
-          <zoom-button>关闭</zoom-button> -->
-      </div>
+    </div>
+    <div class="upload-footer">
+        <div class="upload-btns">
+            <zoom-button :disabled="true" ref="startUpload" type="primary" @click="submit">开始上传</zoom-button>
+            <!-- <zoom-button>停止上传</zoom-button>
+            <zoom-button>关闭</zoom-button> -->
+        </div>
+    </div>
   </div>
   <input style="display:none" @change="addFile" :multiple="multiple" type="file" :name="name" ref="zoom-upload"/>
 </div>
@@ -144,6 +164,7 @@ export default {
  props: {
     op: {
         type: Object,
+        custom: Boolean,    // 为true则开启自定义模式 自定义模式下点击后自动选择文件并上传
         url: {  // 要上传的服务器地址
             type: String,
             required: true
@@ -172,6 +193,7 @@ export default {
  data() {
      return {
          limit: 0,  //  文件数量
+         custom: false, //  自定义模式
          data: {},  //  上传时携带的参数
          fileType: '',  //  文件类型
          action: '',    //  要上传的服务器地址
@@ -250,6 +272,9 @@ export default {
         if (this.op.fileType) {
             this.fileType = this.op.fileType;
         }
+        if (this.op.custom) {
+            this.custom = this.op.custom;
+        }
      }
  },
  mounted() {
@@ -276,6 +301,17 @@ export default {
     }
  },
  methods: {
+    //  自定义模式下的格式化状态
+    setStatus(status) {
+        switch (val) {
+            case 'success':
+                return 'upload-success';
+            case 'error':
+                return 'upload-failed';
+            default:
+                return '';
+        }
+    },
     //  格式化状态
     formatStatus(val) {
         switch (val) {
@@ -413,16 +449,22 @@ export default {
         this.filelist.push(fileList);
         // 如果状态是delete的不加进来
         this.filelist.forEach(item => {
-            if (item.length > 1) {
+            if (item.length === 1 && item[0].status !== 'delete') {
+                List.push(item[0]);
+            } else if (item.length > 1) {
                 item.forEach(i => {
                     if (i.status !== 'delete') {
-                        List.push(i)
+                        List.push(i);
                     }
                 })
             }
         })
         this.List = Array.from(new Set(List));
         // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
+        if (this.custom) {
+            // 如果是自定义上传方法 直接调用
+            this.submit();
+        }
     },
     // 移除文件 中转方法
     removeConfirmation(index) {
@@ -685,6 +727,93 @@ export default {
 }
 </script>
 <style>
+/* 自定义上传模式 */
+.zoom-file-upload .upload-custom .custom-header {
+    display: inline-block;
+}
+.zoom-file-upload .upload-custom .zoom-progress .zoom-progress-container {
+    margin-left: 0;
+    height: 2px;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item>.zoom-icon {
+    line-height: inherit;
+    position: absolute;
+    display: block;
+    right: 5px;
+    top: 0;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item .item-name>.zoom-icon {
+    height: 100%;
+    font-size: 16px;
+    margin-right: 4px;
+    color: #909399;
+    fill: #909399;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-success:active,
+.zoom-file-upload .upload-custom .upload-list .upload-success:focus {
+    outline-width: 0;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:hover {
+    background-color: #f5f7fa;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:focus .item-name>span,
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:hover .item-name>span {
+    color: #409eff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-failed .item-name+span,
+.zoom-file-upload .upload-custom .upload-list .upload-failed .item-name span {
+    color: #f56c6c;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-success .item-name+span,
+.zoom-file-upload .upload-custom .upload-list .upload-success .item-name span {
+    color: #3eaf7c;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:hover .item-name .icon-close-plus {
+    display: inline-block;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item .item-name .icon-close-plus {
+    display: none;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item .item-name {
+    display: block;
+    margin-right: 40px;
+    padding-left: 4px;
+    -webkit-transition: color .3s;
+    transition: color .3s;
+}
+.zoom-file-upload .upload-custom .upload-list .upload-list-item {
+    -webkit-transition: all .5s cubic-bezier(.55, 0, .1, 1);
+    transition: all .5s cubic-bezier(.55, 0, .1, 1);
+    font-size: 14px;
+    color: #333;
+    line-height: 1.8;
+    margin-top: 8px;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 2px;
+    width: 100%;
+    outline: 0;
+}
+.zoom-file-upload .upload-custom .upload-list {
+    font-size: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.zoom-file-upload .upload-custom .upload-content {
+    text-align: left;
+}
+.zoom-file-upload .upload-custom {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    outline: 0;
+}
+/* 普通上传模式 */
 .zoom-file-upload .upload-content th.grid-item:first-child {
     text-align: center;
 }
@@ -853,6 +982,7 @@ export default {
     position: relative;
 }
 .zoom-file-upload .upload-header {
+    text-align: left;
     position: relative;
     line-height: 36px;
     -webkit-box-sizing: border-box;
