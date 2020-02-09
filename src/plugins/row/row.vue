@@ -1,6 +1,6 @@
 <template>
   <div :class="cls" class="zoom-row">
-      <slot></slot>
+    <slot></slot>
   </div>
 </template>
 <script>

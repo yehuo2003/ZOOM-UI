@@ -63,6 +63,7 @@ export default {
       currentValue: this.value,
       options: {
         placeHolder: "请输入关键词",
+        readonly: false,
         isdisabled: false
       }
     };

@@ -7,7 +7,7 @@
       <div class="custom-content">
           <ul v-show="List.length > 0" class="upload-list">
               <li v-for="(item, index) of List" :key="index" :class="setStatus(item.status)" class="upload-list-item">
-                  <a class="item name">
+                  <a class="item-name">
                     <i :class="item.type && item.type.indexOf('image') > -1 ? 'icon-img' : 'icon-channel' " class="zoom-icon"></i>
                     <span>{{item.name}}</span>
                     <i @click="removeConfirmation(index)" class="zoom-icon icon-close-plus"></i>
@@ -18,7 +18,7 @@
           </ul>
       </div>
   </div>
-  <div>
+  <div v-else>
     <div class="upload-header">
         <div class="upload-title">选择文件</div>
         <div class="alert-upload upload-info">
@@ -234,18 +234,20 @@ export default {
          if (this.op && this.op.onChange) {
              this.op.onChange(newVal);
          }
-        //  如果没有要上传的文件, 开始上传 按钮禁用
-        if (newVal.length > 0) {
-            this.$refs['startUpload'].isdisabled = false;
-        } else {
-            this.$refs['startUpload'].isdisabled = true;
-        }
-        // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
-        if (newVal.length >= this.limit) {
-            this.List.length = this.limit;
-            this.$refs['addUpload'].isdisabled = true;
-        } else {
-            this.$refs['addUpload'].isdisabled = false;
+        //  如果没有要上传的文件, 禁用 开始上传 按钮
+        if (!this.custom) {
+            if (newVal.length > 0) {
+                this.$refs['startUpload'].isdisabled = false;
+            } else {
+                this.$refs['startUpload'].isdisabled = true;
+            }
+            // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
+            if (newVal.length >= this.limit) {
+                this.List.length = this.limit;
+                this.$refs['addUpload'].isdisabled = true;
+            } else {
+                this.$refs['addUpload'].isdisabled = false;
+            }
         }
      }
  },
@@ -278,32 +280,34 @@ export default {
      }
  },
  mounted() {
-    this.successCount = 0;
-    this.errCount = 0;
-    let select_frame = this.$refs['select_frame'];
-    select_frame.ondragleave = e => {
-        e.preventDefault();  // 阻止离开时的浏览器默认行为
-    }
-    select_frame.ondrop = e => {
-        e.preventDefault();    // 阻止拖放后的浏览器默认行为
-        const data = e.dataTransfer.files[0];  // 获取文件对象
-        if (data.length < 1) {
-            return;  // 检测是否有文件拖拽到页面
+    if (!this.custom) {
+        this.successCount = 0;
+        this.errCount = 0;
+        let select_frame = this.$refs['select_frame'];
+        select_frame.ondragleave = e => {
+            e.preventDefault();  // 阻止离开时的浏览器默认行为
         }
-        this.addFile({target: {files: [data]}})//上传文件的方法
-    }
-    select_frame.ondragenter = e => {
-        e.preventDefault();  // 阻止拖入时的浏览器默认行为
-        select_frame.border = '2px dashed red'
-    }
-    select_frame.ondragover = e => {
-        e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
+        select_frame.ondrop = e => {
+            e.preventDefault();    // 阻止拖放后的浏览器默认行为
+            const data = e.dataTransfer.files[0];  // 获取文件对象
+            if (data.length < 1) {
+                return;  // 检测是否有文件拖拽到页面
+            }
+            this.addFile({target: {files: [data]}})//上传文件的方法
+        }
+        select_frame.ondragenter = e => {
+            e.preventDefault();  // 阻止拖入时的浏览器默认行为
+            select_frame.border = '2px dashed red'
+        }
+        select_frame.ondragover = e => {
+            e.preventDefault();    // 阻止拖来拖去的浏览器默认行为
+        }
     }
  },
  methods: {
     //  自定义模式下的格式化状态
     setStatus(status) {
-        switch (val) {
+        switch (status) {
             case 'success':
                 return 'upload-success';
             case 'error':
@@ -373,10 +377,6 @@ export default {
         } else {
             if (file && size) {
                 let fileSize = file.size;
-                // if (file.type.indexOf('image') == -1) {
-                //     this.defeated('请选择图片文件!');
-                //     return false
-                // }
                 if(fileSize > size * 1024) {
                     this.$zoom.alert({
                         title: '提示',
@@ -527,9 +527,11 @@ export default {
                 type: 'warning'
             })
         }
-        setTimeout(() => {
-            this.$refs['startUpload'].isdisabled = true;
-        });
+        if (!this.custom) {
+            setTimeout(() => {
+                this.$refs['startUpload'].isdisabled = true;
+            });
+        }
     },
     // 4.基于上传的两套逻辑，这里封装了两个方法xhrSubmit和fetchSubmit
     fetchSubmit() {
@@ -728,9 +730,6 @@ export default {
 </script>
 <style>
 /* 自定义上传模式 */
-.zoom-file-upload .upload-custom .custom-header {
-    display: inline-block;
-}
 .zoom-file-upload .upload-custom .zoom-progress .zoom-progress-container {
     margin-left: 0;
     height: 2px;
@@ -749,8 +748,8 @@ export default {
     color: #909399;
     fill: #909399;
 }
-.zoom-file-upload .upload-custom .upload-list .upload-success:active,
-.zoom-file-upload .upload-custom .upload-list .upload-success:focus {
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:active,
+.zoom-file-upload .upload-custom .upload-list .upload-list-item:focus {
     outline-width: 0;
 }
 .zoom-file-upload .upload-custom .upload-list .upload-list-item:hover {
@@ -762,14 +761,15 @@ export default {
     cursor: pointer;
     text-decoration: underline;
 }
-.zoom-file-upload .upload-custom .upload-list .upload-failed .item-name+span,
+.zoom-file-upload .upload-custom .upload-list .upload-failed .icon-close-fill,
 .zoom-file-upload .upload-custom .upload-list .upload-failed .item-name span {
     color: #f56c6c;
 }
-.zoom-file-upload .upload-custom .upload-list .upload-success .item-name+span,
+.zoom-file-upload .upload-custom .upload-list .upload-success .icon-success-fill,
 .zoom-file-upload .upload-custom .upload-list .upload-success .item-name span {
     color: #3eaf7c;
 }
+.zoom-file-upload .upload-custom .custom-header,
 .zoom-file-upload .upload-custom .upload-list .upload-list-item:hover .item-name .icon-close-plus {
     display: inline-block;
 }
@@ -808,7 +808,7 @@ export default {
 }
 .zoom-file-upload .upload-custom {
     display: inline-block;
-    text-align: center;
+    text-align: left;
     cursor: pointer;
     width: 100%;
     outline: 0;

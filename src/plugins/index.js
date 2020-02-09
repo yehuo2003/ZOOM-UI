@@ -8,6 +8,11 @@ const install = Vue => {
     Vue.directive('focus', {
         inserted: function(el) {
             el.focus();
+        },
+        update: function(el, value) {
+            if (value) {
+                el.focus();
+            }
         }
     })
     Vue.directive('drag', {

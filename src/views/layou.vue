@@ -17,12 +17,20 @@
         <div class="item">第三个</div>
       </zoom-col>
     </zoom-row>
+    <zoom-row>
+      <zoom-col>
+        <zoom-text-popup rows="10" :op="textpop"></zoom-text-popup>
+      </zoom-col>
+    </zoom-row>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      textpop: {
+        resize: true
+      },
       btnOp: {
         type: 'primary',
         shape: 'round',
