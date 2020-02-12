@@ -6,6 +6,7 @@ import date from '../views/date.vue'
 import photoUI from '../views/photoUI.vue'
 import layou from '../views/layou.vue'
 import data from '../views/data.vue'
+import tabtest from '../views/tabtest.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/date',
     name: 'date',
     component: date
+  },
+  {
+    path: '/tab',
+    name: 'tabtest',
+    component: tabtest
   },
   {
     path: '/layou',

@@ -1,87 +1,44 @@
 <template>
-  <div class="zoom-tabs" style="margin: 20px;">
-      <div class="zoom-tabs-top">
-          <div v-for="(item, index) of titleList" :key="index" :data-id="item.id" @click="getItem(item,index)" :class="activeClass == index ? 'tab-active' : '' " class="zoom-tab-item">
-              <div class="tab-tops-item">
-                  {{item.title}}
-                  <!-- <span class="zoom-icon icon-close" @click="deleteItem(item)"></span> -->
-              </div>
-          </div>
-          <!-- <div class="zoom-tab-item tab-active">
-              <div class="tab-tops-item">
-                  Tab 2
-                  <span class="zoom-icon icon-close"></span>
-              </div>
-          </div> -->
-      </div>
-      <div class="zoom-tabs-content">
-          <slot></slot>
-      </div>
+  <div class="tab-container">
+    <ul class="tab-head">
+      <slot></slot>
+    </ul>
+    <content-container :panels="panels" />
   </div>
 </template>
+
 <script>
-export default {
-    name: 'zoom-tabs',
-    props: {
-        op: {
-        }
-    },
+  export default {
+    name: 'tabs',
     data() {
-        return {
-            activeClass: 0,
-            titleList: []
-        }
+      return {
+        panels: [] // 子组件mounted的时候将自己push到该数组中
+      }
     },
-    computed: {
-        getters() {
-            return this.$store.getters.targetTitle;
-        }
-    },
-    watch: {
-         getters(val) {
-             this.titleList = val;
-             console.log('新值', val);
-         }
+    props: {
+      value: {
+        type: [String, Number],
+        required: true
+      }
     },
     methods: {
-        getItem(item, index) {
-            this.activeClass = index;  // 把当前点击元素的index，赋值给activeClass
-            let data = $Z('[zoom-title]');
-            // 切换
-            for(var i = 0; i < data.length; i++) {
-                data[i].style = 'display: none;'
-            }
-            $Z(`[zoom-title=${item.title}]`)[0].style = 'display: block;'
-        },
-        // 删除
-        deleteItem(e) {
-            if (e.id) {
-                this.titleList.forEach((item, index) => {
-                    if (item.id === e.id) {
-                        this.titleList.splice(index, 1);
-                    }
-                });
-                this.$store.commit('deleteTabTitle', e.id);
-                this.$nextTick(() => {
-                    this.load();
-                })
-            }
-        },
-        load() {
-            let data = $Z('[zoom-title]');
-            data[0].style = 'display: block;';
-            for(var i = 1; i < data.length; i++) {
-                data[i].style = 'display: none;'
-            }
-        }
-    },
-    mounted() {
-        this.load();
+      tabChange(index) {
+        this.$emit('tabChange',index)
+      }
     }
-}
+  }
 </script>
-<style>
-.zoom-tabs-content {
+
+<style scoped>
+.tab-container{
+  width: 500px;
+}
+.tab-head {
+  padding: 0 15px;
+  border-bottom: 2px solid #ccc;
+  font-size: 0;
+}
+/* .zoom-tabs-content {
     padding: 15px 24px;
     text-align: left;
     overflow: hidden;
@@ -149,5 +106,5 @@ export default {
     margin: 0;
     width: 100%;
     float: left;
-}
+} */
 </style>

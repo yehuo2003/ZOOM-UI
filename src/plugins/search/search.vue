@@ -1,6 +1,6 @@
 <template>
   <div class="zoom-search zoom-input">
-    <div :class=" focus ? 'focus' : '' " class="search-line">
+    <div :class=" focus ? 'focus' : '' " class="select-line">
       <div v-if="list.length > 0" class="search-place">
         <span class="search-text">{{obj.text}}</span>
         <span class="search-outer">
@@ -121,7 +121,6 @@ export default {
   padding: 0;
 }
 .zoom-search-select .select-body {
-  min-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -162,8 +161,8 @@ export default {
   vertical-align: middle;
   right: 0;
 }
-.zoom-input .input-btn a,
-.zoom-input .input-btn span {
+.zoom-search.zoom-input .input-btn a,
+.zoom-search.zoom-input .input-btn span {
   text-decoration: none;
   display: block;
   float: left;

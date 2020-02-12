@@ -7,7 +7,10 @@
               <div class="tree-list">
                   <ul>
                       <li @click="handleClick(item, index)" :class="item.children ? 'tree-extend' : '' " v-for="(item, index) of navList" :key="index">
-                          <a :href="item.url ? item.url : 'javascript:void(0);' " :target="item.target == 'blank' ? '_blank' : '' ">{{item.title}}</a>
+                          <a :href="item.url ? item.url : 'javascript:void(0);' " :target="item.target == 'blank' ? '_blank' : '' ">
+                              <i v-show="item.icon" :class="item.icon ? item.icon : '' " class="zoom-icon"></i>
+                              {{item.title}}
+                          </a>
                           <div v-if="item.children" class="zoom-menu">
                               <ul @click="handleClick(i, index)" v-for="(i, index) of item.children" :key="index">
                                   <li>
@@ -25,6 +28,7 @@
           <!-- 右边 -->
           <li @click="handleClick(item, index)" v-for="(item, index) of navList" :key="index" class="zoom-list">
                <a :href="item.url ? item.url : 'javascript:void(0);' " :target="item.target == 'blank' ? '_blank' : '' ">
+                   <i v-show="item.icon" :class="item.icon ? item.icon : '' " class="zoom-icon"></i>
                    {{item.title}}
                    <span v-if="item.children" class="zoom-icon icon-down"></span>
                </a>
@@ -107,6 +111,10 @@ export default {
     content: " ";
     clear: both;
 }
+.tree .tree-list>ul a>i {
+    position: absolute;
+    left: 3px;
+}
 .tree .tree-list>ul li .zoom-menu ul>li a {
     color: #333;
 }
@@ -150,6 +158,7 @@ export default {
     animation: showTree .5s;
 }
 .tree .tree-list>ul li {
+    transition: all .3s ease-in-out;
     line-height: 48px;
     padding-left: 20px;
     text-align-last: left;
@@ -179,11 +188,11 @@ export default {
 .tree:hover>a {
     background: #10a491;
     color: #fff;
-    padding: 13px 18px 16px 18px;
+    padding: 10px 20px;
     transform: rotate(0);
 }
 .tree>a {
-    padding: 15px;
+    padding: 10px 20px;
     color: #fff;
     display: block;
     font-weight: bold;
@@ -237,7 +246,8 @@ export default {
     padding: 0 24px;
 }
 .zoom-nav ul li.zoom-list {
-    width: 100px;
+    transition: background .3s ease-in-out;
+    min-width: 100px;
     text-align: center;
     float: left;
 }
@@ -248,12 +258,8 @@ export default {
     line-height: 48px;
     width: 100%;
 }
-.zoom-nav ul li.zoom-list a span {
-    width: 10px;
-    margin-left: 5px;
-}
 .zoom-nav ul li.zoom-list:hover a span {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
 }
 .zoom-nav ul li.zoom-list .zoom-list-child {
     display: none;

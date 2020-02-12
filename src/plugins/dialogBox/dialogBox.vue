@@ -2,15 +2,15 @@
   <div v-show="visibility" class="zoom-dialog-box zoom-dialog-warpper">
       <div class="dialog-box" :style=" 'width:' + width + '; top: 15vh; left: calc((100vw - 30%) / 2);' ">
         <div class="dialog-header">
-            <span>提示</span>
+            <span>{{title}}</span>
             <a @click="closeBox" href="javascript:void(0);">×</a>
         </div>
         <div class="dialog-content">
             <slot></slot>
         </div>
         <div v-if="showBtn" class="dialog-footer">
-            <zoom-button :op="quitOp">确定</zoom-button>
-            <zoom-button :op="closeOp">取消</zoom-button>
+            <zoom-button type="primary" @click="handleClick">确定</zoom-button>
+            <zoom-button @click="closeBox">取消</zoom-button>
         </div>
       </div>
   </div>
@@ -34,18 +34,7 @@ export default {
   data() {
       return {
           showBtn: true,
-          visibility: false,
-          quitOp: {
-              type: "primary",
-              onClick: () => {
-                  this.handleClick();
-              }
-          },
-          closeOp: {
-              onClick: () => {
-                  this.closeBox();
-              }
-          }
+          visibility: false
       }
   },
   watch: {
@@ -66,6 +55,7 @@ export default {
             this.visibility = this.op.show;
             this.showBtn = this.op.showBtn;
             if (this.op.width) this.width = this.op.width;
+            if (this.op.title) this.title = this.op.title;
         }
       },
       handleClick() {
@@ -74,8 +64,8 @@ export default {
         }
       },
       closeBox() {
-          this.visibility = false;
-          this.$emit('close', this.visibility);
+        this.visibility = false;
+        this.$emit('close', this.visibility);
       }
   }
 };
@@ -98,7 +88,6 @@ export default {
     color: #5a5e66;
     font-size: 14px;
     overflow: auto;
-    /* min-height: 65vh; */
 }
 .zoom-dialog-box .dialog-box .dialog-header a {
     float: right;
@@ -110,6 +99,7 @@ export default {
     text-align-last: left;
     padding: 8px 24px;
     height: 40px;
+    line-height: 25px;
     background: #ffffff;
     border-bottom: 1px solid #d9d9d9;
 }

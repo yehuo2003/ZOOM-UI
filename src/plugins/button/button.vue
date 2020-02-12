@@ -26,9 +26,13 @@ export default {
       type: [String, Number],
       default: 1000
     },
+    size: {  //  大小, 'mini' 迷你, 'small' 小按钮, 'medium' 中等(比普通稍大), 'large' 大按钮
+      type: String,
+      default: null
+    },
     shape: {  //  形状, plain平角 round 圆角  circle圆形
       type: String,
-      default: 'plain'
+      default: null
     }
   },
   data() {
@@ -111,9 +115,24 @@ export default {
       if (shapeArr.includes(shape)) {
         // 添加到css样式
         this.css += ` zoom-${shape}`;
+      } else {
+        throw Error(`zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`);
+      }
     }
+    // 按钮大小
+    let size = null;
+    let sizeArr = ['mini', 'small', 'medium', 'large'];
+    if (this.op && this.op.size) {
+      size = this.op.size;
     } else {
-      throw Error(`zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`);
+      size = this.size;
+    }
+    if (size) {
+      if (sizeArr.includes(size)) {
+        this.css += ` ${size}`;
+      } else {
+        throw Error(`zoom-ui TypeError: ${size} 语法错误, 请参考zoom-ui手册并检查语法!`);
+      }
     }
   },
   methods: {
@@ -372,5 +391,25 @@ export default {
   color: #d8bab5;
   background: hsla(9, 31%, 78%, .1);
   border-color: #d8bab5;
+}
+/* 按钮大小样式 */
+.zoom-btn.mini, .zoom-btn[size=mini] {
+  min-width: 30px;
+  max-width: 120px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 6px;
+}
+.zoom-btn.small, .zoom-btn[size=small] {
+  min-width: 80px;
+  max-width: 140px;
+  height: 24px;
+  line-height: 24px;
+}
+.zoom-btn.large, .zoom-btn[size=large] {
+  min-width: 80px;
+  max-width: 130px;
+  height: 42px;
+  line-height: 14px;
 }
 </style>

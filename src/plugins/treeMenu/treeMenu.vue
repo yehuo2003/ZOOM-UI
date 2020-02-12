@@ -2,9 +2,10 @@
   <div class="zoom-tree-menu" :style="Width ? 'width: ' + Width : '' ">
       <ul class="zoom-tree-menus">
           <!-- 一级菜单 -->
-          <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index)" :class="item.show ? 'tree-open' : '' " class="tree-item">
-              <span v-if="item.children" :class="item.show ? 'icon-down' : 'icon-add' " class="zoom-icon"></span>
+          <li v-for="(item, index) of treeList" :key="index" @click.stop="showTree(item, index, 'one')" :class="item.show ? 'tree-open' : '' " class="tree-item">
+              <span v-if="item.children" :class="item.show ? 'icon-up' : 'icon-down' " class="zoom-icon"></span>
               <div @click="handleClick(item, index)" class="tree-item-link">
+                  <span v-show="item.icon" :class="item.icon ? item.icon : '' " class="zoom-icon"></span>
                   <a :href="item.url ? item.url : 'javascript:void(0);'" :target="item.target === 'blank' ? '_blank'  : '' " class="item-node">
                       <span class="node-name">{{item.title}}</span>
                   </a>
@@ -13,8 +14,9 @@
               <transition name="fade">
                 <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
                     <li v-for="(i, index) of item.children" :key="index" @click.stop="showTree(i, index)" :class="i.show ? 'tree-open' : '' " class="tree-item">
-                        <span v-if="i.children" :class="i.show ? 'icon-down' : 'icon-add' " class="zoom-icon"></span>
+                        <span v-if="i.children" :class="i.show ? 'icon-up' : 'icon-down' " class="zoom-icon"></span>
                         <div class="tree-item-link">
+                            <span v-show="i.icon" :class="i.icon ? i.icon : '' " class="zoom-icon"></span>
                             <a :href="i.url ? i.url : 'javascript:void(0);'" :target="i.target === 'blank' ? '_blank'  : '' " class="item-node">
                                 <span class="node-name">{{i.title}}</span>
                             </a>
@@ -24,6 +26,7 @@
                             <ul v-show="i.show" v-if="i.children" class="zoom-tree-menus">
                                 <li v-for="(j, index) of i.children" :key="index" @click.stop="showTree(j, index)" :class="j.show ? 'tree-open' : '' " class="tree-item">
                                     <div class="tree-item-link">
+                                        <span v-show="j.icon" :class="j.icon ? j.icon : '' " class="zoom-icon"></span>
                                         <a :href="j.url ? j.url : 'javascript:void(0);'" :target="j.target === 'blank' ? '_blank'  : '' " class="item-node">
                                             <span class="node-name">{{j.title}}</span>
                                         </a>
@@ -91,14 +94,14 @@ export default {
     },
     methods: {
         // 展开下拉树事件
-        showTree(item, index) {
+        showTree(item, index, tier) {
             let value = JSON.parse(JSON.stringify(item));
             if (item.load) {
                 delete value.load;
                 item.load(value, index);
             }
-            // 判断是否开启手风琴模式
-            if (this.op.accordion) {
+            // 判断是否开启手风琴模式   只有一级菜单才有作用
+            if (this.op.accordion && tier) {
                 this.treeList.forEach(elem => {
                     elem.show = false;
                 })
@@ -159,6 +162,10 @@ export default {
     cursor: pointer;
     text-decoration: none;
 }
+.zoom-tree-menu .zoom-tree-menus .tree-item>.tree-item-link>.zoom-icon {
+    position: absolute;
+    left: 0;
+}
 .zoom-tree-menu .zoom-tree-menus .tree-item>.tree-item-link {
     text-align: left;
     margin-left: 24px;
@@ -184,7 +191,6 @@ export default {
     padding: 0;
 }
 .zoom-tree-menu ul {
-    font-size: 12px;
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -204,10 +210,11 @@ export default {
     width: 100%;
 }
 .zoom-tree-menu {
-    /* width: 210px; */
     width: 100%;
     background: #fff;
-    position: relative;
     font-size: 12px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
 }
 </style>
