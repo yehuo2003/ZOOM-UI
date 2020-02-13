@@ -1,30 +1,22 @@
-<template>
-  <div class="zoom-form-item">
-      <label :style="labelWidth" class="form-item-label">{{text}}</label>
-      <slot></slot>
-  </div>
-</template>
 <script>
 export default {
-    name: 'zoom-form-item',
-    props: {
-        label: {
-            type: String,
-            default: ''
-        }
+  name: 'zoom-form-item',
+  props: {
+    content: {
+      type: String,
+      default: ''
     },
-    data() {
-        return {
-            text: '',
-            labelWidth: 'width: 100px;'
-        }
-    },
-    mounted() {
-        this.text = this.label;
-        let form = this.$zoom.$id('zoom-form');
-        if (form && form.getAttribute('label')) {
-            this.labelWidth = `width: ${form.getAttribute('label')}px;`;
-        }
+    label: {
+      type: String,
+      default: ''
     }
+  },
+  render(h)  {
+    const labels = this.$slots.label || h ('label', {class: 'form-item-label', style: 'width: ' + this.$parent.labelWidth + ';'}, [this.label]);
+    const slot = this.$slots.content;
+    return h('div', {
+      class : 'zoom-form-item',
+    }, [ labels, slot ])
+  },
 }
 </script>

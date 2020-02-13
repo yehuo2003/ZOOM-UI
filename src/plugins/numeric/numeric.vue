@@ -1,5 +1,15 @@
 <template>
-  <div class="zoom-numeric zoom-input" :class="options.isdisabled ? 'numeric-disabled' : '' ">
+  <div
+   @click="handleChild('click')"
+   @mousedown="handleChild('mousedownChild')"
+   @mouseenter="handleChild('mouseenterChild')"
+   @mouseleave="handleChild('mouseleaveChild')"
+   @mousemove="handleChild('mousemoveChild')"
+   @mouseout="handleChild('mouseoutChild')"
+   @mouseover="handleChild('mouseoverChild')"
+   @keydown="handleChild('keydownChild')"
+   @keyup="handleChild('keyupChild')"
+   class="zoom-numeric zoom-input" :class="options.isdisabled ? 'numeric-disabled' : '' ">
     <a @click="subtraction" href="javascript:void(0);" class="num-btn num-subtraction">-</a>
     <input
       :class="error ? 'error' : '' "
@@ -7,8 +17,10 @@
       @oninput="getValue"
       @blur="handleBlur"
       :value="currentValue"
-      @input="Oninput"
+      :placeholder="placeholder ? placeholder : options.placeHolder"
+      :readonly="options.readonly"
       :disabled="options.isdisabled"
+      @input="Oninput"
       type="number"
     />
     <a @click="add" href="javascript:void(0);" class="num-btn num-add">+</a>
@@ -19,6 +31,10 @@ export default {
   name: "zoom-numeric",
   props: {
     op: Object,
+    placeholder: {
+      type: String,
+      default: null
+    },
     value: {
       type: Number,
       default: 0
@@ -41,6 +57,9 @@ export default {
     }
   },
   methods: {
+    handleChild(e) {
+      this.$emit(e);
+    },
     //   验证
     getValue() {
       this.value = this.value.replace(/[^0-9|-]/g, "");

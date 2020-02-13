@@ -20,7 +20,7 @@
         @input="Oninput"
         @keyup.enter="search"
         :value="currentValue"
-        :placeholder="options.placeHolder"
+        :placeholder="placeholder ? placeholder : options.placeHolder"
         :readonly="options.readonly"
         :disabled="options.isdisabled"
         type="text"
@@ -51,6 +51,10 @@ export default {
         default: false
       },
       data: Array //  可选的查找数据
+    },
+    placeholder: {
+      type: String,
+      default: null
     },
     search: Function, // search(val, key)
     value: String

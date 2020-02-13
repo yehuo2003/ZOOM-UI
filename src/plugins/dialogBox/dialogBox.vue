@@ -22,6 +22,10 @@ export default {
       op: {
           type: Object,
       },
+      title: {
+        type: String,
+        default: ''
+      },
       width: {
         type: String,
         default: ''

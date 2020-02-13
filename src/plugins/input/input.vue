@@ -17,7 +17,7 @@
       :value="currentValue"
       @input="Oninput"
       :type="options.type"
-      :placeholder="options.placeHolder"
+      :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
       :disabled="options.isdisabled"
     />
@@ -59,6 +59,10 @@ export default {
         type: String,
         default: false
       }
+    },
+    placeholder: {
+      type: String,
+      default: null
     },
     value: String
   },
