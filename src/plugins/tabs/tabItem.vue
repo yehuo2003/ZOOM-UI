@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: 'zoom-tab-item',
+  name: "zoom-tab-item",
   props: {
     index: {
       type: [String, Number],
@@ -11,31 +11,35 @@ export default {
     }
   },
   mounted() {
-    this.$parent.panels.push(this)
+    this.$parent.panels.push(this);
   },
-  render(h)  {
-    const tab = this.$slots.label || h ('span',this.label)  // 如果用name=label的slot,则用slot,否则展示label prop
-    return h('li', {
-      class: this.classes,
-      on: {
-        click: this.activeCurTab
-      }
-    }, [ tab ])
+  render(h) {
+    const tab = this.$slots.label || h("span", this.label); // 如果用name=label的slot,则用slot,否则展示label prop
+    return h(
+      "li",
+      {
+        class: this.classes,
+        on: {
+          click: this.activeCurTab
+        }
+      },
+      [tab]
+    );
   },
   computed: {
     active() {
-      return this.index === this.$parent.value
+      return this.index === this.$parent.value;
     },
     classes() {
-      return ['zoom-tab-item', this.active ? 'tab-active' : '']
+      return ["zoom-tab-item", this.active ? "tab-active" : ""];
     }
   },
   methods: {
     activeCurTab() {
-      this.$parent.tabChange(this.index)
+      this.$parent.tabChange(this.index);
     }
   }
-}
+};
 </script>
 
 <style>
@@ -74,8 +78,10 @@ export default {
   border-bottom: none;
   top: 1px;
   z-index: 9;
-  -webkit-transition: color .3s cubic-bezier(645, .045, .355, 1), padding .3s cubic-bezier(.645, .045, .355, 1);
-  transition: color .3s cubic-bezier(645, .045, .355, 1), padding .3s cubic-bezier(.645, .045, .355, 1);
+  -webkit-transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
+    padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
+    padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .zoom-tab-item.tab-active::before {
   position: absolute;

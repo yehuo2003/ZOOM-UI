@@ -1,6 +1,6 @@
 <template>
   <div class="zoom-search zoom-input">
-    <div :class=" focus ? 'focus' : '' " class="select-line">
+    <div :class="[ focus ? 'focus' : '', error ? 'error' : ''] " class="select-line">
       <div v-if="list.length > 0" class="search-place">
         <span class="search-text">{{obj.text}}</span>
         <span class="search-outer">
@@ -16,7 +16,7 @@
       </div>
       <input
         @focus="focus = true"
-        @blur="focus = false"
+        @blur="handleBlur"
         @input="Oninput"
         @keyup.enter="search"
         :value="currentValue"
@@ -26,6 +26,7 @@
         type="text"
         class="zoom-input-search"
       />
+      <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
       <div class="input-btn">
         <a class="zoom-icon icon-search"></a>
       </div>
@@ -44,6 +45,10 @@ export default {
       isdisabled: {
         type: Boolean,
         default: false
+      },
+      errMsg: {
+        type: String,
+        default: ""
       },
       readonly: {
         // 是否禁止输入默认false
@@ -64,8 +69,11 @@ export default {
       list: [],
       obj: {},
       focus: false,
+      error: false,
+      errMsg: null,
       currentValue: this.value,
       options: {
+        errMsg: "",
         placeHolder: "请输入关键词",
         readonly: false,
         isdisabled: false
@@ -82,6 +90,27 @@ export default {
     }
   },
   methods: {
+    // 验证功能
+    handleBlur() {
+      this.focus = false;
+      if (this.options.testing) {
+        let test = this.options.testing(this.currentValue);
+        if (!test) {
+          this.error = true;
+          if (this.options.errMsg) {
+            this.errMsg = this.options.errMsg;
+            setTimeout(() => {
+              this.errMsg = null;
+            }, 2000);
+          }
+          return !!test;
+        } else {
+          this.error = false;
+        }
+      } else {
+        return this.testing();
+      }
+    },
     // 点击搜索条目
     selectClick(e) {
       if (e !== this.obj) {
@@ -91,6 +120,14 @@ export default {
     Oninput($event) {
       this.currentValue = $event.target.value;
       this.$emit("input", $event.target.value);
+    },
+    reset() {
+      if (!this.options.isdisabled) {
+        this.currentValue = "";
+        this.$emit("input", "");
+      } else {
+        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+      }
     },
     /**
      * 向父组件传递search事件, 可获取参数 input 框value值, 当前查找的obj
@@ -181,6 +218,7 @@ export default {
   border: 0;
   width: 100%;
   height: 30px;
+  font-size: 12px;
   line-height: 30px;
   background: 0 0;
 }
@@ -216,5 +254,8 @@ export default {
   border: 1px solid #d9d9d9;
   background: #fff;
   transition: 0.5s;
+}
+.zoom-search.zoom-input .select-line.error {
+  border: 1px solid red;
 }
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <a @click="logoutClick" class="zoom-logout">
-    {{title}}
-  </a>
+  <a @click="logoutClick" class="zoom-logout">{{title}}</a>
 </template>
 <script>
 export default {
@@ -9,10 +7,10 @@ export default {
   props: {
     op: {
       type: Object,
-      url: String,  //  注销后要跳转的url
-      point: [Boolean, String],  //  是否需要提示
+      url: String, //  注销后要跳转的url
+      point: [Boolean, String], //  是否需要提示
       onClick: Function, //  点击事件
-      text: String  //  文字内容, 默认为注销
+      text: String //  文字内容, 默认为注销
     },
     url: String,
     text: String,
@@ -22,8 +20,8 @@ export default {
     return {
       confim: false, //  是否开启确认框
       logoutUrl: null,
-      title: '注销'
-    }
+      title: "注销"
+    };
   },
   created() {
     if (this.op) {
@@ -42,7 +40,7 @@ export default {
         this.confim = this.point;
       }
       if (this.url) {
-        this.logoutUrl = this.url
+        this.logoutUrl = this.url;
       }
       if (this.text) {
         this.title = this.text;
@@ -55,13 +53,13 @@ export default {
       if (this.op && this.op.onClick) {
         this.op.onClick();
       }
-      let content = '';
+      let content = "";
       // 先判断是否有确认框
       if (this.confim) {
-        if (typeof this.confim === 'string') {
+        if (typeof this.confim === "string") {
           content = this.confim;
         } else {
-          content = '确认要注销吗?';
+          content = "确认要注销吗?";
         }
         this.$zoom.popup({
           title: "提示",
@@ -70,7 +68,7 @@ export default {
           onClick: () => {
             this.logout();
           }
-        })
+        });
       } else {
         this.logout();
       }

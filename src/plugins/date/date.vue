@@ -193,6 +193,9 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.load();
+    },
     /**
      * 加载数据
      */
@@ -435,7 +438,7 @@ export default {
       this.dateTime = this.formatDate(this.current);
       this.$emit("input", this.dateTime);
       if (this.dateTime.indexOf("NaN") > -1) {
-        throw Error("zoom-ui TypeError: 请检查入参是否为有效时间格式! ");
+        throw new Error("zoom-ui TypeError: 请检查入参是否为有效时间格式! ");
       }
     },
 
@@ -568,10 +571,10 @@ export default {
   right: 25%;
 }
 .zoom-date
-.zoom-date-wrap
-.zoom-date-content
-.zoom-date-picker
-.panel-item:hover {
+  .zoom-date-wrap
+  .zoom-date-content
+  .zoom-date-picker
+  .panel-item:hover {
   background: #e1f0fe;
 }
 .zoom-date {

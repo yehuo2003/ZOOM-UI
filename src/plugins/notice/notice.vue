@@ -2,12 +2,14 @@
   <div class="zoom-notice">
     <div v-if="vertical" class="vertical-notice">
       <div class="rolling-header">
-        <div class="rolling-header-body">
-          {{title}}
-        </div>
+        <div class="rolling-header-body">{{title}}</div>
       </div>
       <div class="rolling-container">
-        <div :style=" 'animation: scrollChild ' + rollTime + ' linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="rolling-container-body">
+        <div
+          :style=" 'animation: scrollChild ' + rollTime + ' linear infinite;' "
+          :class="isSuspend ? 'suspend-marquee' : '' "
+          class="rolling-container-body"
+        >
           <slot></slot>
         </div>
       </div>
@@ -16,7 +18,11 @@
       <div class="notice-header">
         <i class="zoom-icon" :class="icon ? icon : 'icon-trumpet' "></i>
       </div>
-      <div :style=" 'animation: marquee ' + rollTime + ' linear infinite;' " :class="isSuspend ? 'suspend-marquee' : '' " class="notice-marquee">
+      <div
+        :style=" 'animation: marquee ' + rollTime + ' linear infinite;' "
+        :class="isSuspend ? 'suspend-marquee' : '' "
+        class="notice-marquee"
+      >
         <slot></slot>
       </div>
     </div>
@@ -28,22 +34,22 @@ export default {
   props: {
     op: {
       type: Object,
-      IconStyle: String,  //  横向滚动时候的图标
-      title: String,      //  设置标题
-      notSuspend: [String, Boolean],  //  滚动时候鼠标经过暂停, 设置true关闭
-      vertical: Boolean,  //  是否垂直滚动, 默认false
-      time: [Number, String]  //  滚动的时间
+      IconStyle: String, //  横向滚动时候的图标
+      title: String, //  设置标题
+      notSuspend: [String, Boolean], //  滚动时候鼠标经过暂停, 设置true关闭
+      vertical: Boolean, //  是否垂直滚动, 默认false
+      time: [Number, String] //  滚动的时间
     },
     title: String,
     time: [Number, String]
   },
   data() {
     return {
-      vertical: false,  //  是否垂直
-      rollTime: '10000ms',  //  滚动时间
+      vertical: false, //  是否垂直
+      rollTime: "10000ms", //  滚动时间
       icon: null,
       isSuspend: true //  鼠标经过时暂停
-    }
+    };
   },
   created() {
     let time = null;
@@ -67,17 +73,17 @@ export default {
         this.title = this.op.title;
       }
       if (this.op.IconStyle) {
-        this.icon = this.op.IconStyle
+        this.icon = this.op.IconStyle;
       }
     } else {
       time = this.time;
     }
     if (time) {
       // 判断用户传的time类型
-      if (typeof time === 'string' && time.indexOf('s') > -1) {
+      if (typeof time === "string" && time.indexOf("s") > -1) {
         this.rollTime = time;
-      } else if (typeof time === 'number') {
-        this.rollTime = time + 'ms';
+      } else if (typeof time === "number") {
+        this.rollTime = time + "ms";
       }
     }
   }
@@ -115,11 +121,11 @@ export default {
 }
 /* 垂直滚动 */
 .vertical-notice .rolling-header {
-  font-size: .75rem;
+  font-size: 0.75rem;
   overflow: hidden;
 }
 .vertical-notice .rolling-header .rolling-header-body {
-  padding: .5rem .25rem;
+  padding: 0.5rem 0.25rem;
   font-size: inherit;
   min-width: 1px;
   color: #333;

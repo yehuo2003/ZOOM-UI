@@ -34,15 +34,18 @@ export default {
   name: "zoom-photo",
   props: {
     op: {
-      baseline: { // 外部区域的基线 (The baseline of the external area)
+      baseline: {
+        // 外部区域的基线 (The baseline of the external area)
         type: Boolean,
         default: false
       },
-      pointer: {  // 外部区域的中心点 (The center of an external area)
+      pointer: {
+        // 外部区域的中心点 (The center of an external area)
         type: Boolean,
         default: false
       },
-      outShow: {  // 	图片展示区域会在图片外部(image will be displayed on the outside)
+      outShow: {
+        // 	图片展示区域会在图片外部(image will be displayed on the outside)
         type: Boolean,
         default: false
       },
@@ -50,29 +53,35 @@ export default {
         type: Boolean,
         default: false
       },
-      scale: {    // 放大倍数(scale)
+      scale: {
+        // 放大倍数(scale)
         type: Number,
         default: 3
       },
-      selectorStyle: {    // 放大镜样式(style of magnifying glass)
+      selectorStyle: {
+        // 放大镜样式(style of magnifying glass)
         type: Object,
-        default () {
+        default() {
           return {};
         }
       },
-      hideZoom: { // 隐藏放大镜，图像加载时不会显示放大镜(hide magnifying)
+      hideZoom: {
+        // 隐藏放大镜，图像加载时不会显示放大镜(hide magnifying)
         type: Boolean,
         default: false
       },
-      width: {    // 放大镜宽度(width of magnifying glass)
+      width: {
+        // 放大镜宽度(width of magnifying glass)
         type: Number,
         default: 168
       },
-      leaveEvent: {   // 当需要在外部监听离开事件时，请通过该字段传入事件(When you need to listen for leaving events outside the component)
+      leaveEvent: {
+        // 当需要在外部监听离开事件时，请通过该字段传入事件(When you need to listen for leaving events outside the component)
         type: [Object, MouseEvent],
         default: null
       },
-      moveEvent: {    // 当需要在外部监听移动事件时,请通过该字段传入事件（必须包含 pageX,pageY,clientY）(When you need to listen for moving events outside the component)
+      moveEvent: {
+        // 当需要在外部监听移动事件时,请通过该字段传入事件（必须包含 pageX,pageY,clientY）(When you need to listen for moving events outside the component)
         type: [Object, MouseEvent],
         default: null
       },
@@ -83,12 +92,12 @@ export default {
       //     return ["circle", "square"].indexOf(value) !== -1;
       //   }
       // },
-      outShowStyle: {},   // 更清晰的图片,若不提供会采用 url(more detailed photo url)
+      outShowStyle: {}, // 更清晰的图片,若不提供会采用 url(more detailed photo url)
       highUrl: String,
-      url: String,    // 图片地址(photo url)
+      url: String // 图片地址(photo url)
     }
   },
-  data () {
+  data() {
     return {
       selector: {
         width: this.width,
@@ -101,13 +110,13 @@ export default {
         absoluteLeft: 0,
         absoluteTop: 0
       },
-      url: '',
-      highUrl: '',
+      url: "",
+      highUrl: "",
       outShow: false,
       scale: 3,
       imgInfo: {},
       $img: null,
-      type: 'square',
+      type: "square",
       width: 168,
       leaveEvent: null,
       moveEvent: null,
@@ -123,19 +132,19 @@ export default {
     };
   },
   watch: {
-    moveEvent (e) {
+    moveEvent(e) {
       this.mouseMove(e);
     },
-    leaveEvent (e) {
+    leaveEvent(e) {
       this.mouseLeave(e);
     },
-    url () {
+    url() {
       this.handlerUrlChange();
     },
-    width (n) {
+    width(n) {
       this.initSelectorProperty(n);
     },
-    screenWidth (val) {
+    screenWidth(val) {
       if (!this.timer) {
         this.screenWidth = val;
         this.timer = setTimeout(() => {
@@ -147,27 +156,27 @@ export default {
     }
   },
   computed: {
-    addWidth () {
+    addWidth() {
       return !this.outShow ? (this.width / 2) * (1 - this.scale) : 0;
     },
-    imgSelectorPosition () {
+    imgSelectorPosition() {
       let { top, left } = this.selector;
       return {
         top: `${top}px`,
         left: `${left}px`
       };
     },
-    imgSelectorSize () {
+    imgSelectorSize() {
       let width = this.selector.width;
       return {
         width: `${width}px`,
         height: `${width}px`
       };
     },
-    imgSelectorStyle () {
+    imgSelectorStyle() {
       return this.op.selectorStyle;
     },
-    imgOutShowSize () {
+    imgOutShowSize() {
       let {
         scale,
         selector: { width }
@@ -177,18 +186,18 @@ export default {
         height: `${width * scale}px`
       };
     },
-    imgOutShowPosition () {
+    imgOutShowPosition() {
       return {
         top: `${this.outShowTop}px`,
         right: `${-8}px`
       };
     },
-    imgBg () {
+    imgBg() {
       return {
         backgroundImage: `url(${this.highUrl || this.url})`
       };
     },
-    imgBgSize () {
+    imgBgSize() {
       let {
         scale,
         imgInfo: { height, width }
@@ -197,14 +206,14 @@ export default {
         backgroundSize: `${width * scale}px ${height * scale}px`
       };
     },
-    imgBgPosition () {
+    imgBgPosition() {
       let { bgLeft, bgTop } = this.selector;
       return {
         backgroundPosition: `${bgLeft}px ${bgTop}px`
       };
     }
   },
-  created () {
+  created() {
     if (this.op) {
       this.type = this.op.type;
       this.width = this.op.width || 168;
@@ -218,24 +227,24 @@ export default {
       this.outShow = this.op.outShow;
     }
   },
-  mounted () {
-    if (this.$refs['img']) {
-      this.$img = this.$refs['img'];
+  mounted() {
+    if (this.$refs["img"]) {
+      this.$img = this.$refs["img"];
       this.$nextTick(() => {
         // 如果用户没设置放大镜宽度, 放大镜宽度默认为照片的三分之一大小
-        if(!this.op.width) {
-          this.width = Math.floor(this.$refs['img'].width / 3);
+        if (!this.op.width) {
+          this.width = Math.floor(this.$refs["img"].width / 3);
         }
       });
     }
   },
   methods: {
-    handlerUrlChange () {
+    handlerUrlChange() {
       this.imgLoadedFlag = false;
       this.op.lazyload &&
         this.loadImg(this.url).then(this.imgLoaded, err => console.error(err));
     },
-    loadImg (url) {
+    loadImg(url) {
       return new Promise((resolve, reject) => {
         const img = document.createElement("img");
         img.addEventListener("load", resolve);
@@ -243,7 +252,7 @@ export default {
         img.src = url;
       });
     },
-    imgLoaded () {
+    imgLoaded() {
       let imgInfo = this.$img.getBoundingClientRect();
       if (JSON.stringify(this.imgInfo) != JSON.stringify(imgInfo)) {
         this.imgInfo = imgInfo;
@@ -255,7 +264,7 @@ export default {
         this.$emit("created", imgInfo);
       }
     },
-    mouseMove (e) {
+    mouseMove(e) {
       if (!this.op.hideZoom && this.imgLoadedFlag) {
         this.imgLoaded();
         const { pageX, pageY, clientY } = e;
@@ -280,26 +289,32 @@ export default {
         selector.bgTop = addWidth - y * scale;
       }
     },
-    initSelectorProperty (selectorWidth) {
+    initSelectorProperty(selectorWidth) {
       const selectorHalfWidth = selectorWidth / 2;
       const selector = this.selector;
       const { width, height, left, top } = this.imgInfo;
-      const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-      const scrollLeft = document.documentElement.scrollLeft || window.pageXOffset || document.body.scrollLeft;
+      const scrollTop =
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop;
+      const scrollLeft =
+        document.documentElement.scrollLeft ||
+        window.pageXOffset ||
+        document.body.scrollLeft;
       selector.width = selectorWidth;
       selector.rightBound = width - selectorWidth;
       selector.bottomBound = height - selectorWidth;
       selector.absoluteLeft = left + selectorHalfWidth + scrollLeft;
       selector.absoluteTop = top + selectorHalfWidth + scrollTop;
     },
-    mouseLeave () {
+    mouseLeave() {
       this.hideSelector = true;
       if (this.outShow) {
         this.hideOutShow = true;
       }
     },
     // 重置放大镜位置(reset zoom position)
-    reset () {
+    reset() {
       Object.assign(this.selector, {
         top: 0,
         left: 0,
@@ -308,7 +323,7 @@ export default {
       });
       this.resetOutShowInitPosition();
     },
-    resetOutShowInitPosition () {
+    resetOutShowInitPosition() {
       this.outShowInitTop = 0;
     }
   }
@@ -347,7 +362,7 @@ export default {
 .img-out-show.base-line::after {
   position: absolute;
   box-sizing: border-box;
-  content: '';
+  content: "";
   width: 1px;
   border: 1px dashed rgba(0, 0, 0, 0.36);
   top: 0;
@@ -358,7 +373,7 @@ export default {
 .img-out-show.base-line::before {
   position: absolute;
   box-sizing: border-box;
-  content: '';
+  content: "";
   height: 1px;
   border: 1px dashed rgba(0, 0, 0, 0.36);
   left: 0;

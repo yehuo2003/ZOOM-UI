@@ -9,7 +9,10 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
-    class="zoom-btn" :class="css" :disabled="isdisabled">
+    class="zoom-btn"
+    :class="css"
+    :disabled="isdisabled"
+  >
     <slot></slot>
     <i v-if="showIcon" class="zoom-icon" :class="IconStyle"></i>
   </button>
@@ -22,15 +25,18 @@ export default {
     disabled: Boolean,
     onClick: Function,
     type: String,
-    resetTime: {  //  点击按钮后 禁用的时间, 默认1秒
+    resetTime: {
+      //  点击按钮后 禁用的时间, 默认1秒
       type: [String, Number],
       default: 1000
     },
-    size: {  //  大小, 'mini' 迷你, 'small' 小按钮, 'medium' 中等(比普通稍大), 'large' 大按钮
+    size: {
+      //  大小, 'mini' 迷你, 'small' 小按钮, 'medium' 中等(比普通稍大), 'large' 大按钮
       type: String,
       default: null
     },
-    shape: {  //  形状, plain平角 round 圆角  circle圆形
+    shape: {
+      //  形状, plain平角 round 圆角  circle圆形
       type: String,
       default: null
     }
@@ -38,7 +44,7 @@ export default {
   data() {
     return {
       css: "",
-      shapeType: 'plain', //  按钮形状
+      shapeType: "plain", //  按钮形状
       time: 1000, //  点击按钮后禁用的时间
       isdisabled: false,
       showIcon: false,
@@ -49,7 +55,7 @@ export default {
     if (this.op || this.type) {
       let type = this.op ? this.op.type : this.type;
       if (type && typeof type !== "string") {
-        throw Error("zoom-ui error: type 的类型需要传入字符串");
+        throw new Error("zoom-ui error: type 的类型需要传入字符串");
         return;
       }
       switch (type) {
@@ -88,7 +94,7 @@ export default {
         } else {
           this.IconStyle = "";
           this.showIcon = false;
-          throw Error(
+          throw new Error(
             `zoom-ui TypeError: IconStyle: ${this.op.IconStyle} 错误, 请传入有效的icon名`
           );
         }
@@ -105,7 +111,7 @@ export default {
     }
     // 按钮样式
     let shape = null;
-    let shapeArr = ['plain', 'round', 'circle'];
+    let shapeArr = ["plain", "round", "circle"];
     if (this.op && this.op.shape) {
       shape = this.op.shape;
     } else {
@@ -116,12 +122,14 @@ export default {
         // 添加到css样式
         this.css += ` zoom-${shape}`;
       } else {
-        throw Error(`zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`);
+        throw new Error(
+          `zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`
+        );
       }
     }
     // 按钮大小
     let size = null;
-    let sizeArr = ['mini', 'small', 'medium', 'large'];
+    let sizeArr = ["mini", "small", "medium", "large"];
     if (this.op && this.op.size) {
       size = this.op.size;
     } else {
@@ -131,14 +139,16 @@ export default {
       if (sizeArr.includes(size)) {
         this.css += ` ${size}`;
       } else {
-        throw Error(`zoom-ui TypeError: ${size} 语法错误, 请参考zoom-ui手册并检查语法!`);
+        throw new Error(
+          `zoom-ui TypeError: ${size} 语法错误, 请参考zoom-ui手册并检查语法!`
+        );
       }
     }
   },
   methods: {
     handleChild(e) {
-      if (e === 'click') {
-        this.handleClick()
+      if (e === "click") {
+        this.handleClick();
       }
       this.$emit(e);
     },
@@ -151,7 +161,7 @@ export default {
         if (typeof this.op.onClick === "function") {
           this.op.onClick();
         } else {
-          throw Error("zoom-ui error: onClick 需要绑定一个函数对象");
+          throw new Error("zoom-ui error: onClick 需要绑定一个函数对象");
         }
       } else {
         return;
@@ -329,7 +339,7 @@ export default {
 /* shape样式 */
 .zoom-btn.zoom-plain.primary {
   color: #1890ff;
-  background: rgba(24, 144, 255, .06);
+  background: rgba(24, 144, 255, 0.06);
   border-color: #1890ff;
 }
 .zoom-btn.zoom-plain.primary[disabled],
@@ -337,12 +347,12 @@ export default {
 .zoom-btn.zoom-plain.primary[disabled]:focus,
 .zoom-btn.zoom-plain.primary[disabled]:active {
   color: #bfbfbf;
-  background: hsla(0, 0%, 75%, .1);
+  background: hsla(0, 0%, 75%, 0.1);
   border-color: #d9d9d9;
 }
 .zoom-btn.zoom-plain.success {
   color: #52c41a;
-  background: rgba(82, 196, 26, .06);
+  background: rgba(82, 196, 26, 0.06);
   border-color: #52c41a;
 }
 .zoom-btn.zoom-plain.success[disabled],
@@ -350,12 +360,12 @@ export default {
 .zoom-btn.zoom-plain.success[disabled]:focus,
 .zoom-btn.zoom-plain.success[disabled]:active {
   color: #a6c3b9;
-  background: rgba(166, 195, 185, .1);
+  background: rgba(166, 195, 185, 0.1);
   border-color: #a6c3b9;
 }
 .zoom-btn.zoom-plain.info {
   color: #333;
-  background: rgba(51, 51, 51, .06);
+  background: rgba(51, 51, 51, 0.06);
   border-color: #333;
 }
 .zoom-btn.zoom-plain.info[disabled],
@@ -363,12 +373,12 @@ export default {
 .zoom-btn.zoom-plain.info[disabled]:focus,
 .zoom-btn.zoom-plain.info[disabled]:active {
   color: #bfbfbf;
-  background: hsla(0, 0%, 75%, .1);
+  background: hsla(0, 0%, 75%, 0.1);
   border-color: #bfbfbf;
 }
 .zoom-btn.zoom-plain.warning {
   color: #faad14;
-  background: rgba(250, 173, 20, .06);
+  background: rgba(250, 173, 20, 0.06);
   border-color: #faad14;
 }
 .zoom-btn.zoom-plain.warning[disabled],
@@ -376,12 +386,12 @@ export default {
 .zoom-btn.zoom-plain.warning[disabled]:focus,
 .zoom-btn.zoom-plain.warning[disabled]:active {
   color: #d3c6a2;
-  background: hsla(44, 36%, 73%, .1);
+  background: hsla(44, 36%, 73%, 0.1);
   border-color: #d3c6a2;
 }
 .zoom-btn.zoom-plain.danger {
   color: #f5222d;
-  background: rgba(245, 34, 45, .06);
+  background: rgba(245, 34, 45, 0.06);
   border-color: #f5222d;
 }
 .zoom-btn.zoom-plain.danger[disabled],
@@ -389,24 +399,27 @@ export default {
 .zoom-btn.zoom-plain.danger[disabled]:focus,
 .zoom-btn.zoom-plain.danger[disabled]:active {
   color: #d8bab5;
-  background: hsla(9, 31%, 78%, .1);
+  background: hsla(9, 31%, 78%, 0.1);
   border-color: #d8bab5;
 }
 /* 按钮大小样式 */
-.zoom-btn.mini, .zoom-btn[size=mini] {
+.zoom-btn.mini,
+.zoom-btn[size="mini"] {
   min-width: 30px;
   max-width: 120px;
   height: 30px;
   line-height: 30px;
   padding: 0 6px;
 }
-.zoom-btn.small, .zoom-btn[size=small] {
+.zoom-btn.small,
+.zoom-btn[size="small"] {
   min-width: 80px;
   max-width: 140px;
   height: 24px;
   line-height: 24px;
 }
-.zoom-btn.large, .zoom-btn[size=large] {
+.zoom-btn.large,
+.zoom-btn[size="large"] {
   min-width: 80px;
   max-width: 130px;
   height: 42px;

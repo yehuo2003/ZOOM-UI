@@ -9,7 +9,8 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
-    class="zoom-input zoom-dropdown">
+    class="zoom-input zoom-dropdown"
+  >
     <input
       :class="error ? 'error' : ''"
       @blur="handleBlur"
@@ -49,10 +50,8 @@
             @click="itemClick(item)"
             class="list-item"
           >
-          <!-- 多选功能开启时启动复选框 -->
-          <zoom-checkbox v-show="isChecked" :ref="item.value" :op="checkOp">
-            {{item.text}}
-          </zoom-checkbox>
+            <!-- 多选功能开启时启动复选框 -->
+            <zoom-checkbox v-show="isChecked" :ref="item.value" :op="checkOp">{{item.text}}</zoom-checkbox>
             {{isChecked ? '' : item.text}}
           </li>
         </ul>
@@ -66,34 +65,42 @@ export default {
   props: {
     id: String,
     op: {
-      placeHolder: {  //  占位符
+      placeHolder: {
+        //  占位符
         type: String,
         default: null
       },
-      isdisabled: {  //是否禁用 默认false
+      isdisabled: {
+        //是否禁用 默认false
         type: Boolean,
         default: false
       },
-      readonly: { // 是否禁止输入默认false
+      readonly: {
+        // 是否禁止输入默认false
         type: Boolean,
         default: false
       },
-      isChecked: { // 是否启用多选功能 默认false
+      isChecked: {
+        // 是否启用多选功能 默认false
         type: Boolean,
         default: false
       },
-      hideClose: {  //是否隐藏清除按钮 默认false
+      hideClose: {
+        //是否隐藏清除按钮 默认false
         type: Boolean,
         default: false
       },
-      errMsg: { //  验证失败时候显示的信息
+      errMsg: {
+        //  验证失败时候显示的信息
         type: String,
         default: ""
       },
-      onClick: {  //  点击事件
+      onClick: {
+        //  点击事件
         type: Function
       },
-      data: { //下拉框数据, 键值对的方式, text是展示的文本
+      data: {
+        //下拉框数据, 键值对的方式, text是展示的文本
         type: Array,
         default: function() {
           return [];
@@ -110,11 +117,10 @@ export default {
       currentValue: this.value,
       error: false,
       errMsg: null,
-      checkOp: {  //  如果配置了多选
+      checkOp: {
+        //  如果配置了多选
         Bool: true,
-        data: [
-          {text: '', value: ''}
-        ]
+        data: [{ text: "", value: "" }]
       },
       options: {
         data: [],
@@ -142,14 +148,14 @@ export default {
         this.isChecked = this.op.isChecked;
         let list = [];
         this.op.data.forEach(item => {
-            // 判断是否设置了默认项
-            if (!item.checked) {
-                item.checked = false;
-            } else {
-                item.checked = true;
-            }
-            list.push(item);
-        })
+          // 判断是否设置了默认项
+          if (!item.checked) {
+            item.checked = false;
+          } else {
+            item.checked = true;
+          }
+          list.push(item);
+        });
         this.op.data = this.$zoom.clone(list);
       }
       this.options = this.op;
@@ -179,37 +185,37 @@ export default {
         // 单选状态
         this.currentValue = e.text;
         this.$refs["downVal"].value = e.value;
-        this.$emit('input', e.value);
+        this.$emit("input", e.value);
         this.showDown = false;
       } else {
         let list = this.$zoom.clone(this.list);
-        let str = ''; //  展示的数据
+        let str = ""; //  展示的数据
         let lst = []; //  返回给父组件的
         if (!e.checked) {
           // 选中
           list.push(e);
           list.forEach(item => {
-            str += item.text + ';'
+            str += item.text + ";";
             lst.push(item.value);
-          })
+          });
         } else {
           // 取消选中
           list.forEach((item, index) => {
             if (item.value === e.value) {
               list[index] = null;
             } else {
-              str += item.text + ';'
+              str += item.text + ";";
               lst.push(item.value);
             }
-          })
+          });
         }
         // 返回给父组件v-model
-          this.$emit('input', lst);
-          // 展示的文本
-          this.currentValue = str;
-          // 去除为空的数据然后保存下来
-          this.list = list.filter(d => d);
-          e.checked = !e.checked;
+        this.$emit("input", lst);
+        // 展示的文本
+        this.currentValue = str;
+        // 去除为空的数据然后保存下来
+        this.list = list.filter(d => d);
+        e.checked = !e.checked;
       }
     },
     // 验证功能
@@ -221,29 +227,36 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-              this.errMsg = null;
+                this.errMsg = null;
             }, 2000);
           }
+          return !!test;
         } else {
           this.error = false;
         }
+      } else {
+        return true
       }
+    },
+    // 重置功能,主要给父组件调用
+    reset() {
+      this.clear();
     },
     clear() {
       if (!this.options.isdisabled) {
         this.currentValue = "";
         this.list = [];
-        this.$emit('input', this.currentValue);
+        this.$emit("input", this.currentValue);
         if (this.options.isChecked) {
           this.options.data.forEach(item => {
             if (item.checked) {
               // 清空复选框
               this.$refs[item.value][0].list[0].checked = item.checked = false;
             }
-          })
+          });
         }
       } else {
-        throw Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
       }
     },
     Oninput($event) {

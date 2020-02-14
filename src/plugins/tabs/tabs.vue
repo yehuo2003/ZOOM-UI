@@ -8,25 +8,25 @@
 </template>
 
 <script>
-  export default {
-    name: 'zoom-tabs',
-    data() {
-      return {
-        panels: [] // 子组件mounted的时候将自己push到该数组中
-      }
-    },
-    props: {
-      value: {
-        type: [String, Number],
-        required: true
-      }
-    },
-    methods: {
-      tabChange(index) {
-        this.$emit('tabChange',index)
-      }
+export default {
+  name: "zoom-tabs",
+  data() {
+    return {
+      panels: [] // 子组件mounted的时候将自己push到该数组中
+    };
+  },
+  props: {
+    value: {
+      type: [String, Number],
+      required: true
+    }
+  },
+  methods: {
+    tabChange(index) {
+      this.$emit("tabChange", index);
     }
   }
+};
 </script>
 
 <style>

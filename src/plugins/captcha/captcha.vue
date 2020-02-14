@@ -1,5 +1,8 @@
 <template>
-  <div :class="[ hide ? 'captcha-hide' : '', disabled ? 'disabled-captcha-model' : '' ]" class="captcha-model">
+  <div
+    :class="[ hide ? 'captcha-hide' : '', disabled ? 'disabled-captcha-model' : '' ]"
+    class="captcha-model"
+  >
     <div class="captcha-header">
       <span>请完成安全验证</span>
     </div>
@@ -30,7 +33,7 @@ export default {
   props: {
     op: {
       type: Object,
-      show: Boolean,  //  为true时, 总是显示
+      show: Boolean, //  为true时, 总是显示
       disabled: Boolean, //  是否禁用 默认false, 验证成功后自动为true
       RandomSrc: Function, //  父组件生成随机图片的方法
       onSuccess: Function, //  监听验证成功的回调
@@ -355,7 +358,7 @@ export default {
   z-index: 999;
   cursor: no-drop;
   background: #d9d9d9;
-  opacity: .5;
+  opacity: 0.5;
   top: 0;
 }
 .captcha-hide:not(.disabled-captcha-model):hover .captcha-header,

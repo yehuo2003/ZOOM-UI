@@ -1,15 +1,17 @@
 <template>
   <div
-   @click="handleChild('click')"
-   @mousedown="handleChild('mousedownChild')"
-   @mouseenter="handleChild('mouseenterChild')"
-   @mouseleave="handleChild('mouseleaveChild')"
-   @mousemove="handleChild('mousemoveChild')"
-   @mouseout="handleChild('mouseoutChild')"
-   @mouseover="handleChild('mouseoverChild')"
-   @keydown="handleChild('keydownChild')"
-   @keyup="handleChild('keyupChild')"
-   class="zoom-numeric zoom-input" :class="options.isdisabled ? 'numeric-disabled' : '' ">
+    @click="handleChild('click')"
+    @mousedown="handleChild('mousedownChild')"
+    @mouseenter="handleChild('mouseenterChild')"
+    @mouseleave="handleChild('mouseleaveChild')"
+    @mousemove="handleChild('mousemoveChild')"
+    @mouseout="handleChild('mouseoutChild')"
+    @mouseover="handleChild('mouseoverChild')"
+    @keydown="handleChild('keydownChild')"
+    @keyup="handleChild('keyupChild')"
+    class="zoom-numeric zoom-input"
+    :class="options.isdisabled ? 'numeric-disabled' : '' "
+  >
     <a @click="subtraction" href="javascript:void(0);" class="num-btn num-subtraction">-</a>
     <input
       :class="error ? 'error' : '' "
@@ -23,6 +25,7 @@
       @input="Oninput"
       type="number"
     />
+    <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
     <a @click="add" href="javascript:void(0);" class="num-btn num-add">+</a>
   </div>
 </template>
@@ -45,6 +48,7 @@ export default {
       isdisabled: false,
       currentValue: this.value,
       error: false,
+      errMsg: null,
       options: {
         max: 999999,
         min: 0
@@ -64,16 +68,24 @@ export default {
     getValue() {
       this.value = this.value.replace(/[^0-9|-]/g, "");
     },
+    // 验证功能
     handleBlur() {
       if (this.options.testing) {
         let test = this.options.testing(this.currentValue);
         if (!test) {
           this.error = true;
+          if (this.options.errMsg) {
+            this.errMsg = this.options.errMsg;
+            setTimeout(() => {
+              this.errMsg = null;
+            }, 2000);
+          }
+          return !!test;
         } else {
           this.error = false;
         }
       } else {
-        this.testing();
+        return this.testing();
       }
     },
     testing() {
@@ -82,7 +94,7 @@ export default {
       }
       let val = Number(this.currentValue);
       if (isNaN(val)) {
-        throw Error(
+        throw new Error(
           `zoom-ui TypeError: value ${this.currentValue} is NaN, 请输入有效数字! `
         );
         return false;
@@ -100,6 +112,15 @@ export default {
     subtraction() {
       if (this.testing()) {
         this.currentValue = Number(this.currentValue) - 1;
+      }
+    },
+    // 重置
+    reset() {
+      if (!this.options.isdisabled) {
+        this.currentValue = 0;
+        this.$emit("input", 0);
+      } else {
+        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
       }
     },
     add() {

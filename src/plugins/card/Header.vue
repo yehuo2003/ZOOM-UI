@@ -1,10 +1,10 @@
 <template>
   <div class="zoom-header">
-      <slot></slot>
+    <slot></slot>
   </div>
 </template>
 <script>
 export default {
-    name: 'zoom-header'
-}
+  name: "zoom-header"
+};
 </script>

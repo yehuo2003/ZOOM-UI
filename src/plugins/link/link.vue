@@ -1,5 +1,9 @@
 <template>
-  <a :href="isDisabled ? null : url" :class="[ cls, isDisabled ? 'link-disabled' : line ? 'link-underline' : '' ]" class="zoom-link">
+  <a
+    :href="isDisabled ? null : url"
+    :class="[ cls, isDisabled ? 'link-disabled' : line ? 'link-underline' : '' ]"
+    class="zoom-link"
+  >
     <span class="link-inner">
       <slot></slot>
     </span>
@@ -7,23 +11,24 @@
 </template>
 <script>
 export default {
-  name: 'zoom-link',
+  name: "zoom-link",
   props: {
     type: String, //  类型 eg: primary success info danger warning
-    disabled: [Boolean, String],  //  是否禁用
-    url: String,  //  要跳转的地址
-    underline: {  //  是否显示下划线, 默认显示
+    disabled: [Boolean, String], //  是否禁用
+    url: String, //  要跳转的地址
+    underline: {
+      //  是否显示下划线, 默认显示
       type: Boolean,
       default: true
     }
   },
   data() {
     return {
-      text: '',
-      cls: '',
+      text: "",
+      cls: "",
       isDisabled: false,
       line: true
-    }
+    };
   },
   watch: {
     url(val) {
@@ -41,11 +46,11 @@ export default {
   },
   methods: {
     load() {
-      let cls = 'link-';
+      let cls = "link-";
       if (this.type) {
         cls += this.type;
       } else {
-        cls += 'default';
+        cls += "default";
       }
       this.cls = cls;
       if (this.disabled) {
@@ -60,7 +65,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 <style>
 .zoom-link.link-default {

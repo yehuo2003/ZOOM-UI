@@ -6,19 +6,35 @@
           <div>
             Tab1的内容
           </div>
-          <zoom-form submit.prevent="false" label-width="120px">
-            <zoom-form-item label="input的名字">
-              <zoom-input v-model="uname" placeholder="请输入名字" slot="content"></zoom-input>
+          <zoom-form ref="form" submit.prevent="false" label-width="120px">
+            <zoom-form-item inline="true" label="名字">
+              <zoom-input :op="inputOp" placeholder="请输入名字" slot="content"></zoom-input>
             </zoom-form-item>
-            <zoom-form-item label="密码">
+            <zoom-form-item inline="true" label="密码">
               <zoom-date slot="content"></zoom-date>
             </zoom-form-item>
+            <zoom-form-item label="搜索">
+              <zoom-search :op="inputOp" slot="content"></zoom-search>
+            </zoom-form-item>
             <zoom-form-item label="部门">
-              <zoom-input placeholder="请输入部门" slot="content"></zoom-input>
+              <zoom-input :op="inputOp" placeholder="请输入部门" slot="content"></zoom-input>
+            </zoom-form-item>
+            <zoom-form-item label="计数器">
+              <zoom-numeric :op="inputOp" slot="content"></zoom-numeric>
+            </zoom-form-item>
+            <zoom-form-item label="复选框">
+              <zoom-checkbox :op="checkOp" slot="content"></zoom-checkbox>
+            </zoom-form-item>
+            <zoom-form-item label="单选框">
+              <zoom-radio :op="checkOp" slot="content"></zoom-radio>
+            </zoom-form-item>
+            <zoom-form-item label="长框">
+              <zoom-textarea :op="inputOp" slot="content"></zoom-textarea>
             </zoom-form-item>
           </zoom-form>
           <!-- <input v-model="list.apwd" type="text"> -->
         <!-- </zoom-card> -->
+        <zoom-button type="primary" @click="test">验证</zoom-button>
         <zoom-button @click="quit">清除</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" :label="'Tab2'">
@@ -39,14 +55,32 @@
   export default {
     data() {
       return {
+        checkOp: {
+          data: [
+            {value: 1, text: '唱', checked: true},
+            {value: 2, text: '跳'},
+            {value: 3, text: 'rap'},
+            {value: 4, text: '篮球'}
+          ]
+        },
+        inputOp: {
+          errMsg: '验证不通过',
+          testing: val => {
+            return false
+          }
+        },
         uname: '',
         curTab: 0 // 当前激活的tab索引
       }
     },
     methods: {
+      test() {
+        this.$refs['form'].valid();
+      },
       quit() {
+        this.$refs['form'].reset();
         // console.log(this.uname, '==');
-        this.uname = '';
+        // this.uname = '';
       },
       tabChange(index) {
         this.curTab = index

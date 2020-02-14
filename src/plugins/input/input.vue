@@ -47,13 +47,14 @@ export default {
         type: Boolean,
         default: false
       },
-      readonly: { // 是否禁止输入默认false
+      readonly: {
+        // 是否禁止输入默认false
         type: Boolean,
         default: false
       },
       errMsg: {
-          type: String,
-          default: ''
+        type: String,
+        default: ""
       },
       IconStyle: {
         type: String,
@@ -73,7 +74,7 @@ export default {
       errMsg: null,
       options: {
         type: "text",
-        errMsg: '',
+        errMsg: "",
         placeHolder: null,
         isdisabled: false,
         IconStyle: false
@@ -88,7 +89,7 @@ export default {
         return;
       } else {
         this.options.type = "text";
-        throw Error(
+        throw new Error(
           `zoom-ui TypeError: type属性解析失败, 仅支持 'text', 'password' !`
         );
       }
@@ -107,20 +108,28 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-                this.errMsg = null;
+              this.errMsg = null;
             }, 2000);
           }
+          return !!test;
         } else {
           this.error = false;
         }
+      } else {
+        return true;
       }
     },
+    // 重置功能,主要给父组件调用
+    reset() {
+      this.clear();
+    },
+    // 清除
     clear() {
       if (!this.options.isdisabled) {
         this.currentValue = "";
-        this.$emit('input', '');
+        this.$emit("input", "");
       } else {
-        throw Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
       }
     },
     Oninput($event) {
