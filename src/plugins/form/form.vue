@@ -18,20 +18,40 @@ export default {
     }
   },
   methods: {
-    // 验证功能
+    /**
+     * 验证功能 循环遍历form表单,查看表单里组件是否有handleBlur验证函数 如果有就调用
+     */
     valid() {
       let arr = this.$children;
       let count = 0;
       arr.forEach(item => {
+        let componentInstance = item.$slots.content[0].componentInstance;
         if (
-          item.$slots.content[0].componentInstance &&
-          item.$slots.content[0].componentInstance.handleBlur
+          componentInstance &&
+          componentInstance.handleBlur
         ) {
-          let res = item.$slots.content[0].componentInstance.handleBlur();
+          let res = componentInstance.handleBlur();
+          /**
+           * 用户是否添加了必填项(require)
+           * 如果添加了require, 并且表单项的值为空, 则弹出提示 '必填'
+           * 2s 后消失
+           */
+          if (item.require && !componentInstance.currentValue) {
+            let msg = componentInstance.errMsg;
+            componentInstance.errMsg = '必填';
+            componentInstance.error = true;
+            res = false;
+            setTimeout(() => {
+              componentInstance.errMsg = msg;
+              componentInstance.error = false;
+            }, 2000);
+          }
+          // 如果有一项验证未通过, count + 1
+          // 最终结果取反 只有res为 0 才返回 true
           if (!res) count += 1;
         }
       });
-      return !!count;
+      return !count;
     },
     // 重置表单内容
     /**
@@ -56,37 +76,5 @@ export default {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-.zoom-form-item {
-  margin: 0 0 12px;
-}
-.zoom-form-item > .form-item-label {
-  color: #333;
-  text-align: right;
-  vertical-align: middle;
-  line-height: 30px;
-  float: left;
-  padding: 0 8px 0 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  word-break: break-all;
-  font-weight: 400;
-  margin: 0;
-}
-.zoom-form-item::after,
-.zoom-form-item::before {
-  content: "";
-  display: table;
-}
-.zoom-form.form-inline .zoom-form-item,
-.zoom-form .form-item-inline {
-  margin-right: 10px;
-  display: inline-block;
-  vertical-align: top;
-}
-.zoom-form.form-inline .form-item-label,
-.zoom-form .form-item-inline .form-item-label {
-  float: none;
-  display: inline-block;
 }
 </style>

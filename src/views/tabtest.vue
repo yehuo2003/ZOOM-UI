@@ -7,13 +7,13 @@
             Tab1的内容
           </div>
           <zoom-form ref="form" submit.prevent="false" label-width="120px">
-            <zoom-form-item inline="true" label="名字">
+            <zoom-form-item :require="true" inline="true" label="名字">
               <zoom-input :op="inputOp" placeholder="请输入名字" slot="content"></zoom-input>
             </zoom-form-item>
             <zoom-form-item inline="true" label="密码">
               <zoom-date slot="content"></zoom-date>
             </zoom-form-item>
-            <zoom-form-item label="搜索">
+            <zoom-form-item :require="true" label="搜索">
               <zoom-search :op="inputOp" slot="content"></zoom-search>
             </zoom-form-item>
             <zoom-form-item label="部门">

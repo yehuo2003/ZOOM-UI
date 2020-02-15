@@ -4,7 +4,7 @@
     class="captcha-model"
   >
     <div class="captcha-header">
-      <span>请完成安全验证</span>
+      <span>{{title}}</span>
     </div>
     <!-- 验证码 -->
     <div class="captcha-content">
@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      title: '请完成安全验证',
       hide: true,
       disabled: false,
       cv: {
@@ -69,6 +70,7 @@ export default {
     };
   },
   mounted() {
+    this.title = '请完成安全验证';
     this.disabled = true;
     this.init();
     if (this.op && this.op.show) {
@@ -102,6 +104,7 @@ export default {
         type: "success",
         content: "验证成功！"
       });
+      this.title = '验证成功'
     },
     onFail() {
       if (this.op.onFailed) {

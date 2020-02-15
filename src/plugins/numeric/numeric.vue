@@ -83,6 +83,7 @@ export default {
           return !!test;
         } else {
           this.error = false;
+          return this.testing();
         }
       } else {
         return this.testing();
@@ -90,7 +91,7 @@ export default {
     },
     testing() {
       if (this.options.isdisabled) {
-        return;
+        return true;
       }
       let val = Number(this.currentValue);
       if (isNaN(val)) {

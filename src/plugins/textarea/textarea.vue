@@ -74,6 +74,7 @@ export default {
           return !!test;
         } else {
           this.error = false;
+          return true;
         }
       } else {
         return true;

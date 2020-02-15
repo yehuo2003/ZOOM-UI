@@ -80,8 +80,8 @@ export default {
   color: #1890ff;
   fill: #1890ff;
 }
-.zoom-link.link-default:hover,
-.zoom-link.link-primary:hover {
+.zoom-link.link-default:not(.link-disabled):hover,
+.zoom-link.link-primary:not(.link-disabled):hover {
   color: #40a9ff;
   fill: #40a9ff;
   text-decoration: none;
@@ -94,7 +94,7 @@ export default {
   color: #52c41a;
   fill: #52c41a;
 }
-.zoom-link.link-success:hover {
+.zoom-link.link-success:not(.link-disabled):hover {
   color: #73d13d;
   fill: #73d13d;
   text-decoration: none;
@@ -110,7 +110,7 @@ export default {
   color: #faad14;
   fill: #faad14;
 }
-.zoom-link.link-warning:hover {
+.zoom-link.link-warning:not(.link-disabled):hover {
   color: #ffc53d;
   fill: #ffc53d;
   text-decoration: none;
@@ -126,7 +126,7 @@ export default {
   color: #f5222d;
   fill: #f5222d;
 }
-.zoom-link.link-danger:hover {
+.zoom-link.link-danger:not(.link-disabled):hover {
   color: #ff4d4f;
   fill: #ff4d4f;
   text-decoration: none;
@@ -155,7 +155,7 @@ export default {
   border-color: #333;
 }
 .zoom-link.link-primary.link-underline:hover:after,
-.zoom-link.link-default.link-underline:hover,
+.zoom-link.link-default.link-underline:not(.link-disabled):hover,
 .zoom-link.link-default.link-underline:hover:after {
   border-color: #1890ff;
 }

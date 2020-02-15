@@ -18,7 +18,7 @@
         @focus="focus = true"
         @blur="handleBlur"
         @input="Oninput"
-        @keyup.enter="search"
+        @keyup.enter="handleSearch"
         :value="currentValue"
         :placeholder="placeholder ? placeholder : options.placeHolder"
         :readonly="options.readonly"
@@ -27,7 +27,7 @@
         class="zoom-input-search"
       />
       <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
-      <div class="input-btn">
+      <div @click="handleSearch" class="input-btn">
         <a class="zoom-icon icon-search"></a>
       </div>
     </div>
@@ -106,9 +106,10 @@ export default {
           return !!test;
         } else {
           this.error = false;
+          return true;
         }
       } else {
-        return this.testing();
+        return true;
       }
     },
     // 点击搜索条目
@@ -132,8 +133,8 @@ export default {
     /**
      * 向父组件传递search事件, 可获取参数 input 框value值, 当前查找的obj
      */
-    serach() {
-      this.$$emit("serach", this.currentValue, this.obj);
+    handleSearch() {
+      this.$$emit("search", this.currentValue, this.obj);
       if (this.op && this.op.onClick) {
         this.op.onClick();
       }
@@ -177,7 +178,6 @@ export default {
   border-radius: 2px;
   background: #fff;
   color: #333;
-  margin-top: 2px;
   font-size: 12px;
 }
 /* 搜索框 */
@@ -185,7 +185,7 @@ export default {
   display: block;
 }
 .zoom-search.zoom-input .select-line.focus {
-  border: #1890ff;
+  border: 1px solid #1890ff;
 }
 .zoom-search.zoom-input
   .select-line
@@ -193,6 +193,9 @@ export default {
   + .input-btn
   a {
   color: #333;
+}
+.zoom-search.zoom-input .select-line .input-btn:hover a {
+  font-weight: bold;
 }
 .zoom-search.zoom-input .select-line .input-btn {
   width: 30px;

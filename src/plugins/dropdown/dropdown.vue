@@ -233,9 +233,10 @@ export default {
           return !!test;
         } else {
           this.error = false;
+          return true;
         }
       } else {
-        return true
+        return true;
       }
     },
     // 重置功能,主要给父组件调用
