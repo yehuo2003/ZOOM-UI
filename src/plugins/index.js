@@ -2,9 +2,19 @@
 import '../assets/fontIcon/iconfont.css'
 import './dom.js'
 
+// 懒加载图片
+import Lazyload from './lazyLoad.js'
+
 // 路径 是否查找子目录 .vue
 const requireComponent = require.context('./', true, /\.vue$/);
 const install = Vue => {
+	// 参数均为可选
+	Vue.use(Lazyload,{
+	  scrollDistance: 15, // 距离可视区还有15px时开发加载资源
+	  // defaultImage: 'https://gw.alicdn.com/tps/i1/TB147JCLFXXXXc1XVXXxGsw1VXX-112-168.png', // 资源图片未加载前的默认图片（绝对路径）
+	  // errorImage:'https://gw.alicdn.com/tps/i1/TB147JCLFXXXXc1XVXXxGsw1VXX-112-168.png' // 资源图片加载失败时要加载的资源（绝对路径）
+	 })
+
     Vue.directive('focus', {
         inserted: function(el) {
             el.focus();

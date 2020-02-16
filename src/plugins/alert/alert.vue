@@ -270,7 +270,7 @@ export default {
   min-width: 150px;
   min-height: 30px;
   line-height: 30px;
-  z-index: 11;
+  z-index: 9999;
   opacity: 1;
 }
 </style>
