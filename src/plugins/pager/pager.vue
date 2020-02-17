@@ -277,7 +277,7 @@ export default {
   cursor: pointer;
   background: 0 0;
   display: inline-block;
-  font-size: 1em;
+  font-size: 14px;
   margin-left: 4px;
   text-align: center;
   min-width: 30px;

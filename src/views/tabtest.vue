@@ -42,7 +42,9 @@
           我是tab2
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
-        <div>Tab2的内容</div>
+        <div>
+          <img v-lazyload="'1.jpg'" alt="">
+        </div>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
         <div>Tab3的内容</div>

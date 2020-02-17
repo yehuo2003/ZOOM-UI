@@ -122,7 +122,7 @@ summary {
   padding: 0;
   box-sizing: border-box;
 }
-  body {
+body {
   font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Arial";
   color: #333;
   background-color: #fff;
@@ -132,11 +132,10 @@ summary {
   overflow-x: hidden;
   box-sizing: border-box;
 }
-  a {
+a {
   text-decoration: none;
 }
 a:hover {
-  color: #f60;
   text-decoration: none;
 }
 img {
@@ -166,6 +165,23 @@ textarea {
   padding: 0;
   outline: none;
   box-sizing: border-box;
+}
+img[src*="zoom-lazy-logo"] {
+  animation: lazy-logo 2s infinite linear;
+}
+img[src*="zoom-picture-not-found"] {
+  width: 10rem;
+}
+@keyframes lazy-logo {
+  0% {
+    opacity: .2;
+  }
+  50% {
+    opacity: .8;
+  }
+  100% {
+    overflow: .2;
+  }
 }
 .zoom-clear::after {
   content: "";
