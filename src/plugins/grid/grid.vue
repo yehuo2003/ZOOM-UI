@@ -305,10 +305,12 @@ export default {
           if (this.op.onClick) {
             obj.onClick = this.op.onClick;
           }
+          let count = 0;
           for (let key in item) {
             if (fieIdArr.indexOf(key) > -1) {
               // 和头部的键对应才会加入进对象
-              obj[key] = item[key];
+              count += 1;
+              obj[key] = item[fieIdArr[count]];
             }
           }
           dataArr.push(obj);
