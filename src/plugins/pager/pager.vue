@@ -4,27 +4,43 @@
       共{{total}}条
       <zoom-dropdown :op="dropOp"></zoom-dropdown>条/页
     </span>
-
-    <span :class="{ 'disabled': changeStart == 1}" @click="prePageHandle" class="zoom-prev">&lt;</span>
+    <!-- 当前页如果是第一页, 则上一页和返回首页按钮都禁用, 并且点击的时候传相应的值 -->
+    <span v-if="mode !== 'mini' " :class="{ 'disabled': currentPage === 1}" @click="astride('prev', currentPage === 1)" class="page page-start">
+      <i class="zoom-icon icon-to-top"></i>
+    </span>
+    <span :class="{ 'disabled': currentPage === 1}" @click="prePageHandle(currentPage === 1)" class="zoom-prev">
+      <i class="zoom-icon icon-left"></i>
+    </span>
 
     <span
       v-show="index != 5"
       v-if="index != 7"
       v-for="(page, index) of  showPage"
       :key="index"
-      :class="{ 'active':(changeStart + page - 1) == currentPage}"
+      :class="{ 'active':(changeStart + page - 1) === currentPage}"
       @click="changeShow(changeStart + page - 1, index)"
       class="page"
     >{{index === 6 && showPage >= 10 ? '...' : (changeStart + page - 1)}}</span>
 
+    <!-- 如果当前页等于最后一页, 那么下一页按钮和跳转末页按钮则禁用, 并且点击时候传相应的值 -->
     <span
-      :class="{ 'disabled': changeStart + showPage - 1 == pages}"
-      @click="nextPageHandle"
+      :class="{ 'disabled': currentPage === pages}"
+      @click="nextPageHandle(currentPage === pages)"
       class="zoom-next"
-    >&gt;</span>
+    >
+      <i class="zoom-icon icon-right"></i>
+    </span>
+    <span
+       v-if="mode !== 'mini' "
+      :class="{ 'disabled': currentPage === pages}"
+      @click="astride('next', currentPage === pages)"
+      class="page page-end"
+    >
+      <i class="zoom-icon icon-to-top"></i>
+    </span>
     <span v-if="mode !== 'mini' " class="pager-jump">
       <a @click="jump">前往</a>
-      <input type="text" v-model="val" @keyup.enter="jump" />
+      <input type="number" onpaste="return false" v-model.number="val" @keyup.enter="jump" />
       <a @click="jump">页</a>
     </span>
   </div>
@@ -217,14 +233,44 @@ export default {
       this.currentPage = this.val;
       this.val = "";
     },
-    prePageHandle() {
+    /**
+     * 跳转到首页或末页
+     * astride('prev')  首页
+     * astride('end')  末页
+     */
+    astride(page, curPage) {
+      if (curPage) {
+        return;
+      }
+      if (page === 'prev') {
+        this.currentPage = 1;
+      } else {
+        this.currentPage = this.pages;
+      }
+      this.send(this.currentPage);
+    },
+    /**
+     * 跳转到上一页
+     * 判断是否禁用 如果禁用就return
+     */
+    prePageHandle(curPage) {
+      if (curPage) {
+        return;
+      }
       this.currentPage--;
       if (this.currentPage < 1) {
         this.currentPage = 1;
       }
       this.send(this.currentPage);
     },
-    nextPageHandle() {
+    /**
+     * 跳转到下一页
+     * 判断是否禁用 如果禁用就return
+     */
+    nextPageHandle(curPage) {
+      if (curPage) {
+        return;
+      }
       this.currentPage++;
       if (this.currentPage > this.pages) {
         this.currentPage = this.pages;
@@ -250,6 +296,7 @@ export default {
   top: -5px;
 }
 .zoom-pager .zoom-input {
+  margin-right: 5px;
   width: 60px;
 }
 .clear:after {
@@ -287,22 +334,42 @@ export default {
   padding: 0 4px;
 }
 
+.zoom-pager span.page.active {
+  color: #409eff;
+  border: 1px solid #409eff;
+  cursor: default;
+}
+
+.zoom-pager span.zoom-prev,
+.zoom-pager span.zoom-next,
 .zoom-pager span.page:hover {
   color: #409eff;
 }
 
-.zoom-pager span.page.active {
-  color: #409eff;
-  cursor: default;
+.zoom-pager span.zoom-prev:not(.disabled):hover,
+.zoom-pager span.zoom-next:not(.disabled):hover {
+  border: 1px solid #409eff;
 }
 
+.zoom-pager span.page-end>.zoom-icon {
+  font-weight: bold;
+  transform: rotate(90deg);
+}
+
+.zoom-pager span.page-start>.zoom-icon {
+  font-weight: bold;
+  transform: rotate(-90deg);
+}
+
+.zoom-pager span.page-end.disabled,
+.zoom-pager span.page-start.disabled,
 .zoom-pager span.zoom-prev.disabled,
 .zoom-pager span.zoom-next.disabled {
   color: #cccccc;
   cursor: not-allowed;
 }
 
-.zoom-pager input[type="text"] {
+.zoom-pager input[type="number"] {
   padding: 2px;
   border: 1px solid #cccccc;
   border-radius: 5px;
@@ -313,7 +380,7 @@ export default {
   outline: none;
   transition: 0.2s all;
 }
-.zoom-pager input[type="text"]:focus {
+.zoom-pager input[type="number"]:focus {
   border-color: #409eff;
 }
 </style>

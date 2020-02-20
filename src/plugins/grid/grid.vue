@@ -141,6 +141,7 @@ export default {
   },
   data() {
     return {
+      data: [], //  父组件传来的数据
       tips: false,
       height: null, //  表格内容高度
       serial: false, //  是否显示序列号
@@ -288,6 +289,7 @@ export default {
         } else {
           return;
         }
+        this.data = this.$zoom.clone(data);
         let dataArr = [];
         // 循环先判断data数组里每个对象里key值是否和title里key值对应
         data.forEach((item, index) => {
@@ -337,7 +339,11 @@ export default {
       }
       this.setWidth();
     },
-    // 开启loading效果
+    /**
+     * loading 开关
+     * showLoad(true)  开启
+     * showLoad(false) 关闭
+     */
     showLoad(show) {
       this.loading = show;
     },
@@ -410,8 +416,10 @@ export default {
       // 防止改变原数据
       //  dom元素 elemnt 当前点击单元格   col 当前行
       if (col.onClick) {
-        let value = JSON.parse(JSON.stringify(col));
-        delete value.onClick;
+        let value = {};
+        if (col.indexId) {
+          value = this.data[col.indexId - 1];
+        }
         col.onClick(dom, elemnt, value, fieId);
       }
       // 如果有复选框
@@ -422,10 +430,11 @@ export default {
     // 按钮点击事件
     iconClick(e, item) {
       if (e.onClick) {
-        // 防止改变原数据
-        let value = JSON.parse(JSON.stringify(item));
-        delete value.btns;
-        e.onClick(value);
+        let value = {};
+        if (item.indexId) {
+          value = this.data[item.indexId - 1];
+        }
+        e.onClick(value, item.indexId - 1);
       }
     }
   }
