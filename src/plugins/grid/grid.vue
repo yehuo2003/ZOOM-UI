@@ -33,7 +33,7 @@
       <div :style=" 'height :' + height + ';' " :class="height ? 'rolling' : '' " class="grid-body">
         <div v-if="bodyData.length === 0" class="zoom-not-data">
           <p v-show="!loading" class="no-text">
-            <i class="zoom-icon icon-glass"></i>
+            <i class="zoom-icon icon-search"></i>
             <span>暂无数据</span>
           </p>
           <zoom-loading color="#1890ff" :show="loading"></zoom-loading>
@@ -49,7 +49,9 @@
                 @click="clickIndex = item.indexId"
                 class="grid-row"
               >
+              <!-- 如果是名字是按钮就不显示, 或者 当用户设置了隐藏索引时, 隐藏名字为 indexId 的 -->
                 <td
+                  v-if="(serial && name !== 'indexId') || !serial"
                   v-show=" name !== 'onClick' "
                   @click="itemClick($event, i, item, name)"
                   v-for="(i, name, index) of item"
@@ -251,8 +253,7 @@ export default {
       if (this.op.title) {
         let title = this.op.title;
         let titleData = [];
-        // let fieIdArr = ["indexId"];
-        let fieIdArr = [];
+        let fieIdArr = ["indexId"];
         let btns = [];
         let checked = "";
         title.forEach((item, index) => {
@@ -278,6 +279,9 @@ export default {
             btns = item.btns;
           }
         });
+        if (!this.serial) {
+          titleData.unshift({id: 0, title: ' '});
+        }
         this.titleData = titleData;
         // 如果内容部分有传值
         let data = [];
@@ -312,6 +316,9 @@ export default {
             if (fieIdArr.indexOf(key) > -1) {
               // 和头部的键对应才会加入进对象
               count += 1;
+              if (fieIdArr[count] === 'btns') {
+                count += 1;
+              }
               obj[key] = item[fieIdArr[count]];
             }
           }

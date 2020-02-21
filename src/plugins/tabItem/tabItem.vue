@@ -11,7 +11,7 @@ export default {
     }
   },
   mounted() {
-    this.$parent.panels.push(this);
+    this.$parent.panels.push([this]);
   },
   render(h) {
     const tab = this.$slots.label || h("span", this.label); // 如果用name=label的slot,则用slot,否则展示label prop

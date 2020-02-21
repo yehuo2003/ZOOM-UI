@@ -1,6 +1,6 @@
 <template>
   <!-- submit.prevent="false" 阻止默认提交事件 -->
-  <form :class="inline ? 'form-inline' : '' " class="zoom-form">
+  <form :class="[inline ? 'form-inline' : '', textAlign ? 'form-align-' + textAlign : '' ]" class="zoom-form">
     <slot></slot>
   </form>
 </template>
@@ -8,6 +8,10 @@
 export default {
   name: "zoom-form",
   props: {
+    textAlign: {
+      type: String,
+      default: null
+    },
     inline: {
       type: [String, Boolean],
       default: null

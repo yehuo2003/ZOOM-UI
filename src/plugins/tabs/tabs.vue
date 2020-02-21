@@ -3,7 +3,8 @@
     <ul class="tab-head">
       <slot></slot>
     </ul>
-    <zoom-tabs-content :panels="panels" />
+    <!-- 把panels数组拆分, 循环出来渲染, 并且把带有active的元素传给子组件 -->
+    <zoom-tabs-content v-for="(item, i) of panels" :key="i" :active="item[0].active" :panels="panels[i]" />
   </div>
 </template>
 

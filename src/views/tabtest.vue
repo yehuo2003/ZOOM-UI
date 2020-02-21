@@ -8,28 +8,28 @@
           </div>
           <zoom-form ref="form" submit.prevent="false" label-width="120px">
             <zoom-form-item :require="true" inline="true" label="名字">
-              <zoom-input :op="inputOp" placeholder="请输入名字" slot="content"></zoom-input>
+              <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
             <zoom-form-item inline="true" label="密码">
-              <zoom-date slot="content"></zoom-date>
+              <zoom-date></zoom-date>
             </zoom-form-item>
             <zoom-form-item :require="true" label="搜索">
-              <zoom-search :op="inputOp" slot="content"></zoom-search>
+              <zoom-search :op="inputOp"></zoom-search>
             </zoom-form-item>
             <zoom-form-item label="部门">
-              <zoom-input :op="inputOp" placeholder="请输入部门" slot="content"></zoom-input>
+              <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
             </zoom-form-item>
             <zoom-form-item label="计数器">
-              <zoom-numeric :op="inputOp" slot="content"></zoom-numeric>
+              <zoom-numeric :op="inputOp"></zoom-numeric>
             </zoom-form-item>
             <zoom-form-item label="复选框">
-              <zoom-checkbox :op="checkOp" slot="content"></zoom-checkbox>
+              <zoom-checkbox :op="checkOp"></zoom-checkbox>
             </zoom-form-item>
             <zoom-form-item label="单选框">
-              <zoom-radio :op="checkOp" slot="content"></zoom-radio>
+              <zoom-radio :op="checkOp"></zoom-radio>
             </zoom-form-item>
             <zoom-form-item label="长框">
-              <zoom-textarea :op="inputOp" slot="content"></zoom-textarea>
+              <zoom-textarea :op="inputOp"></zoom-textarea>
             </zoom-form-item>
           </zoom-form>
           <!-- <input v-model="list.apwd" type="text"> -->

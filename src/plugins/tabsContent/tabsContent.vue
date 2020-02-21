@@ -2,6 +2,7 @@
 export default {
   name: "zoom-tabs-content",
   props: {
+    active: [String, Boolean],
     panels: {
       type: Array,
       default: function() {
@@ -10,13 +11,11 @@ export default {
     }
   },
   render(h) {
-    const contents = this.panels.map(tab => {
-      return tab.active ? tab.$slots.default : null;
-    });
+    const contents = this.panels[0].$slots.default;
     return h(
       "div",
       {
-        class: "zoom-tabs-content"
+        class: ["zoom-tabs-content", this.active ? 'content-active' : '']
       },
       contents
     );
@@ -29,5 +28,9 @@ export default {
   position: relative;
   padding: 15px 24px;
   overflow: hidden;
+  display: none;
+}
+.zoom-tabs-content.content-active {
+  display: block;
 }
 </style>

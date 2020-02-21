@@ -5,10 +5,19 @@
       <zoom-dropdown :op="dropOp"></zoom-dropdown>条/页
     </span>
     <!-- 当前页如果是第一页, 则上一页和返回首页按钮都禁用, 并且点击的时候传相应的值 -->
-    <span v-if="mode !== 'mini' " :class="{ 'disabled': currentPage === 1}" @click="astride('prev', currentPage === 1)" class="page page-start">
+    <span
+      v-if="mode !== 'mini' "
+      :class="{ 'disabled': currentPage === 1}"
+      @click="astride('prev', currentPage === 1)"
+      class="page page-start"
+    >
       <i class="zoom-icon icon-to-top"></i>
     </span>
-    <span :class="{ 'disabled': currentPage === 1}" @click="prePageHandle(currentPage === 1)" class="zoom-prev">
+    <span
+      :class="{ 'disabled': currentPage === 1}"
+      @click="prePageHandle(currentPage === 1)"
+      class="zoom-prev"
+    >
       <i class="zoom-icon icon-left"></i>
     </span>
 
@@ -31,7 +40,7 @@
       <i class="zoom-icon icon-right"></i>
     </span>
     <span
-       v-if="mode !== 'mini' "
+      v-if="mode !== 'mini' "
       :class="{ 'disabled': currentPage === pages}"
       @click="astride('next', currentPage === pages)"
       class="page page-end"
@@ -242,7 +251,7 @@ export default {
       if (curPage) {
         return;
       }
-      if (page === 'prev') {
+      if (page === "prev") {
         this.currentPage = 1;
       } else {
         this.currentPage = this.pages;
@@ -351,12 +360,12 @@ export default {
   border: 1px solid #409eff;
 }
 
-.zoom-pager span.page-end>.zoom-icon {
+.zoom-pager span.page-end > .zoom-icon {
   font-weight: bold;
   transform: rotate(90deg);
 }
 
-.zoom-pager span.page-start>.zoom-icon {
+.zoom-pager span.page-start > .zoom-icon {
   font-weight: bold;
   transform: rotate(-90deg);
 }

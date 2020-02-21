@@ -30,7 +30,7 @@ export default {
         },
         this.label
       );
-    const slot = this.$slots.content;
+    const slot = this.$slots.default;
     return h(
       "div",
       {
@@ -82,5 +82,14 @@ export default {
   content: "*";
   color: #f5222d;
   margin-right: 4px;
+}
+.zoom-form.form-align-left .zoom-form-item > .form-item-label {
+  text-align: left;
+}
+.zoom-form.form-align-right .zoom-form-item > .form-item-label {
+  text-align: right;
+}
+.zoom-form.form-align-center .zoom-form-item > .form-item-label {
+  text-align: center;
 }
 </style>
