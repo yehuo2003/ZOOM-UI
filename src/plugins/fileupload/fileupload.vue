@@ -20,7 +20,7 @@
               <span>{{item.name}}</span>
               <i @click="removeConfirmation(index)" class="zoom-icon icon-close-plus"></i>
             </a>
-            <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+            <zoom-progress v-if="!notUpload" :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
             <span
               v-show=" item.status === 'success' || item.status === 'error' "
               :class=" item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' "
@@ -115,7 +115,7 @@
             </div>
             <!-- 内容 -->
             <div class="grid-body">
-              <div class="grid-bodybox">
+              <div class="grid-body-box">
                 <table class="grid-table grid-tbody">
                   <tbody class="grid-body-content">
                     <tr v-for="(item, index) of List" :key="index" class="grid-row">
@@ -190,6 +190,7 @@ export default {
   props: {
     op: {
       type: Object,
+      notUpload: Boolean, //  custom开启时候 notUpload设置为true, 关闭自动上传, 需要手动触发上传功能
       custom: Boolean, // 为true则开启自定义模式 自定义模式下点击后自动选择文件并上传
       url: {
         // 要上传的服务器地址
@@ -209,6 +210,7 @@ export default {
       params: Object, //  上传时可追加的携带参数列表 比如token    param: {param1: '', param2: '' },
       multiple: Boolean, //  是否多选
       limit: Number, //  文件数量
+      onDelete: Function, //  文件删除事件, 每当有文件被删除时候调用 onDelete(file)
       onChange: Function, //监听文件变化，增减文件时都会被子组件调用
       onProgress: Function, //上传进度，上传时会不断被触发，需要进度指示时会很有用  uploadProgress(index, progress)
       onSuccess: Function, //某个文件上传成功都会执行该方法，index代表列表中第index个文件  uploadSuccess(index, response)
@@ -221,6 +223,7 @@ export default {
   data() {
     return {
       limit: 0, //  文件数量
+      notUpload: false, //  为true 关闭自动上传
       custom: false, //  自定义模式
       data: {}, //  上传时携带的参数
       fileType: "", //  文件类型
@@ -305,6 +308,9 @@ export default {
       if (this.op.custom) {
         this.custom = this.op.custom;
       }
+      if (this.op.notUpload) {
+        this.notUpload = this.op.notUpload;
+      }
     }
   },
   mounted() {
@@ -333,6 +339,10 @@ export default {
     }
   },
   methods: {
+    // 获取input框dom元素
+    customUpload() {
+      return this.$refs['zoom-upload'];
+    },
     //  自定义模式下的格式化状态
     setStatus(status) {
       switch (status) {
@@ -511,7 +521,7 @@ export default {
       });
       this.List = Array.from(new Set(List));
       // this.onChange(this.List);//调用父组件方法，将列表缓存到上一级data中的fileList属性
-      if (this.custom) {
+      if (this.custom && !this.notUpload) {
         // 如果是自定义上传方法 直接调用
         this.submit();
       }
@@ -528,7 +538,7 @@ export default {
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
     remove(index) {
-      // let fileList = [...this.fileList];
+      let self = this;
       let fileList = [...this.List];
       if (fileList[index]) {
         let fileId = fileList[index].id;
@@ -549,15 +559,24 @@ export default {
           this.filelist.forEach(item => {
             if (item.length === 1) {
               item.status = "delete";
+              deleteFun(i);
             } else {
               item.forEach(i => {
                 if (fileId === i.id) {
                   i.status = "delete";
+                  item.status = "delete";
+                  deleteFun(i);
                 }
               });
             }
           });
           this.List = fileList;
+        }
+      }
+      function deleteFun(file) {
+        // 把删除文件结果传给用户 (如果有设置onDelete事件)
+        if (self.op && self.op.onDelete) {
+          self.op.onDelete(file);
         }
       }
     },

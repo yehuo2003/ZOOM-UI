@@ -55,6 +55,9 @@ export default {
         url: 'http://127.0.0.1:8081/profile',
         fileList: [],//上传文件列表，无论单选还是支持多选，文件都以列表格式保存
         params: {param1: '自定义参数1', param2: '自定义参数2' },//携带参数列表
+        onDelete: (file) => { // 删除文件事件
+          console.log( file, '文件被删除了');
+        },
         onChange: fileList => {//监听文件变化，增减文件时都会被子组件调用
           console.log('New文件变化了onChange', fileList);
         },

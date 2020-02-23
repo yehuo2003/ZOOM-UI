@@ -179,9 +179,9 @@ export default {
 }
 .zoom-input .input-btn {
   bottom: 0;
-  right: 0;
+  right: 2px;
+  top: -1px;
   position: absolute;
-  top: 0;
   line-height: 30px;
   min-width: 20px;
   min-height: 30px;
@@ -193,7 +193,6 @@ export default {
 }
 .zoom-input > input[disabled] {
   cursor: not-allowed;
-  /* pointer-events: none; */
   border: 1px solid #d9d9d9;
   color: #bfbfbf;
   background: #f5f5f5;

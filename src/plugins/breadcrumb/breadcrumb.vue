@@ -61,7 +61,7 @@ ol {
   padding-inline-start: 40px;
 }
 .zoom-breadcrumb {
-  padding: 8px 15px;
+  padding: 8px 0;
   line-height: 1em;
   list-style: none;
 }

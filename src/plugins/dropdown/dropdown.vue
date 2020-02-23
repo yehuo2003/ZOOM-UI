@@ -159,15 +159,22 @@ export default {
         this.op.data = this.$zoom.clone(list);
       }
       this.options = this.op;
-      if (!this.options.data) {
+      //
+      if (!this.op.data) {
+        // 如果没有配置data数据 默认显示暂无数据
         this.options.data = this.defaultList;
       }
+    } else {
+      this.options.data = this.defaultList;
     }
   },
   methods: {
     load(data) {
       if (data && data.length && data instanceof Array) {
         this.list = data;
+      } else if (Object.prototype.toString.call(data) === '[object Object]' && data.value && data.text) {
+        this.currentValue = data.text;
+        this.$refs["downVal"].value = data.value;
       }
     },
     handleChild(e) {

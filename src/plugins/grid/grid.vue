@@ -61,7 +61,6 @@
                   class="grid-item"
                 >
                   <span class="grid-input">
-                    <!-- {{i === item.btns ? '' : i}} -->
                     {{i === item.btns ? '' : name === 'checked' ? '' : i}}
                     <!-- 如果是复选框, 就加载 -->
                     <span
@@ -293,6 +292,7 @@ export default {
         } else {
           return;
         }
+
         this.data = this.$zoom.clone(data);
         let dataArr = [];
         // 循环先判断data数组里每个对象里key值是否和title里key值对应

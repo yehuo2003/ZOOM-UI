@@ -131,7 +131,7 @@ export default {
     },
     Oninput($event) {
       if (this.testing()) {
-        this.currentValue = $event.target.value;
+        this.currentValue = Number($event.target.value);
         this.$emit("input", this.currentValue);
       }
     }

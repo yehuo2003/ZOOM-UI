@@ -8,10 +8,13 @@
           </div>
           <zoom-form ref="form" submit.prevent="false" label-width="120px">
             <zoom-form-item :require="true" inline="true" label="名字">
-              <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
+              <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
             <zoom-form-item inline="true" label="密码">
               <zoom-date></zoom-date>
+            </zoom-form-item>
+            <zoom-form-item inline="true" label="下拉框">
+              <zoom-dropdown ref="dropdown"></zoom-dropdown>
             </zoom-form-item>
             <zoom-form-item :require="true" label="搜索">
               <zoom-search :op="inputOp"></zoom-search>
@@ -50,6 +53,9 @@
         <div>Tab3的内容</div>
       </zoom-tab-item>
     </zoom-tabs>
+    <zoom-input v-model="name"></zoom-input>
+    <el-input v-model="name"></el-input>
+              <input v-model="name" type="text">
   </div>
 </template>
 
@@ -57,6 +63,7 @@
   export default {
     data() {
       return {
+        name: '',
         checkOp: {
           data: [
             {value: 1, text: '唱', checked: true},
@@ -77,7 +84,9 @@
     },
     methods: {
       test() {
-        this.$refs['form'].valid();
+        let obj = { value: '666', text: '设置选中值'};
+        this.$refs['dropdown'].load(obj);
+        // this.$refs['form'].valid();
       },
       quit() {
         this.$refs['form'].reset();

@@ -164,5 +164,6 @@ export default {
 }
 .zoom-textarea {
   position: relative;
+  display: inline-block;
 }
 </style>
