@@ -51,11 +51,12 @@
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
         <div>Tab3的内容</div>
+        <zoom-loading></zoom-loading>
       </zoom-tab-item>
     </zoom-tabs>
     <zoom-input v-model="name"></zoom-input>
     <el-input v-model="name"></el-input>
-              <input v-model="name" type="text">
+    <input v-model="name" type="text">
   </div>
 </template>
 
@@ -86,7 +87,7 @@
       test() {
         let obj = { value: '666', text: '设置选中值'};
         this.$refs['dropdown'].load(obj);
-        // this.$refs['form'].valid();
+        this.$refs['form'].valid();
       },
       quit() {
         this.$refs['form'].reset();

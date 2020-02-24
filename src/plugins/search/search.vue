@@ -26,7 +26,7 @@
         type="text"
         class="zoom-input-search"
       />
-      <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
+      <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
       <div @click="handleSearch" class="input-btn">
         <a class="zoom-icon icon-search"></a>
       </div>
@@ -100,7 +100,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-              this.errMsg = null;
+              this.error = false;
             }, 2000);
           }
           return !!test;

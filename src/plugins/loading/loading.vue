@@ -5,11 +5,13 @@
     :style="'color:' + color + ';border: 1px solid ' + color + ';' "
   >
     <div class="load-text">loading</div>
-    <div :style="'background:' + color + ';' " class="loading-item loading-one"></div>
-    <div :style="'background:' + color + ';' " class="loading-item loading-two"></div>
-    <div :style="'background:' + color + ';' " class="loading-item loading-three"></div>
-    <div :style="'background:' + color + ';' " class="loading-item loading-four"></div>
-    <div :style="'background:' + color + ';' " class="loading-item loading-five"></div>
+    <div
+      v-for="item of ['one', 'two', 'three', 'four', 'five']"
+      :key="item"
+      :style="'background:' + color + ';' "
+      :class=" 'loading-' + item"
+      class="loading-item"
+    ></div>
   </div>
 </template>
 <script>
@@ -51,16 +53,16 @@ export default {
   margin-top: 10px;
   animation: loading 1s infinite ease-in-out; /*animation：动画名称 持续时间 动画速度曲线 延迟 执行多少次 是否正反方向轮流播放*/
 }
-.loading-two {
+.zoom-loading .loading-item.loading-two {
   animation-delay: -0.9s; /*定义开始执行的地方，负号表示直接从第900ms开始执行*/
 }
-.loading-three {
+.zoom-loading .loading-item.loading-three {
   animation-delay: -0.8s;
 }
-.loading-four {
+.zoom-loading .loading-item.loading-four {
   animation-delay: -0.7s;
 }
-.loading-five {
+.zoom-loading .loading-item.loading-five {
   animation-delay: -0.6s;
 }
 @keyframes loading {
@@ -107,32 +109,44 @@ export default {
   0% {
     opacity: 1;
   }
+  50% {
+    opacity: 0.5;
+  }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 @-webkit-keyframes blink {
   0% {
     opacity: 1;
   }
+  50% {
+    opacity: 0.5;
+  }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 @-moz-keyframes blink {
   0% {
     opacity: 1;
   }
+  50% {
+    opacity: 0.5;
+  }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 @-ms-keyframes blink {
   0% {
     opacity: 1;
   }
+  50% {
+    opacity: 0.5;
+  }
   100% {
-    opacity: 0;
+    opacity: 0.2;
   }
 }
 </style>

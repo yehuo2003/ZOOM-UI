@@ -23,7 +23,7 @@
       type="text"
       ref="downVal"
     />
-    <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
+    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
     <div class="input-btn">
       <a
         v-if="!options.hideClose"
@@ -234,7 +234,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-                this.errMsg = null;
+                this.error = false;
             }, 2000);
           }
           return !!test;

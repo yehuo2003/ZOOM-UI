@@ -21,7 +21,7 @@
       :readonly="options.readonly"
       :disabled="options.isdisabled"
     />
-    <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
+    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
     <div class="input-btn">
       <a @click="clear" href="javascript:void(0);" class="zoom-icon icon-close icon-default"></a>
       <a
@@ -108,7 +108,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-              this.errMsg = null;
+              this.error = false;
             }, 2000);
           }
           return !!test;

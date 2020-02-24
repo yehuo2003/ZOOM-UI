@@ -25,7 +25,7 @@
       @input="Oninput"
       type="number"
     />
-    <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
+    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
     <a @click="add" href="javascript:void(0);" class="num-btn num-add">+</a>
   </div>
 </template>
@@ -77,7 +77,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-              this.errMsg = null;
+              this.error = false;
             }, 2000);
           }
           return !!test;

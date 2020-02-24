@@ -11,7 +11,7 @@
       ref="zoom-text"
       class="zoom-text zoom-area"
     />
-    <span v-if="errMsg" class="err-msg">{{errMsg}}</span>
+    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
     <textarea
       :style=" options.resize ? '' : 'resize: none;' "
       @blur="blurInput"
@@ -82,7 +82,7 @@ export default {
   },
   methods: {
     reset() {
-       if (!this.options.isdisabled) {
+      if (!this.options.isdisabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -98,7 +98,7 @@ export default {
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
             setTimeout(() => {
-              this.errMsg = null;
+              this.error = false;
             }, 2000);
           }
           return !!test;
