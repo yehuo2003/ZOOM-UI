@@ -12,14 +12,18 @@
     class="zoom-input zoom-dropdown"
   >
     <input
-      :class="error ? 'error' : ''"
+      @compositionstart="handleComposition"
+      @compositionupdate="handleComposition"
+      @compositionend="handleComposition"
+      @keydown="handleTab($event)"
       @blur="handleBlur"
-      :value="currentValue"
       @input="Oninput"
+      :value="currentValue"
       :placeholder="options.placeHolder"
       :disabled="options.isdisabled"
       :readonly="options.readonly"
       :id="id"
+      :class="error ? 'error' : ''"
       type="text"
       ref="downVal"
     />
@@ -60,10 +64,12 @@
   </div>
 </template>
 <script>
+import { isKorean } from "../common.js";
 export default {
   name: "zoom-dropdown",
   props: {
     id: String,
+    value: [String, Number],
     op: {
       placeHolder: {
         //  占位符
@@ -110,13 +116,16 @@ export default {
   },
   data() {
     return {
+      currentValue:
+        this.value === undefined || this.value === null ? "" : this.value,
+      error: false,
+      errMsg: null,
+      isOnComposition: false,
+      valueBeforeComposition: null,
       list: [], //  多选时候用
       defaultList: [{ value: null, text: "暂无数据" }],
       showDown: false,
       isChecked: false, //  是否启用多选功能
-      currentValue: this.value,
-      error: false,
-      errMsg: null,
       checkOp: {
         //  如果配置了多选
         Bool: true,
@@ -168,7 +177,49 @@ export default {
       this.options.data = this.defaultList;
     }
   },
+  watch: {
+    value(val, oldValue) {
+      this.setCurrentValue(val);
+    }
+  },
   methods: {
+    /**
+     * 当用户按tab键切换的时候 触发验证功能
+     */
+    handleTab(e) {
+      if (e.keyCode !== 9) return;
+      this.handleBlur();
+    },
+    setCurrentValue(value) {
+      // 输入中，直接返回
+      if (this.isOnComposition && value === this.valueBeforeComposition) return;
+      this.currentValue = value;
+      if (this.isOnComposition) return;
+    },
+    /**
+     * 判断用户输入的是否是拼音, 如果是拼音输入完了返回
+     */
+    handleComposition(event) {
+      // 如果中文输入已完成
+      if (event.type === "compositionend") {
+        //  isOnComposition设置为false
+        this.isOnComposition = false;
+        this.currentValue = this.valueBeforeComposition;
+        this.valueBeforeComposition = null;
+        //触发input事件，因为input事件是在compositionend事件之后触发，这时输入未完成，不会将值传给父组件，所以需要再调一次input方法
+        this.Oninput(event);
+      } else {
+        //如果中文输入未完成
+        const text = event.target.value;
+        const lastCharacter = text[text.length - 1] || "";
+        //isOnComposition用来判断是否在输入拼音的过程中
+        this.isOnComposition = !isKorean(lastCharacter);
+        if (this.isOnComposition && event.type === "compositionstart") {
+          //  输入框中输入的值赋给valueBeforeComposition
+          this.valueBeforeComposition = text;
+        }
+      }
+    },
     load(data) {
       if (data && data.length && data instanceof Array) {
         this.list = data;
@@ -268,8 +319,13 @@ export default {
       }
     },
     Oninput($event) {
-      this.currentValue = $event.target.value;
-      this.$emit("input", $event.target.value);
+      const value = $event.target.value;
+      //设置当前值
+      this.setCurrentValue(value);
+      //如果还在输入中，将不会把值传给父组件
+      if (this.isOnComposition) return;
+      //输入完成时，isOnComposition为false，将值传递给父组件
+      this.$emit("input", value);
     },
     serach() {
       if (this.options.isdisabled) {
