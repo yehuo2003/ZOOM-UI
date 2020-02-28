@@ -1,6 +1,6 @@
 <template>
   <div>
-    <zoom-tabs :value="curTab" @tabChange="tabChange">
+    <zoom-tabs position="left" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" :label="'Tab1'">
         <!-- <zoom-card border="true" hover-shadow="true"> -->
           <div>
@@ -45,18 +45,13 @@
           我是tab2
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
-        <div>
-          <img v-lazyload="'1.jpg'" alt="">
-        </div>
+        <zoom-steps></zoom-steps>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
         <div>Tab3的内容</div>
         <zoom-loading></zoom-loading>
       </zoom-tab-item>
     </zoom-tabs>
-    <zoom-input v-model="name"></zoom-input>
-    <el-input v-model="name"></el-input>
-    <input v-model="name" type="text">
   </div>
 </template>
 
@@ -80,7 +75,7 @@
           }
         },
         uname: '',
-        curTab: 0 // 当前激活的tab索引
+        curTab: 1 // 当前激活的tab索引
       }
     },
     methods: {

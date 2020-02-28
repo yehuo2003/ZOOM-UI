@@ -1,5 +1,5 @@
 <template>
-  <div class="zoom-tabs">
+  <div :class="position ? 'tabs-' + position : '' " class="zoom-tabs">
     <ul class="tab-head">
       <slot></slot>
     </ul>
@@ -17,6 +17,10 @@ export default {
     };
   },
   props: {
+    position: { //  可传值 left 或 right, 左定位或右定位
+      type: String,
+      default: null
+    },
     value: {
       type: [String, Number],
       required: true
@@ -31,7 +35,7 @@ export default {
 </script>
 
 <style>
-.zoom-tabs .tab-head {
+.zoom-tabs:not(.tabs-left,.tabs-right) .tab-head {
   border-bottom: 1px solid #d9d9d9;
   padding: 0;
   position: relative;
@@ -43,5 +47,37 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.tabs-left .tab-head {
+  float: left;
+  margin-bottom: 0;
+  margin-right: 10px;
+  background: #f5f5f5;
+}
+.tabs-right .tab-head {
+  float: right;
+  margin-bottom: 0;
+  margin-left: 10px;
+  background: #f5f5f5;
+}
+.tabs-left li.zoom-tab-item.tab-active {
+  border-right: none;
+}
+.tabs-right li.zoom-tab-item.tab-active {
+  border-left: none;
+}
+.tabs-left li.zoom-tab-item {
+  display: block;
+  width: 100%;
+  border-right: 1px solid #d9d9d9;
+}
+.tabs-right li.zoom-tab-item {
+  display: block;
+  width: 100%;
+  border-left: 1px solid #d9d9d9;
+}
+.tabs-right li.zoom-tab-item:last-child,
+.tabs-left li.zoom-tab-item:last-child {
+  border-bottom: 1px solid #d9d9d9;
 }
 </style>
