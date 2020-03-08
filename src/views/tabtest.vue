@@ -45,7 +45,9 @@
           我是tab2
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
-        <zoom-steps></zoom-steps>
+        <zoom-steps type="advanced" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
+        <zoom-button @click="prevTest">上一步</zoom-button>
+        <zoom-button @click="nextTest">下一步</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
         <div>Tab3的内容</div>
@@ -60,6 +62,18 @@
     data() {
       return {
         name: '',
+        stepsOp: {
+          active: 7,
+          data:  [
+            {index: 5, count: 4, status: 'doing', time: '2008-05-12 14:25:32', name: 'Basic Info.'},
+            {index: 6, count: 6, time: '2018-08-08 08:08:08', name: 'Vics tab.'},
+            {index: 7, count: 8, time: '2018-08-08 08:08:08', name: 'not done.'},
+            {index: 8, count: 2, time: 1583678818399, name: 'not done2'}
+          ],
+          onClick: val => {
+            console.log('click', val);
+          }
+        },
         checkOp: {
           data: [
             {value: 1, text: '唱', checked: true},
@@ -79,6 +93,15 @@
       }
     },
     methods: {
+      stepsChange(val) {
+        console.log('stepsChange', val);
+      },
+      prevTest() {
+        this.$refs['steps'].prev();
+      },
+      nextTest() {
+        this.$refs['steps'].next();
+      },
       test() {
         let obj = { value: '666', text: '设置选中值'};
         this.$refs['dropdown'].load(obj);

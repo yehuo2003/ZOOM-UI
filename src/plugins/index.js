@@ -3,17 +3,15 @@ import '../assets/fontIcon/iconfont.css'
 import './dom.js'
 
 // 懒加载图片
-import Lazyload from './lazyLoad.js'
+import lazyload from './lazyLoad.js';
 
 // 路径 是否查找子目录 .vue
 const requireComponent = require.context('./', true, /\.vue$/);
 const install = Vue => {
 	// 参数均为可选
-	Vue.use(Lazyload,{
-	  scrollDistance: 15, // 距离可视区还有15px时开发加载资源
-	  // defaultImage: 'https://gw.alicdn.com/tps/i1/TB147JCLFXXXXc1XVXXxGsw1VXX-112-168.png', // 资源图片未加载前的默认图片（绝对路径）
-	  // errorImage:'https://gw.alicdn.com/tps/i1/TB147JCLFXXXXc1XVXXxGsw1VXX-112-168.png' // 资源图片加载失败时要加载的资源（绝对路径）
-	 })
+    Vue.use(lazyload, {
+        scrollDistance: 15, // 距离可视区还有15px时开发加载资源
+    })
 
     Vue.directive('focus', {
         inserted: function(el) {
@@ -55,6 +53,7 @@ const install = Vue => {
          * dateFormat("YYYY-mm-dd HH:MM", date)
          */
         dateFormat(fmt, date) {
+            date = new Date(date);
             let ret;
             let opt = {
                 "Y+": date.getFullYear().toString(),        // 年
@@ -148,12 +147,12 @@ const install = Vue => {
          */
         cookie: {
             /** 设置一条完整的cookie
-            *   param name : 表示cookie的名称，必填
-            *   param subCookies : 表示cookie的值，为一个对象，必填
-            *   param expires : 表示cookie的过期时间，可以不填
-            *   param domain : 表示cookie的域名，可以不填
-            *   param path : 表示cookie的路径，可以不填
-            *   param secure : 表示cookie的安全标志，可以不填
+            *  @param name : 表示cookie的名称，必填
+            *  @param subCookies : 表示cookie的值，为一个对象，必填
+            *  @param expires : 表示cookie的过期时间，可以不填
+            *  @param domain : 表示cookie的域名，可以不填
+            *  @param path : 表示cookie的路径，可以不填
+            *  @param secure : 表示cookie的安全标志，可以不填
             *   eg : this.$zoom.cookie.set("info", { name : "zoom", age : 23});
             **/
             set(name, subCookies, expires, domain, path, secure) {
@@ -185,13 +184,13 @@ const install = Vue => {
                 document.cookie = cookieText;
             },
             /** 设置一条子cookie
-            *   param name : 表示cookie的名称，必填
-            *   param subName : 表示子cookie的名称，必填
-            *   param value : 表示子cookie的值，必填
-            *   param expires : 表示cookie的过期时间，可以不填
-            *   param domain : 表示cookie的域名，可以不填
-            *   param path : 表示cookie的路径，可以不填
-            *   param secure : 表示cookie的安全标志，可以不填
+            *  @param name : 表示cookie的名称，必填
+            *  @param subName : 表示子cookie的名称，必填
+            *  @param value : 表示子cookie的值，必填
+            *  @param expires : 表示cookie的过期时间，可以不填
+            *  @param domain : 表示cookie的域名，可以不填
+            *  @param path : 表示cookie的路径，可以不填
+            *  @param secure : 表示cookie的安全标志，可以不填
             *   eg : this.$zoom.cookie.setChild("info", "sex", "boy");
             **/
             setChild(name, subName, value, expires, domain, path, secure) {
@@ -204,7 +203,7 @@ const install = Vue => {
             },
             /** 读取一条完整cookie
              *  如果没传参数则默认读取所有cookie
-            *   param name : 表示cookie的名称，不填默认获取所有cookie
+            *  @param name : 表示cookie的名称，不填默认获取所有cookie
             *   return : 一个cookie对象
             *   eg : this.$zoom.cookie.get("info");
             **/
@@ -233,8 +232,8 @@ const install = Vue => {
                 return null;
             },
             /** 获取一条子cookie的值
-            *   param name : 表示cookie的名称，必填
-            *   param subName : 表示子cookie的名称
+            *  @param name : 表示cookie的名称，必填
+            *  @param subName : 表示子cookie的名称
             *   return : 一个子cookie的值
             *   eg : this.$zoom.cookie.getChild("info", "name");
             **/
@@ -250,10 +249,10 @@ const install = Vue => {
                 }
             },
             /** 删除一条完整cookie
-            *   param name : 表示cookie的名称，必填
-            *   param domain : 表示cookie的域名，可以不填
-            *   param path : 表示cookie的路径，可以不填
-            *   param secure : 表示cookie的安全标志，可以不填
+            *  @param name : 表示cookie的名称，必填
+            *  @param domain : 表示cookie的域名，可以不填
+            *  @param path : 表示cookie的路径，可以不填
+            *  @param secure : 表示cookie的安全标志，可以不填
             *   eg : this.$zoom.cookie.del("info");
             **/
             del(name, domain, path, secure) {
@@ -263,11 +262,11 @@ const install = Vue => {
                 this.set(name, "", new Date(0).toGMTString(), domain, path, secure);
             },
             /** 删除一条子cookie
-            *   param name : 表示cookie的名称，必填
-            *   param subName : 表示子cookie的名称，必填
-            *   param domain : 表示cookie的域名，可以不填
-            *   param path : 表示cookie的路径，可以不填
-            *   param secure : 表示cookie的安全标志，可以不填
+            *  @param name : 表示cookie的名称，必填
+            *  @param subName : 表示子cookie的名称，必填
+            *  @param domain : 表示cookie的域名，可以不填
+            *  @param path : 表示cookie的路径，可以不填
+            *  @param secure : 表示cookie的安全标志，可以不填
             *   eg : this.$zoom.cookie.delChild("info", "name");
             **/
             delChild(name, subName, domain, path, secure) {
@@ -343,6 +342,4 @@ const install = Vue => {
 
 export default {
     install
-    // ,
-    // Popup
 }
