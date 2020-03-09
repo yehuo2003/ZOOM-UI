@@ -2,11 +2,10 @@
   <div>
     <zoom-tabs position="left" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" :label="'Tab1'">
-        <!-- <zoom-card border="true" hover-shadow="true"> -->
           <div>
             Tab1的内容
           </div>
-          <zoom-form ref="form" submit.prevent="false" label-width="120px">
+          <!-- <zoom-form ref="form" submit.prevent="false" label-width="120px">
             <zoom-form-item :require="true" inline="true" label="名字">
               <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
@@ -35,19 +34,28 @@
               <zoom-textarea :op="inputOp"></zoom-textarea>
             </zoom-form-item>
           </zoom-form>
-          <!-- <input v-model="list.apwd" type="text"> -->
-        <!-- </zoom-card> -->
         <zoom-button type="primary" @click="test">验证</zoom-button>
-        <zoom-button @click="quit">清除</zoom-button>
+        <zoom-button @click="quit">清除</zoom-button> -->
       </zoom-tab-item>
       <zoom-tab-item :index="1" :label="'Tab2'">
         <h5 slot="label">
           我是tab2
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
-        <zoom-steps type="advanced" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
-        <zoom-button @click="prevTest">上一步</zoom-button>
-        <zoom-button @click="nextTest">下一步</zoom-button>
+        <zoom-tabs :value="curTab2" @tabChange="tabChange2">
+          <zoom-tab-item :index="0" label="内层tab1">
+            内层tab1
+            <!-- <zoom-steps type="advanced" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
+            <zoom-button @click="prevTest">上一步</zoom-button>
+            <zoom-button @click="nextTest">下一步</zoom-button> -->
+          </zoom-tab-item>
+          <zoom-tab-item :index="1" label="内层tab2">
+            tab2
+          </zoom-tab-item>
+          <zoom-tab-item :index="2" label="内层tab3">
+            tab3
+          </zoom-tab-item>
+        </zoom-tabs>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
         <div>Tab3的内容</div>
@@ -89,7 +97,8 @@
           }
         },
         uname: '',
-        curTab: 1 // 当前激活的tab索引
+        curTab: 1, // 当前激活的tab索引
+        curTab2: 2
       }
     },
     methods: {
@@ -114,6 +123,10 @@
       },
       tabChange(index) {
         this.curTab = index
+      },
+      tabChange2(index) {
+        this.curTab2 = index;
+        this.$forceUpdate();
       }
     }
   }

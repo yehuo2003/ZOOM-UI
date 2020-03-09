@@ -20,7 +20,9 @@ export default {
       {
         class: this.classes,
         on: {
-          click: this.activeCurTab
+          click: () => {
+            this.activeCurTab();
+          }
         }
       },
       [tab]

@@ -35,7 +35,7 @@ export default {
 </script>
 
 <style>
-.zoom-tabs:not(.tabs-left,.tabs-right) .tab-head {
+.zoom-tabs:not(.tabs-left,.tabs-right)>.tab-head {
   border-bottom: 1px solid #d9d9d9;
   padding: 0;
   position: relative;
@@ -48,36 +48,36 @@ export default {
   -ms-user-select: none;
   user-select: none;
 }
-.tabs-left .tab-head {
+.tabs-left>.tab-head {
   float: left;
   margin-bottom: 0;
   margin-right: 10px;
   background: #f5f5f5;
 }
-.tabs-right .tab-head {
+.tabs-right>.tab-head {
   float: right;
   margin-bottom: 0;
   margin-left: 10px;
   background: #f5f5f5;
 }
-.tabs-left li.zoom-tab-item.tab-active {
+.tabs-left>.tab-head>li.zoom-tab-item.tab-active {
   border-right: none;
 }
-.tabs-right li.zoom-tab-item.tab-active {
+.tabs-right>.tab-head>li.zoom-tab-item.tab-active {
   border-left: none;
 }
-.tabs-left li.zoom-tab-item {
+.tabs-left>.tab-head>li.zoom-tab-item {
   display: block;
   width: 100%;
   border-right: 1px solid #d9d9d9;
 }
-.tabs-right li.zoom-tab-item {
+.tabs-right>.tab-head>li.zoom-tab-item {
   display: block;
   width: 100%;
   border-left: 1px solid #d9d9d9;
 }
-.tabs-right li.zoom-tab-item:last-child,
-.tabs-left li.zoom-tab-item:last-child {
+.tabs-right>.tab-head>li.zoom-tab-item:last-child,
+.tabs-left>.tab-head>li.zoom-tab-item:last-child {
   border-bottom: 1px solid #d9d9d9;
 }
 </style>
