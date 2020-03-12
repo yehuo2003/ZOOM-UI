@@ -60,7 +60,8 @@
                   :zoom-tip="tips ? i === item.btns ? 'btns' : i : false"
                   class="grid-item"
                 >
-                  <span class="grid-input">
+                  <!-- <span v-tip.transition.dark.left.click="i === item.btns ? '' : name === 'checked' ? '' : i" class="grid-input"> -->
+                  <!-- <span class="grid-input"> -->
                     {{i === item.btns ? '' : name === 'checked' ? '' : i}}
                     <!-- 如果是复选框, 就加载 -->
                     <span

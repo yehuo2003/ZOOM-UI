@@ -5,7 +5,7 @@
           <div>
             Tab1的内容
           </div>
-          <!-- <zoom-form ref="form" submit.prevent="false" label-width="120px">
+          <zoom-form ref="form" submit.prevent="false" label-width="120px">
             <zoom-form-item :require="true" inline="true" label="名字">
               <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
@@ -35,19 +35,19 @@
             </zoom-form-item>
           </zoom-form>
         <zoom-button type="primary" @click="test">验证</zoom-button>
-        <zoom-button @click="quit">清除</zoom-button> -->
+        <zoom-button @click="quit">清除</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" :label="'Tab2'">
         <h5 slot="label">
           我是tab2
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
-        <zoom-tabs :value="curTab2" @tabChange="tabChange2">
+        <zoom-steps type="advanced" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
+            <zoom-button @click="prevTest">上一步</zoom-button>
+            <zoom-button @click="nextTest">下一步</zoom-button>
+        <!-- <zoom-tabs :value="curTab2" @tabChange="tabChange2">
           <zoom-tab-item :index="0" label="内层tab1">
             内层tab1
-            <!-- <zoom-steps type="advanced" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
-            <zoom-button @click="prevTest">上一步</zoom-button>
-            <zoom-button @click="nextTest">下一步</zoom-button> -->
           </zoom-tab-item>
           <zoom-tab-item :index="1" label="内层tab2">
             tab2
@@ -55,11 +55,13 @@
           <zoom-tab-item :index="2" label="内层tab3">
             tab3
           </zoom-tab-item>
-        </zoom-tabs>
+        </zoom-tabs> -->
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
-        <div>Tab3的内容</div>
-        <zoom-loading></zoom-loading>
+        <div v-tip.transition.dark.right="'tip测绘师'">
+          drag测试
+        </div>
+        <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
   </div>
@@ -97,7 +99,7 @@
           }
         },
         uname: '',
-        curTab: 1, // 当前激活的tab索引
+        curTab: 2, // 当前激活的tab索引
         curTab2: 2
       }
     },

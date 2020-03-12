@@ -2,12 +2,16 @@
 import '../assets/fontIcon/iconfont.css'
 import './dom.js'
 
+// tip组件 全局注册 v-tip可引用
+import Vtip from './tips/index'
 // 懒加载图片
 import lazyload from './lazyLoad.js';
 
 // 路径 是否查找子目录 .vue
 const requireComponent = require.context('./', true, /\.vue$/);
 const install = Vue => {
+    // 注册指令使用
+    Vue.use(Vtip.directive);
 	// 参数均为可选
     Vue.use(lazyload, {
         scrollDistance: 15, // 距离可视区还有15px时开发加载资源
@@ -292,7 +296,9 @@ const install = Vue => {
                     }
                 }
             }
-        }
+        },
+        // tip工具函数调用
+        tip: Vtip.tip
     };
     if (install.installed) return;
     install.installed;
