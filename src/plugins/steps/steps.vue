@@ -23,9 +23,9 @@
     </div>
 
     <ul v-else-if=" type === 'advanced' " class="zoom-steps-advanced">
-      <li @click="advancedClick(item)" v-for="(item, index) of list" :key="index" :class=" item.status ? item.status : '' " style="width: 25%;">
+      <li @click="advancedClick(item)" v-for="(item, index) of list" :key="index" :class=" item.status ? item.status : '' " :style="'width:' + parseInt(100 / list.length) +'%;'">
         <a>
-          <span :class=" item.status ? item.status : '' " class="dot"></span>
+          <span :class=" item.type ? item.type : '' " class="dot"></span>
           {{item.name}}
           <span v-show="item.count" class="count">{{item.count}}</span>
         </a>
@@ -33,7 +33,7 @@
     </ul>
 
     <div v-else class="zoom-steps-normal">
-      <div v-for="item of list" :key="item.index" :class=" item.status ? 'progress-' + item.status : '' " style="width: 25%" class="normal">
+      <div v-for="item of list" :key="item.index" :class=" item.status ? 'progress-' + item.status : '' " :style="'width:' + parseInt(100 / list.length) +'%;'" class="normal">
         <div class="steps-icon">
           <span @click="handleClick(item)" :class=" item.status === 'done' ? 'zoom-icon icon-success-fill' : '' ">
             {{item.status === 'done' ? '' : item.index || (index + 1)}}
@@ -57,6 +57,7 @@ export default {
       type: String,
       default: 'normal'
     },
+    disabled: Boolean,  //  是否禁止点击 默认false
     op: {
       type: Object,
       data: { //  数据  list = [{index: 1, time: '2008-05-12 14:25:32', name: 'Basic Info.', status: 'done'}]
@@ -69,12 +70,7 @@ export default {
   },
   data() {
     return {
-      list: [
-        // {index: 1, time: '2008-05-12 14:25:32', name: 'Basic Info.', status: 'done'},
-        // {index: 2, time: '2018-08-08 08:08:08', name: 'Vics tab.', status: 'done'},
-        // {index: 3, time: '2018-08-08 08:08:08', name: 'not done.', status: 'current'},
-        // {index: 4, time: '2018-08-08 08:08:08', name: 'not done2', status: ''}
-      ]
+      list: []
     }
   },
   created() {
@@ -142,6 +138,9 @@ export default {
      * @description 根据点击的索引判断, 点击条目的前面按钮状态都变成成功, 点击的条目变成进行中, 后面的为未完成
      */
     handleClick(e) {
+      if (this.op.disabled) {
+        return
+      }
       let arr = this.$zoom.clone(this.list);
       arr.forEach(item => {
         if (item.index < e.index) {
@@ -226,6 +225,9 @@ export default {
      * @description 只将用户点击的条目激活
      */
     advancedClick(e) {
+      if (this.op.disabled) {
+        return
+      }
       this.list.forEach(item => {
         if (item.index === e.index) {
           item.status = 'current';

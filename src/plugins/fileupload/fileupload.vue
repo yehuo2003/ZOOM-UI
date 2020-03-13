@@ -134,7 +134,7 @@
                           </span>
                         </span>
                       </td>
-                      <td :zoom-tip="item.fileName" class="grid-item zoom-tip" style="width: 100%;">
+                      <td v-tip.transition.primary="item.fileName" class="grid-item" style="width: 100%;">
                         <span class="grid-input">{{item.fileName}}</span>
                       </td>
                       <td class="grid-item" style="width: 50%;">
@@ -152,10 +152,10 @@
                       <td class="grid-item" style="width: 40%;">
                         <span class="grid-input">{{item.fileSize}}</span>
                       </td>
-                      <td class="grid-item" style="width: 60%;">
+                      <td v-tip.transition.primary="item.fileDate" class="grid-item" style="width: 60%;">
                         <span class="grid-input">{{item.fileDate}}</span>
                       </td>
-                      <td :zoom-tip="item.type" class="grid-item zoom-tip" style="width: 120%;">
+                      <td v-tip.transition.primary="item.type" class="grid-item" style="width: 120%;">
                         <span class="grid-input">{{item.type}}</span>
                       </td>
                     </tr>

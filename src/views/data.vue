@@ -89,9 +89,9 @@ export default {
         tip: true,
         title: [
           // {fieId: 'Index', header: '.No'},
-          {fieId: 'name',tip: true, header: '姓名'},
-          {fieId: 'age',tip: true, header: '年龄'},
-          {fieId: 'gender',tip: true, header: '性别'},
+          {fieId: 'name',tip: false, header: '姓名'},
+          {fieId: 'age',tip: false, header: '年龄'},
+          {fieId: 'gender', header: '性别'},
           {fieId: 'city',tip: true, header: '地址'},
           {fieId: 'phone',tip: true, header: '联系方式'}
         ],

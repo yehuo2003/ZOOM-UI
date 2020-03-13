@@ -13,6 +13,27 @@ function clearEvent (el) {
   delete el._tipOptions
   delete el._tipInstance
 }
+/**
+ *
+ * @param {info, dark, danger, err, error, warning, warn, success, primary} theme
+ * @function 自定义主题
+ * @description info, danger, warning, success  default general
+ */
+function cusTheme(theme) {
+  if (theme.info || theme.dark) {
+    return 'info';
+  } else if (theme.danger || theme.err || theme.error) {
+    return 'danger'
+  } else if (theme.warning || theme.warn) {
+    return 'warning'
+  } else if (theme.success) {
+    return 'success'
+  } else if (theme.primary) {
+    return 'primary'
+  } else {
+    return 'general'
+  }
+}
 
 export default {
   install (Vue, options) {
@@ -25,7 +46,7 @@ export default {
     Vue.directive(name, {
       bind (el, binding) {
         clearEvent(el)
-        const { click, dark, transition } = binding.modifiers
+        const { click, info, dark, danger, err, error, warning, warn, success, primary, transition } = binding.modifiers
         const limitPlacementQueue = allPlacements.filter(placement => binding.modifiers[placement])
         el._tipOptions = binding.value
         el._tipHandler = function tipHandler () {
@@ -36,7 +57,7 @@ export default {
           const mix = {
             placements,
             transition,
-            theme: dark ? 'dark' : 'light'
+            theme: cusTheme({info, dark, danger, err, error, warning, warn, success, primary})
           }
           // 一般情况为 v-tip 绑定需要显示的内容
           // 需要配置时可以直接绑定一个配置对象

@@ -121,10 +121,10 @@ export default {
       default: 999
     },
 
-    // 主题 light dark 默认为 light
+    // 主题 info, danger, warning, success, primary 默认为 general
     theme: {
       type: String,
-      default: "light"
+      default: "general"
     },
 
     // 自定义 class 的类名
@@ -414,34 +414,150 @@ export default {
   left: 2px;
   border-right-color: #fff;
 }
-.zoom-tip-container.dark {
+.zoom-tip-container.info {
   color: #fff;
   background: #1f2d3d;
   border-color: #1f2d3d;
 }
-.zoom-tip-container.dark .zoom-tip-arrows[class*=" top-"]::after,
-.zoom-tip-container.dark .zoom-tip-arrows[class^="top-"]::after,
-.zoom-tip-container.dark[class*=" top-"]::after,
-.zoom-tip-container.dark[class^="top-"]::after {
+.zoom-tip-container.info .zoom-tip-arrows[class*=" top-"]::after,
+.zoom-tip-container.info .zoom-tip-arrows[class^="top-"]::after,
+.zoom-tip-container.info[class*=" top-"]::after,
+.zoom-tip-container.info[class^="top-"]::after {
   border-top-color: #1f2d3d;
 }
-.zoom-tip-container.dark .zoom-tip-arrows[class*=" bottom-"]::after,
-.zoom-tip-container.dark .zoom-tip-arrows[class^="bottom-"]::after,
-.zoom-tip-container.dark[class*=" bottom-"]::after,
-.zoom-tip-container.dark[class^="bottom-"]::after {
+.zoom-tip-container.info .zoom-tip-arrows[class*=" bottom-"]::after,
+.zoom-tip-container.info .zoom-tip-arrows[class^="bottom-"]::after,
+.zoom-tip-container.info[class*=" bottom-"]::after,
+.zoom-tip-container.info[class^="bottom-"]::after {
   border-bottom-color: #1f2d3d;
 }
-.zoom-tip-container.dark .zoom-tip-arrows[class*=" left-"]::after,
-.zoom-tip-container.dark .zoom-tip-arrows[class^="left-"]::after,
-.zoom-tip-container.dark[class*=" left-"]::after,
-.zoom-tip-container.dark[class^="left-"]::after {
+.zoom-tip-container.info .zoom-tip-arrows[class*=" left-"]::after,
+.zoom-tip-container.info .zoom-tip-arrows[class^="left-"]::after,
+.zoom-tip-container.info[class*=" left-"]::after,
+.zoom-tip-container.info[class^="left-"]::after {
   border-left-color: #1f2d3d;
 }
-.zoom-tip-container.dark .zoom-tip-arrows[class*=" right-"]::after,
-.zoom-tip-container.dark .zoom-tip-arrows[class^="right-"]::after,
-.zoom-tip-container.dark[class*=" right-"]::after,
-.zoom-tip-container.dark[class^="right-"]::after {
+.zoom-tip-container.info .zoom-tip-arrows[class*=" right-"]::after,
+.zoom-tip-container.info .zoom-tip-arrows[class^="right-"]::after,
+.zoom-tip-container.info[class*=" right-"]::after,
+.zoom-tip-container.info[class^="right-"]::after {
   border-right-color: #1f2d3d;
+}
+.zoom-tip-container.warning {
+  color: #fff;
+  background: #faad14;
+  border-color: #faad14;
+}
+.zoom-tip-container.warning .zoom-tip-arrows[class*=" top-"]::after,
+.zoom-tip-container.warning .zoom-tip-arrows[class^="top-"]::after,
+.zoom-tip-container.warning[class*=" top-"]::after,
+.zoom-tip-container.warning[class^="top-"]::after {
+  border-top-color: #faad14;
+}
+.zoom-tip-container.warning .zoom-tip-arrows[class*=" bottom-"]::after,
+.zoom-tip-container.warning .zoom-tip-arrows[class^="bottom-"]::after,
+.zoom-tip-container.warning[class*=" bottom-"]::after,
+.zoom-tip-container.warning[class^="bottom-"]::after {
+  border-bottom-color: #faad14;
+}
+.zoom-tip-container.warning .zoom-tip-arrows[class*=" left-"]::after,
+.zoom-tip-container.warning .zoom-tip-arrows[class^="left-"]::after,
+.zoom-tip-container.warning[class*=" left-"]::after,
+.zoom-tip-container.warning[class^="left-"]::after {
+  border-left-color: #faad14;
+}
+.zoom-tip-container.warning .zoom-tip-arrows[class*=" right-"]::after,
+.zoom-tip-container.warning .zoom-tip-arrows[class^="right-"]::after,
+.zoom-tip-container.warning[class*=" right-"]::after,
+.zoom-tip-container.warning[class^="right-"]::after {
+  border-right-color: #faad14;
+}
+.zoom-tip-container.danger {
+  color: #fff;
+  background: #ff4d4f;
+  border-color: #ff4d4f;
+}
+.zoom-tip-container.danger .zoom-tip-arrows[class*=" top-"]::after,
+.zoom-tip-container.danger .zoom-tip-arrows[class^="top-"]::after,
+.zoom-tip-container.danger[class*=" top-"]::after,
+.zoom-tip-container.danger[class^="top-"]::after {
+  border-top-color: #ff4d4f;
+}
+.zoom-tip-container.danger .zoom-tip-arrows[class*=" bottom-"]::after,
+.zoom-tip-container.danger .zoom-tip-arrows[class^="bottom-"]::after,
+.zoom-tip-container.danger[class*=" bottom-"]::after,
+.zoom-tip-container.danger[class^="bottom-"]::after {
+  border-bottom-color: #ff4d4f;
+}
+.zoom-tip-container.danger .zoom-tip-arrows[class*=" left-"]::after,
+.zoom-tip-container.danger .zoom-tip-arrows[class^="left-"]::after,
+.zoom-tip-container.danger[class*=" left-"]::after,
+.zoom-tip-container.danger[class^="left-"]::after {
+  border-left-color: #ff4d4f;
+}
+.zoom-tip-container.danger .zoom-tip-arrows[class*=" right-"]::after,
+.zoom-tip-container.danger .zoom-tip-arrows[class^="right-"]::after,
+.zoom-tip-container.danger[class*=" right-"]::after,
+.zoom-tip-container.danger[class^="right-"]::after {
+  border-right-color: #ff4d4f;
+}
+.zoom-tip-container.primary {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+.zoom-tip-container.primary .zoom-tip-arrows[class*=" top-"]::after,
+.zoom-tip-container.primary .zoom-tip-arrows[class^="top-"]::after,
+.zoom-tip-container.primary[class*=" top-"]::after,
+.zoom-tip-container.primary[class^="top-"]::after {
+  border-top-color: #1890ff;
+}
+.zoom-tip-container.primary .zoom-tip-arrows[class*=" bottom-"]::after,
+.zoom-tip-container.primary .zoom-tip-arrows[class^="bottom-"]::after,
+.zoom-tip-container.primary[class*=" bottom-"]::after,
+.zoom-tip-container.primary[class^="bottom-"]::after {
+  border-bottom-color: #1890ff;
+}
+.zoom-tip-container.primary .zoom-tip-arrows[class*=" left-"]::after,
+.zoom-tip-container.primary .zoom-tip-arrows[class^="left-"]::after,
+.zoom-tip-container.primary[class*=" left-"]::after,
+.zoom-tip-container.primary[class^="left-"]::after {
+  border-left-color: #1890ff;
+}
+.zoom-tip-container.primary .zoom-tip-arrows[class*=" right-"]::after,
+.zoom-tip-container.primary .zoom-tip-arrows[class^="right-"]::after,
+.zoom-tip-container.primary[class*=" right-"]::after,
+.zoom-tip-container.primary[class^="right-"]::after {
+  border-right-color: #1890ff;
+}
+.zoom-tip-container.success {
+  color: #fff;
+  background: #52c41a;
+  border-color: #52c41a;
+}
+.zoom-tip-container.success .zoom-tip-arrows[class*=" top-"]::after,
+.zoom-tip-container.success .zoom-tip-arrows[class^="top-"]::after,
+.zoom-tip-container.success[class*=" top-"]::after,
+.zoom-tip-container.success[class^="top-"]::after {
+  border-top-color: #52c41a;
+}
+.zoom-tip-container.success .zoom-tip-arrows[class*=" bottom-"]::after,
+.zoom-tip-container.success .zoom-tip-arrows[class^="bottom-"]::after,
+.zoom-tip-container.success[class*=" bottom-"]::after,
+.zoom-tip-container.success[class^="bottom-"]::after {
+  border-bottom-color: #52c41a;
+}
+.zoom-tip-container.success .zoom-tip-arrows[class*=" left-"]::after,
+.zoom-tip-container.success .zoom-tip-arrows[class^="left-"]::after,
+.zoom-tip-container.success[class*=" left-"]::after,
+.zoom-tip-container.success[class^="left-"]::after {
+  border-left-color: #52c41a;
+}
+.zoom-tip-container.success .zoom-tip-arrows[class*=" right-"]::after,
+.zoom-tip-container.success .zoom-tip-arrows[class^="right-"]::after,
+.zoom-tip-container.success[class*=" right-"]::after,
+.zoom-tip-container.success[class^="right-"]::after {
+  border-right-color: #52c41a;
 }
 .zoom-tip-container.transition-transfrom {
   transition: opacity 0.3s, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
