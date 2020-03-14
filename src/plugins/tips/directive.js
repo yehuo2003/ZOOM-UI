@@ -46,7 +46,7 @@ export default {
     Vue.directive(name, {
       bind (el, binding) {
         clearEvent(el)
-        const { click, info, dark, danger, err, error, warning, warn, success, primary, transition } = binding.modifiers
+        const { click, info, dark, danger, err, error, warning, warn, success, primary, transition, multiple } = binding.modifiers
         const limitPlacementQueue = allPlacements.filter(placement => binding.modifiers[placement])
         el._tipOptions = binding.value
         el._tipHandler = function tipHandler () {
@@ -55,6 +55,7 @@ export default {
           const placements = limitPlacementQueue.length
             ? limitPlacementQueue : allPlacements
           const mix = {
+            multiple,
             placements,
             transition,
             theme: cusTheme({info, dark, danger, err, error, warning, warn, success, primary})

@@ -9,7 +9,12 @@
       :disabled="options.isdisabled"
       :maxlength="options.maxLength"
     ></textarea>
-    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
+    <span
+      v-show="errMsg && error"
+      ref="err"
+      v-tip.error.right.multiple.click="errMsg"
+      style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
+    ></span>
     <div class="zoom-statistics">{{currentValue?currentValue.length:0}}/{{options.maxLength}}</div>
   </div>
 </template>
@@ -67,9 +72,15 @@ export default {
           this.error = true;
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
-            setTimeout(() => {
-              this.error = false;
-            }, 2000);
+            this.$nextTick(() => {
+              this.$refs["err"].click();
+              setTimeout(() => {
+                this.$nextTick(() => {
+                  this.error = false;
+                  $Z(".zoom-tip-container")[0].remove();
+                });
+              }, 2000);
+            });
           }
           return !!test;
         } else {
@@ -102,17 +113,6 @@ export default {
 };
 </script>
 <style>
-.zoom-textarea .err-msg {
-  color: #fff;
-  font-size: 14px;
-  position: absolute;
-  z-index: 11;
-  right: 0;
-  top: 0;
-  background: #ff4d4f;
-  padding: 5px;
-  border-radius: 5px;
-}
 .zoom-textarea .error {
   border: 1px solid red;
 }

@@ -25,7 +25,12 @@
       :disabled="options.isdisabled"
       :class="error ? 'error' : ''"
     />
-    <span v-if="errMsg && error" class="err-msg">{{errMsg}}</span>
+    <span
+      v-show="errMsg && error"
+      ref="err"
+      v-tip.error.right.multiple.click="errMsg"
+      style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
+    ></span>
     <div class="input-btn">
       <a @click="clear" href="javascript:void(0);" class="zoom-icon icon-close icon-default"></a>
       <a
@@ -157,9 +162,15 @@ export default {
           this.error = true;
           if (this.options.errMsg) {
             this.errMsg = this.options.errMsg;
-            setTimeout(() => {
-              this.error = false;
-            }, 2000);
+            this.$nextTick(() => {
+              this.$refs["err"].click();
+              setTimeout(() => {
+                this.$nextTick(() => {
+                  this.error = false;
+                  $Z(".zoom-tip-container")[0].remove();
+                });
+              }, 2000);
+            });
           }
           return !!test;
         } else {
@@ -201,17 +212,6 @@ export default {
 };
 </script>
 <style>
-.zoom-input .err-msg {
-  color: #fff;
-  font-size: 14px;
-  position: absolute;
-  z-index: 11;
-  right: -100px;
-  top: 0;
-  background: #ff4d4f;
-  padding: 5px;
-  border-radius: 5px;
-}
 .zoom-input .error {
   border: 1px solid red;
 }

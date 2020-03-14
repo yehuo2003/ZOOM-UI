@@ -6,19 +6,19 @@
             Tab1的内容
           </div>
           <zoom-form ref="form" submit.prevent="false" label-width="120px">
-            <zoom-form-item :require="true" inline="true" label="名字">
+            <zoom-form-item :require="true" label="名字">
               <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
-            <zoom-form-item inline="true" label="密码">
+            <zoom-form-item label="密码">
               <zoom-date></zoom-date>
             </zoom-form-item>
-            <zoom-form-item inline="true" label="下拉框">
+            <zoom-form-item label="下拉框">
               <zoom-dropdown ref="dropdown"></zoom-dropdown>
             </zoom-form-item>
             <zoom-form-item :require="true" label="搜索">
               <zoom-search :op="inputOp"></zoom-search>
             </zoom-form-item>
-            <zoom-form-item label="部门">
+            <zoom-form-item :require="true" label="部门">
               <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
             </zoom-form-item>
             <zoom-form-item label="计数器">
@@ -30,7 +30,7 @@
             <zoom-form-item label="单选框">
               <zoom-radio :op="checkOp"></zoom-radio>
             </zoom-form-item>
-            <zoom-form-item label="长框">
+            <zoom-form-item :require="true" label="长框">
               <zoom-textarea :op="inputOp"></zoom-textarea>
             </zoom-form-item>
           </zoom-form>
@@ -100,7 +100,7 @@
           }
         },
         uname: '',
-        curTab: 2, // 当前激活的tab索引
+        curTab: 0, // 当前激活的tab索引
         curTab2: 2
       }
     },
@@ -115,8 +115,8 @@
         this.$refs['steps'].next();
       },
       test() {
-        let obj = { value: '666', text: '设置选中值'};
-        this.$refs['dropdown'].load(obj);
+        // let obj = { value: '666', text: '设置选中值'};
+        // this.$refs['dropdown'].load(obj);
         this.$refs['form'].valid();
       },
       quit() {

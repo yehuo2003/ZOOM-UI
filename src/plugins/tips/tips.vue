@@ -97,6 +97,9 @@ export default {
     // 是否为 tip 添加 transfrom 过渡
     transition: Boolean,
 
+    // 是否为 同时显示多个 tip
+    multiple: Boolean,
+
     // 提示用的小箭头大小
     arrowsSize: {
       type: Number,

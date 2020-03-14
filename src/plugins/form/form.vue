@@ -37,30 +37,34 @@ export default {
           modules.forEach(i => {
             let componentInstance = i.componentInstance;
             /**
-             * 判断用户是否添加了必填项(require)
+             * @function 判断用户是否添加了必填项(require)
              * 如果添加了require, 并且表单项的值为空, 则弹出提示 '必填'
-             * 2s 后消失
+             * 3s 后消失
              */
             if (
               item.require &&
               componentInstance &&
               componentInstance.handleBlur
             ) {
+              /**
+               * 如果用户没未填写内容 则弹出提示 '必填'
+               * 如果输入框有数据, 但是用户有自定义规则, 就调用自定义规则
+               */
               let res = componentInstance.handleBlur();
-              if (!res || !componentInstance.currentValue) {
-                let msg = componentInstance.errMsg;
-                componentInstance.errMsg = "必填";
+              if (!componentInstance.currentValue || !res) {
+                let msg = this.$zoom.clone(componentInstance.errMsg);
                 componentInstance.error = true;
                 res = false;
-                // TODO 2S后 警告消失
+                if (!componentInstance.currentValue) {
+                  componentInstance.errMsg = '必填';
+                }
                 setTimeout(() => {
-                  componentInstance.errMsg = msg;
                   componentInstance.error = false;
-                }, 2000);
+                }, 5000);
               }
               /**
                * 如果有一项验证未通过, count + 1
-               * // 最终结果取反 只有res为 0 才返回 true
+               * 最终结果取反 只有res为 0 才返回 true
                */
               if (!res) count += 1;
             }
