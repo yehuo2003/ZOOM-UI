@@ -64,6 +64,8 @@
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
+    <span>{{$zoom.$t('m.music')}}</span>
+    <zoom-button @click="updateI18">{{lang}}</zoom-button>
   </div>
 </template>
 
@@ -71,6 +73,8 @@
   export default {
     data() {
       return {
+        $t: '',
+        lang: 'zh-CN',
         name: '',
         stepsOp: {
           active: 7,
@@ -100,11 +104,30 @@
           }
         },
         uname: '',
-        curTab: 0, // 当前激活的tab索引
+        curTab: 2, // 当前激活的tab索引
         curTab2: 2
       }
     },
+    created() {
+      // this.$zoom.addLanguage({
+      //   lang: 'zh',
+      //   title: 'err',
+      //   value: '错误'
+      // });
+      console.log(this.$zoom.LanguageInfo, '=this.$zoom.LanguageInfo');
+    },
     methods: {
+      updateI18() {
+        console.log(this.$zoom.$t('err.shape'));
+        if ( this.lang === 'zh-CN' ) {
+          this.lang = 'en-US';
+          this.$zoom.setLanguage('en');
+        }else {
+          this.lang = 'zh-CN';
+          this.$zoom.setLanguage('zh');//关键语句
+        }
+
+      },
       stepsChange(val) {
         console.log('stepsChange', val);
       },

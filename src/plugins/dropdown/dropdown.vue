@@ -69,7 +69,7 @@
   </div>
 </template>
 <script>
-import { isKorean } from "../common.js";
+import { isKorean } from "../common/common.js";
 export default {
   name: "zoom-dropdown",
   props: {

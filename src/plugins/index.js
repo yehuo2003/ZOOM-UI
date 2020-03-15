@@ -1,11 +1,13 @@
 // import Vue from 'vue'
 import '../assets/fontIcon/iconfont.css'
-import './dom.js'
+import './common/dom.js'
 
 // tip组件 全局注册 v-tip可引用
 import Vtip from './tips/index'
 // 懒加载图片
-import lazyload from './lazyLoad.js';
+import lazyload from './common/lazyLoad.js';
+
+import lang from './common/lang/index';
 
 // 路径 是否查找子目录 .vue
 const requireComponent = require.context('./', true, /\.vue$/);
@@ -46,6 +48,50 @@ const install = Vue => {
     })
     // 自定义方法
     Vue.prototype.$zoom = {
+        /**
+         * @function 获取当前语言
+         * @deprecated 先根据url判断, 如果没有就取 localStorage.language, 如果没有设置则默认显示中文
+         */
+        getLanguage() {
+            let lang = localStorage.getItem('language') || 'zh';
+            let url = window.location.href.toLowerCase();
+            if (url.indexOf('zh') > -1) {
+            lang = 'zh';
+            } else if (url.indexOf('en') > -1) {
+            lang = 'en';
+            }
+            return lang;
+        },
+        /**
+         * @function 设置国际化语言传入字符串
+         * @param {'en'} lang
+         * @type String
+         */
+        setLanguage(lang) {
+            let langArr = ['zh', 'en'];
+            if (lang && langArr.includes(lang.toLowerCase())) {
+            localStorage.setItem('language', lang);
+            }
+            return this.getLanguage();
+        },
+        addLanguage(arr) {
+            this.LanguageInfo[arr.lang][arr.title] = arr.value;
+            console.log(this.LanguageInfo, 'this.LanguageInfo');
+        },
+        LanguageInfo: lang,
+        $t(val) {
+            if (val && val.length > 0 && val.indexOf('.') > 0) {
+                const kind = val.split('.')[0]; //  msg
+                const value = val.split('.')[1];    //  val
+                const language = this.getLanguage();
+                if (!kind && !value) {
+                    return
+                }
+                if (this.LanguageInfo[language] && this.LanguageInfo[language][kind] && this.LanguageInfo[language][kind][value]) {
+                    return this.LanguageInfo[language][kind][value];
+                }
+            }
+        },
         /**
          *
          * @param {"YYYY-mm-dd HH:MM"} fmt
