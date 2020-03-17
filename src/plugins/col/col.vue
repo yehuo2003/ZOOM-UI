@@ -54,7 +54,7 @@ export default {
       if (reg.test(num)) {
         return true;
       } else {
-        throw Error(
+        throw new Error(
           `ZOOM-UI ValueError: value ${num} 解析出错, 请传入一个范围 1~12 之间的正整数!`
         );
       }

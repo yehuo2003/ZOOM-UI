@@ -65,6 +65,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <span>{{$zoom.$t('m.music')}}</span>
+    <h1>{{$zoom.$t('file.count_error', params)}}</h1>
     <zoom-button @click="updateI18">{{lang}}</zoom-button>
   </div>
 </template>
@@ -73,8 +74,9 @@
   export default {
     data() {
       return {
+        params: {count: 12, file: 'doc'},
         $t: '',
-        lang: 'zh-CN',
+        lang: 'zh',
         name: '',
         stepsOp: {
           active: 7,
@@ -114,19 +116,31 @@
       //   title: 'err',
       //   value: '错误'
       // });
-      console.log(this.$zoom.LanguageInfo, '=this.$zoom.LanguageInfo');
+      console.log(this.$zoom.getLanguage(), '=this.$zoom.getLanguage()');
     },
     methods: {
       updateI18() {
-        console.log(this.$zoom.$t('err.shape'));
-        if ( this.lang === 'zh-CN' ) {
-          this.lang = 'en-US';
-          this.$zoom.setLanguage('en');
+        let locale = ''
+        if ( this.lang === 'zh' ) {
+          this.lang = locale = 'en';
         }else {
-          this.lang = 'zh-CN';
-          this.$zoom.setLanguage('zh');//关键语句
+          this.lang = locale = 'zh';
         }
-
+        let lang = {
+          locale,
+          detail: {
+            zh: {
+              'success.button': '按钮错误',
+              'success.input': '输入框错误'
+            },
+            en: {
+              'success.button': 'button err',
+              'success.input': 'input err'
+            }
+          }
+        }
+        console.log(lang.locale, 'lang.locale');
+        this.$zoom.setLanguage(lang);
       },
       stepsChange(val) {
         console.log('stepsChange', val);

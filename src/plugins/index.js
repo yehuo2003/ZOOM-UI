@@ -56,39 +56,54 @@ const install = Vue => {
             let lang = localStorage.getItem('language') || 'zh';
             let url = window.location.href.toLowerCase();
             if (url.indexOf('zh') > -1) {
-            lang = 'zh';
+                lang = 'zh';
             } else if (url.indexOf('en') > -1) {
-            lang = 'en';
+                lang = 'en';
             }
-            return lang;
+            return {locale: lang, detail: this.LanguageInfo};
         },
         /**
-         * @function 设置国际化语言传入字符串
-         * @param {'en'} lang
+         * @function 设置国际化语言传入对象
+         * @param {lang.locale} lang // 'zh' 'en'
+         * @param {lang.detail} Object // {zh: {'xx': 'xx'}, en: {'xx': 'xx'}}
          * @type String
          */
         setLanguage(lang) {
             let langArr = ['zh', 'en'];
-            if (lang && langArr.includes(lang.toLowerCase())) {
-            localStorage.setItem('language', lang);
+            if (lang.locale && langArr.includes(lang.locale.toLowerCase())) {
+                localStorage.setItem('language', lang.locale);
+                // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
+                if (lang.detail && Object.prototype.toString.call(lang.detail) === '[object Object]') {
+                    for(var key in lang.detail) {
+                        this.LanguageInfo[key] = Object.assign({}, lang.detail[key] ,this.LanguageInfo[key])
+                    }
+                }
             }
+            console.log(this.getLanguage(), '===this.getLanguage()==');
             return this.getLanguage();
         },
-        addLanguage(arr) {
-            this.LanguageInfo[arr.lang][arr.title] = arr.value;
-            console.log(this.LanguageInfo, 'this.LanguageInfo');
-        },
+        // 国际化对象 不推荐用户直接调用
         LanguageInfo: lang,
-        $t(val) {
-            if (val && val.length > 0 && val.indexOf('.') > 0) {
-                const kind = val.split('.')[0]; //  msg
-                const value = val.split('.')[1];    //  val
-                const language = this.getLanguage();
-                if (!kind && !value) {
-                    return
+        /**
+         * @function展示当前国际化
+         * @param {val:String} val $zoom.$t('xxx')
+         * @param {parameter: String} val $zoom.$t('xxx', {count1: 'xx', count2: 'xx'})
+         */
+        $t(val, parameter) {
+            if (val && val.length && val.length > 0) {
+                const language = this.getLanguage().locale;
+                if (!val && !language) {
+                    return;
                 }
-                if (this.LanguageInfo[language] && this.LanguageInfo[language][kind] && this.LanguageInfo[language][kind][value]) {
-                    return this.LanguageInfo[language][kind][value];
+                if (this.LanguageInfo[language] && this.LanguageInfo[language][val]) {
+                    let value = this.LanguageInfo[language][val];
+                    // 判断用户是否配置了parameter, 如果有就用parameter对应key值替换国际化里的数据再返回给用户
+                    if (parameter && Object.prototype.toString.call(parameter) === '[object Object]') {
+                        for (let key in parameter) {
+                            value = value.replace(`{${key}}`, parameter[key]);
+                        }
+                    }
+                    return value;
                 }
             }
         },

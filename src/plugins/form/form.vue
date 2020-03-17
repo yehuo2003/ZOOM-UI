@@ -56,7 +56,7 @@ export default {
                 componentInstance.error = true;
                 res = false;
                 if (!componentInstance.currentValue) {
-                  componentInstance.errMsg = '必填';
+                  componentInstance.errMsg = this.$zoom.$t('volid.require_err');
                 }
                 setTimeout(() => {
                   componentInstance.error = false;
