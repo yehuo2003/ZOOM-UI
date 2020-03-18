@@ -4,7 +4,8 @@
       <!-- 左边原始数据 -->
       <div class="transfer-panel">
         <div class="transfer-panel-header">
-          所有数据列表
+          <!-- 所有数据列表 -->
+          {{$zoom.$t('所有数据列表')}}
           <span
             class="transfer-panel-selected"
           >{{list.length}} / {{op && op.data ? op.data.length : 0}}</span>
@@ -62,10 +63,10 @@ export default {
         { fieId: "indexId", header: "" },
         {
           fieId: "btns",
-          header: "操作",
+          header: this.$zoom.$t('public.operation'), //  操作
           btns: [
             {
-              title: "移除",
+              title: this.$zoom.$t('public.remove'), //  移除
               css: {
                 icon: "icon-close"
               },
@@ -97,7 +98,7 @@ export default {
         onClick: () => {
           this.serachData();
         },
-        placeHolder: "请输入要搜索的元素内容"
+        placeHolder: this.$zoom.$t('transfer.search') //  请输入要搜索的元素内容
       },
       // 添加数据的输入框
       addinputOp: {
@@ -105,7 +106,7 @@ export default {
         onClick: () => {
           this.serachaddData();
         },
-        placeHolder: "请输入要搜索的元素内容"
+        placeHolder: this.$zoom.$t('transfer.search') //  请输入要搜索的元素内容
       },
       gridOp: {
         hideIndex: true,

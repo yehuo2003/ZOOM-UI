@@ -32,23 +32,29 @@
     </div>
     <div v-else>
       <div class="upload-header">
-        <div class="upload-title">选择文件</div>
+        <!-- 选择文件 -->
+        <div class="upload-title">{{ $zoom.$t('file.select') }}</div>
         <div class="alert-upload upload-info">
           <i class="zoom-icon close-alert icon-hint"></i>
-          <span v-if="limit">最多上传{{limit}}个文件!</span>
-          <span v-if="size">每个文件最大{{size}}</span>
+          <!-- 最多上传{{limit}}个文件! -->
+          <span v-if="limit">{{ $zoom.$t('file.max_count', {limit}) }}</span>
+          <!-- 每个文件最大{{size}} -->
+          <span v-if="size">{{ $zoom.$t('file.max_file_size', {size}) }}</span>
         </div>
         <div v-show="successCount" class="alert-upload upload-success">
           <i class="zoom-icon close-alert icon-success"></i>
-          上传成功{{successCount}}个文件
+          <!-- 上传成功{{successCount}}个文件 -->
+          {{ $zoom.$t('file.upload_success', {successCount}) }}
         </div>
         <div v-show="errCount" class="alert-upload upload-error">
           <i class="zoom-icon close-alert icon-close"></i>
-          上传失败{{errCount}}个文件!
+          <!-- 上传失败{{errCount}}个文件! -->
+          {{ $zoom.$t('file.upload_error', {errCount}) }}
         </div>
       </div>
       <div class="upload-toolbar zoom-clear">
-        <zoom-button ref="addUpload" @click="addFileClick">添加文件</zoom-button>
+        <!-- 添加文件 -->
+        <zoom-button ref="addUpload" @click="addFileClick">{{ $zoom.$t('file.add_file') }}</zoom-button>
         <div class="upload-switch">
           <zoom-radio v-model="active" :op="radioOp"></zoom-radio>
         </div>
@@ -56,7 +62,8 @@
       <div class="upload-content" ref="select_frame" ondragstart="return false">
         <div v-show="List.length === 0" class="upload-text">
           <i class="zoom-icon icon-edit"></i>
-          <div>拖拽文件至此处</div>
+          <!-- 拖拽文件到此处 -->
+          <div>{{ $zoom.$t('file.drag_tip') }}</div>
         </div>
         <ul v-show="List.length > 0 && active === 'imgModel' " class="upload-file-list">
           <li v-for="(item, index) of List" :key="index" class="upload-file">
@@ -72,7 +79,7 @@
               <span class="file-name-wrapper">{{item.name}}</span>
             </div>
             <div class="file-close">
-              <a @click="removeConfirmation(index)" class="zoom-icon icon-delete"></a>
+              <a @click="removeConfirmation(index)" v-tip="$zoom.$t('file.delete_file')" class="zoom-icon icon-delete"></a>
             </div>
             <div class="file-size">{{item.fileSize}}</div>
             <!-- 上传成功后显示 -->
@@ -125,7 +132,8 @@
                       <td class="grid-item" style="width: 30%;">
                         <span class="grid-input">
                           <span>
-                            <a title="删除文件" class="zoom-icon">
+                            <!-- 删除文件 -->
+                            <a v-tip="$zoom.$t('file.delete_file')" class="zoom-icon">
                               <span
                                 @click="removeConfirmation(index)"
                                 class="zoom-icon icon-delete"
@@ -168,7 +176,8 @@
       </div>
       <div class="upload-footer">
         <div class="upload-btns">
-          <zoom-button :disabled="true" ref="startUpload" type="primary" @click="submit">开始上传</zoom-button>
+          <!-- 开始上传 -->
+          <zoom-button :disabled="true" ref="startUpload" type="primary" @click="submit">{{ $zoom.$t('file.upload_start') }}</zoom-button>
           <!-- <zoom-button>停止上传</zoom-button>
           <zoom-button>关闭</zoom-button>-->
         </div>
@@ -231,22 +240,22 @@ export default {
       closeProgress: false, //  为true关闭进度条
       multiple: false, //  是否多选
       title: [
-        { id: 1, text: "编号", width: 30 },
-        { id: 2, text: "操作", width: 30 },
-        { id: 3, text: "文件名", width: 100 },
-        { id: 4, text: "状态", width: 50 },
-        { id: 5, text: "上传进度", width: 50 },
-        { id: 6, text: "文件大小", width: 40 },
-        { id: 7, text: "修改日期", width: 60 },
-        { id: 8, text: "文件件类型", width: 120 }
+        { id: 1, text: this.$zoom.$t('file.numbering'), width: 30 },  //  文件编号
+        { id: 2, text: this.$zoom.$t('public.operation'), width: 30 }, //  操作
+        { id: 3, text: this.$zoom.$t('file.name'), width: 100 },  //  文件名
+        { id: 4, text: this.$zoom.$t('file.status'), width: 50 },     //  状态
+        { id: 5, text: this.$zoom.$t('file.progress'), width: 50 }, //  上传进度
+        { id: 6, text: this.$zoom.$t('file.size'), width: 40 }, //  文件大小
+        { id: 7, text: this.$zoom.$t('file.update_date'), width: 60 }, // 修改日期
+        { id: 8, text: this.$zoom.$t('file.type'), width: 120 } // 文件类型
       ],
       testList: [],
       radioOp: {
         name: "list",
         isdisabled: false,
         data: [
-          { text: "列表模式", value: "listModel", checked: true },
-          { text: "缩略图模式", value: "imgModel" }
+          { text: this.$zoom.$t('file.list_view'), value: "listModel", checked: true },  //  列表模式
+          { text: this.$zoom.$t('file.thumbnails_view'), value: "imgModel" } //  缩略图模式
         ]
       },
       testprogress: [],
@@ -358,13 +367,13 @@ export default {
     formatStatus(val) {
       switch (val) {
         case "success":
-          return "成功";
+          return this.$zoom.$t('public.success');  //  成功
         case "error":
-          return "失败";
+          return this.$zoom.$t('public.fail');  // "失败"
         case "start":
-          return "上传中";
+          return this.$zoom.$t('file.uploading');  // "正在上传"
         default:
-          return "等待上传";
+          return this.$zoom.$t('file.wait_upload');  // "等待上传"
       }
     },
     //  添加文件
@@ -380,7 +389,8 @@ export default {
         if (file.type.indexOf(this.fileType) === -1) {
           this.$zoom.alert({
             title: "提示",
-            content: `${file.name}的文件类型${file.type}错误, 请传入${this.fileType}类型文件`,
+            // 文件：{type} 的类型不符合要求, 支持上传【{format}】格式的文件
+            content: `${this.$zoom.$t('file.type_error', {type: file.name} )}, ${this.$zoom.$t('file.support', {format: this.fileType} )}`,
             type: "warning"
           });
           return false;
@@ -412,7 +422,8 @@ export default {
       }
       if (isNaN(size)) {
         throw new Error(
-          "zoom-ui TypeError: size类型错误, 必须为数字, 或以KB, MB, GB等形式结尾字符串"
+          // "zoom-ui TypeError: size类型错误, 必须为数字, 或以KB, MB, GB等形式结尾字符串"
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('file.size_err')}`
         );
       } else {
         if (file && size) {
@@ -420,14 +431,16 @@ export default {
           if (fileSize > size * 1024) {
             this.$zoom.alert({
               title: "提示",
-              content: `文件大小不能大于${this.size}!`,
+              // content: `每个文件最大 ${this.size}!`,
+              content: this.$zoom.$t( 'file.max_file_size', {size: this.size} ),
               type: "warning"
             });
             return false;
           } else if (fileSize <= 0) {
             this.$zoom.alert({
               title: "提示",
-              content: "文件大小不能为0! ",
+              // 文件大小不能为0!
+              content: this.$zoom.$t('file.nonzero'),
               type: "warning"
             });
             return false;
@@ -483,7 +496,6 @@ export default {
           return;
         }
       }
-      // let fileList = [...this.filelist];
       let fileList = [];
       if (this.multiple && files.length > 1) {
         //多选时，文件全部压如列表末尾
@@ -529,7 +541,8 @@ export default {
     // 移除文件 中转方法
     removeConfirmation(index) {
       this.$zoom.popup({
-        content: "确认要删除该文件吗?",
+        // 确定要删除吗？
+        content: this.$zoom.$t('del.comfirm.msg'),
         status: "primary",
         onClick: () => {
           this.remove(index);
@@ -591,7 +604,8 @@ export default {
       } else {
         this.$zoom.alert({
           title: "提示",
-          content: "请检查要上传文件",
+          // 请检查要上传文件
+          content: this.$zoom.$t('file.testing'),
           type: "warning"
         });
       }
@@ -630,7 +644,7 @@ export default {
             }
           })
           .catch(err => {
-            console.error("zoom-ui Error: ", err);
+            console.error(this.$zoom.$t('err.zoom_ui_type') + ': ', err);
           });
       });
       Promise.all(promises)

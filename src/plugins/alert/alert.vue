@@ -75,17 +75,13 @@ export default {
     let time = this.time || 2000;
     if (typeof time !== "number") {
       throw new Error(
-        `zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `
+        // `zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `
+        `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.attribute', {err_attribute: time, attribute: 'Number'})}`
       );
     }
     setTimeout(() => {
       this.close();
     }, time);
-    // if (this.size && this.size == 'lager') {
-    //     this.lager = true;
-    // } else {
-    //     this.lager = false;
-    // }
   },
   methods: {
     close() {
@@ -120,13 +116,15 @@ export default {
         this.content = obj;
       } else {
         throw new Error(
-          `zoom-ui TypeError: 参数 ${obj} 类型错误, 请参考zoom-ui使用手册! `
+          // `zoom-ui TypeError: 参数 ${obj} 类型错误, 请参考zoom-ui使用手册! `
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.attribute', {err_attribute: obj, attribute: 'String'})}`
         );
       }
       time = time || 2000;
       if (typeof time !== "number") {
         throw new Error(
-          `zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `
+          // `zoom-ui TypeError: 参数 ${time} 类型错误, 请传入number类型数值! `
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.attribute', {err_attribute: time, attribute: 'Number'})}`
         );
       }
       this.msgStatus = cls;

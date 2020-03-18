@@ -107,9 +107,10 @@ export default {
         return;
       } else {
         this.options.type = "text";
-        throw new Error(
-          `zoom-ui TypeError: type属性解析失败, 仅支持 'text', 'password' !`
-        );
+          throw new Error(
+            // `zoom-ui TypeError: type属性解析失败, 仅支持 'text', 'password' !`
+            `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('input.msg', {type: this.options.type})}`
+          );
       }
     }
   },
@@ -191,7 +192,10 @@ export default {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
-        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error(
+          // "zoom-ui error: disabled状态下无法清除内容! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.disabled_clear')}`
+        );
       }
     },
     Oninput($event) {

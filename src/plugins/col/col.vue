@@ -55,7 +55,8 @@ export default {
         return true;
       } else {
         throw new Error(
-          `ZOOM-UI ValueError: value ${num} 解析出错, 请传入一个范围 1~12 之间的正整数!`
+          // `ZOOM-UI ValueError: value ${num} 解析出错, 请传入一个范围 1~12 之间的正整数!`
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('col.err', {num})}`
         );
       }
     }

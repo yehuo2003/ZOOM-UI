@@ -44,7 +44,8 @@ export default {
         return css;
       } else {
         throw new Error(
-          "zoom-ui TypeError: zoom-row属性输入有误, 请根据手册检查语法"
+          // "zoom-ui TypeError: zoom-row属性输入有误, 请根据手册检查语法"
+          `${this.$zoom.$t('err.zoom_ui_grammar')}: ${this.$zoom.$t('err.attribute', {err_attribute: 'zoom-row', attribute: ''})}`
         );
       }
     }

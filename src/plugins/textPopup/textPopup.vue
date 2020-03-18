@@ -34,10 +34,7 @@ export default {
   name: "zoom-text-popup",
   props: {
     op: {
-      placeHolder: {
-        type: String,
-        default: "请输入关键词"
-      },
+      placeHolder: [String],
       isdisabled: {
         type: Boolean,
         default: false
@@ -73,7 +70,7 @@ export default {
       currentValue: this.value,
       options: {
         errMsg: "",
-        placeHolder: "请输入关键词",
+        placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         resize: false,
         readonly: false,
         isdisabled: false
@@ -83,6 +80,9 @@ export default {
   created() {
     if (this.op) {
       this.options = this.op;
+      if (!this.options.placeHolder) {
+        this.options.placeHolder =  this.$zoom.$t('search.msg') // 请输入关键词
+      }
     }
   },
   methods: {
@@ -91,7 +91,10 @@ export default {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
-        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error(
+          // "zoom-ui error: disabled状态下无法清除内容! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.disabled_clear')}`
+        );
       }
     },
     // 验证功能

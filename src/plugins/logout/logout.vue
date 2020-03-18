@@ -20,7 +20,7 @@ export default {
     return {
       confim: false, //  是否开启确认框
       logoutUrl: null,
-      title: "注销"
+      title: this.$zoom.$t('logout') //  注销
     };
   },
   created() {
@@ -59,10 +59,11 @@ export default {
         if (typeof this.confim === "string") {
           content = this.confim;
         } else {
-          content = "确认要注销吗?";
+          // content = "确认要注销吗?";
+          content = this.$zoom.$t('logout.confim');
         }
         this.$zoom.popup({
-          title: "提示",
+          title: this.$zoom.$t('public.hint'),  //  提示
           type: "query",
           content,
           onClick: () => {

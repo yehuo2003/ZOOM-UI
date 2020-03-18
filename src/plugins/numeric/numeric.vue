@@ -157,9 +157,9 @@ export default {
       let val = Number(this.currentValue);
       if (isNaN(val)) {
         throw new Error(
-          `zoom-ui TypeError: value ${this.currentValue} is NaN, 请输入有效数字! `
+          // `zoom-ui TypeError: value ${this.currentValue} is NaN, 请输入有效数字! `
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('number.error', {value: this.currentValue})}`
         );
-        return false;
       } else {
         if (typeof this.options.max === "number" && val >= this.options.max) {
           this.currentValue = this.options.max - 1;
@@ -182,7 +182,10 @@ export default {
         this.currentValue = 0;
         this.$emit("input", 0);
       } else {
-        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error(
+          // "zoom-ui error: disabled状态下无法清除内容! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.disabled_clear')}`
+        );
       }
     },
     add() {

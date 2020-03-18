@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="popup-modal-footer">
-          <zoom-button @click="close">取消</zoom-button>
+          <zoom-button @click="close">{{$zoom.$t('public.cancel')}}</zoom-button>
           <zoom-button @click="btnClick" type="primary">{{btnText}}</zoom-button>
         </div>
       </div>
@@ -30,12 +30,12 @@ export default {
   data () {
     return {
       show: false,
-      title: '提示',
+      title: this.$zoom.$t('public.hint'),  //  提示
       content: '',
       container: null,
       type: null,
       css: 'icon-query-fill',
-      btnText: '确认'
+      btnText: this.$zoom.$t('public.confirm') //  确认
     }
   },
   created () {

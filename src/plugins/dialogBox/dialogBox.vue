@@ -12,8 +12,8 @@
         <slot></slot>
       </div>
       <div v-if="showBtn" class="dialog-footer">
-        <zoom-button type="primary" @click="handleClick">确定</zoom-button>
-        <zoom-button @click="closeBox">取消</zoom-button>
+        <zoom-button type="primary" @click="handleClick">{{$zoom.$t('public.sure')}}</zoom-button>
+        <zoom-button @click="closeBox">{{$zoom.$t('public.cancel')}}</zoom-button>
       </div>
     </div>
   </div>

@@ -40,7 +40,7 @@ export default {
     };
   },
   created() {
-      this.reset();
+    this.reset();
   },
   methods: {
     reset() {

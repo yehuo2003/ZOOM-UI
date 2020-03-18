@@ -55,8 +55,10 @@ export default {
     if (this.op || this.type) {
       let type = this.op ? this.op.type : this.type;
       if (type && typeof type !== "string") {
-        throw new Error("zoom-ui error: type 的类型需要传入字符串");
-        return;
+        throw new Error(
+          // "zoom-ui error: type 的类型需要传入字符串"
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('button.type', {type: typeof type})}`
+        );
       }
       switch (type) {
         case "err":
@@ -95,7 +97,8 @@ export default {
           this.IconStyle = "";
           this.showIcon = false;
           throw new Error(
-            `zoom-ui TypeError: IconStyle: ${this.op.IconStyle} 错误, 请传入有效的icon名`
+            // `zoom-ui TypeError: IconStyle: ${this.op.IconStyle} 错误, 请传入有效的icon名`
+            this.$zoom.$t('button.icon', {icon: this.op.IconStyle})
           );
         }
       }
@@ -123,7 +126,8 @@ export default {
         this.css += ` zoom-${shape}`;
       } else {
         throw new Error(
-          `zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`
+          // `zoom-ui TypeError: ${shape} 语法错误, 请参考zoom-ui手册并检查语法!`
+          `${this.$zoom.$t('err.zoom_ui_grammar')}: ${this.$zoom.$t('err.attribute', {err_attribute: shape, attribute: 'Icon'})}`
         );
       }
     }
@@ -140,7 +144,8 @@ export default {
         this.css += ` ${size}`;
       } else {
         throw new Error(
-          `zoom-ui TypeError: ${size} 语法错误, 请参考zoom-ui手册并检查语法!`
+          // `zoom-ui TypeError: ${size} 语法错误, 请参考zoom-ui手册并检查语法!`
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.attribute', {err_attribute: size, attribute: ''})}`
         );
       }
     }
@@ -161,7 +166,10 @@ export default {
         if (typeof this.op.onClick === "function") {
           this.op.onClick();
         } else {
-          throw new Error("zoom-ui error: onClick 需要绑定一个函数对象");
+          throw new Error(
+            // "zoom-ui error: onClick 需要绑定一个函数对象"
+            `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('button.onClick')}`
+          );
         }
       } else {
         return;

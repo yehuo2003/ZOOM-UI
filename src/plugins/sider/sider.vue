@@ -10,11 +10,11 @@
   </div>
 </template>
 <script>
-/*
+/**
  * min 进度条最小值
  * max 进度条最大值
  * v-model 对当前值进行双向绑定实时显示拖拽进度
- * */
+ */
 export default {
   name: "zoom-slider",
   props: {
@@ -46,7 +46,10 @@ export default {
   mounted() {
     if (this.per > this.max) {
       this.per = null;
-      throw new Error("zoom-ui Error: 当前值不能大于最大值! ");
+      throw new Error(
+        // "zoom-ui Error: 当前值不能大于最大值! "
+        `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('slider.msg')}`
+      );
     }
     this.slider = this.$refs["zoom-slider"];
     this.thunk = this.$refs["zoom-thunk"];

@@ -10,7 +10,6 @@
       :name=" mode === 'stars' ? 'rate-star' : 'rate-face' "
       :value="item"
     />
-    <!-- <input v-show=" mode !== 'star'" v-model="active" v-for="item of rateList" :key="item" type="radio" name="rate-face" :value="item"> -->
   </div>
 </template>
 <script>

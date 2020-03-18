@@ -26,9 +26,10 @@
         >&lt;</span>
 
         <span class="zoom-date-header-btn-day">
-          <span class="zoom-date-header-btn" @click.stop="openSelectYear">{{ select.year }}年</span>
-
-          <span class="zoom-date-header-btn" @click.stop="openSelectMonth">{{ select.month }}月</span>
+          <!-- 年 -->
+          <span class="zoom-date-header-btn" @click.stop="openSelectYear">{{ select.year + $zoom.$t('date.year') }}</span>
+          <!-- 月 -->
+          <span class="zoom-date-header-btn" @click.stop="openSelectMonth">{{ select.month + $zoom.$t('date.month') }}</span>
         </span>
 
         <span
@@ -47,7 +48,8 @@
       <div class="zoom-date-content">
         <table>
           <thead>
-            <th v-for="item of ['日', '一', '二', '三', '四', '五', '六']" :key="item">{{item}}</th>
+            <!-- <th v-for="item of ['日', '一', '二', '三', '四', '五', '六']" :key="item">{{item}}</th> -->
+            <th v-for="item of $zoom.$t('date.week')" :key="item">{{item}}</th>
           </thead>
 
           <tbody>
@@ -69,7 +71,7 @@
                 :class="{active: y === select.year}"
                 class="panel-item-inner"
                 @click.stop="pickYear(y)"
-              >{{ y }}年</div>
+              >{{ y + $zoom.$t('date.year') }}</div>  <!-- 年 -->
             </div>
           </div>
         </div>
@@ -81,7 +83,7 @@
                 :class="{active: item === select.month}"
                 @click.stop="pickMonth(item)"
                 class="panel-item-inner"
-              >{{ item }}月</div>
+              >{{ item + $zoom.$t('date.month') }}</div>  <!-- 月 -->
             </div>
           </div>
         </div>
@@ -438,7 +440,10 @@ export default {
       this.dateTime = this.formatDate(this.current);
       this.$emit("input", this.dateTime);
       if (this.dateTime.indexOf("NaN") > -1) {
-        throw new Error("zoom-ui TypeError: 请检查入参是否为有效时间格式! ");
+        throw new Error(
+          // "zoom-ui TypeError: 请检查入参是否为有效时间格式! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('date.type')}`
+        );
       }
     },
 

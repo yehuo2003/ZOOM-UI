@@ -48,10 +48,7 @@ export default {
   name: "zoom-search",
   props: {
     op: {
-      placeHolder: {
-        type: String,
-        default: "请输入关键词"
-      },
+      placeHolder: [String],
       isdisabled: {
         type: Boolean,
         default: false
@@ -87,7 +84,7 @@ export default {
       valueBeforeComposition: null,
       options: {
         errMsg: "",
-        placeHolder: "请输入关键词",
+        placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         readonly: false,
         isdisabled: false
       }
@@ -96,6 +93,9 @@ export default {
   created() {
     if (this.op) {
       this.options = this.op;
+      if (!this.options.placeHolder) {
+        this.options.placeHolder =  this.$zoom.$t('search.msg') // 请输入关键词
+      }
       if (this.op.data && this.op.data.length > 0) {
         this.list = this.op.data;
         this.obj = this.list[0];
@@ -193,7 +193,10 @@ export default {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
-        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error(
+          // "zoom-ui error: disabled状态下无法清除内容! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.disabled_clear')}`
+        );
       }
     },
     /**

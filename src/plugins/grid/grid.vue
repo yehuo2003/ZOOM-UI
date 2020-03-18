@@ -34,7 +34,8 @@
         <div v-if="bodyData.length === 0" class="zoom-not-data">
           <p v-show="!loading" class="no-text">
             <i class="zoom-icon icon-search"></i>
-            <span>暂无数据</span>
+            <!-- 暂无数据 -->
+            <span>{{$zoom.$t('grid.no_data')}}</span>
           </p>
           <zoom-loading color="#1890ff" :show="loading"></zoom-loading>
         </div>
@@ -172,7 +173,8 @@ export default {
       if (this.op && this.op.isChecked) {
         let checkObj = {
           fieId: "checked",
-          header: "全选/取消"
+          // "全选/取消"
+          header: this.$zoom.$t('grid.election_cancel')
         };
         let count = 0;
         this.op.title.forEach(item => {
@@ -372,7 +374,7 @@ export default {
     },
     // title 点击 全选/取消 功能
     titleClick(item) {
-      if (item.title === "全选/取消") {
+      if (item.title === this.$zoom.$t('grid.election_cancel')) {
         let count = 0;
         // 遍历查看有几个是选中的
         this.bodyData.forEach(item => {

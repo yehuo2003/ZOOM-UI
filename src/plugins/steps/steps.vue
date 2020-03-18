@@ -1,7 +1,13 @@
 <template>
   <div class="zoom-steps">
     <div v-if="type === 'timeLine' " class="zoom-steps-timeline">
-      <div v-for="(item, index) of list" :key="index" :class=" item.status ? 'progress-' + item.status : '' " :style="item.index !== list.length ? 'height: 88px;' : '' " class="timeline">
+      <div
+        v-for="(item, index) of list"
+        :key="index"
+        :class=" item.status ? 'progress-' + item.status : '' "
+        :style="item.index !== list.length ? 'height: 88px;' : '' "
+        class="timeline"
+      >
         <ul>
           <li class="date-time">
             <span class="date">{{item.time ? item.time.split(' ')[0] : ''}}</span>
@@ -9,9 +15,10 @@
           </li>
           <li :style="index !== list.length - 1 ? 'height: 88px;' : '' " class="steps-line">
             <div class="steps-icon">
-              <span @click="handleClick(item)" :class=" item.status === 'done' ? 'zoom-icon icon-success-fill' : '' ">
-                {{item.status === 'done' ? '' : item.index || (index + 1)}}
-              </span>
+              <span
+                @click="handleClick(item)"
+                :class=" item.status === 'done' ? 'zoom-icon icon-success-fill' : '' "
+              >{{item.status === 'done' ? '' : item.index || (index + 1)}}</span>
             </div>
           </li>
           <li class="steps-name">
@@ -23,7 +30,13 @@
     </div>
 
     <ul v-else-if=" type === 'advanced' " class="zoom-steps-advanced">
-      <li @click="advancedClick(item)" v-for="(item, index) of list" :key="index" :class=" item.status ? item.status : '' " :style="'width:' + parseInt(100 / list.length) +'%;'">
+      <li
+        @click="advancedClick(item)"
+        v-for="(item, index) of list"
+        :key="index"
+        :class=" item.status ? item.status : '' "
+        :style="'width:' + parseInt(100 / list.length) +'%;'"
+      >
         <a>
           <span :class=" item.type ? item.type : '' " class="dot"></span>
           {{item.name}}
@@ -33,11 +46,18 @@
     </ul>
 
     <div v-else class="zoom-steps-normal">
-      <div v-for="item of list" :key="item.index" :class=" item.status ? 'progress-' + item.status : '' " :style="'width:' + parseInt(100 / list.length) +'%;'" class="normal">
+      <div
+        v-for="item of list"
+        :key="item.index"
+        :class=" item.status ? 'progress-' + item.status : '' "
+        :style="'width:' + parseInt(100 / list.length) +'%;'"
+        class="normal"
+      >
         <div class="steps-icon">
-          <span @click="handleClick(item)" :class=" item.status === 'done' ? 'zoom-icon icon-success-fill' : '' ">
-            {{item.status === 'done' ? '' : item.index || (index + 1)}}
-          </span>
+          <span
+            @click="handleClick(item)"
+            :class=" item.status === 'done' ? 'zoom-icon icon-success-fill' : '' "
+          >{{item.status === 'done' ? '' : item.index || (index + 1)}}</span>
         </div>
         <div :class=" item.status === 'done' ? ' line-done' : '' " class="steps-line"></div>
         <div class="node-description">
@@ -46,32 +66,33 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
 export default {
   name: "zoom-steps",
   props: {
-    type: { //  步骤条类型, 默认 'normal', 可选 'timeLine' 或  'advanced'
+    type: {
+      //  步骤条类型, 默认 'normal', 可选 'timeLine' 或  'advanced'
       type: String,
-      default: 'normal'
+      default: "normal"
     },
-    disabled: Boolean,  //  是否禁止点击 默认false
+    disabled: Boolean, //  是否禁止点击 默认false
     op: {
       type: Object,
-      data: { //  数据  list = [{index: 1, time: '2008-05-12 14:25:32', name: 'Basic Info.', status: 'done'}]
+      data: {
+        //  数据  list = [{index: 1, time: '2008-05-12 14:25:32', name: 'Basic Info.', status: 'done'}]
         type: Array,
         default: []
       },
-      onClick: Function,  //  监听点击事件
-      active: [Number, String]  //  要选中的条目, 和index对应
+      onClick: Function, //  监听点击事件
+      active: [Number, String] //  要选中的条目, 和index对应
     }
   },
   data() {
     return {
       list: []
-    }
+    };
   },
   created() {
     this.load();
@@ -93,18 +114,23 @@ export default {
       }
 
       // 如果是时间轴模式, 就格式化时间为 YYYY-mm-dd HH:MM 格式
-      if (this.type === 'timeLine') {
+      if (this.type === "timeLine") {
         arr.forEach(item => {
           if (item.time) {
             item.time = this.$zoom.dateFormat("YYYY-mm-dd HH:MM", item.time);
-            if (item.time.indexOf('NaN') > -1) {
+            if (item.time.indexOf("NaN") > -1) {
               this.list = [];
-              throw new Error('zoom-ui TypeError: 请输入有效的时间类型');
+              throw new Error(
+                // 'zoom-ui TypeError: 请输入有效的时间类型'
+                `${this.$zoom.$t("err.zoom_ui_type")}: ${this.$zoom.$t(
+                  "steps.error"
+                )}`
+              );
             }
           } else {
             item.time = this.$zoom.dateFormat("YYYY-mm-dd HH:MM", new Date());
           }
-        })
+        });
       }
       // 如果用户设置了active, 就循环把active之前的数据都设置为done
       if (this.op.active) {
@@ -118,17 +144,17 @@ export default {
      */
     setValue(active, data) {
       if (!active) {
-        return
+        return;
       }
       if (!data) {
         data = this.op.data;
       }
-      for (let i = 0; i <= data.length; i ++) {
+      for (let i = 0; i <= data.length; i++) {
         if (data[i].index === active) {
-          data[i].status = 'current';
+          data[i].status = "current";
           break;
         } else {
-          data[i].status = 'done';
+          data[i].status = "done";
         }
       }
       return data;
@@ -139,23 +165,23 @@ export default {
      */
     handleClick(e) {
       if (this.op.disabled) {
-        return
+        return;
       }
       let arr = this.$zoom.clone(this.list);
       arr.forEach(item => {
         if (item.index < e.index) {
-          item.status = 'done';
+          item.status = "done";
         } else if (item.index === e.index) {
-          item.status = 'current';
+          item.status = "current";
         } else {
-          item.status = '';
+          item.status = "";
         }
       });
       this.list = arr;
       if (this.op.onClick) {
         this.op.onClick(e);
       }
-      this.$emit('change', e.index);
+      this.$emit("change", e.index);
     },
     /**
      * @function 跳到下个步骤,给父组件调用
@@ -169,7 +195,7 @@ export default {
       let count = 0;
       let isDone = false;
       arr.forEach(item => {
-        if (item.status === 'current' || !item.status || item.status === '') {
+        if (item.status === "current" || !item.status || item.status === "") {
           isDone = true;
         }
       });
@@ -179,16 +205,16 @@ export default {
       arr.forEach(item => {
         if (count === 1) {
           count += 1;
-          item.status = 'current';
-          this.$emit('change', item.index);
-        } else if (item.status === 'current') {
-          item.status = 'done';
+          item.status = "current";
+          this.$emit("change", item.index);
+        } else if (item.status === "current") {
+          item.status = "done";
           count += 1;
         }
       });
       if (count === 0 && arr && arr.length) {
-        arr[0].status = 'current';
-        this.$emit('change', arr[0].index);
+        arr[0].status = "current";
+        this.$emit("change", arr[0].index);
       }
       this.list = arr;
     },
@@ -202,19 +228,19 @@ export default {
       let arr = this.$zoom.clone(this.list);
       let isDone = false;
       arr.forEach(item => {
-        if (item.status === 'current' || item.status === 'done') {
+        if (item.status === "current" || item.status === "done") {
           isDone = true;
         }
       });
       if (!isDone) {
         return;
       }
-      for (var i = arr.length - 1; i >= 0; i --) {
-        if (arr[i].status === 'current') {
-          arr[i].status = '';
-        } else if (arr[i].status === 'done') {
-          arr[i].status = 'current';
-          this.$emit('change', arr[i].index);
+      for (var i = arr.length - 1; i >= 0; i--) {
+        if (arr[i].status === "current") {
+          arr[i].status = "";
+        } else if (arr[i].status === "done") {
+          arr[i].status = "current";
+          this.$emit("change", arr[i].index);
           break;
         }
       }
@@ -226,25 +252,25 @@ export default {
      */
     advancedClick(e) {
       if (this.op.disabled) {
-        return
+        return;
       }
       this.list.forEach(item => {
         if (item.index === e.index) {
-          item.status = 'current';
+          item.status = "current";
         } else {
-          item.status = '';
+          item.status = "";
         }
-      })
+      });
     },
     // 状态格式化
     setStatus(val) {
       switch (val) {
-        case 'done':
-          return '已完成';
-        case 'current':
-          return '进行中';
+        case "done":
+          return this.$zoom.$t("steps.completed"); //  已完成
+        case "current":
+          return this.$zoom.$t("steps.in"); //  进行中
         default:
-          return '未完成';
+          return this.$zoom.$t("steps.no_completed"); //  未完成
       }
     }
   }
@@ -399,7 +425,7 @@ export default {
   color: #fff;
   font-size: 12px;
 }
-.zoom-steps .progress-done .steps-icon>.zoom-icon {
+.zoom-steps .progress-done .steps-icon > .zoom-icon {
   font-size: 20px;
 }
 .zoom-steps .progress-done .steps-icon {

@@ -2,7 +2,7 @@
   <div class="test-layou">
     <zoom-button @click="test">普通按钮</zoom-button>
     <zoom-button :op="btnOp" type="primary">正常按钮</zoom-button>
-    <zoom-button reset-time="6000" shape="rounds" type="warning">警告按钮</zoom-button>
+    <zoom-button reset-time="6000" shape="round" type="warning">警告按钮</zoom-button>
     <zoom-button reset-time="0" shape="circle" type="success">成功按钮</zoom-button>
     <zoom-button type="info">信息按钮</zoom-button>
     <zoom-button type="danger">危险按钮</zoom-button>

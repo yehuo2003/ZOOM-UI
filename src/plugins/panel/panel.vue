@@ -14,10 +14,7 @@ export default {
   name: "zoom-panel",
   props: {
     op: Object,
-    title: {
-      type: String,
-      default: "<span>点击展开</span>"
-    },
+    title: [String],
     show: {
       type: Boolean,
       default: false
@@ -25,7 +22,7 @@ export default {
   },
   data() {
     return {
-      titleContent: "<span>点击展开</span>",
+      titleContent: `<span>${this.$zoom.$t('panel.unfolding')}</span>`,
       visibility: false
     };
   },
@@ -33,7 +30,9 @@ export default {
     this.titleContent = this.title;
     this.visibility = this.show;
     if (this.op) {
-      this.titleContent = this.op.title;
+      if (this.op.title) {
+        this.titleContent = this.op.title;
+      }
       this.visibility = this.op.show;
     }
   },

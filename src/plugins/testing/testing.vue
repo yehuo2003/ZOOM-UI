@@ -1,7 +1,8 @@
 <template>
   <div class="zoom-testing">
     <canvas :id="canvasId" @click="changeClick" width="130" height="40"></canvas>
-    <a v-if="showText" @click="testing">换一张</a>
+    <!-- 换一张 -->
+    <a v-if="showText" @click="testing">{{$zoom.$t('testing.msg')}}</a>
   </div>
 </template>
 <script>

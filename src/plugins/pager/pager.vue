@@ -1,7 +1,8 @@
 <template>
   <div class="zoom-pager">
     <span v-if="mode !== 'mini' " class="pager-total">
-      共{{total}}条
+      <!-- 共 x 条 -->
+      {{ $zoom.$t('pager.total') + total + $zoom.$t('pager.quantity')}}
       <zoom-dropdown :op="dropOp"></zoom-dropdown>条/页
     </span>
     <!-- 当前页如果是第一页, 则上一页和返回首页按钮都禁用, 并且点击的时候传相应的值 -->
@@ -48,9 +49,11 @@
       <i class="zoom-icon icon-to-top"></i>
     </span>
     <span v-if="mode !== 'mini' " class="pager-jump">
-      <a @click="jump">前往</a>
+      <!-- 前往 -->
+      <a @click="jump">{{$zoom.$t('pager.go')}}</a>
       <input type="number" onpaste="return false" v-model.number="val" @keyup.enter="jump" />
-      <a @click="jump">页</a>
+      <!-- 页 -->
+      <a @click="jump">{{$zoom.$t('pager.page')}}</a>
     </span>
   </div>
 </template>
@@ -169,7 +172,8 @@ export default {
           this.op.pageVal = data;
         } else {
           throw Error(
-            `zoom-ui TypeError: ${data}语法错误, 请参考zoom-ui手册检查语法! `
+            // `zoom-ui TypeError: ${data}语法错误, 请参考zoom-ui手册检查语法! `
+            `${this.$zoom.$t('err.zoom_ui_grammar')}: ${this.$zoom.$t('err.attribute', {err_attribute: data, attribute: 'Object'})}`
           );
         }
       }

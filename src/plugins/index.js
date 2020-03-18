@@ -54,12 +54,6 @@ const install = Vue => {
          */
         getLanguage() {
             let lang = localStorage.getItem('language') || 'zh';
-            let url = window.location.href.toLowerCase();
-            if (url.indexOf('zh') > -1) {
-                lang = 'zh';
-            } else if (url.indexOf('en') > -1) {
-                lang = 'en';
-            }
             return {locale: lang, detail: this.LanguageInfo};
         },
         /**
@@ -79,7 +73,6 @@ const install = Vue => {
                     }
                 }
             }
-            console.log(this.getLanguage(), '===this.getLanguage()==');
             return this.getLanguage();
         },
         // 国际化对象 不推荐用户直接调用
@@ -91,7 +84,7 @@ const install = Vue => {
          */
         $t(val, parameter) {
             if (val && val.length && val.length > 0) {
-                const language = this.getLanguage().locale;
+                const language = localStorage.getItem('language') || this.getLanguage().locale;
                 if (!val && !language) {
                     return;
                 }

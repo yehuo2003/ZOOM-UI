@@ -12,7 +12,10 @@ export default {
   'file.upload_success': '上传成功{successCount}个文件！',
   'file.upload_error': '上传失败{errCount}个文件！',
   'file.add_file': '添加文件',
+  'file.delete_file': '删除文件',
   'file.upload_start': '开始上传',
+  'file.uploading': '正在上传',
+  'file.wait_upload': '等待上传',
   'file.type': '文件类型',
   'file.size_err': 'size类型错误, 必须为数字, 或以KB, MB, GB等形式结尾字符串',
   'file.nonzero': '文件大小不能为0！',
@@ -33,7 +36,7 @@ export default {
   'file.type_error': '文件：{type} 的类型不符合要求',
   'file.format_error': '文件格式错误或不支持',
   'file.http_error': '上传错误，HTTP状态码：',
-  'file.max_count': '最多上传{{limit}}个文件！',
+  'file.max_count': '最多上传{limit}个文件！',
   'file.max_file_size': '每个文件最大 {size}',
   'file.over_count': '已超出上传文件最大数量',
   'file.over_max': '上传文件个数已达上限：{file_count}，请先删除已上传的文件后方可继续上传其他文件',
@@ -83,16 +86,18 @@ export default {
   'grid.election_cancel': '全选/取消',
 
 //   zoom-input
-  'input.': '{type}属性解析失败, 仅支持 "text"，"password"！',
+  'input.msg': '{type}属性解析失败, 仅支持 "text"，"password"！',
 
 //   zoom-logout
   'logout': '注销',
   'logout.confim': '确认要注销吗?',
-  'logout.error': '属性 {value} 不是一个有效数字, 请输入有效数字！',
+  'number.error': '属性 {value} 不是一个有效数字, 请输入有效数字！',
 
 //   zoom-pager
   'pager.go': '前往',
   'pager.page': '页',
+  'pager.quantity': '条',
+  'pager.total': '共',
 
   // zoom-panel
   'panel.unfolding': '展开',

@@ -10,7 +10,8 @@
     <div class="captcha-content">
       <div class="sliding-pictures">
         <div ref="captcha">
-          <i v-if="!disabled" class="zoom-icon icon-refresh" @click="reset" title="刷新验证码"></i>
+          <!-- 刷新验证码 -->
+          <i v-if="!disabled" class="zoom-icon icon-refresh" @click="reset" v-tip="$zoom.$t('captcha.refresh')"></i>
         </div>
       </div>
     </div>
@@ -23,7 +24,8 @@
           <span class="sliderIcon"></span>
         </div>
       </div>
-      <span class="sliderText">向右滑动填充拼图</span>
+      <!-- 向右滑动填充拼图 -->
+      <span class="sliderText">{{$zoom.$t('captcha.back_fill')}}</span>
     </div>
   </div>
 </template>
@@ -42,7 +44,7 @@ export default {
   },
   data() {
     return {
-      title: '请完成安全验证',
+      title: this.$zoom.$t('captcha.testing'),  //  请完成安全验证
       hide: true,
       disabled: false,
       cv: {
@@ -70,7 +72,7 @@ export default {
     };
   },
   mounted() {
-    this.title = '请完成安全验证';
+    this.title = this.$zoom.$t('captcha.testing');  // 请完成安全验证
     this.disabled = true;
     this.init();
     if (this.op && this.op.show) {
@@ -102,7 +104,7 @@ export default {
       this.disabled = true;
       this.$zoom.alert({
         type: "success",
-        content: "验证成功！"
+        content: this.$zoom.$t('public.vaild_success') + "!" // 验证成功
       });
       this.title = '验证成功'
     },
@@ -113,7 +115,7 @@ export default {
       }
       this.$zoom.alert({
         type: "warning",
-        content: "验证失败, 请重试！"
+        content: this.$zoom.$t('captcha.testing_error') // 验证失败, 请重试！
       });
     },
     bindEvents() {

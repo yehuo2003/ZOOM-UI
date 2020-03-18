@@ -128,7 +128,7 @@ export default {
       isOnComposition: false,
       valueBeforeComposition: null,
       list: [], //  多选时候用
-      defaultList: [{ value: null, text: "暂无数据" }],
+      defaultList: [{ value: null, text: this.$zoom.$t('grid.no_data') }], //  暂无数据
       showDown: false,
       isChecked: false, //  是否启用多选功能
       checkOp: {
@@ -240,7 +240,7 @@ export default {
       if (this.options.onClick) {
         this.options.onClick(e);
       }
-      if (e.value === null && e.text === "暂无数据") {
+      if (e.value === null && e.text === this.$zoom.$t('grid.no_data')) { // 暂无数据
         return;
       }
       // 判断是否是多选
@@ -326,7 +326,10 @@ export default {
           });
         }
       } else {
-        throw new Error("zoom-ui error: disabled状态下无法清除内容! ");
+        throw new Error(
+          // "zoom-ui error: disabled状态下无法清除内容! "
+          `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('err.disabled_clear')}`
+        );
       }
     },
     Oninput($event) {

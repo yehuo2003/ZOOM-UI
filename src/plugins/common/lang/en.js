@@ -7,18 +7,21 @@ export default {
   'm.download': 'DOWNLOAD',//下载客户端
   'err.shape': 'shape I18n Error',
 
-  'file.select': '选择文件',
-  'file.upload_success': '上传成功{successCount}个文件！',
-  'file.upload_error': '上传失败{errCount}个文件！',
-  'file.add_file': '添加文件',
-  'file.upload_start': '开始上传',
-  'file.type': '文件类型',
-  'file.size_err': 'size类型错误, 必须为数字, 或以KB, MB, GB等形式结尾字符串',
-  'file.nonzero': '文件大小不能为0！',
-  'file.testing': '请检查要上传文件！',
-  'file.numbering': '文件编号',
-  'file.progress': '上传进度',
-  'file.update_date': '修改日期',
+  'file.select': 'Select file',
+  'file.upload_success': 'Upload successfully {successCount} files!',
+  'file.upload_error': 'Upload failed {errCount} files!',
+  'file.add_file': 'Add file',
+  'file.delete_file': 'Delete file',
+  'file.upload_start': 'Start uploading',
+  'file.uploading': 'uploading',
+  'file.wait_upload': 'Wait for upload',
+  'file.type': 'File type',
+  'file.size_err': 'The size type error must be a Number, or a string of KB,MB, MB, and GB',
+  'file.nonzero': 'The file size cannot be 0！',
+  'file.testing': 'Please check to upload the file!',
+  'file.numbering': 'File number',
+  'file.progress': 'Upload progress',
+  'file.update_date': 'Modification date',
   'file.drag_tip': 'Drag files to here',
   'file.del_comfirm': 'Confim to cancel upload this file?',
   'file.count_error': 'Only {count} files can be uploaded',
@@ -72,10 +75,10 @@ export default {
   'col.err': 'Attribute to the {num} parsing error, please pass in a positive integer between 1 and 12!',
 
   // date
-  'date.year': 'year',
-  'date.month': 'month',
-  'date.day': 'day',
-  'date.week': ['Sunday', 'Monday', 'Tuesday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  'date.year': ' year ',
+  'date.month': ' month ',
+  'date.day': ' day ',
+  'date.week': ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'],
   'date.type': 'Please check whether the entry is an effective time format!',
 
 //   grid
@@ -83,16 +86,18 @@ export default {
   'grid.election_cancel': 'Full election/cancellation',
 
 //   zoom-input
-  'input.': '{type} attribute parsing failure, only support the "text" and "password"！',
+  'input.msg': '{type} attribute parsing failure, only support the "text" and "password"！',
 
 //   zoom-logout
   'logout': 'Logout',
   'logout.confim': 'Are you sure to cancel out?',
-  'logout.error': 'Attribute {value} is NaN, please enter the valid number!',
+  'number.error': 'Attribute {value} is NaN, please enter the valid number!',
 
 //   zoom-pager
   'pager.go': 'Go',
-  'pager.page': 'page',
+  'pager.page': 'Page',
+  'pager.quantity': ' Quantity ',
+  'pager.total': ' Total ',
 
   // zoom-panel
   'panel.unfolding': 'unfolding',
