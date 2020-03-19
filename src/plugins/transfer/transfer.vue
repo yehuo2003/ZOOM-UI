@@ -5,7 +5,7 @@
       <div class="transfer-panel">
         <div class="transfer-panel-header">
           <!-- 所有数据列表 -->
-          {{$zoom.$t('所有数据列表')}}
+          {{$zoom.$t('transfer.list')}}
           <span
             class="transfer-panel-selected"
           >{{list.length}} / {{op && op.data ? op.data.length : 0}}</span>
@@ -14,7 +14,7 @@
           <zoom-input v-model="inputdata" @keyup.enter.native="serachData" :op="inputOp"></zoom-input>
         </div>
         <div class="transfer-panel-content">
-          <zoom-grid ref="grid" :op="gridOp"></zoom-grid>
+          <zoom-grid ref="grid" :op="gridOp" @fullClick="fullClick"></zoom-grid>
           <!-- <div class="transfer-panel-pager">
                 <zoom-pager></zoom-pager>
           </div>-->
@@ -27,7 +27,8 @@
       <!-- 右边选中数据 -->
       <div class="transfer-panel select-panel">
         <div class="transfer-panel-header">
-          已选中数据列表
+          <!-- 已选中数据列表 -->
+          {{$zoom.$t('transfer.list_select')}}
           <!-- 计算选中的 -->
           <span class="transfer-panel-selected">{{list.length}}</span>
         </div>
@@ -58,9 +59,8 @@ export default {
       temporary: [],
       addtemporary: [],
       serachName: "", //  要搜索的字段
-      titleList: [{ fieId: "indexId", header: "" }], //  原始表头数据,两个都是一样的
+      titleList: [], //  原始表头数据,两个都是一样的
       addtitleList: [
-        { fieId: "indexId", header: "" },
         {
           fieId: "btns",
           header: this.$zoom.$t('public.operation'), //  操作
@@ -72,6 +72,9 @@ export default {
               },
               onClick: val => {
                 //    把点击的行从表中删除
+                if (!val) {
+                  return;
+                }
                 let list = [];
                 this.list.forEach(item => {
                   if (item.indexId !== val.indexId) {
@@ -114,7 +117,11 @@ export default {
         // 点击行 把点击的数据加入到另一个表格中
         onClick: (dom, element, col, fieId) => {
           setTimeout(() => {
-            let list = (this.list = this.$refs["grid"].getData());
+            // let list = (this.list = this.$refs["grid"].getData());
+            this.list = this.$refs["grid"].getData()
+            let list = this.list.map(item => {
+              return item;
+            })
             this.$refs["addGrid"].load(list);
           });
         },
@@ -145,6 +152,17 @@ export default {
     }
   },
   methods: {
+    // 全选 / 反选 监听
+    fullClick(val) {
+      let arr = [];
+      val.forEach(item => {
+        if (item.checked) {
+          arr.push(item);
+        }
+      })
+      this.$refs["addGrid"].load(arr);
+      console.log(arr, 'arr');
+    },
     // 动态加载数据
     load(data) {
       this.list = [];

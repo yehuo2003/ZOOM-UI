@@ -1,12 +1,4 @@
 export default {
-  'm.music': 'Music',//网易云音乐
-  'm.findMusic': 'FIND MUSIC',//发现音乐
-  'm.myMusic': 'MY MUSIC',//我的音乐
-  'm.friend': 'FRIEND',//朋友
-  'm.musician': 'MUSICIAN',//音乐人
-  'm.download': 'DOWNLOAD',//下载客户端
-  'err.shape': 'shape I18n Error',
-
   'file.select': 'Select file',
   'file.upload_success': 'Upload successfully {successCount} files!',
   'file.upload_error': 'Upload failed {errCount} files!',
@@ -83,7 +75,7 @@ export default {
 
 //   grid
   'grid.no_data': 'No Data',
-  'grid.election_cancel': 'Full election/cancellation',
+  'grid.election_cancel': 'Full/cancel',
 
 //   zoom-input
   'input.msg': '{type} attribute parsing failure, only support the "text" and "password"！',

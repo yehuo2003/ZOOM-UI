@@ -124,12 +124,14 @@ export default {
       }
     },
     blurInput() {
+      console.log('blurInput');
       this.$refs["zoom-area"].blur();
       this.isShow = true;
       this.focusStatus = false;
-      this.$refs["zoom-text"].focus();
+      // this.$refs["zoom-text"].focus();
     },
     hoverInput() {
+      console.log('hoverInput');
       if (!this.options.isdisabled && !this.options.readonly) {
         this.$refs["zoom-text"].blur();
         this.isShow = false;

@@ -16,6 +16,7 @@
                   :col="item.id"
                   :class="item.sort ? 'item-sort' : ''"
                   :style=" 'width: ' + item.minWidth + '%;' "
+                  :fieId="item.fieId"
                   class="grid-item"
                 >
                   <div v-if="item.sort" class="zoom-sort">
@@ -66,7 +67,7 @@
                     <span
                       v-if="name === 'checked'"
                       @click.stop="itemClick($event, i, item, name)"
-                      class="zoom-checkbox"
+                      class="zoom-checkbox grid-input"
                     >
                       <label class="checkbox-item">
                         <i
@@ -76,13 +77,12 @@
                       </label>
                     </span>
                     <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
-                    <span v-if="i === item.btns">
+                    <span v-if="i === item.btns" class="grid-input">
                       <a
                         v-for="(j, jIndex) of item.btns"
                         :key="jIndex"
-                        :title="j.title"
+                        v-tip.right="j.title"
                         @click.stop="iconClick(j, item)"
-                        class="zoom-icon"
                       >
                         <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
                       </a>
@@ -136,6 +136,7 @@ export default {
           return {};
         }
       },
+      onClick: Function,  //  点击行事件
       beforeLoad: Function, // 组件加载时调用, 可以这时挂载数据
       pagerOp: Object // 是否启用分页组件
     }
@@ -221,7 +222,7 @@ export default {
               } else {
                 if (item.fieId === "checked") {
                   $Z(
-                    '[col="2"]'
+                    '[fieid="checked"]'
                   )[0].style = i.style = `width: ${15}%; text-align: center;`;
                 }
                 // 判断是否有自定义样式
@@ -298,6 +299,9 @@ export default {
         let dataArr = [];
         // 循环先判断data数组里每个对象里key值是否和title里key值对应
         data.forEach((item, index) => {
+          if (gridData) {
+            // debugger
+          }
           let obj = {};
           // 设置索引值
           obj.indexId = index + 1;
@@ -312,15 +316,10 @@ export default {
           if (this.op.onClick) {
             obj.onClick = this.op.onClick;
           }
-          let count = 0;
           for (let key in item) {
             if (fieIdArr.indexOf(key) > -1) {
               // 和头部的键对应才会加入进对象
-              count += 1;
-              if (fieIdArr[count] === 'btns') {
-                count += 1;
-              }
-              obj[key] = item[fieIdArr[count]];
+              obj[key] = item[key]
             }
           }
           dataArr.push(obj);
@@ -393,6 +392,8 @@ export default {
           });
         }
       }
+      this.$emit('fullClick', this.bodyData);
+      return this.bodyData;
     },
     // 获取当前数据
     getData() {
@@ -504,12 +505,11 @@ export default {
 .zoom-tip:hover::before {
   display: block;
 }
-.grid-body-box .grid-input .zoom-icon span:hover {
+.grid-body-box .grid-input .zoom-icon:hover {
   cursor: pointer;
-  font-weight: bold;
   color: #096dd9;
 }
-.grid-body-box .grid-input .zoom-icon span {
+.grid-body-box .grid-input .zoom-icon {
   font-size: 20px;
   line-height: 20px;
   color: #1890ff;
@@ -646,8 +646,14 @@ export default {
   height: 30px;
   line-height: 30px;
 }
+.grid-table thead.grid-head-content th[fieid="checked"] {
+  cursor: pointer;
+}
 .grid-table thead.grid-head-content th.grid-item {
   text-align: left;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 .grid-tbody tbody tr td:first-child,
 .grid-tbody tbody tr th:first-child,

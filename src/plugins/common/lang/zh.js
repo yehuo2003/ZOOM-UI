@@ -1,12 +1,4 @@
 export default {
-  'm.music': '网易云音乐',
-  'm.findMusic': '发现音乐',
-  'm.myMusic': '我的音乐',
-  'm.friend': '朋友',
-  'm.musician': '音乐人',
-  'm.download': '下载客户端',
-  'err.shape': 'shape 错误',
-
 //   fileUpload
   'file.select': '选择文件',
   'file.upload_success': '上传成功{successCount}个文件！',

@@ -89,8 +89,20 @@ export default {
         tip: true,
         title: [
           // {fieId: 'Index', header: '.No'},
-          {fieId: 'name',tip: false, header: '姓名'},
+          {
+            fieId: "btns",
+            header: this.$zoom.$t('public.operation'), //  操作
+            btns: [
+              {
+                title: this.$zoom.$t('public.remove'), //  移除
+                css: {
+                  icon: "icon-close"
+                }
+              }
+            ]
+          },
           {fieId: 'age',tip: false, header: '年龄'},
+          {fieId: 'name',tip: false, header: '姓名'},
           {fieId: 'gender', header: '性别'},
           {fieId: 'city',tip: true, header: '地址'},
           {fieId: 'phone',tip: true, header: '联系方式'}

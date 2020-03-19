@@ -64,7 +64,7 @@
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
-    <span>{{$zoom.$t('m.music')}}</span>
+    <!-- <span>{{$zoom.$t('m.music')}}</span> -->
     <h1>{{$zoom.$t('file.count_error', params)}}</h1>
     <zoom-button @click="updateI18">{{lang}}</zoom-button>
   </div>
