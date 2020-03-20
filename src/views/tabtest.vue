@@ -6,10 +6,10 @@
             Tab1的内容
           </div>
           <zoom-form ref="form" submit.prevent="false" label-width="120px">
-            <zoom-form-item :require="true" label="名字">
+            <zoom-form-item inline="true" :require="true" label="名字">
               <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
-            <zoom-form-item label="密码">
+            <zoom-form-item inline="true" label="密码">
               <zoom-date></zoom-date>
             </zoom-form-item>
             <zoom-form-item label="下拉框">
@@ -122,7 +122,8 @@
       updateI18() {
         let locale = ''
         if ( this.lang === 'zh' ) {
-          this.lang = locale = 'en';
+          // this.lang = locale = 'en';
+          this.lang = locale = 'ja';
         }else {
           this.lang = locale = 'zh';
         }

@@ -1,4 +1,21 @@
-export default {
+export default {   //  英文
+  // 通用
+  'volid.require_err': 'Value is required! ',
+  'err.attribute': '{err_attribute} The attribute parsing failure is not an effective method of using the attribute of an effective {attribute}, Refer to the zoom-ui manual and check the syntax!',
+  'err.zoom_ui_grammar': '[warn] zoom-ui detects syntax errors ',
+  'err.zoom_ui_type': '[warn] zoom-ui Detect type errors ',
+  'err.disabled_clear': 'Unable to remove content under the forbidden state!',
+  'public.vaild_success': 'Validation success',
+  'public.sure': 'Make sure',
+  'public.confirm': 'confirmation',
+  'public.cancel': 'cancel',
+  'public.hint': 'hint',
+  'public.delete': 'delete',
+  'public.success': 'success',
+  'public.fail': 'fail',
+  'public.operation': 'operation',
+  'public.remove': 'remove',
+  //   fileUpload
   'file.select': 'Select file',
   'file.upload_success': 'Upload successfully {successCount} files!',
   'file.upload_error': 'Upload failed {errCount} files!',
@@ -33,24 +50,6 @@ export default {
   'file.over_max': 'The number of uploaded files has reached the upper limit: {0}，please delete the upload files first, and then continue to upload other documents',
   'preview': 'Preview',
   'del.comfirm.msg': 'Are you sure you want to delete?',
-
-  // 通用
-  'volid.require_err': 'Value is required! ',
-  'err.attribute': '{err_attribute} The attribute parsing failure is not an effective method of using the attribute of an effective {attribute}, Refer to the zoom-ui manual and check the syntax!',
-
-  'err.zoom_ui_grammar': '[warn] zoom-ui detects syntax errors ',
-  'err.zoom_ui_type': '[warn] zoom-ui Detect type errors ',
-  'err.disabled_clear': 'Unable to remove content under the forbidden state!',
-  'public.vaild_success': 'Validation success',
-  'public.sure': 'Make sure',
-  'public.confirm': 'confirmation',
-  'public.cancel': 'cancel',
-  'public.hint': 'hint',
-  'public.delete': 'delete',
-  'public.success': 'success',
-  'public.fail': 'fail',
-  'public.operation': 'operation',
-  'public.remove': 'remove',
 
   // button
   'button.type': 'Type type needs to be passed in a string, not a {type} type!',

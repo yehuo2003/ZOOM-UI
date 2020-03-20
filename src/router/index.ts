@@ -7,6 +7,7 @@ import photoUI from '../views/photoUI.vue'
 import layou from '../views/layou.vue'
 import data from '../views/data.vue'
 import tabtest from '../views/tabtest.vue'
+import layout from '../views/layout.vue'
 
 Vue.use(VueRouter)
 
@@ -40,6 +41,11 @@ const routes = [
     path: '/layou',
     name: 'layou',
     component: layou
+  },
+  {
+    path: '/layout',
+    name: 'layout',
+    component: layout
   },
   {
     path: '/data',

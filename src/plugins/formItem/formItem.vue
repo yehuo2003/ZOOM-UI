@@ -49,7 +49,7 @@ export default {
 .zoom-form-item {
   margin: 0 0 12px;
 }
-.zoom-form-item > .form-item-label {
+.zoom-form-item>.form-item-label {
   color: #333;
   text-align: right;
   vertical-align: middle;
@@ -67,29 +67,29 @@ export default {
   content: "";
   display: table;
 }
-.zoom-form.form-inline .zoom-form-item,
-.zoom-form .form-item-inline {
+.zoom-form.form-inline>.zoom-form-item,
+.zoom-form>.form-item-inline {
   margin-right: 10px;
   display: inline-block;
   vertical-align: top;
 }
-.zoom-form.form-inline .form-item-label,
-.zoom-form .form-item-inline .form-item-label {
+.zoom-form.form-inline>.form-item-label,
+.zoom-form>.form-item-inline .form-item-label {
   float: none;
   display: inline-block;
 }
-.is-require label.form-item-label::before {
+.is-require>label.form-item-label::before {
   content: "*";
   color: #f5222d;
   margin-right: 4px;
 }
-.zoom-form.form-align-left .zoom-form-item > .form-item-label {
+.zoom-form.form-align-left>.zoom-form-item > .form-item-label {
   text-align: left;
 }
-.zoom-form.form-align-right .zoom-form-item > .form-item-label {
+.zoom-form.form-align-right>.zoom-form-item > .form-item-label {
   text-align: right;
 }
-.zoom-form.form-align-center .zoom-form-item > .form-item-label {
+.zoom-form.form-align-center>.zoom-form-item > .form-item-label {
   text-align: center;
 }
 </style>

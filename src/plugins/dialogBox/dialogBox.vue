@@ -4,16 +4,20 @@
       class="dialog-box"
       :style=" 'width:' + width + '; top: 15vh; left: calc((100vw - 30%) / 2);' "
     >
-      <div class="dialog-header">
+      <div v-if="$slots.header" aria-label="custom-header" class="dialog-header">
+        <slot name="header"></slot>
+      </div>
+      <!-- 如果未定义slot头部 则默认显示 -->
+      <div v-else aria-label="default-header" class="dialog-header">
         <span>{{title}}</span>
         <a @click="closeBox" href="javascript:void(0);">×</a>
       </div>
       <div class="dialog-content">
         <slot></slot>
       </div>
-      <div v-if="showBtn" class="dialog-footer">
-        <zoom-button type="primary" @click="handleClick">{{$zoom.$t('public.sure')}}</zoom-button>
-        <zoom-button @click="closeBox">{{$zoom.$t('public.cancel')}}</zoom-button>
+      <!-- 底部 有定义slot才会显示 -->
+      <div v-if="$slots.footer" aria-label="custom-footer" class="dialog-footer">
+        <slot name="footer"></slot>
       </div>
     </div>
   </div>
@@ -40,7 +44,6 @@ export default {
   },
   data() {
     return {
-      showBtn: true,
       visibility: false
     };
   },
@@ -60,14 +63,8 @@ export default {
       this.visibility = this.show;
       if (this.op) {
         this.visibility = this.op.show;
-        this.showBtn = this.op.showBtn;
         if (this.op.width) this.width = this.op.width;
         if (this.op.title) this.title = this.op.title;
-      }
-    },
-    handleClick() {
-      if (this.op && this.op.onClick) {
-        this.op.onClick();
       }
     },
     closeBox() {
@@ -78,31 +75,31 @@ export default {
 };
 </script>
 <style>
-.zoom-dialog-box .dialog-box .dialog-footer .zoom-btn {
+.zoom-dialog-box>.dialog-box>.dialog-footer .zoom-btn {
   padding: 0 10px;
 }
-.zoom-dialog-box .dialog-box .dialog-footer {
+.zoom-dialog-box>.dialog-box>.dialog-footer {
   display: flex;
   justify-content: center;
-  padding: 0 0 24px;
+  padding: 10px;
   text-align: center;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-.zoom-dialog-box .dialog-box .dialog-content {
+.zoom-dialog-box>.dialog-box>.dialog-content {
   text-align: initial;
   padding: 24px;
   color: #5a5e66;
   font-size: 14px;
   overflow: auto;
 }
-.zoom-dialog-box .dialog-box .dialog-header a {
+.zoom-dialog-box>.dialog-box>.dialog-header>a {
   float: right;
   color: #666;
   font-size: 25px;
   text-decoration: none;
 }
-.zoom-dialog-box .dialog-box .dialog-header {
+.zoom-dialog-box>.dialog-box>.dialog-header {
   text-align-last: left;
   padding: 8px 24px;
   height: 40px;
@@ -110,7 +107,7 @@ export default {
   background: #ffffff;
   border-bottom: 1px solid #d9d9d9;
 }
-.zoom-dialog-box .dialog-box {
+.zoom-dialog-box>.dialog-box {
   z-index: 999;
   opacity: 1;
   position: absolute;

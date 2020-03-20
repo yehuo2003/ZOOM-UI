@@ -1,4 +1,20 @@
-export default {
+export default {  //  中文
+  // 通用
+  'volid.require_err': '必填！',
+  'err.attribute': '{err_attribute} 属性解析失败, 不是有效的{attribute}属性，请参考zoom-ui手册并检查语法！',
+  'err.zoom_ui_grammar': '[警告] zoom-ui 检测语法错误 ',
+  'err.zoom_ui_type': '[警告] zoom-ui 检测到类型错误 ',
+  'err.disabled_clear': '禁用状态下无法清除内容！',
+  'public.vaild_success': '验证成功',
+  'public.sure': '确定',
+  'public.confirm': '确认',
+  'public.cancel': '取消',
+  'public.hint': '提示',
+  'public.delete': '删除',
+  'public.success': '成功',
+  'public.fail': '失败',
+  'public.operation': '操作',
+  'public.remove': '移除',
 //   fileUpload
   'file.select': '选择文件',
   'file.upload_success': '上传成功{successCount}个文件！',
@@ -34,23 +50,6 @@ export default {
   'file.over_max': '上传文件个数已达上限：{file_count}，请先删除已上传的文件后方可继续上传其他文件',
   'del.comfirm.msg': '确定要删除吗？',
   'preview': '预览',
-
-  // 通用
-  'volid.require_err': '必填！',
-  'err.attribute': '{err_attribute} 属性解析失败, 不是有效的{attribute}属性，请参考zoom-ui手册并检查语法！',
-  'err.zoom_ui_grammar': '[警告] zoom-ui 检测语法错误 ',
-  'err.zoom_ui_type': '[警告] zoom-ui 检测到类型错误 ',
-  'err.disabled_clear': '禁用状态下无法清除内容！',
-  'public.vaild_success': '验证成功',
-  'public.sure': '确定',
-  'public.confirm': '确认',
-  'public.cancel': '取消',
-  'public.hint': '提示',
-  'public.delete': '删除',
-  'public.success': '成功',
-  'public.fail': '失败',
-  'public.operation': '操作',
-  'public.remove': '移除',
 
   // button
   'button.type': 'type的类型需要传入字符串，而不是 {type} 类型！',
