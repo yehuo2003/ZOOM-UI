@@ -1,23 +1,30 @@
 <template>
   <div class="container">
-    <zoom-layout asideWidth="300" headerHeight="100">
+    <zoom-layout>
       <div slot="header">
         头部
       </div>
-      <div slot="aside">
+      <!-- <div slot="aside">
         左侧单栏
-      </div>
+      </div> -->
       <div slot="main">
-        <zoom-dialog-box :show="visibility" @close="handleClose">
-          <h1 slot="header">
-            自定义头部
-          </h1>
-          <h1>弹框测试</h1>
-          <div slot="footer">
-            <zoom-button>自定义button</zoom-button>
+        <zoom-layout>
+          <div slot="aside">
+            侧边栏
           </div>
-        </zoom-dialog-box>
-        <zoom-button @click="visibility = true">弹框测试</zoom-button>
+          <div slot="main">
+            <zoom-dialog-box :show="visibility" @close="handleClose">
+              <h1 slot="header">
+                自定义头部
+              </h1>
+              <h1>弹框测试</h1>
+              <div slot="footer">
+                <zoom-button>自定义button</zoom-button>
+              </div>
+            </zoom-dialog-box>
+            <zoom-button @click="visibility = true">弹框测试</zoom-button>
+          </div>
+        </zoom-layout>
       </div>
       <div slot="footer">
         尾部
@@ -49,5 +56,8 @@ export default {
 }
 .container .zoom-main {
   background:#ffc53d;
+}
+.container .zoom-footer {
+  background: #ff4d4f;
 }
 </style>

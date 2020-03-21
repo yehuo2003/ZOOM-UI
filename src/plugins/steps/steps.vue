@@ -338,11 +338,20 @@ export default {
   top: -10px;
   right: 10px;
 }
-.zoom-steps .zoom-steps-advanced .dot.done {
+.zoom-steps .zoom-steps-advanced .dot.success {
   background: #52c41a;
 }
-.zoom-steps .zoom-steps-advanced .dot.doing {
+.zoom-steps .zoom-steps-advanced .dot.warning {
   background: #fa8c16;
+}
+.zoom-steps .zoom-steps-advanced .dot.primary {
+  background: #1890ff;
+}
+.zoom-steps .zoom-steps-advanced .dot.danger {
+  background: #f5222d;
+}
+.zoom-steps .zoom-steps-advanced .dot.info {
+  background: rgba(0, 0, 0, 0.5);
 }
 .zoom-steps .zoom-steps-advanced .dot {
   height: 8px;

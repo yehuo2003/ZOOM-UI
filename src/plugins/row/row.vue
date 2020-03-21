@@ -157,9 +157,9 @@ textarea {
 * {
   box-sizing: border-box;
 }
-input,
-select,
-textarea {
+[class*="zoom-"] input,
+[class*="zoom-"] select,
+[class*="zoom-"] textarea {
   font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Arial";
   background-color: #fff;
   margin: 0;

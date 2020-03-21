@@ -5,7 +5,7 @@
       <slot name="header"></slot>
     </div>
     <!-- 底部 -->
-    <div v-if="$slots.footer" :style="footerHeight" class="zoom-footer">
+    <div v-if="$slots.footer" :style="footerStyle" class="zoom-footer">
       <slot name="footer"></slot>
     </div>
     <!-- 左侧单栏 -->
@@ -22,7 +22,7 @@
 export default {
   name: 'zoom-layout',
   props: {
-    patterm: String,  //  default/simple/legend/classic/fashion
+    format: String,  //  default/fashion
     headerHeight: { //  头部高
       type: [Number, String],
       default: 60
@@ -45,18 +45,39 @@ export default {
     }
   },
   created() {
-    this.headerStyle = `height: ${this.headerHeight}px;`
-    this.footerStyle = `height: ${this.footerHeight}px;`
-    this.asideStyle = `width: ${this.asideWidth}px;`
-    if (this.$slots.header) {
-      this.asideStyle += `top: ${this.headerHeight}px;`
-      this.mainStyle += `top: ${this.headerHeight}px;`
-    }
-    if (this.$slots.aside) {
-      this.mainStyle += `left:  ${this.asideWidth}px;`
-    }
+    this.load();
   },
   methods: {
+    load() {
+      this.headerStyle = `height: ${this.headerHeight}px;`
+      this.footerStyle = `height: ${this.footerHeight}px;`
+      this.asideStyle = `width: ${this.asideWidth}px;`
+
+      if (this.$slots.footer) {
+        this.mainStyle += `bottom: ${this.footerHeight}px;`
+      }
+
+      if (this.format === 'fashion') {
+        if (this.$slots.header) {
+          this.mainStyle += `top: ${this.headerHeight}px;`
+        }
+        if (this.$slots.aside) {
+          this.headerStyle += `left: ${this.asideWidth}px;`
+          this.mainStyle += `left: ${this.asideWidth}px;`
+          this.footerStyle += `left: ${this.asideWidth}px;`
+        }
+      } else {
+        // default
+        if (this.$slots.header) {
+          this.asideStyle += `top: ${this.headerHeight}px;`
+          this.mainStyle += `top: ${this.headerHeight}px;`
+        }
+        if (this.$slots.aside) {
+          this.mainStyle += `left: ${this.asideWidth}px;`
+          this.footerStyle += `left: ${this.asideWidth}px;`
+        }
+      }
+    }
   }
 };
 </script>
@@ -72,5 +93,9 @@ export default {
   bottom: 0;
   right: 0;
   margin: 0;
+}
+.zoom-layout>.zoom-footer {
+  top: auto;
+  width: auto;
 }
 </style>
