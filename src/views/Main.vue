@@ -1,71 +1,105 @@
 <template>
-  <zoom-container>
-    <zoom-tree-menu style="float: left; font-size: 14px;" :op="navOp"></zoom-tree-menu>
-    <main style="width: 80%; float: right;">
-        <!-- 顶部信息栏 -->
-      <MainHeader></MainHeader>
-      <!-- 主体部分 -->
-      <zoom-container>
+  <zoom-layout>
+    <div slot="header">
+      头部
+    </div>
+    <div slot="aside">
+      <zoom-tree-menu style="float: left; font-size: 14px;" :op="navOp"></zoom-tree-menu>
+    </div>
+    <div slot="main">
+      <main style="width: 80%; float: right;">
+        <!-- 主体部分 -->
         <router-view></router-view>
-      </zoom-container>
-    </main>
-  </zoom-container>
+      </main>
+    </div>
+  </zoom-layout>
 </template>
 
 <script>
-import MainHeader from "../components/MainHeader";
 export default {
-  components: {
-    // 当前组件内部使用过的子组件列表
-    MainHeader
-  },
   data() {
     //数据属性
     return {
       navOp: {
-        width: '18%',
+        // width: '18%',
         accordion: true,
         data: [
-          {title: '全局设置', url: '#/settings', icon: 'icon-set'},
-          {title: '桌台管理', url: '', children: [
-            {title: '桌台列表', url: '#/table/list', icon: 'icon-list'},
-            {title: '添加桌台', url: '#/table/add', icon: 'icon-add-plus'}
+          {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
+          {title: '自定义主题', url: '', children: [
+            {title: '颜色', url: '', icon: 'icon-list'},
+            {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
           ]},
-          {title: '菜品类别', url: '#/category/list'},
-          {title: '菜品管理', url: '', children: [
-            {title: '所有菜品', url: '#/dish/list', icon: 'icon-list'},
-            {title: '添加菜品', url: '#/dish/add', icon: 'icon-add-plus'}
+          {title: '导航组件', url: '', children: [
+            {title: '导航菜单组件', url: '#/dish/list', icon: 'icon-list'},
+            {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
+            {title: '导航菜单栏', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '面包屑导航', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '浮动框菜单栏', url: '#/dish/add', icon: 'icon-add-plus'}
           ]},
-          {title: '订单管理', url: '#/order/list', icon: 'icon-order'},
-          {title: '安全管理', url: '#/security', icon: 'icon-store'},
+          {title: '表单组件', url: '', children: [
+            {title: '按钮', url: '#/dish/list', icon: 'icon-list'},
+            {title: '输入框', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '下拉框', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '验证码', url: '#/dish/add', children: [
+              {title: '文字验证码', url: '#/dish/list', icon: 'icon-list'},
+              {title: '滑块验证码', url: '#/dish/add', icon: 'icon-add-plus'},
+            ]},
+            {title: '搜索框', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '滑块组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '弹出编辑', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '计数器', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '日期选择', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '开关组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '单选框', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '复选框', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: 'form表单组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '文本域组件', url: '#/dish/add', icon: 'icon-add-plus'},
+          ]},
+          {title: '布局组件', url: '', children: [
+            {title: 'layout布局', url: '#/dish/list', icon: 'icon-list'},
+            {title: 'row行布局', url: '#/dish/list', children: [
+              {title: 'col列布局', url: '#/dish/add', icon: 'icon-add-plus'},
+            ]}
+          ]},
+          {title: '容器组件', url: '', children: [
+            {title: '卡片容器', url: '#/dish/list', children: [
+              {title: '卡片组件', url: '#/dish/list', icon: 'icon-list'},
+              {title: '卡片头部', url: '#/dish/list', icon: 'icon-list'},
+              {title: '卡片内容', url: '#/dish/list', icon: 'icon-list'},
+              {title: '卡片尾部', url: '#/dish/list', icon: 'icon-list'},
+              {title: '对话框组件', url: '#/dish/list', icon: 'icon-list'},
+              {title: 'tab页组件', url: '#/dish/list', icon: 'icon-list'},
+            ]},
+            {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
+            {title: '导航菜单栏', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '浮动框菜单栏', url: '#/dish/add', icon: 'icon-add-plus'}
+          ]},
+          {title: '数据组件', url: '', children: [
+            {title: '分页组件', url: '#/dish/list', icon: 'icon-list'},
+            {title: '表格组件', url: '#/dish/list', icon: 'icon-list'},
+            {title: '穿梭框组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '浮动框菜单栏', url: '#/dish/add', icon: 'icon-add-plus'}
+          ]},
+          {title: '业务组件', url: '', children: [
+            {title: 'alert提示框', url: '#/dish/list', icon: 'icon-list'},
+            {title: 'loading组件', url: '#/dish/list', icon: 'icon-list'},
+            {title: '标签组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '文字链接', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '滚动栏组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: '注销组件', url: '#/dish/add', icon: 'icon-add-plus'},
+            {title: 'popup弹框', url: '#/dish/add', icon: 'icon-add-plus'}
+          ]},
+          {title: '上传图片组件', url: '#/order/list', icon: 'icon-order'},
+          {title: '放大镜组件', url: '#/security', icon: 'icon-store'},
+          {title: '轮播图组件', url: '#/security', icon: 'icon-store'},
+          {title: '评分组件', url: '#/security', icon: 'icon-store'},
+          {title: '画廊幻灯片', url: '#/security', icon: 'icon-store'},
+          {title: '步骤条组件', url: '#/security', icon: 'icon-store'},
+          {title: 'Tips组件', url: '#/security', icon: 'icon-store'},
         ]
       }
     };
   },
-  // computed: {
-  //   defaultActive() {
-  //     // 用户当前访问哪页，就把对应菜单项设置为当前项
-  //     return this.$route.path;
-  //   },
-  //   //计算属性 = 数据属性 + 操作方法
-  //   defaultOpeneds() {
-  //     if (this.$route.path.indexOf("/table") == 0) {
-  //       // 用户当前在浏览/table/xx菜单项
-  //       return ["table"];
-  //     } else if (this.$route.path.indexOf("/dish") == 0) {
-  //       return ["dish"];
-  //     } else {
-  //       return [];
-  //     }
-  //   }
-  // },
-  // beforeCreate() {
-  //   // 组件创建之前先要检查是否已经登录为管理员
-  //   if (!this.$store.state.adminName) {
-  //     // 未登录则跳转到登录页面
-  //     this.$router.push("/login");
-  //   }
-  // }
 };
 </script>
 

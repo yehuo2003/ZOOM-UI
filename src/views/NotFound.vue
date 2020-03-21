@@ -1,11 +1,11 @@
 <template>
-  <div class="cat-notfound">
+  <div class="zoom-notfound">
     <h1>404! NOT FOUND!</h1>
   </div>
 </template>
 
 <style lang="scss">
-.cat-notfound {
+.zoom-notfound {
   text-align: center;
   padding-top: 200px;
 }

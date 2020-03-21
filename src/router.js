@@ -16,6 +16,6 @@ importAll(require.context('./router', true, /\.routes\.js/))
 export default new Router({
   routes: [
     ...routerList,
-    { path: '/', redirect: 'login' }
+    { path: '/', redirect: 'home' }
   ]
 })
