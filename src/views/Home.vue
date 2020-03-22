@@ -22,6 +22,11 @@
         <div v-for="item of 10" :key="item"></div>
       </div>
     </div>
+    <div class="go-to">
+      <router-link to="/main">
+        进入
+      </router-link>
+    </div>
   </div>
 </template>
 

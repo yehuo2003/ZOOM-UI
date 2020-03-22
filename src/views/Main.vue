@@ -1,17 +1,15 @@
 <template>
-  <zoom-layout>
+  <zoom-layout class="home-layout">
     <div slot="header">
       头部
     </div>
     <div slot="aside">
-      <zoom-tree-menu style="float: left; font-size: 14px;" :op="navOp"></zoom-tree-menu>
+      <zoom-tree-menu style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
     </div>
-    <div slot="main">
-      <main style="width: 80%; float: right;">
-        <!-- 主体部分 -->
-        <router-view></router-view>
-      </main>
-    </div>
+    <main slot="main" class="home-main">
+      <!-- 主体部分 -->
+      <router-view></router-view>
+    </main>
   </zoom-layout>
 </template>
 
@@ -27,7 +25,26 @@ export default {
           {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
           {title: '自定义主题', url: '', children: [
             {title: '颜色', url: '', icon: 'icon-list'},
-            {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
+            {title: 'Icon图标', url: '#/component/custom-icon', icon: 'icon-add-plus'}
+          ]},
+          {title: '表单组件', url: '', children: [
+            {title: '按钮', url: '#/component/zoom-button', icon: 'icon-list'},
+            {title: '输入框', url: '#/component/zoom-input', icon: 'icon-add-plus'},
+            {title: '下拉框', url: '#/component/zoom-dropdown', icon: 'icon-add-plus'},
+            {title: '搜索框', url: '#/component/zoom-search', icon: 'icon-add-plus'},
+            {title: '计数器', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '文本域组件', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '验证码', children: [
+              {title: '文字验证码', url: '#/component/', icon: 'icon-list'},
+              {title: '滑块验证码', url: '#/component/', icon: 'icon-add-plus'},
+            ]},
+            {title: '滑块组件', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '弹出编辑', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '日期选择', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '开关组件', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '单选框', url: '#/component/', icon: 'icon-add-plus'},
+            {title: '复选框', url: '#/component/', icon: 'icon-add-plus'},
+            {title: 'form表单组件', url: '#/component/', icon: 'icon-add-plus'},
           ]},
           {title: '导航组件', url: '', children: [
             {title: '导航菜单组件', url: '#/dish/list', icon: 'icon-list'},
@@ -35,25 +52,6 @@ export default {
             {title: '导航菜单栏', url: '#/dish/add', icon: 'icon-add-plus'},
             {title: '面包屑导航', url: '#/dish/add', icon: 'icon-add-plus'},
             {title: '浮动框菜单栏', url: '#/dish/add', icon: 'icon-add-plus'}
-          ]},
-          {title: '表单组件', url: '', children: [
-            {title: '按钮', url: '#/dish/list', icon: 'icon-list'},
-            {title: '输入框', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '下拉框', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '验证码', url: '#/dish/add', children: [
-              {title: '文字验证码', url: '#/dish/list', icon: 'icon-list'},
-              {title: '滑块验证码', url: '#/dish/add', icon: 'icon-add-plus'},
-            ]},
-            {title: '搜索框', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '滑块组件', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '弹出编辑', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '计数器', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '日期选择', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '开关组件', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '单选框', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '复选框', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: 'form表单组件', url: '#/dish/add', icon: 'icon-add-plus'},
-            {title: '文本域组件', url: '#/dish/add', icon: 'icon-add-plus'},
           ]},
           {title: '布局组件', url: '', children: [
             {title: 'layout布局', url: '#/dish/list', icon: 'icon-list'},
@@ -102,4 +100,11 @@ export default {
   },
 };
 </script>
-
+<style lang="scss" scoped>
+.home-layout {
+  .home-main {
+    padding: 0 50px;
+    margin-bottom: 50px;
+  }
+}
+</style>
