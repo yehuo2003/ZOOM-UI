@@ -1,44 +1,31 @@
 <template>
   <div>
-    <zoom-search :op="searchOp"></zoom-search>
-    禁用搜索框：<zoom-search :op="searchOp2"></zoom-search>
+    <zoom-date :op="dateOp"></zoom-date><br>
+    禁用日期选择：<br>
+    <zoom-date :op="dateOp2"></zoom-date>
   </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        searchOp2: {
+        dateOp2: {
           isdisabled: true,
-          placeHolder: '搜索框已禁用',
-          hideClose: false,
-          data: [
-            {value: '1', text: '所有'},
-            {value: '2', text: '找人'},
-            {value: '3', text: '文章'}
-          ],
+          dateTime: '2020-02-02'
         },
-        searchOp: {
-          isdisabled: false,			// 是否禁用
-          placeHolder: '查找需要的内容',	//占位符  默认为 请输入关键词
-          readonly: false,		//是否禁止输入
-          errMsg: '必填',
-          testing: val => {
-            if (!val) {
-              return false;
-            } else {
-              return true;
-            }
+        dateOp: {
+          isdisabled: false,  //  是否禁用
+          dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
+          onComplete: (arr, time) => {	//	arr是日期数组(年月日周几 + 时分秒)
+            console.log('组件编译完成onComplete', arr, time);
           },
-          onClick: (val, key) => {
-            console.log(val, key);
+          onRender: (arr, time) => {  //  组件渲染完成时执行的事件
+            console.log('组件渲染完成onRender', arr, time);
           },
-          data: [	//下拉框数据, 键值对的方式, text是展示的文本
-            {value: '1', text: '所有'},
-            {value: '2', text: '找人'},
-            {value: '3', text: '文章'}
-          ],
-        },
+          onShow: day => {	// 选择日期框日期后执行的事件 日期对象 flag 是否当前月 false则表示不在当前月
+            console.log('选择日期框日期后执行的事件', day);
+          }
+        }
       }
     }
   }
