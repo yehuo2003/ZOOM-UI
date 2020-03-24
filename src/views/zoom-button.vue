@@ -2,8 +2,8 @@
   <div class="custom-zoom-button">
     <h1>Button组件</h1>
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <h3>基础样式</h3>
+    <h2>基本用法</h2>
+    <p>基础按钮的用法</p>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button v-for="item of btnList" :key=" 1 + item.id" :type="item.type">{{item.text + '按钮'}}</zoom-button>
@@ -19,7 +19,8 @@
       </zoom-tab-item>
     </zoom-tabs>
     <!-- 禁用间隔 -->
-    <h3>按钮禁用时间间隔</h3>
+    <h2>按钮禁用时间间隔</h2>
+    <p>通过<span>isdisabled</span>属性设置按钮为禁用状态</p>
     <p>点击按钮后禁用的时间，默认为1秒，可以手动设置reset-time属性，单位为毫秒</p>
     <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
       <zoom-tab-item :index="0" label="效果">
@@ -32,7 +33,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <!-- 大小 -->
-    <h3>按钮大小</h3>
+    <h2>按钮大小</h2>
     <p>可指定按钮大小, 属性: size</p>
     <zoom-tabs class="basic" :value="sizeTab" @tabChange="sizeChange">
       <zoom-tab-item :index="0" label="效果">
@@ -47,7 +48,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <!-- op -->
-    <h3>自定义配置属性</h3>
+    <h2>自定义配置属性</h2>
     <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如type和按钮禁用等</p>
     <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
       <zoom-tab-item :index="0" label="效果">
@@ -59,38 +60,45 @@
         <custom-code :html="opBtn"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
+    <div class="tip">
+      zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
+      组件暂不支持页面渲染后再改变属性，v-model除外。
+    </div>
     <h2>属性</h2>
-    <zoom-panel title="按钮类型: type">
-      <p>可选参数: primary / info / warning / success / danger</p>
-      <p>类型: String</p>
-      <p>用法: type="可选参数"</p>
-    </zoom-panel>
-    <zoom-panel title="按钮形状: shape">
-      <p>可选参数: plain / round / circle</p>
-      <p>类型: String</p>
-      <p>用法: shape="可选参数", 默认: plain</p>
-    </zoom-panel>
-    <zoom-panel title="按钮大小: size">
-      <p>可选参数: mini / small / medium / large</p>
-      <p>类型: String</p>
-      <p>用法: size="可选参数"</p>
-    </zoom-panel>
-    <zoom-panel title="点击后禁用时间: resetTime">
-      <p>默认: 1000 毫秒</p>
-      <p>类型: Number</p>
-      <p>用法: :reset-time="1000"</p>
-    </zoom-panel>
-    <zoom-panel title="按钮禁用: isdisabled">
-      <p>默认: false</p>
-      <p>类型: Boolean</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="点击事件: onClick">
-      <p>可绑定点击事件</p>
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 设置 @click="自定义事件"</p>
-    </zoom-panel>
+    <div class="attribute-type">
+      <!-- <zoom-panel title="按钮类型: type"> -->
+      <zoom-panel title="<span class='name'>type</span><span class='type'>String</span>">
+        <p>按钮类型</p>
+        <p>可选参数: primary / info / warning / success / danger</p>
+        <p>用法: type="可选参数"</p>
+      </zoom-panel>
+      <zoom-panel title="<span class='name'>shape</span><span class='type'>String</span>">
+        <p>按钮形状</p>
+        <p>可选参数: plain / round / circle</p>
+        <p>用法: shape="可选参数", 默认: plain</p>
+      </zoom-panel>
+      <zoom-panel title="<span class='name'>size</span><span class='type'>String</span>">
+        <p>按钮大小</p>
+        <p>可选参数: mini / small / medium / large</p>
+        <p>用法: size="可选参数"</p>
+      </zoom-panel>
+      <zoom-panel title="<span class='name'>reset-time</span><span class='type'>Number</span>">
+        <p>点击间隔</p>
+        <p>默认: 1000 毫秒</p>
+        <p>用法: :reset-time="1000"</p>
+      </zoom-panel>
+      <zoom-panel title="<span class='name'>isdisabled</span><span class='type'>Boolean</span>">
+        <p>按钮禁用</p>
+        <p>默认: false</p>
+        <p>用法: 配置op对象, 设置 isdisabled="true"</p>
+      </zoom-panel>
+      <h2>方法</h2>
+      <zoom-panel title="<span class='name'>onClick</span><span class='type'>Function</span>">
+        <p>自定义点击事件</p>
+        <p>可绑定点击事件</p>
+        <p>用法: 配置op对象, 设置 @click="自定义事件"</p>
+      </zoom-panel>
+    </div>
     <zoom-button @click="prevClick">自定义主题</zoom-button>
     <zoom-button @click="nextClick">输入框组件</zoom-button>
   </div>
@@ -228,7 +236,7 @@ export default {
       margin: 15px 25px;
     }
   }
-  h1,h2 {
+  h1 {
     margin-bottom: 20px;
   }
   h3, p {

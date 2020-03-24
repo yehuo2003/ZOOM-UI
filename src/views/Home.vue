@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="go-to">
-      <router-link to="/main">
+      <router-link to="/develop">
         进入
       </router-link>
     </div>
