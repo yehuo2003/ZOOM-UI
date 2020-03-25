@@ -35,10 +35,7 @@ export default {
             {title: 'Color色彩', url: '#/component/custom-color'},
             {title: 'Container版型', url: '#/component/custom-container'},
             {title: 'Icon图标', url: '#/component/custom-icon'},
-            {title: 'layout布局', children: [
-              {title: 'Row行配置', url: '#/component/zoom-row'},
-              {title: 'Col列配置', url: '#/component/zoom-col'}
-            ]},
+            {title: '栅格布局', url: '#/component/zoom-row-col'},
           ]},
           {title: '导航组件', url: '', children: [
             {title: 'Breadcrumb面包屑', url: '#/component/zoom-breadcrumb'},
