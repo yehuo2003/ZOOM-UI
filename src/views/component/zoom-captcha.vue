@@ -5,7 +5,6 @@
     <h2>使用方法</h2>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <!-- <zoom-captcha></zoom-captcha> -->
         <zoom-captcha :op="captchaOp2"></zoom-captcha>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
@@ -25,33 +24,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="禁用验证码: disabled">
-      <p>类型: Boolean</p>
-      <p>默认false，当验证成功后为true，可手动修改，禁用后无法再刷新验证码</p>
-      <p>用法: 配置op对象, 设置 disabled="true"</p>
-    </zoom-panel>
-    <zoom-panel title="显示验证码: show">
-      <p>类型: Boolean</p>
-      <p>默认false，鼠标进过时，才会显示，当设置为true时候，则总是显示</p>
-      <p>用法: 配置op对象, 设置 show="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="随机图片地址: RandomSrc">
-      <p>类型: Function</p>
-      <p>在op对象中定义，该方法必须返回一个图片地址，用于显示验证码所需要的图片，每次刷新图片时候都会调用一次该方法</p>
-      <p>用法: 配置op对象, 在op对象里定义该方法，方法需返回一个有效的图片地址</p>
-    </zoom-panel>
-    <zoom-panel title="监听验证码成功的回调: onSuccess">
-      <p>类型: Function</p>
-      <p>在op对象中定义，当用户验证成功后，可以在该方法中监听到，并做下一步逻辑处理</p>
-      <p>用法: 配置op对象, 在op对象里定义该方法</p>
-    </zoom-panel>
-    <zoom-panel title="监听验证码失败的回调: onFailed">
-      <p>类型: Function</p>
-      <p>在op对象中定义，当用户验证失败后，可以在该方法中监听到，并做下一步逻辑处理</p>
-      <p>用法: 配置op对象, 在op对象里定义该方法</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">文字验证码</zoom-button>
     <zoom-button @click="nextClick">滑块组件</zoom-button>
   </div>
@@ -60,6 +33,60 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "禁用验证码",
+              name: "disabled",
+              type: "Boolean",
+              text: "默认<span>false</span>，当验证成功后为<span>true</span>，可手动修改，禁用后无法再刷新验证码",
+              text2: '用法: 配置op对象, 设置 <span>disabled="true"</span>'
+            },
+            {
+              id: 2,
+              title: "显示验证码",
+              name: "show",
+              type: "Boolean",
+              text: "默认<span>false</span>，鼠标进过时，才会显示，当设置为<span>true</span>时候，则总是显示",
+              text2: '用法: 配置op对象, 设置 <span>show="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "随机图片地址",
+              name: "RandomSrc",
+              type: "Function",
+              text: "在op对象中定义，该方法必须返回一个图片地址，用于显示验证码所需要的图片，每次刷新图片时候都会调用一次该方法",
+              text2: '用法: 配置op对象, 在op对象里定义该方法，方法需返回一个有效的图片地址'
+            },
+            {
+              id: 2,
+              title: "监听验证码成功的回调",
+              name: "onSuccess",
+              type: "Function",
+              text: "在op对象中定义，当用户验证成功后，可以在该方法中监听到，并做下一步逻辑处理",
+              text2: '用法: 配置op对象, 在op对象里定义该方法'
+            },
+            {
+              id: 3,
+              title: "监听验证码失败的回调",
+              name: "onFailed",
+              type: "Function",
+              text: "在op对象中定义，当用户验证失败后，可以在该方法中监听到，并做下一步逻辑处理",
+              text2: '用法: 配置op对象, 在op对象里定义该方法'
+            }
+          ]
+        }
+      ],
       captchaOp2: {
         disabled: true,
       },

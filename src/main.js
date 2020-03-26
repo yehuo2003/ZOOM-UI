@@ -6,6 +6,7 @@ import zoomUI from 'zoom-ui-1.0'
 import 'zoom-ui-1.0/lib/zoom-ui-1.0.css'
 import Hljs from 'highlight.js'
 import customCode from "./components/customCode";
+import attribute from "./components/attribute";
 import 'highlight.js/styles/atom-one-dark.css'	//	yes
 //import 'highlight.js/styles/github.css'
 //import 'highlight.js/styles/darkula.css'		//	橙色标签
@@ -31,6 +32,7 @@ Highlight.install = function (Vue, options) {
 Vue.use(Highlight);
 // 自定义代码片段组件
 Vue.component('custom-code', customCode);
+Vue.component('attribute', attribute);
 
 
 new Vue({

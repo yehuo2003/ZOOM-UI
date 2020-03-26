@@ -101,48 +101,58 @@
         <custom-code :html="orderHtml"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
+    <h2>Col列偏移</h2>
     <p>通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数</p>
-    <p>zoom-ui提供的row输入框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
-    <div>
-      <zoom-panel title="输入框类型: type">
-        <p>可选参数: text / password</p>
-        <p>默认: text</p>
-        <p>类型: String</p>
-        <p>用法: type="可选参数"</p>
+    <zoom-tabs class="basic" :value="offsetTab" @tabChange="offsetChange">
+      <zoom-tab-item :index="0" label="效果">
+        <zoom-row>
+          <zoom-col span="2">第一个</zoom-col>
+          <zoom-col span="2" offset="1">第二个</zoom-col>
+          <zoom-col span="2">第三个</zoom-col>
+          <zoom-col span="2" offset="2">第四个</zoom-col>
+        </zoom-row>
+        <zoom-row>
+          <zoom-col span="2" offset="3">第一个</zoom-col>
+          <zoom-col span="2">第二个</zoom-col>
+        </zoom-row>
+      </zoom-tab-item>
+      <zoom-tab-item :index="1" label="代码">
+        <custom-code :html="offsetrHtml"></custom-code>
+      </zoom-tab-item>
+    </zoom-tabs>
+    <h2>属性</h2>
+    <div class="attribute-type">
+      <zoom-panel title="<span class='name'>flex</span><span class='type'>Boolean</span>">
+        <h3>弹性布局</h3>
+        <p>在 <span>zoom-row</span> 标签上设置属性 <span>:flex="true"</span> 可开启弹性布局, 注意在低版本IE下可能会不兼容</p>
+        <p>用法: 在标签上标记<span>:flex="true"</span></p>
       </zoom-panel>
-      <zoom-panel title="占位符: placeHolder">
-        <p>类型: String</p>
-        <p>用法: 配置op对象, 设置 placeHolder="参数"</p>
+      <zoom-panel title="<span class='name'>justify</span><span class='type'>String</span>">
+        <h3>排列方式</h3>
+        <p>可选参数: <span>center</span> <span>end</span> <span>space-around</span></p>
+        <p>配置了flex弹性布局后, 在 <span>zoom-row</span> 标签上标记 <span>justify</span> 可以定义排列方式</p>
+        <p>用法: 在标签上标记<span>justify="属性"</span></p>
       </zoom-panel>
-      <zoom-panel title="自定义icon: IconStyle">
-        <p>类型: String</p>
-        <p>配置了自定义icon后, 在输入框最右边显示, 可以配合onClick点击事件一起使用</p>
-        <p>用法: 配置op对象, 设置 IconStyle="icon类名"</p>
+      <zoom-panel title="<span class='name'>align</span><span class='type'>String</span>">
+        <h3>对齐方式</h3>
+        <p>可选参数: <span>top</span> <span>middle</span> <span>bottom</span></p>
+        <p>配置了flex弹性布局后, 在 <span>zoom-row</span> 标签上标记 <span>align</span> 可以定义对齐方式</p>
+        <p>用法: 在标签上标记 <span>align="属性"</span></p>
       </zoom-panel>
-      <zoom-panel title="错误信息: errMsg">
-        <p>类型: String</p>
-        <p>需要配置testing方法, 并且在方法返回false的情况下, 才会出现</p>
-        <p>用法: 配置op对象, 设置 errMsg="要提示用户的错误信息"</p>
+      <zoom-panel title="<span class='name'>order</span><span class='type'>Number</span>">
+        <h3>自定义列排序</h3>
+        <p>配置了flex弹性布局后, 在 <span>zoom-col</span> 标签上标记 <span>order</span> 可以定义排序顺序</p>
+        <p>用法: 在标签上标记 <span>order="属性"</span></p>
       </zoom-panel>
-      <zoom-panel title="禁止输入: readonly">
-        <p>类型: Boolean</p>
-        <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-        <p>用法: 配置op对象, 设置 readonly="true"</p>
+      <zoom-panel title="<span class='name'>span</span><span class='type'>Number</span>">
+        <h3>分栏属性</h3>
+        <p>可选参数: span / xl / lg / md / sm / xs</p>
+        <p>说明: 可以在不同屏幕下适配不同尺寸大小, span默认为所有情况, 范围在 <span>1 ~ 12</span> 之间</p>
+        <p>用法: span="可选参数", 默认: <span>span="12"</span></p>
       </zoom-panel>
-      <zoom-panel title="禁止输入: isdisabled">
-        <p>类型: Boolean</p>
-        <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-        <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-      </zoom-panel>
-      <h2>方法</h2>
-      <zoom-panel title="自定义icon的点击事件: onClick">
-        <p>类型: Function</p>
-        <p>用法: 配置op对象, 并设置了自定义icon后, 设置 onClick:val => {}; val为输入框内容</p>
-      </zoom-panel>
-      <zoom-panel title="验证方法: testing">
-        <p>类型: Function</p>
-        <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
+      <zoom-panel title="<span class='name'>offset</span><span class='type'>Number</span>">
+        <p>说明: 通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数</p>
+        <p>用法: 在标签上标记 <span>offset="col偏移数( 1 ~ 12 之间)"</span></p>
       </zoom-panel>
     </div>
     <zoom-button @click="prevClick">按钮组件</zoom-button>
@@ -157,6 +167,19 @@ export default {
       curTab: 0,
       flexTab: 0,
       orderTab: 0,
+      offsetTab: 0,
+      offsetrHtml: `
+        &lt;zoom-row>
+          &lt;zoom-col span="2">第一个&lt;/zoom-col>
+          &lt;zoom-col span="2" offset="1">第二个&lt;/zoom-col>
+          &lt;zoom-col span="2">第三个&lt;/zoom-col>
+          &lt;zoom-col span="2" offset="2">第四个&lt;/zoom-col>
+        &lt;/zoom-row>
+        &lt;zoom-row>
+          &lt;zoom-col span="2" offset="3">第一个&lt;/zoom-col>
+          &lt;zoom-col span="2">第二个&lt;/zoom-col>
+        &lt;/zoom-row&gt;
+      `,
       orderHtml: `
         &lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
           &lt;zoom-col order="2" span="3"&gt;第一个&lt;/zoom-col&gt;
@@ -222,6 +245,9 @@ export default {
     }
   },
   methods: {
+    offsetChange(index) {
+      this.offsetTab = index
+    },
     orderChange(index) {
       this.orderTab = index
     },
@@ -251,17 +277,13 @@ export default {
       text-align: center;
     }
     .zoom-col {
-      background: #50bfff;
       border: 3px solid #fff;
-      border-radius: 10px;
-      color: #333;
+      background: #50bfff;
+      border-radius: 15px;
+      line-height: 24px;
+      font-weight: bold;
+      color: #fff;
     }
-  }
-  h1,h2 {
-    margin-bottom: 20px;
-  }
-  h3, p {
-    margin-bottom: 10px;
   }
 }
 </style>

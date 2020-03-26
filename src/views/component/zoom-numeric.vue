@@ -23,37 +23,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="最小值: min">
-      <p>类型: Number</p>
-      <p>设置用户可输入的的最小值, 设置之后, 用户输入范围最小不得小于最小值, 也无法通过减号按钮让当前值小于最小值</p>
-      <p>用法: 配置op对象, 设置 min="最小值"</p>
-    </zoom-panel>
-    <zoom-panel title="最大值: max">
-      <p>类型: Number</p>
-      <p>设置用户可输入的的最大值, 设置之后, 用户输入范围最大不得大于最大值, 也无法通过减号按钮让当前值大于最大值</p>
-      <p>用法: 配置op对象, 设置 max="最大值"</p>
-    </zoom-panel>
-    <zoom-panel title="错误信息: errMsg">
-      <p>类型: String</p>
-      <p>需要配置testing方法, 并且在方法返回false的情况下, 才会出现</p>
-      <p>用法: 配置op对象, 设置 errMsg="要提示用户的错误信息"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: readonly">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-      <p>用法: 配置op对象, 设置 readonly="true"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="验证方法: testing">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">搜索框组件</zoom-button>
     <zoom-button @click="nextClick">文本域组件</zoom-button>
   </div>
@@ -62,6 +32,68 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "最小值",
+              name: "min",
+              type: "Number",
+              text: "设置用户可输入的的最小值, 设置之后, 用户输入范围最小不得小于最小值, 也无法通过减号按钮让当前值小于最小值",
+              text2: '用法: 配置op对象, 设置 <span>min="最小值"</span>'
+            },
+            {
+              id: 2,
+              title: "最大值",
+              name: "max",
+              type: "Number",
+              text: "设置用户可输入的的最大值, 设置之后, 用户输入范围最大不得大于最大值, 也无法通过减号按钮让当前值大于最大值",
+              text2: '用法: 配置op对象, 设置 <span>max="最大值"</span>'
+            },
+            {
+              id: 3,
+              title: "错误信息",
+              name: "errMsg",
+              type: "String",
+              text: "需要配置testing方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
+              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+            },
+            {
+              id: 4,
+              title: "禁止输入",
+              name: "readonly",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
+              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+            },
+            {
+              id: 5,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "验证方法",
+              name: "testing",
+              type: "String",
+              text: "绑定自定义验证方法",
+              text2: '用法: 配置op对象, 并设置了<span>errMsg</span>后, 设置 <span>testing:val => {};</span> val为输入框内容, 如果方法返回<span>false</span>则显示<span>errMsg</span>的内容'
+            }
+          ]
+        }
+      ],
       num: 5,
       numericOp2: {
         isdisabled: true,

@@ -25,34 +25,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="禁用: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 选择日期</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <zoom-panel title="初始化时间: dateTime">
-      <p>类型: Date</p>
-      <p>默认当前日期, 可传入时间戳, 或者其它时间格式类型的数据</p>
-      <p>用法: 配置op对象, 设置 dateTime="时间类型"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="组件编译完成时执行的事件: onComplete">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 会返回两个参数 arr和time, arr是日期数组(年月日周几 + 时分秒), time是时间</p>
-    </zoom-panel>
-    <zoom-panel title="组件渲染完成时执行的事件: onRender">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 会返回两个参数 arr和time, arr是日期数组(年月日周几 + 时分秒), time是时间</p>
-    </zoom-panel>
-    <zoom-panel title="选择日期框日期后执行的事件: onShow">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 返回一个参数day, day里面有个参数flag 用来表示是否当前月 false则表示不在当前月</p>
-    </zoom-panel>
-    <zoom-panel title="动态设置当前时间: load">
-      <p>类型: Function</p>
-      <p>用法: 在标签中设置自定义ref属性, 通过this.$refs[自定义属性].load(日期对象) 来动态设置当前日期</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">弹出编辑</zoom-button>
     <zoom-button @click="nextClick">开关组件组件</zoom-button>
   </div>
@@ -61,6 +34,68 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 选择日期",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            },
+            {
+              id: 2,
+              title: "初始化时间",
+              name: "dateTime",
+              type: "Date",
+              text: "默认当前日期, 可传入时间戳, 或者其它时间格式类型的数据",
+              text2: '用法: 配置op对象, 设置 <span>dateTime="时间类型"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "组件编译完成时执行的事件",
+              name: "onComplete",
+              type: "Function",
+              text: "",
+              text2: '用法: 配置op对象后设置回调函数, 会返回两个参数 <span>arr</span>和<span>time</span>, <span>arr</span>是日期数组(年月日周几 + 时分秒), <span>time</span>是时间'
+            },
+            {
+              id: 2,
+              title: "组件渲染完成时执行的事件",
+              name: "onRender",
+              type: "Function",
+              text: "",
+              text2: '用法: 配置op对象后设置回调函数, 会返回两个参数 <span>arr</span>和<span>time</span>, <span>arr</span>是日期数组(年月日周几 + 时分秒), <span>time</span>是时间'
+            },
+            {
+              id: 3,
+              title: "选择日期框日期后执行的事件",
+              name: "onShow",
+              type: "Function",
+              text: "",
+              text2: '用法: 配置op对象后设置回调函数, 返回一个参数<span>day</span>, <span>day</span>里面有个参数<span>flag</span> 用来表示是否当前月 <span>false</span>则表示不在当前月'
+            },
+            {
+              id: 4,
+              title: "动态设置当前时间",
+              name: "load",
+              type: "Function",
+              text: "可以动态设置当前时间, 需要传入时间类型数据",
+              text2: '用法: 在标签中设置自定义<span>ref</span>属性, 通过<span>this.$refs[自定义属性].load(日期对象)</span> 来动态设置当前日期'
+            }
+          ]
+        }
+      ],
       dateOp2: {
         isdisabled: true,
         dateTime: '2020-02-02'

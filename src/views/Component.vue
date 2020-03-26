@@ -33,7 +33,7 @@ export default {
           {title: '快速上手', url: '#/component/index'},  //  安装
           {title: '框架风格', children: [
             {title: 'Color色彩', url: '#/component/custom-color'},
-            {title: 'Container版型', url: '#/component/custom-container'},
+            {title: 'Layout布局', url: '#/component/custom-layout'},
             {title: 'Icon图标', url: '#/component/custom-icon'},
             {title: '栅格布局', url: '#/component/zoom-row-col'},
           ]},
@@ -113,21 +113,6 @@ export default {
   .home-main {
     padding: 0 50px;
     margin-bottom: 50px;
-    /deep/ .attribute-type {
-      p {
-        line-height: inherit;
-        .name {
-          color: #209dd5;
-          font-weight: bold;
-          font-size: 1.2em;
-        }
-        .type {
-          padding-left: 10px;
-          font-size: 12px;
-          color: #969696;
-        }
-      }
-    }
     .content-active {
       border: 1px solid #d9d9d9;
     }
@@ -145,17 +130,41 @@ export default {
       padding-bottom: .3rem;
       border-bottom: 1px solid #eaecef;
     }
+    h3 {
+      margin-bottom: 10px;
+    }
     p {
       font-size: 16px;
       color: #5e6d82;
       line-height: 1.7em;
+      margin-bottom: 10px;
       span {
         color: #476582;
         padding: .25rem .5rem;
+        margin: 0 .25rem;
         margin: 0;
         font-size: .85em;
         background: rgba(27, 31, 35, 0.05);
         border-radius: 3px;
+      }
+    }
+    /deep/ .attribute-type {
+      p {
+        line-height: inherit;
+      }
+      p.panel-title {
+        span:first-child {
+          background: none;
+          color: #209dd5;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        span:last-child {
+          background: none;
+          padding-left: 10px;
+          font-size: 12px;
+          color: #969696;
+        }
       }
     }
   }

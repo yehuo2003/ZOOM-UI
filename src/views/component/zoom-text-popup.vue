@@ -24,26 +24,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="显示行数: rows">
-      <p>类型: String, Number</p>
-      <p>弹出后编辑框默认展示的行数, 默认为5</p>
-      <p>用法: 在标签上直接配置 rows="参数"</p>
-    </zoom-panel>
-    <zoom-panel title="占位符: placeHolder">
-      <p>类型: String</p>
-      <p>用法: 配置op对象, 设置 placeHolder="参数"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: readonly">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-      <p>用法: 配置op对象, 设置 readonly="true"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">滑块组件</zoom-button>
     <zoom-button @click="nextClick">日期选择框组件</zoom-button>
   </div>
@@ -52,6 +33,46 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "显示行数",
+              name: "rows",
+              type: "Number",
+              text: "弹出后编辑框默认展示的行数, 默认为5",
+              text2: '用法: 在标签上直接配置 <span>rows="参数"</span>'
+            },
+            {
+              id: 2,
+              title: "占位符",
+              name: "placeHolder",
+              type: "String",
+              text: "可自定义占位符内容",
+              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+            },
+            {
+              id: 3,
+              title: "禁止输入",
+              name: "readonly",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
+              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+            },
+            {
+              id: 4,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            }
+          ]
+        }
+      ],
       textPopupOp2: {
         isdisabled: true,
       },

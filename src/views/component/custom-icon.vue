@@ -2,7 +2,7 @@
   <div class="custom-icon">
     <h1>Icon字体图标</h1>
     <h2>使用</h2>
-    <p>zoom-ui 提供了自定义icon字体图标，只需在行内标签的class写入指定的类名即可</p>
+    <p>zoom-ui 提供了自定义icon字体图标，只需在行内标签的<span>class</span>写入指定的类名即可</p>
     <p>使用方法如下：</p>
     <custom-code :html="icon"></custom-code>
     <h2>图标汇总</h2>

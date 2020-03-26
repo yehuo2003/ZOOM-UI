@@ -35,56 +35,7 @@
         <custom-code :html="loadIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="占位符: placeHolder">
-      <p>类型: String</p>
-      <p>用法: 配置op对象, 设置 placeHolder="参数"</p>
-    </zoom-panel>
-    <zoom-panel title="下拉框数据: data">
-      <p>类型: Array</p>
-      <p>默认为暂无数据, 可手动配置数组对象, 对象里设置value和text, text为前端展示文本, value是传给后台的值</p>
-      <p>用法: 配置op对象, 设置 data=[{value: 'xx', text: 'xxx'}]</p>
-    </zoom-panel>
-    <zoom-panel title="默认选中: defalut">
-      <p>类型: String</p>
-      <p>default为默认展示的数据, 必须要是data数组里有的数据, default请和value值保持一致</p>
-      <p>用法: 配置op对象, 设置 default="属性"</p>
-    </zoom-panel>
-    <zoom-panel title="错误信息: errMsg">
-      <p>类型: String</p>
-      <p>需要配置testing方法, 并且在方法返回false的情况下, 才会出现</p>
-      <p>用法: 配置op对象, 设置 errMsg="要提示用户的错误信息"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: readonly">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-      <p>用法: 配置op对象, 设置 readonly="true"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <zoom-panel title="隐藏清除按钮: hideClose">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则不显示清除按钮</p>
-      <p>用法: 配置op对象, 设置 hideClose="true"</p>
-    </zoom-panel>
-    <zoom-panel title="是否多选: isChecked">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则启用多选功能, 样式为复选框</p>
-      <p>用法: 配置op对象, 设置 isChecked="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="验证方法: testing">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
-    </zoom-panel>
-    <zoom-panel title="动态设置数据: load">
-      <p>类型: Function</p>
-      <p>通过ref来获取当前下拉框, 再调用load方法, 入参为数组。</p>
-      <p>用法: this.$refs[属性].load(data)</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">输入框组件</zoom-button>
     <zoom-button @click="nextClick">搜索框组件</zoom-button>
   </div>
@@ -93,6 +44,100 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "占位符",
+              name: "placeHolder",
+              type: "String",
+              text: "可自定义占位符内容",
+              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+            },
+            {
+              id: 2,
+              title: "下拉框数据",
+              name: "data",
+              type: "Array",
+              text: "默认为暂无数据, 可手动配置数组对象, 对象里设置<span>value</span>和<span>text</span>, <span>text</span>为前端展示文本, <span>value</span>是传给后台的值",
+              text2: '用法: 配置op对象, 设置 <span>data=[{value: "xx", text: "xxx"}]</span>'
+            },
+            {
+              id: 3,
+              title: "默认选中",
+              name: "defalut",
+              type: "String",
+              text: "<span>default</span>为默认展示的数据, 必须要是<span>data</span>数组里有的数据, <span>default</span>请和<span>value</span>值保持一致",
+              text2: '用法: 配置op对象, 设置 <span></span>default="属性"'
+            },
+            {
+              id: 4,
+              title: "错误信息",
+              name: "errMsg",
+              type: "String",
+              text: "需要配置<span>testing</span>方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
+              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+            },
+            {
+              id: 5,
+              title: "禁止输入",
+              name: "readonly",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
+              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+            },
+            {
+              id: 6,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            },
+            {
+              id: 7,
+              title: "隐藏清除按钮",
+              name: "hideClose",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则不显示清除按钮",
+              text2: '用法: 配置op对象, 设置 <span>hideClose="true"</span>'
+            },
+            {
+              id: 8,
+              title: "是否多选",
+              name: "isChecked",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则启用多选功能, 样式为复选框",
+              text2: '用法: 配置op对象, 设置 <span>isChecked="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "验证方法",
+              name: "testing",
+              type: "String",
+              text: "绑定自定义验证方法",
+              text2: '用法: 配置op对象, 并设置了<span>errMsg</span>后, 设置 <span>testing:val => {};</span> val为输入框内容, 如果方法返回<span>false</span>则显示<span>errMsg</span>的内容'
+            },
+            {
+              id: 2,
+              title: "动态设置数据",
+              name: "load",
+              type: "Function",
+              text: "通过ref来获取当前下拉框, 再调用<span></span>load方法, 入参为数组。",
+              text2: '用法: <span>this.$refs[属性].load(data)</span>'
+            }
+          ]
+        }
+      ],
       dropdownOp4: {
         placeHolder: '--等待加载数据--',
       },

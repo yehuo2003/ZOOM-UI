@@ -22,41 +22,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="占位符: placeHolder">
-      <p>类型: String</p>
-      <p>默认: "请输入关键词"</p>
-      <p>用法: 配置op对象, 设置 placeHolder="参数"</p>
-    </zoom-panel>
-    <zoom-panel title="搜索下拉框数据: data">
-      <p>类型: Array</p>
-      <p>若无配置则不显示, 可手动配置数组对象, 对象里设置value和text, text为前端展示文本, value是传给后台的值。默认展示第一个</p>
-      <p>用法: 配置op对象, 设置 data=[{value: 'xx', text: 'xxx'}]</p>
-    </zoom-panel>
-    <zoom-panel title="错误信息: errMsg">
-      <p>类型: String</p>
-      <p>需要配置testing方法, 并且在方法返回false的情况下, 才会出现</p>
-      <p>用法: 配置op对象, 设置 errMsg="要提示用户的错误信息"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: readonly">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-      <p>用法: 配置op对象, 设置 readonly="true"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="验证方法: testing">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
-    </zoom-panel>
-    <zoom-panel title="搜索事件: onClick">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 设置 onClick:(val, key) => {}; val为输入框内容，key值为搜索框的值，若未配置则为undefined</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">下拉框组件</zoom-button>
     <zoom-button @click="nextClick">数字框组件</zoom-button>
   </div>
@@ -65,6 +31,76 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "搜索下拉框数据",
+              name: "data",
+              type: "Array",
+              text: "若无配置则不显示, 可手动配置数组对象, 对象里设置value和text, text为前端展示文本, value是传给后台的值。默认展示第一个",
+              text2: '用法: 配置op对象, 设置 data=[{value: "xxx", text: "xxx"}]'
+            },
+            {
+              id: 2,
+              title: "占位符",
+              name: "placeHolder",
+              type: "String",
+              text: "可自定义占位符内容",
+              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+            },
+            {
+              id: 4,
+              title: "错误信息",
+              name: "errMsg",
+              type: "String",
+              text: "需要配置testing方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
+              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+            },
+            {
+              id: 5,
+              title: "禁止输入",
+              name: "readonly",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
+              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+            },
+            {
+              id: 6,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "验证方法",
+              name: "testing",
+              type: "String",
+              text: "绑定自定义验证方法",
+              text2: '用法: 配置op对象, 并设置了<span>errMsg</span>后, 设置 <span>testing:val => {};</span> val为输入框内容, 如果方法返回<span>false</span>则显示<span>errMsg</span>的内容'
+            },
+            {
+              id: 2,
+              title: "搜索事件",
+              name: "onClick",
+              type: "Function",
+              text: "可绑定自定义函数",
+              text2: '用法: 配置op对象, 设置 <span>onClick:(val, key) => {}</span>; <span>val</span>为输入框内容，<span>key</span>值为搜索框的值，若未配置则为undefined'
+            }
+          ]
+        }
+      ],
       searchOp2: {
         isdisabled: true,
         placeHolder: '搜索框已禁用',

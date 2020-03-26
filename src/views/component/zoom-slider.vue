@@ -28,17 +28,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="最小值: min">
-      <p>类型: Number</p>
-      <p>滑块的最小值, 默认 0</p>
-      <p>用法: min="0"</p>
-    </zoom-panel>
-    <zoom-panel title="最大值: max">
-      <p>类型: Number</p>
-      <p>滑块的最大值, 默认 100</p>
-      <p>用法: min="100"</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">滑块验证码</zoom-button>
     <zoom-button @click="nextClick">弹出编辑</zoom-button>
   </div>
@@ -47,6 +37,30 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "最小值",
+              name: "min",
+              type: "Number",
+              text: "滑块的最小值, 默认 <span>0</span>",
+              text2: '用法: <span>min="0"</span>'
+            },
+            {
+              id: 2,
+              title: "最大值",
+              name: "max",
+              type: "Number",
+              text: "滑块的最大值, 默认 <span>100</span>",
+              text2: '用法: <span>min="100"</span>'
+            }
+          ]
+        },
+      ],
       num1: 0,
       num2: 100,
       opTab: 0,

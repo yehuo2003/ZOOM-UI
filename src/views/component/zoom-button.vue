@@ -6,13 +6,32 @@
     <p>基础按钮的用法</p>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-button v-for="item of btnList" :key=" 1 + item.id" :type="item.type">{{item.text + '按钮'}}</zoom-button>
-        <br>
-        <zoom-button v-for="item of btnList" :key=" 10 + item.id" :type="item.type" shape="plain">{{item.text + '平角'}}</zoom-button>
-        <br>
-        <zoom-button v-for="item of btnList" :key=" 20 + item.id" :type="item.type" shape="round">{{item.text + '圆角'}}</zoom-button>
-        <br>
-        <zoom-button v-for="item of btnList" :key=" 30 + item.id" :type="item.type" shape="circle">圆形</zoom-button>
+        <zoom-button
+          v-for="item of btnList"
+          :key=" 1 + item.id"
+          :type="item.type"
+        >{{item.text + '按钮'}}</zoom-button>
+        <br />
+        <zoom-button
+          v-for="item of btnList"
+          :key=" 10 + item.id"
+          :type="item.type"
+          shape="plain"
+        >{{item.text + '平角'}}</zoom-button>
+        <br />
+        <zoom-button
+          v-for="item of btnList"
+          :key=" 20 + item.id"
+          :type="item.type"
+          shape="round"
+        >{{item.text + '圆角'}}</zoom-button>
+        <br />
+        <zoom-button
+          v-for="item of btnList"
+          :key=" 30 + item.id"
+          :type="item.type"
+          shape="circle"
+        >圆形</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="btn"></custom-code>
@@ -20,7 +39,10 @@
     </zoom-tabs>
     <!-- 禁用间隔 -->
     <h2>按钮禁用时间间隔</h2>
-    <p>通过<span>isdisabled</span>属性设置按钮为禁用状态</p>
+    <p>
+      通过
+      <span>isdisabled</span>属性设置按钮为禁用状态
+    </p>
     <p>点击按钮后禁用的时间，默认为1秒，可以手动设置reset-time属性，单位为毫秒</p>
     <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
       <zoom-tab-item :index="0" label="效果">
@@ -53,7 +75,7 @@
     <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button :op="op">按钮1</zoom-button>
-        <br>
+        <br />
         <zoom-button :op="op2">按钮2</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
@@ -64,41 +86,7 @@
       zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
       组件暂不支持页面渲染后再改变属性，v-model除外。
     </div>
-    <h2>属性</h2>
-    <div class="attribute-type">
-      <!-- <zoom-panel title="按钮类型: type"> -->
-      <zoom-panel title="<span class='name'>type</span><span class='type'>String</span>">
-        <p>按钮类型</p>
-        <p>可选参数: primary / info / warning / success / danger</p>
-        <p>用法: type="可选参数"</p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>shape</span><span class='type'>String</span>">
-        <p>按钮形状</p>
-        <p>可选参数: plain / round / circle</p>
-        <p>用法: shape="可选参数", 默认: plain</p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>size</span><span class='type'>String</span>">
-        <p>按钮大小</p>
-        <p>可选参数: mini / small / medium / large</p>
-        <p>用法: size="可选参数"</p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>reset-time</span><span class='type'>Number</span>">
-        <p>点击间隔</p>
-        <p>默认: 1000 毫秒</p>
-        <p>用法: :reset-time="1000"</p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>isdisabled</span><span class='type'>Boolean</span>">
-        <p>按钮禁用</p>
-        <p>默认: false</p>
-        <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-      </zoom-panel>
-      <h2>方法</h2>
-      <zoom-panel title="<span class='name'>onClick</span><span class='type'>Function</span>">
-        <p>自定义点击事件</p>
-        <p>可绑定点击事件</p>
-        <p>用法: 配置op对象, 设置 @click="自定义事件"</p>
-      </zoom-panel>
-    </div>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">自定义主题</zoom-button>
     <zoom-button @click="nextClick">输入框组件</zoom-button>
   </div>
@@ -108,24 +96,90 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "按钮类型",
+              name: "type",
+              type: "String",
+              text: "可选参数: <span>primary</span> / <span>info</span> / <span>warning</span> / <span>success</span> / <span>danger</span>",
+              text2: '用法: <span>shape="可选参数"</span>, 默认: <span>plain</span>'
+            },
+            {
+              id: 2,
+              title: "按钮形状",
+              name: "shape",
+              type: "String",
+              text: "可选参数: <span>plain</span> / <span>round</span> / <span>circle</span>",
+              text2: '用法: <span>shape="可选参数"</span>, 默认: <span>plain</span>'
+            },
+            {
+              id: 3,
+              title: "按钮大小",
+              name: "size",
+              type: "String",
+              text: "可选参数: <span>mini</span> / <span>small</span> / <span>medium</span> / <span>large</span>",
+              text2: '用法: <span>size="参数"</span>'
+            },
+            {
+              id: 4,
+              title: "点击间隔",
+              name: "reset-time",
+              type: "Number",
+              text: "默认: 1000 毫秒",
+              text2: '用法: <span>:reset-time="时间"</span>'
+            },
+            {
+              id: 5,
+              title: "按钮禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "可选参数: <span>true</span> / <span>false</span>, 默认 <span>false</span>",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "自定义点击事件",
+              name: "onClick",
+              type: "Function",
+              text: "可绑定点击事件",
+              text2: '用法: 配置op对象, 设置 <span>@click="自定义事件"</span>'
+            }
+          ]
+        }
+      ],
       op: {
-        type: 'primary',
-        isdisabled: false,	// 是否禁用 类型 布尔
-        onClick: () => {console.log('按钮被点击了')}			//回调函数 点击时候触发
+        type: "primary",
+        isdisabled: false, // 是否禁用 类型 布尔
+        onClick: () => {
+          console.log("按钮被点击了");
+        } //回调函数 点击时候触发
       },
       op2: {
-        type: 'warning',
-        isdisabled: true,	// 是否禁用 类型 布尔
-        IconStyle: 'icon-close',		// 启用字体图标,传入icon开头的字体图标class,类型为字符串
-        onClick: function(){console.log('按钮被点击了')}			//回调函数 点击时候触发
+        type: "warning",
+        isdisabled: true, // 是否禁用 类型 布尔
+        IconStyle: "icon-close", // 启用字体图标,传入icon开头的字体图标class,类型为字符串
+        onClick: function() {
+          console.log("按钮被点击了");
+        } //回调函数 点击时候触发
       },
       btnList: [
-        {id: 1, text: '普通', type: null},
-        {id: 2, text: '主要', type: 'primary'},
-        {id: 3, text: '成功', type: 'success'},
-        {id: 4, text: '警告', type: 'warning'},
-        {id: 5, text: '危险', type: 'danger'},
-        {id: 6, text: '信息', type: 'info'},
+        { id: 1, text: "普通", type: null },
+        { id: 2, text: "主要", type: "primary" },
+        { id: 3, text: "成功", type: "success" },
+        { id: 4, text: "警告", type: "warning" },
+        { id: 5, text: "危险", type: "danger" },
+        { id: 6, text: "信息", type: "info" }
       ],
       curTab: 0,
       reseTab: 0,
@@ -202,26 +256,26 @@ export default {
         &lt;zoom-button shape="circle" type="danger"&gt;圆形&lt;/zoom-button&gt;
         &lt;zoom-button shape="circle" type="info"&gt;圆形&lt;/zoom-button&gt;
       `
-    }
+    };
   },
   methods: {
     tabChange(index) {
-      this.curTab = index
+      this.curTab = index;
     },
     reseChange(index) {
-      this.reseTab = index
+      this.reseTab = index;
     },
     opChange(index) {
-      this.opTab = index
+      this.opTab = index;
     },
     sizeChange(index) {
-      this.sizeTab = index
+      this.sizeTab = index;
     },
     prevClick() {
-      this.$router.push('/component/custom-icon');
+      this.$router.push("/component/custom-icon");
     },
     nextClick() {
-      this.$router.push('/component/zoom-input');
+      this.$router.push("/component/zoom-input");
     }
   }
 };
@@ -235,12 +289,6 @@ export default {
     .zoom-circle {
       margin: 15px 25px;
     }
-  }
-  h1 {
-    margin-bottom: 20px;
-  }
-  h3, p {
-    margin-bottom: 10px;
   }
 }
 </style>

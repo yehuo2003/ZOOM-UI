@@ -24,46 +24,7 @@
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="输入框类型: type">
-      <p>可选参数: text / password</p>
-      <p>默认: text</p>
-      <p>类型: String</p>
-      <p>用法: type="可选参数"</p>
-    </zoom-panel>
-    <zoom-panel title="占位符: placeHolder">
-      <p>类型: String</p>
-      <p>用法: 配置op对象, 设置 placeHolder="参数"</p>
-    </zoom-panel>
-    <zoom-panel title="自定义icon: IconStyle">
-      <p>类型: String</p>
-      <p>配置了自定义icon后, 在输入框最右边显示, 可以配合onClick点击事件一起使用</p>
-      <p>用法: 配置op对象, 设置 IconStyle="icon类名"</p>
-    </zoom-panel>
-    <zoom-panel title="错误信息: errMsg">
-      <p>类型: String</p>
-      <p>需要配置testing方法, 并且在方法返回false的情况下, 才会出现</p>
-      <p>用法: 配置op对象, 设置 errMsg="要提示用户的错误信息"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: readonly">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容</p>
-      <p>用法: 配置op对象, 设置 readonly="true"</p>
-    </zoom-panel>
-    <zoom-panel title="禁止输入: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="自定义icon的点击事件: onClick">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 并设置了自定义icon后, 设置 onClick:val => {}; val为输入框内容</p>
-    </zoom-panel>
-    <zoom-panel title="验证方法: testing">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
-    </zoom-panel>
+    <attribute :list="attributeList"></attribute>
     <zoom-button @click="prevClick">按钮组件</zoom-button>
     <zoom-button @click="nextClick">下拉框组件</zoom-button>
   </div>
@@ -72,6 +33,84 @@
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "输入框类型",
+              name: "type",
+              type: "String",
+              text: "可选参数: <span>text</span> / <span>password</span>, 默认: <span>text</span>",
+              text2: '用法: <span>type="可选参数"</span>'
+            },
+            {
+              id: 2,
+              title: "占位符",
+              name: "placeHolder",
+              type: "String",
+              text: "可自定义占位符内容",
+              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+            },
+            {
+              id: 3,
+              title: "自定义icon",
+              name: "IconStyle",
+              type: "String",
+              text: "配置了自定义icon后, 在输入框最右边显示, 可以配合<span>onClick</span>点击事件一起使用",
+              text2: '>用法: 配置op对象, 设置 <span>IconStyle="icon类名"</span>'
+            },
+            {
+              id: 4,
+              title: "错误信息",
+              name: "errMsg",
+              type: "String",
+              text: "需要配置testing方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
+              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+            },
+            {
+              id: 5,
+              title: "禁止输入",
+              name: "readonly",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
+              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+            },
+            {
+              id: 6,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "验证方法",
+              name: "testing",
+              type: "String",
+              text: "绑定自定义验证方法",
+              text2: '用法: 配置op对象, 并设置了<span>errMsg</span>后, 设置 <span>testing:val => {};</span> val为输入框内容, 如果方法返回<span>false</span>则显示<span>errMsg</span>的内容'
+            },
+            {
+              id: 2,
+              title: "自定义icon的点击事件",
+              name: "onClick",
+              type: "Function",
+              text: "绑定自定义Icon点击事件",
+              text2: '用法: 配置op对象, 并设置了自定义icon后, 设置 <span>onClick:val => {};</span> val为输入框内容'
+            }
+          ]
+        }
+      ],
       value: '输入框内容',
       inputOp4: {
         readonly: true

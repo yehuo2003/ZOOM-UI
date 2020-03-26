@@ -6,6 +6,7 @@ export default {
     { path: '/', redirect: '/component/zoom-button' },
     { path: '/component/custom-color', component: () => import('../views/component/custom-color.vue') },  //  色彩
     { path: '/component/custom-icon', component: () => import('../views/component/custom-icon.vue') },  //  icon
+    { path: '/component/custom-layout', component: () => import('../views/component/custom-layout.vue') },  //  layout
     { path: '/component/zoom-row-col', component: () => import('../views/component/zoom-row-col.vue') },  //  row-col
     { path: '/component/zoom-button', component: () => import('../views/component/zoom-button.vue') },  //  button
     { path: '/component/zoom-input', component: () => import('../views/component/zoom-input.vue') },  //  input
