@@ -175,17 +175,11 @@ export default {
 .custom-zoom-date {
   .data-drop {
     /deep/ .zoom-tabs-content.content-active {
-      min-height: 400px;
+      min-height: 280px;
       .zoom-date {
         margin: 10px 0;
       }
     }
-  }
-  h1,h2 {
-    margin-bottom: 20px;
-  }
-  h3, p {
-    margin-bottom: 10px;
   }
 }
 </style>

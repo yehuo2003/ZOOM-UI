@@ -1,81 +1,117 @@
 <template>
-  <div class="custom-zoom-date">
+  <div class="custom-zoom-switch">
     <h1>开关组件</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-date></zoom-date>
+        <zoom-switch open="开启" close="关闭" :op="switchOp"></zoom-switch>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="ipt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的日期选择组件，组件可以用v-model绑定,默认显示当前时间, 点击输入框,弹出日期选择框,
-      点击年份, 可选择前后六年时间,点击月份 可在1~12月份之间选择,也可以点击左右箭头切换。可以绑定op对象，并设置常用属性</p>
-    <p>禁用状态下，无法拖动文本域</p>
+    <h3>标签属性</h3>
+    <div class="tip">
+      配置组件的属性有两种方式，一种是示例中的op对象，另一种是直接将属性配置在组件标签上，如下所示：
+      注意：两种方式不能混用，当使用op对象配置属性后，组件其它标签将被忽略(v-model)除外，而且目前还不支持在组件渲染完成后再修改标签属性的值，
+      即zoom-ui对标签属性没有做双向绑定(v-model)除外。
+    </div>
+    <p>禁用状态下，开启或关闭开关</p>
     <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-date :op="dateOp"></zoom-date><br>
-        禁用日期选择：<br>
-        <zoom-date :op="dateOp2"></zoom-date>
+        <zoom-switch :op="switchOp"></zoom-switch>
+        禁用开关:
+        <zoom-switch :op="switchOp2"></zoom-switch>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="opIpt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>属性</h2>
-    <zoom-panel title="禁用: isdisabled">
-      <p>类型: Boolean</p>
-      <p>默认false, 为true则禁用输入框, 禁用状态下, 选择日期</p>
-      <p>用法: 配置op对象, 设置 isdisabled="true"</p>
-    </zoom-panel>
-    <zoom-panel title="初始化时间: dateTime">
-      <p>类型: Date</p>
-      <p>默认当前日期, 可传入时间戳, 或者其它时间格式类型的数据</p>
-      <p>用法: 配置op对象, 设置 dateTime="时间类型"</p>
-    </zoom-panel>
-    <h2>方法</h2>
-    <zoom-panel title="组件编译完成时执行的事件: onComplete">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 会返回两个参数 arr和time, arr是日期数组(年月日周几 + 时分秒), time是时间</p>
-    </zoom-panel>
-    <zoom-panel title="组件渲染完成时执行的事件: onRender">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 会返回两个参数 arr和time, arr是日期数组(年月日周几 + 时分秒), time是时间</p>
-    </zoom-panel>
-    <zoom-panel title="选择日期框日期后执行的事件: onShow">
-      <p>类型: Function</p>
-      <p>用法: 配置op对象后设置回调函数, 返回一个参数day, day里面有个参数flag 用来表示是否当前月 false则表示不在当前月</p>
-    </zoom-panel>
-    <zoom-panel title="动态设置当前时间: load">
-      <p>类型: Function</p>
-      <p>用法: 在标签中设置自定义ref属性, 通过this.$refs[自定义属性].load(日期对象) 来动态设置当前日期</p>
-    </zoom-panel>
-    <zoom-button @click="prevClick">弹出编辑</zoom-button>
-    <zoom-button @click="nextClick">开关组件组件</zoom-button>
+    <attribute :list="attributeList"></attribute>
+    <zoom-button @click="prevClick">日期选择组件</zoom-button>
+    <zoom-button @click="nextClick">单选框组件</zoom-button>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      dateOp2: {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "禁用",
+              name: "isdisabled",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则禁用开关, 禁用状态下, 无法开启或关闭开关",
+              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+            },
+            {
+              id: 2,
+              title: "显示开启时的文本内容",
+              name: "open",
+              type: "String",
+              text: "打开状态下, 要展示给用户看的文本内容",
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>open="文本内容"</span>'
+            },
+            {
+              id: 3,
+              title: "显示关闭时的文本内容",
+              name: "close",
+              type: "String",
+              text: "打开状态下, 要展示给用户看的文本内容",
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>close="文本内容"</span>'
+            },
+            {
+              id: 4,
+              title: "组件渲染时的初始状态",
+              name: "status",
+              type: "String",
+              text: "默认<span>close</span>, 为<span>open</span>则是打开状态,",
+              text2: '用法: 配置op对象, 设置 <span>status="open"</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "点击按钮前触发的回调函数",
+              name: "beforeClick",
+              type: "Function",
+              text: "",
+              text2: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变前的值'
+            },
+            {
+              id: 2,
+              title: "点击按钮后触发的回调函数",
+              name: "afterClick",
+              type: "Function",
+              text: "",
+              text2: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变后的值'
+            }
+          ]
+        }
+      ],
+      switchOp2: {
         isdisabled: true,
-        dateTime: '2020-02-02'
       },
-      dateOp: {
-        isdisabled: false,  //  是否禁用
-        dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
-        onComplete: (arr, time) => {	//	arr是日期数组(年月日周几 + 时分秒)
-          console.log('组件编译完成onComplete', arr, time);
+      switchOp: {
+        isdisabled: false,	// 是否禁用 默认false
+        open: '开启',				// 打开的文本
+        close: '关闭',			// 关闭的文本
+        status: 'open',			// 初始状态(可选open || close, 默认是close)
+        beforeClick: val => {			//点击前的回调函数
+          console.log('点击前触发', val);
         },
-        onRender: (arr, time) => {  //  组件渲染完成时执行的事件
-          console.log('组件渲染完成onRender', arr, time);
-        },
-        onShow: day => {	// 选择日期框日期后执行的事件 日期对象 flag 是否当前月 false则表示不在当前月
-          console.log('选择日期框日期后执行的事件', day);
+        afterClick: val => {				//点击后的回调函数
+          console.log('点击后触发', val);
         }
       },
       opTab: 0,
@@ -83,30 +119,28 @@ export default {
       opIpt: `
         &lt;template&gt;
           &lt;div&gt;
-            &lt;zoom-date :op="dateOp"&gt;&lt;/zoom-date&gt;&lt;br&gt;
-            禁用日期选择：&lt;br&gt;
-            &lt;zoom-date :op="dateOp2"&gt;&lt;/zoom-date&gt;
+            &lt;zoom-switch :op="switchOp"&gt;&lt;/zoom-switch&gt;
+            禁用开关:
+            &lt;zoom-switch :op="switchOp2"&gt;&lt;/zoom-switch&gt;
           &lt;/div&gt;
         &lt;/template&gt;
         &lt;script&gt;
           export default {
             data() {
               return {
-                dateOp2: {
+                switchOp2: {
                   isdisabled: true,
-                  dateTime: '2020-02-02'
                 },
-                dateOp: {
-                  isdisabled: false,  //  是否禁用
-                  dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
-                  onComplete: (arr, time) =&gt; {	//	arr是日期数组(年月日周几 + 时分秒)
-                    console.log('组件编译完成onComplete', arr, time);
+                switchOp: {
+                  isdisabled: false,	// 是否禁用 默认false
+                  open: '开启',	        // 打开的文本
+                  close: '关闭',	// 关闭的文本
+                  status: 'open',	// 初始状态(可选open || close, 默认是close)
+                  beforeClick: val => {	//点击前的回调函数
+                    console.log('点击前触发', val);
                   },
-                  onRender: (arr, time) =&gt; {  //  组件渲染完成时执行的事件
-                    console.log('组件渲染完成onRender', arr, time);
-                  },
-                  onShow: day =&gt; {	// 选择日期框日期后执行的事件 日期对象 flag 是否当前月 false则表示不在当前月
-                    console.log('选择日期框日期后执行的事件', day);
+                  afterClick: val => {	//点击后的回调函数
+                    console.log('点击后触发', val);
                   }
                 }
               }
@@ -114,11 +148,8 @@ export default {
           }
         &lt;/script&gt;
       `,
-      ipt:`&lt;zoom-date&gt;&lt;/zoom-date&gt;`
+      ipt:`&lt;zoom-switch open="开启" close="关闭"&gt;&lt;/zoom-switch&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {
@@ -128,29 +159,13 @@ export default {
       this.curTab = index
     },
     prevClick() {
-      this.$router.push('/component/zoom-text-popup');
+      this.$router.push('/component/zoom-date');
     },
     nextClick() {
-      this.$router.push('/component/zoom-switch');
+      this.$router.push('/component/zoom-radio');
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.custom-zoom-date {
-  .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
-      min-height: 400px;
-      .zoom-date {
-        margin: 10px 0;
-      }
-    }
-  }
-  h1,h2 {
-    margin-bottom: 20px;
-  }
-  h3, p {
-    margin-bottom: 10px;
-  }
-}
 </style>

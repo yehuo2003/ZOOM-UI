@@ -20,6 +20,10 @@ export default {
     { path: '/component/zoom-text-popup', component: () => import('../views/component/zoom-text-popup.vue') },  //  text-popup
     { path: '/component/zoom-date', component: () => import('../views/component/zoom-date.vue') },  //  date
     { path: '/component/zoom-switch', component: () => import('../views/component/zoom-switch.vue') },  //  switch
+    { path: '/component/zoom-radio', component: () => import('../views/component/zoom-radio.vue') },  //  radio
+    { path: '/component/zoom-checkbox', component: () => import('../views/component/zoom-checkbox.vue') },  //  checkbox
+    { path: '/component/zoom-form', component: () => import('../views/component/zoom-form.vue') },  //  form
+    { path: '/component/zoom-file-upload', component: () => import('../views/component/zoom-file-upload.vue') },  //  file-upload
     { path: '/test', component: () => import('../views/test.vue') },
   ]
 }

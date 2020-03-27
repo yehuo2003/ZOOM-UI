@@ -70,12 +70,10 @@ export default {
             {title: 'Textpopup弹出编辑', url: '#/component/zoom-text-popup'},
             {title: 'Date日期选择', url: '#/component/zoom-date'},
             {title: 'Switch开关组件', url: '#/component/zoom-switch'},
-            {title: 'Radio单选框', url: '#/component/zom-radio'},
+            {title: 'Radio单选框', url: '#/component/zoom-radio'},
             {title: 'Checkbox复选框', url: '#/component/zoom-checkbox'},
-            {title: 'Form表单组件', url: '#/component/zoom-form', children: [
-              {title: 'FormItem组件', url: '#/component/zoom-form-item'},
-            ]},
-            {title: 'Fileupload文件上传', url: '#/component/zoom-fileupload'},
+            {title: 'Form/Item表单组件', url: '#/component/zoom-form'},
+            {title: 'Fileupload文件上传', url: '#/component/zoom-file-upload'},
           ]},
           {title: '数据组件', children: [
             {title: '分页组件', url: '#/component/zoom-pager'},
