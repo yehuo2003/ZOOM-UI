@@ -1,6 +1,5 @@
 export default {
   path: '/component',
-  name: 'component',
   component: () => import('../views/Component.vue'),
   children: [
     { path: '/', redirect: '/component/zoom-button' },

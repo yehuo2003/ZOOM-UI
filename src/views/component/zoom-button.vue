@@ -87,8 +87,6 @@
       组件暂不支持页面渲染后再改变属性，v-model除外。
     </div>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">自定义主题</zoom-button>
-    <zoom-button @click="nextClick">输入框组件</zoom-button>
   </div>
 </template>
 
@@ -270,12 +268,6 @@ export default {
     },
     sizeChange(index) {
       this.sizeTab = index;
-    },
-    prevClick() {
-      this.$router.push("/component/custom-icon");
-    },
-    nextClick() {
-      this.$router.push("/component/zoom-input");
     }
   }
 };

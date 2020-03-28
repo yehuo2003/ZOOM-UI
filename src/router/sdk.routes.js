@@ -1,6 +1,5 @@
 export default {
   path: '/SDK',
-  name: 'SDK',
   component: () => import('../views/SDK.vue'),
   children: [
     { path: '/', redirect: '/SDK/software-kit' },

@@ -25,8 +25,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">数字框组件</zoom-button>
-    <zoom-button @click="nextClick">验证码组件</zoom-button>
   </div>
 </template>
 <script>
@@ -152,12 +150,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-numeric');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-testing');
     }
   }
 }

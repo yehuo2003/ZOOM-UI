@@ -25,8 +25,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">文字验证码</zoom-button>
-    <zoom-button @click="nextClick">滑块组件</zoom-button>
   </div>
 </template>
 <script>
@@ -151,12 +149,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-testing');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-slider');
     }
   }
 }

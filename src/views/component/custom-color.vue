@@ -74,8 +74,6 @@
         <custom-code :html="color4"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <zoom-button @click="prevClick">自定义主题</zoom-button>
-    <zoom-button @click="nextClick">输入框组件</zoom-button>
   </div>
 </template>
 
@@ -134,12 +132,6 @@ export default {
     },
     sizeChange(index) {
       this.sizeTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/custom-icon');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-input');
     }
   }
 };

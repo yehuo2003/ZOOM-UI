@@ -155,8 +155,6 @@
         <p>用法: 在标签上标记 <span>offset="col偏移数( 1 ~ 12 之间)"</span></p>
       </zoom-panel>
     </div>
-    <zoom-button @click="prevClick">按钮组件</zoom-button>
-    <zoom-button @click="nextClick">下拉框组件</zoom-button>
   </div>
 </template>
 <script>
@@ -259,12 +257,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-button');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-dropdown');
     }
   }
 }

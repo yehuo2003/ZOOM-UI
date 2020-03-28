@@ -18,8 +18,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">表单组件</zoom-button>
-    <zoom-button @click="nextClick">分页组件</zoom-button>
   </div>
 </template>
 <script>
@@ -273,12 +271,6 @@ export default {
   methods: {
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-form');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-pager');
     }
   }
 }

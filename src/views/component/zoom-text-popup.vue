@@ -25,8 +25,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">滑块组件</zoom-button>
-    <zoom-button @click="nextClick">日期选择框组件</zoom-button>
   </div>
 </template>
 <script>
@@ -122,12 +120,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-slider');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-date');
     }
   }
 }

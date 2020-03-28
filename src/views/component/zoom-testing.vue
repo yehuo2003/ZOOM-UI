@@ -54,8 +54,6 @@
       <p>类型: Function</p>
       <p>用法: 配置op对象, 并设置了errMsg后, 设置 testing:val => {}; val为输入框内容, 如果方法返回false则显示errMsg的内容</p>
     </zoom-panel>
-    <zoom-button @click="prevClick">文本域组件</zoom-button>
-    <zoom-button @click="nextClick">滑块验证码</zoom-button>
   </div>
 </template>
 <script>
@@ -128,12 +126,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-textarea');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-captcha');
     }
   }
 }

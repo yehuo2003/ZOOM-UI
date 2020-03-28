@@ -1,15 +1,9 @@
 <template>
   <zoom-layout class="home-layout">
-    <div slot="header">
-      <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
-    </div>
-    <div slot="aside">
-      <zoom-tree-menu style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
-    </div>
-    <main slot="main" class="home-main">
-      <!-- 主体部分 -->
-      <router-view></router-view>
-    </main>
+    <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
+    <zoom-tree-menu slot="aside" style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
+    <!-- 主体部分 -->
+    <router-view slot="main"></router-view>
   </zoom-layout>
 </template>
 
@@ -113,10 +107,11 @@ export default {
 </script>
 <style lang="scss">
 .home-layout {
-  .home-main {
+  .zoom-main {
     padding: 0 50px;
     margin-bottom: 50px;
-    /deep/ .attribute-type {
+    overflow-y: auto;
+    .attribute-type {
       p {
         line-height: inherit;
         .name {

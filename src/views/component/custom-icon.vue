@@ -13,8 +13,6 @@
         <p>{{item.cls}}</p>
       </zoom-col>
     </zoom-row>
-    <zoom-button @click="prevClick">颜色</zoom-button>
-    <zoom-button @click="nextClick">表单组件</zoom-button>
   </div>
 </template>
 <script>
@@ -127,14 +125,6 @@ export default {
         {cls: 'icon-location', name: '定位'},
         {cls: 'icon-logistics', name: '物流'},
       ]
-    }
-  },
-  methods: {
-    prevClick() {
-      this.$router.push('/component/custom-color');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-button');
     }
   }
 };

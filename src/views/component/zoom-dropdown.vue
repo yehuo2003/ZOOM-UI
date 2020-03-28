@@ -36,8 +36,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">输入框组件</zoom-button>
-    <zoom-button @click="nextClick">搜索框组件</zoom-button>
   </div>
 </template>
 <script>
@@ -285,12 +283,6 @@ export default {
     },
     loadChange(index) {
       this.loadTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-input');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-search');
     }
   }
 }

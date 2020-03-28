@@ -1,6 +1,5 @@
 export default {
   path: '/develop',
-  name: 'develop',
   component: () => import('../views/develop.vue'),
   children: [
     { path: '/', redirect: '/develop/setting' },

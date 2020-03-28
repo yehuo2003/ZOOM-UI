@@ -28,8 +28,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">开关组件组件</zoom-button>
-    <zoom-button @click="nextClick">复选框组件</zoom-button>
   </div>
 </template>
 <script>
@@ -197,12 +195,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-switch');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-checkbox');
     }
   }
 }

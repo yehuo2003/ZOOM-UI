@@ -25,8 +25,6 @@
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
-    <zoom-button @click="prevClick">按钮组件</zoom-button>
-    <zoom-button @click="nextClick">下拉框组件</zoom-button>
   </div>
 </template>
 <script>
@@ -217,12 +215,6 @@ export default {
     },
     tabChange(index) {
       this.curTab = index
-    },
-    prevClick() {
-      this.$router.push('/component/zoom-button');
-    },
-    nextClick() {
-      this.$router.push('/component/zoom-dropdown');
     }
   }
 }
