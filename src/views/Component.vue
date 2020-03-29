@@ -3,7 +3,12 @@
     <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
     <zoom-tree-menu slot="aside" style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
     <!-- 主体部分 -->
-    <router-view slot="main"></router-view>
+      <zoom-layout slot="main">
+        <h1 class="component-header" slot="header">
+          {{nowTitle}}
+        </h1>
+        <router-view slot="main"></router-view>
+      </zoom-layout>
     <div slot="footer">
       <p @click="toClick(leftUrl)" v-show="leftTitle" style="float: left;">
         <span class="zoom-icon icon-left"></span>
@@ -26,13 +31,14 @@ export default {
       rightTitle: null,
       leftUrl: null,
       rightUrl: null,
+      nowTitle: null,
       list: [],
       list2: [
         {title: '框架风格', children: [
           {title: 'Color色彩', url: '#/component/custom-color'},
           {title: 'Layout布局', url: '#/component/custom-layout'},
-          {title: 'Icon图标', url: '#/component/custom-icon'},
-          {title: '栅格布局', url: '#/component/zoom-row-col'},
+          {title: 'Icon字体图标', url: '#/component/custom-icon'},
+          {title: 'Row/Col栅格布局', url: '#/component/zoom-row-col'},
         ]},
         {title: '导航组件', url: '', children: [
           {title: 'Breadcrumb面包屑', url: '#/component/zoom-breadcrumb'},
@@ -42,12 +48,10 @@ export default {
         ]},
         {title: '容器组件', url: '', children: [
           {title: 'Carousel轮播图', url: '#/component/zoom-carousel'},
-          {title: '卡片容器', children: [
-            {title: 'Card卡片组件', url: '#/component/zoom-card'},
-            {title: 'Dialogbox对话框组件', url: '#/component/zoom-dialogbox'},
-            {title: 'Tabs页组件', url: '#/component/zoom-tabs'},
-            {title: 'Panel折叠面板', url: '#/component/zoom-panel'}
-          ]}
+          {title: 'Card卡片组件', url: '#/component/zoom-card'},
+          {title: 'Dialogbox对话框组件', url: '#/component/zoom-dialog-box'},
+          {title: 'Tabs页组件', url: '#/component/zoom-tabs'},
+          {title: 'Panel折叠面板', url: '#/component/zoom-panel'}
         ]},
         {title: '表单组件', children: [
           {title: 'Button按钮', url: '#/component/zoom-button'},
@@ -164,6 +168,7 @@ export default {
       this.list.forEach((item, index) => {
         if (item.url === current) {
           currentIndex = index;
+          this.nowTitle = item.title;
         }
       })
       if (this.list[currentIndex - 1]) {
@@ -184,6 +189,10 @@ export default {
 </script>
 <style lang="scss">
 .home-layout {
+  .component-header {
+    padding: 0 50px;
+    color: #333;
+  }
   .zoom-footer {
     padding: 0 50px;
     p {
@@ -208,11 +217,15 @@ export default {
     }
     &::-webkit-scrollbar-thumb {
       position: absolute;
-      border-radius: 10px;
-      -webkit-box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
-      box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
-      background: rgba(85,85,85, .5);
-      opacity: .5;
+      background: #fff;
+    }
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
+        box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
+        background: rgba(85,85,85, .5);
+      }
     }
     &::-webkit-scrollbar-track {/*滚动条里面轨道*/
       -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);

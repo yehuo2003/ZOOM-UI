@@ -1,6 +1,5 @@
 <template>
   <div class="custom-color">
-    <h1>Color色彩</h1>
     <!-- 普通 -->
     <h2>色彩类型</h2>
     <h3>对于色彩类型一共有五种</h3>

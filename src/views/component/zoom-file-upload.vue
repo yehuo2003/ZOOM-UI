@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-file-upload">
-    <h1>文件上传组件</h1>
     <!-- 普通 -->
     <div class="tip">
       zoom-ui提供了强大的文件上传组件，组件分为三种模式，一种是列表模式，一种缩略图模式，用户可以自由切换，还有一种自定义模式，

@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-date">
-    <h1>日期选择组件</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">

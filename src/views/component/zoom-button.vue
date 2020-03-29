@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-button">
-    <h1>Button组件</h1>
     <!-- 普通 -->
     <h2>基本用法</h2>
     <p>基础按钮的用法</p>

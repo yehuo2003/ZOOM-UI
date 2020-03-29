@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-form">
-    <h1>开关组件</h1>
     <!-- 普通 -->
     <div class="tip">
       zoom-ui的form表单组件提供了强大的表单功能，在表单中每个条目默认为块级元素，也可以更改为行内元素，此外表单还提供了一键验证功能，用于自定义验证表单中所有zoom-ui的表单组件，

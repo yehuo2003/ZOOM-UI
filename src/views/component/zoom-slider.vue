@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-slider">
-    <h1>滑块组件</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">

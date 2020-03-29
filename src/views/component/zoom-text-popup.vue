@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-text-popup">
-    <h1>弹出编辑</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">

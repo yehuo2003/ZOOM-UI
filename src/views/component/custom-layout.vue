@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-layout">
-    <h1>Layout布局</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <div class="tip">

@@ -7,6 +7,15 @@ export default {
     { path: '/component/custom-icon', component: () => import('../views/component/custom-icon.vue') },  //  icon
     { path: '/component/custom-layout', component: () => import('../views/component/custom-layout.vue') },  //  layout
     { path: '/component/zoom-row-col', component: () => import('../views/component/zoom-row-col.vue') },  //  row-col
+    { path: '/component/zoom-breadcrumb', component: () => import('../views/component/zoom-breadcrumb.vue') },  //  breadcrumb
+    { path: '/component/zoom-nav-menu', component: () => import('../views/component/zoom-nav-menu.vue') },  //  nav-menu
+    { path: '/component/zoom-floatbar', component: () => import('../views/component/zoom-floatbar.vue') },  //  floatbar
+    { path: '/component/zoom-tree-menu', component: () => import('../views/component/zoom-tree-menu.vue') },  //  tree-menu
+    { path: '/component/zoom-carousel', component: () => import('../views/component/zoom-carousel.vue') },  //  carousel
+    { path: '/component/zoom-card', component: () => import('../views/component/zoom-card.vue') },  //  card
+    { path: '/component/zoom-dialog-box', component: () => import('../views/component/zoom-dialogbox.vue') },  //  dialog-box
+    { path: '/component/zoom-tabs', component: () => import('../views/component/zoom-tabs.vue') },  //  tabs
+    { path: '/component/zoom-panel', component: () => import('../views/component/zoom-panel.vue') },  //  panel
     { path: '/component/zoom-button', component: () => import('../views/component/zoom-button.vue') },  //  button
     { path: '/component/zoom-input', component: () => import('../views/component/zoom-input.vue') },  //  input
     { path: '/component/zoom-dropdown', component: () => import('../views/component/zoom-dropdown.vue') },  //  dropdown
@@ -23,6 +32,7 @@ export default {
     { path: '/component/zoom-checkbox', component: () => import('../views/component/zoom-checkbox.vue') },  //  checkbox
     { path: '/component/zoom-form', component: () => import('../views/component/zoom-form.vue') },  //  form
     { path: '/component/zoom-file-upload', component: () => import('../views/component/zoom-file-upload.vue') },  //  file-upload
+    { path: '/component/zoom-pager', component: () => import('../views/component/zoom-pager.vue') },  //  pager
     { path: '/test', component: () => import('../views/test.vue') },
   ]
 }

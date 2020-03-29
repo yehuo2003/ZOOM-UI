@@ -1,6 +1,5 @@
 <template>
   <div class="custom-zoom-captcha">
-    <h1>滑块验证码</h1>
     <!-- 普通 -->
     <h2>使用方法</h2>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
@@ -170,12 +169,6 @@ export default {
         margin-top: 200px;
       }
     }
-  }
-  h1,h2 {
-    margin-bottom: 20px;
-  }
-  h3, p {
-    margin-bottom: 10px;
   }
 }
 </style>
