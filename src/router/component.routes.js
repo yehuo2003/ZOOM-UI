@@ -33,6 +33,13 @@ export default {
     { path: '/component/zoom-form', component: () => import('../views/component/zoom-form.vue') },  //  form
     { path: '/component/zoom-file-upload', component: () => import('../views/component/zoom-file-upload.vue') },  //  file-upload
     { path: '/component/zoom-pager', component: () => import('../views/component/zoom-pager.vue') },  //  pager
+    { path: '/component/zoom-grid', component: () => import('../views/component/zoom-grid.vue') },  //  grid
+    { path: '/component/zoom-transfer', component: () => import('../views/component/zoom-transfer.vue') },  //  transfer
+    { path: '/component/zoom-alert', component: () => import('../views/component/zoom-alert.vue') },  //  alert
+    { path: '/component/zoom-popup', component: () => import('../views/component/zoom-popup.vue') },  //  popup
+    { path: '/component/zoom-tip', component: () => import('../views/component/zoom-tip.vue') },  //  tip
+    { path: '/component/zoom-loading', component: () => import('../views/component/zoom-loading.vue') },  //  loading
+    { path: '/component/zoom-logout', component: () => import('../views/component/zoom-logout.vue') },  //  logout
     { path: '/test', component: () => import('../views/test.vue') },
   ]
 }

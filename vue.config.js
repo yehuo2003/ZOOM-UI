@@ -31,16 +31,16 @@ module.exports = {
   devServer: {
     compress: false,  //  开启压缩
     open: true, //  自动开启浏览器
-    proxy: {
-      '/apply' : {
-        target: 'http://www.xxxxxx.com',  //  需要代理的服务器地址
-        ws: true, //websocket 与后台形成一个通道  持续的
-        changeOrigin: true, //  是否允许跨域
-        pathRewrite: {  //  重写
-          '/apply': '/'
-        }
-      }
-    }
+    // proxy: {
+    //   '/apply' : {
+    //     target: 'http://www.xxxxxx.com',  //  需要代理的服务器地址
+    //     ws: true, //websocket 与后台形成一个通道  持续的
+    //     changeOrigin: true, //  是否允许跨域
+    //     pathRewrite: {  //  重写
+    //       '/apply': '/'
+    //     }
+    //   }
+    // }
   },
   // css 相关配置
   css: {

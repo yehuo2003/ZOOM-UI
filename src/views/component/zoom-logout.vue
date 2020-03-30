@@ -1,26 +1,25 @@
 <template>
-  <div class="custom-zoom-pager">
+  <div class="custom-zoom-logout">
     <!-- 普通 -->
     <h2>使用方法</h2>
     <div class="tip">
-      zoom-ui提供了强大的分页组件, 可以配合表格组件或者其他组件一起使用<br>
-      需要对分页组件配置op对象, 并配置相应信息<br>
-      分页组件还提供了多个点击事件, 来方便开发者使用
+      zoom-ui提供的注销组件, 以a标签形式, 默认文字为"注销", 可自行修改<br>
+      点击注销后清空cookie缓存, 并刷新页面, 如果有指定的url则进行跳转
     </div>
     <h2>基础使用</h2>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-pager :op="pagerOp"></zoom-pager>
+        <zoom-logout></zoom-logout>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="ipt"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h2>迷你版</h2>
-    <p>可对<span>title</span>绑定自定义html片段</p>
+    <h2>个性化设置</h2>
+    <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
     <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-pager :op="miniOp"></zoom-pager>
+        <zoom-logout :op="logoutOp"></zoom-logout>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="opIpt"></custom-code>
@@ -103,51 +102,33 @@ export default {
           ]
         }
       ],
-      pagerOp: {
-        pageSizes: [5, 10, 20],	// 可选择每页展示数量
-        mode: 'Number',	// 展示模式 mini为简单版, Number为完全版 默认Number
-        pageVal: {
-          total: 100,	// 总条数
-          curPage: 3,	// 展示的当前页
-          pageSize: 20	// 每页要展示多少条数据
-        },
-        pageSizeSkip: (val, pageVal) => {
-          this.pageSize = val;	// 每页大小的下拉框数据发生改变事件
-        },
-        beforeSkip: (val, pageVal) => {
-          console.log('要跳转到',val);	//跳转前事件
-        },
-        skip: (val, pageVal) => {
-          console.log('当前页是',val);	//点击跳转触发获取当前页
-        }
-      },
-      miniOp: {
-        mode: 'mini',
-        pageVal: {
-          total: 100,	// 总条数
-          curPage: 1,	// 展示的当前页
-          pageSize: 20	// 每页要展示多少条数据
-        }
+      logoutOp: {
+        url: '/',  //  注销后要跳转的url
+        point: true,  //  是否需要提示
+        onClick: () => {
+          console.log('注销');
+        }, //  点击事件
+        text: '注销登录'  //  文字内容, 默认为注销
       },
       opTab: 0,
       curTab: 0,
       opIpt: `
         &lt;template&gt;
           &lt;div&gt;
-            &lt;zoom-pager :op="miniOp"&gt;&lt;/zoom-pager&gt;
+            &lt;zoom-logout :op="logoutOp"&gt;&lt;/zoom-logout&gt;
           &lt;/div&gt;
         &lt;/template&gt;
         &lt;script&gt;
           export default {
             data() {
               return {
-                miniOp: {
-                mode: 'mini',
-                  pageVal: {
-                    total: 100,	// 总条数
-                    curPage: 1,	// 展示的当前页
-                    pageSize: 20	// 每页要展示多少条数据
-                  }
+                logoutOp: {
+                  url: '/',  //  注销后要跳转的url
+                  point: true,  //  是否需要提示
+                  onClick: () =&gt; {
+                    console.log('注销');
+                  }, //  点击事件
+                  text: '注销登录'  //  文字内容, 默认为注销
                 }
               }
             }
@@ -155,45 +136,15 @@ export default {
         &lt;/script&gt;
       `,
       ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-pager :op="pagerOp"&gt;&lt;/zoom-pager&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                pagerOp: {
-                  pageSizes: [5, 10, 20],	// 可选择每页展示数量
-                  mode: 'Number',	// 展示模式 mini为简单版, Number为完全版 默认Number
-                  pageVal: {
-                    total: 100,	// 总条数
-                    curPage: 3,	// 展示的当前页
-                    pageSize: 20	// 每页要展示多少条数据
-                  },
-                  pageSizeSkip: (val, pageVal) =&gt; {
-                    this.pageSize = val;	// 每页大小的下拉框数据发生改变事件
-                  },
-                  beforeSkip: (val, pageVal) =&gt; {
-                    console.log('要跳转到',val);	//跳转前事件
-                  },
-                  skip: (val, pageVal) =&gt; {
-                    console.log('当前页是',val);	//点击跳转触发获取当前页
-                  }
-                }
-              }
-            }
-          }
-        &lt;/script&gt;
+        &lt;zoom-logout&gt;&lt;/zoom-logout&gt;
       `
     }
   },
   methods: {
-    pager2Num() {
+    logout2Num() {
       console.log('滑块2当前值是' + this.num2);
     },
-    pager1Num() {
+    logout1Num() {
       console.log('滑块1当前值是' + this.num1);
     },
     opChange(index) {
@@ -205,12 +156,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.custom-zoom-pager {
-  .basic {
-    /deep/ .content-active {
-      min-height: 180px;
-    }
-  }
-}
-</style>
