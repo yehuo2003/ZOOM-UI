@@ -1,6 +1,5 @@
 <template>
   <zoom-layout class="home-layout">
-    <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
     <zoom-tree-menu slot="aside" style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
     <!-- 主体部分 -->
     <router-view slot="main"></router-view>
@@ -12,26 +11,15 @@ export default {
   data() {
     //数据属性
     return {
-      titleOp: {  //  顶部导航栏
-        data: [
-          {title: '首页', url: '#/'},
-          {title: '环境搭建', url: '#/develop/'},
-          {title: '组件', url: '#/component/'},
-          {title: '软件开发包', url: '#/SDK'},
-          {title: '更多'}
-        ]
-      },
       navOp: {  //  侧边栏
         accordion: true,
-        data: [
-          {title: '环境准备', url: '#/develop/setting '},  //  安装
-          {title: '组件安装', url: '#/develop/install-develop'},
-          {title: '快速上手', url: '#/develop/use-develop'},
-          {title: '组件升级', url: '#/develop/upgrade'},  //  升级
-        ]
+        data: []
       }
     };
   },
+  created () {
+    this.navOp.data = this.$store.state.devList;
+  }
 };
 </script>
 <style lang="scss">

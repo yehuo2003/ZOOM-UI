@@ -1,19 +1,20 @@
 <template>
   <div>
-    <zoom-logout :op="logoutOp"></zoom-logout>
+    <zoom-gallery :op="op"></zoom-gallery>
   </div>
 </template>
 <script>
   export default {
     data() {
       return {
-        logoutOp: {
-          url: '/',  //  注销后要跳转的url
-          point: true,  //  是否需要提示
-          onClick: () => {
-            console.log('注销');
-          }, //  点击事件
-          text: '注销登录'  //  文字内容, 默认为注销
+        op: {
+          showZoom: true, //  是否开启放大镜功能, 默认false
+          data: [ //  图片以数组方式保存
+            // require('./static/1.jpg'),
+            // require('./static/2.jpg'),
+            // require('./static/3.jpg'),
+            // require('./static/4.jpg')
+          ]
         }
       }
     }

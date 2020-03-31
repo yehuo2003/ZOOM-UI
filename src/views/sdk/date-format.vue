@@ -1,6 +1,6 @@
 <template>
   <div class="install-develop">
-    <h1>SDK</h1>
+    <h1>日期格式化</h1>
     <h2>$zoom</h2>
     <h3>使用npm安装</h3>
     <custom-code :html="npm"></custom-code>

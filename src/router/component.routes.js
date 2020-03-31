@@ -40,6 +40,14 @@ export default {
     { path: '/component/zoom-tip', component: () => import('../views/component/zoom-tip.vue') },  //  tip
     { path: '/component/zoom-loading', component: () => import('../views/component/zoom-loading.vue') },  //  loading
     { path: '/component/zoom-logout', component: () => import('../views/component/zoom-logout.vue') },  //  logout
+    { path: '/component/zoom-userinfo', component: () => import('../views/component/zoom-userinfo.vue') },  //  userinfo
+    { path: '/component/zoom-photo', component: () => import('../views/component/zoom-photo.vue') },  //  photo
+    { path: '/component/zoom-rate', component: () => import('../views/component/zoom-rate.vue') },  //  rate
+    { path: '/component/zoom-notice', component: () => import('../views/component/zoom-notice.vue') },  //  notice
+    { path: '/component/zoom-tag', component: () => import('../views/component/zoom-tag.vue') },  //  tag
+    { path: '/component/zoom-link', component: () => import('../views/component/zoom-link.vue') },  //  link
+    { path: '/component/zoom-progress', component: () => import('../views/component/zoom-progress.vue') },  //  progress
+    { path: '/component/zoom-gallery', component: () => import('../views/component/zoom-gallery.vue') },  //  gallery
     { path: '/test', component: () => import('../views/test.vue') },
   ]
 }
