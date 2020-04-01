@@ -1,86 +1,125 @@
 <template>
-  <div class="install-develop">
+  <div class="cookie-operation">
     <h1>cookie操作</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+    <h2>cookie-operation</h2>
+    <div class="tip">
+      zoom-ui基于window.cookie封装的一套可供用户极简化操作cookie的API
+      <br />除了对cookie进行简单的增删改查以外, 还可以对cookie设置子项, 也就是以对象方式存入cookie
+      <br />该操作可以作为全局存值的一种方法
+    </div>
+    <h2>set</h2>
+    <h3>设置一条完整的cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.set(name, subCookies, expires, domain, path, secure)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，必填</span>、<br>
+      <span>subCookies : 表示cookie的值，为一个对象，必填</span>、<br>
+      <span>expires : 表示cookie的过期时间，可以不填</span>、<br>
+      <span>domain : 表示cookie的域名，可以不填</span>、<br>
+      <span>path : 表示cookie的路径，可以不填</span>、<br>
+      <span>secure : 表示cookie的安全标志，可以不填</span>
+    </p>
+    <custom-code :html="set"></custom-code>
+    <h2>setChild</h2>
+    <h3>设置一条子cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.setChild(name, subName, value, expires, domain, path, secure)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，必填</span>、<br>
+      <span>subName : 表示子cookie的名称，必填</span>、<br>
+      <span>value : 表示子cookie的值，必填</span>、<br>
+      <span>expires : 表示cookie的过期时间，可以不填</span>、<br>
+      <span>domain : 表示cookie的域名，可以不填</span>、<br>
+      <span>path : 表示cookie的路径，可以不填</span>、<br>
+      <span>secure : 表示cookie的安全标志，可以不填</span>
+    </p>
+    <custom-code :html="setChild"></custom-code>
+    <h2>get</h2>
+    <h3>读取一条完整cookie, 如果没传参数则默认读取所有cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.get(name)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，不填默认获取所有cookie</span>
+    </p>
+    <custom-code :html="get"></custom-code>
+    <h2>getChild</h2>
+    <h3>读取一条子cookie的值</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.getChild(name, subName)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，必填</span>、<br>
+      <span>subName : 表示子cookie的名称</span>、
+    </p>
+    <custom-code :html="getChild"></custom-code>
+    <h2>del</h2>
+    <h3>删除一条完整cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.del(name, domain, path, secure)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，必填</span>、<br>
+      <span>domain : 表示cookie的域名，可以不填</span>、<br>
+      <span>path : 表示cookie的路径，可以不填</span>、<br>
+      <span>secure : 表示cookie的安全标志，可以不填</span>
+    </p>
+    <custom-code :html="del"></custom-code>
+    <h2>delChild</h2>
+    <h3>删除一条子cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.delChild(name, subName, domain, path, secure)</span>
+    </p>
+    <p>
+      参数说明: <br>
+      <span>name : 表示cookie的名称，必填</span>、<br>
+      <span>subCookies : 表示cookie的值，为一个对象，必填</span>、<br>
+      <span>domain : 表示cookie的域名，可以不填</span>、<br>
+      <span>path : 表示cookie的路径，可以不填</span>、<br>
+      <span>secure : 表示cookie的安全标志，可以不填</span>
+    </p>
+    <custom-code :html="delChild"></custom-code>
+    <h2>clear</h2>
+    <h3>清除当前所有cookie</h3>
+    <p>
+      调用方法:
+      <span>this.$zoom.cookie.clear()</span>
+    </p>
+    <custom-code :html="clear"></custom-code>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
-      `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
-          &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
-        &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
-              }
-            };
-          },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
-          }
-        }
-        &lt;/style&gt;
-      `
+      set: `this.$zoom.cookie.set("info", { name : "zoom", age : 23});`,
+      setChild: `this.$zoom.cookie.setChild("info", "sex", "boy");`,
+      get: `this.$zoom.cookie.get("info");`,
+      del: `this.$zoom.cookie.del("info");`,
+      getChild: `this.$zoom.cookie.getChild("info", "name");`,
+      delChild: `this.$zoom.cookie.delChild("info", "name");`,
+      clear: `this.$zoom.cookie.clear();`
     };
-  },
-  methods: {
-    nextClick() {
-      this.$router.push('/component/custom-color');
-    }
   }
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
-  h1,h2 {
+.cookie-operation {
+  h1,
+  h2 {
     margin-bottom: 20px;
   }
   h3 {

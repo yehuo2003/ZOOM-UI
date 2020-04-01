@@ -1,85 +1,78 @@
 <template>
-  <div class="install-develop">
+  <div class="internationalisation">
     <h1>国际化</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+    <h2>internationalisation</h2>
+    <div class="tip">
+      zoom-ui内部封装的国际化组件, 目前zoom-ui已经引入了三种语言国际化，分别是：简体中文（zh）、英文（en）、日文（ja）<br>
+      用户可以根据自己需要，添加自己需要的国际化语言或者国际化文件，并且可以在项目内自由切换国际化语言
+    </div>
+    <h3>获取当前国际化</h3>
+    <p>通过调用<span>this.$zoom.getLanguage()</span>, 返回当前所有国际化信息</p>
+    <custom-code :html="getLanguage"></custom-code>
+    <h3>设置/修改国际化</h3>
+    <p>通过调用<span>this.$zoom.setLanguage(lang)</span>, 可以设置/修改国际化, 并返回当前最新所有国际化信息</p>
+    <p>因为个别浏览器以及缓存原因, 如果切换了国际化后未立马生效请刷新浏览器</p>
+    <custom-code :html="setLanguage"></custom-code>
+    <h3>使用国际化展示</h3>
+    <p>确保国际化名称正常, 可使用<span>$zoom.$t("国际化名称")</span>来展示国际化</p>
+    <custom-code :html="use"></custom-code>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
+      getLanguage: `
+        this.$zoom.getLanguage();
+        /**
+         * return {
+         *   locale: "zh",
+         *   detail: {  //  当前所有语言详情
+         *     en: {'xxx': 'xxx'}, // 英文
+         *     zh: {'xx': 'xxx'}  //  中文
+         *     ...
+         *   }
+         * };
+         */
       `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
-          &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
-        &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
+      setLanguage: `
+        let lang = {
+          locale: 'en',	//	要修改的语言
+          detail: { //  要设置/修改的国际化
+              zh: {
+                'set.success': '设置成功',
+                'set.failed': '设置失败'
+              },
+              en: {
+                'set.success': 'set success',
+                'set.failed': 'set failed',
               }
-            };
           },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
-          }
+          ...
         }
-        &lt;/style&gt;
-      `
+        this.$zoom.setLanguage(lang);
+        //  return {locale: "en", detail: {en: {'xxx': 'xxx'}, zh: {'xx': 'xxx'}, ... }};  //  返回设置完的最新国际化
+      `,
+      use: `
+        &lt;template&gt;
+          &lt;div&gt;
+            &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/template&gt;
+        &lt;script&gt;
+          export default {
+            created() {
+              console.log(this.$zoom.$t("search.msg"), 'this.$zoom.$t("search.msg")');
+            }
+          }
+        &lt;/script&gt;
+      `,
     };
-  },
-  methods: {
-    nextClick() {
-      this.$router.push('/component/custom-color');
-    }
   }
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
+.internationalisation {
   h1,h2 {
     margin-bottom: 20px;
   }

@@ -1,85 +1,39 @@
 <template>
-  <div class="install-develop">
+  <div class="zoom-directive">
     <h1>zoom内置指令</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+    <h2>directive</h2>
+    <div class="tip">
+      zoom-ui基于vue封装的扩展指令、目前有自动聚焦、自由拖拽、提示和懒加载功能<br>
+      用户需要使用可根据规范，在DOM标签上直接通过 v-标签 的形式直接使用。
+    </div>
+    <h3>v-focus</h3>
+    <p>自动聚焦指令, 仅限在非禁用状态下的 <span>input</span> 组件内使用, 使用后, 当用户浏览此页面时, 光标自动聚焦在该输入框中</p>
+    <custom-code :html="focus"></custom-code>
+    <h3>v-drag</h3>
+    <p>自由拖拽指令, 可以在任意标签上使用, 但是该元素必须要设置属性<span>position: absolute;</span>或<span>position: relative;</span>或<span>position: fixed;</span>,使用前确保该属性已脱离文档流</p>
+    <custom-code :html="drag"></custom-code>
+    <h3>v-lazyload</h3>
+    <p>图片懒加载, 只能对图片标签使用, 取代<span>src</span>属性, 引用后, 图片将自动开启懒加载功能</p>
+    <custom-code :html="lazyload"></custom-code>
+    <h3>v-tip</h3>
+    <p>tip提示, 可在任意标签上使用, 绑定tip内容, 个性化操作请看 <a href="#/component/zoom-tip">Tip文字提示</a></p>
+    <custom-code :html="tip" cls="javascript"></custom-code>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
-      `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
-          &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
-        &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
-              }
-            };
-          },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
-          }
-        }
-        &lt;/style&gt;
-      `
+      focus: '&lt;input v-focus type="text"&gt;',
+      drag: '&lt;div v-drag style="position: relative;"&gt;自由拖拽&lt;/div&gt;',
+      lazyload: '&lt;img v-lazyload="src"&gt;',
+      tip: `&lt;span v-tip="'提示文字内容'"&gt;一段文字&lt;/span&gt;`
     };
-  },
-  methods: {
-    nextClick() {
-      this.$router.push('/component/custom-color');
-    }
   }
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
+.zoom-directive {
   h1,h2 {
     margin-bottom: 20px;
   }

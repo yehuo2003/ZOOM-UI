@@ -92,5 +92,24 @@ export default {
       z-index: 999;
     }
   }
+  .attribute-type {
+    p {
+      line-height: inherit;
+    }
+    p.panel-title {
+      span:first-child {
+        background: none;
+        color: #209dd5;
+        font-weight: bold;
+        font-size: 16px;
+      }
+      span:last-child {
+        background: none;
+        padding-left: 10px;
+        font-size: 12px;
+        color: #969696;
+      }
+    }
+  }
 }
 </style>

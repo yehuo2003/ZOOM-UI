@@ -1,74 +1,83 @@
 <template>
-  <div class="install-develop">
-    <h1>SDK 说明</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+  <div class="explanation">
+    <h1>SDK说明</h1>
+    <h2>Software Development Kit</h2>
+    <div class="tip">
+      Software Development Kit软件开发包是zoom-ui基于vue和原生js，封装的一套函数库，其中包含一些常用的方法以及指令，已经集成到zoom-ui中，用户无需额外引入，即可直接调用。<br>
+      用户也可以根据自己的习惯，对于该方法再次进行封装。在使用过程中请根据手册遵守zoom-ui的SDK使用规范，这样可以帮助大家更好的进行开发。
+    </div>
+    <h2>SDK方法一览</h2>
+    <attribute :list="attributeList"></attribute>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
-      `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
-          &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
-        &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
-              }
-            };
-          },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
-          }
+      attributeList: [
+        {
+          id: 1,
+          title: "方法",
+          content: [
+            {
+              id: 1,
+              title: "内置扩展指令",
+              name: "directive",
+              type: "Function",
+              text: "参数: <span>focus</span>、<span>drag</span>、<span>tip</span>、<span>lazyupload</span>",
+              text2: '用法: 直接在需要用到的标签上写上如: <span>v-focus</span>, 具体用法参考: <a href="#/SDK/zoom-directive">内置扩展指令</a>'
+            },
+            {
+              id: 2,
+              title: "国际化",
+              name: "internationalisation",
+              type: "Function",
+              text: "先要按照指定方式导入国际化文件, zoom-ui也集成了部分国际化, 可以直接使用",
+              text2: '用法:DOM元素内 <span>$zoom.$t("国际化名")</span>, js中使用: <span>this.$zoom.$t("国际化名")</span>, 具体用法参考: <a href="#/SDK/internationalisation">国际化</a>'
+            },
+            {
+              id: 3,
+              title: "DOM操作指令",
+              name: "dom-operation",
+              type: "Function",
+              text: "zoom-ui内部封装的类似于<span>jQuery</span>的选择器, 操作方法<span>jQuery</span>大致相同, 虽然没有<span>jQuery</span>功能全面, 但是胜在体积小方便操作, 如果需要更复杂的操作可以引入<span>jQuery</span>",
+              text2: '用法: 用过命令: <span>$("元素")</span>或者<span>$Z("元素")</span>可以获取DOM元素, 然后再进行增删改查操作, 具体用法参考: <a href="#/SDK/dom-operation">DOM操作指令</a>'
+            },
+            {
+              id: 4,
+              title: "日期格式化",
+              name: "date-format",
+              type: "Function",
+              text: "传入需要格式化的日期和需要格式化的形式, 函数会自动返回开发者想要的时间格式",
+              text2: '用法: 调用方法: <span>this.$zoom.dateFormat("YYYY-mm-dd HH:MM", date)</span>, 具体用法参考: <a href="#/SDK/date-format">日期格式化</a>'
+            },
+            {
+              id: 5,
+              title: "cookie操作",
+              name: "cookie-operation",
+              type: "Function",
+              text: "zoom-ui封装的一套对于cookie增删改查等一系列的复杂操作",
+              text2: '用法: 调用方法: <span>this.$zoom.cookie.func</span>, 具体用法参考: <a href="#/SDK/cookie-operation">cookie操作</a>'
+            },
+            {
+              id: 6,
+              title: "深拷贝",
+              name: "copy-clone",
+              type: "Function",
+              text: "可用于对复杂对象、数组、多维数组、数组对象等等进行深拷贝操作",
+              text2: '用法: 调用方法: <span>this.$zoom.clone("拷贝对象")</span>, 具体用法参考: <a href="#/SDK/copy-clone">深拷贝</a>'
+            },
+            {
+              id: 7,
+              title: "随机数/颜色",
+              name: "random",
+              type: "Function",
+              text: "获得一个自定义范围内的随机数/颜色",
+              text2: '用法: 调用方法: <span>this.$zoom.$rn("随机数范围")</span>, 随机颜色: <span>this.$zoom.$rc("随机颜色范围")</span>, 具体用法参考: <a href="#/SDK/random">随机数/颜色</a>'
+            }
+          ]
         }
-        &lt;/style&gt;
-      `
+      ]
     };
   },
   methods: {
@@ -79,7 +88,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
+.explanation {
   h1,h2 {
     margin-bottom: 20px;
   }

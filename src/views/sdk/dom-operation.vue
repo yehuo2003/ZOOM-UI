@@ -1,71 +1,107 @@
 <template>
-  <div class="install-develop">
+  <div class="dom-operation">
     <h1>DOM操作</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+    <h2>dom-operation</h2>
+    <div class="tip">
+      zoom-ui内部封装的极简化轻量级的DOM操作工具, 可以用来简单查找, 操作DOM元素<br>
+      操作方法和jQuery大致相同, 功能方面较为简单, 够满足用户一般操作, 可以进行链式调用<br>
+      如果需要进行更多复杂的操作, 建议引入jQuery组件
+    </div>
+    <h3>查找DOM元素</h3>
+    <p>直接通过<span>$("元素")</span>来获取要查找的DOM元素, 可在mounted声明周期内使用</p>
+    <custom-code :html="select"></custom-code>
+    <h3>链式操作</h3>
+    <p>请看以下例子</p>
+    <custom-code :html="chain"></custom-code>
+    <attribute :list="attributeList"></attribute>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
-      `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "获取DOM元素",
+              name: "$",
+              type: "Function",
+              text: "查找DOM元素",
+              text2: '用法: 调用方法<span>$("元素")</span>'
+            },
+            {
+              id: 2,
+              title: "查找元素",
+              name: "find",
+              type: "Function",
+              text: "查找当前元素下的某个元素",
+              text2: '用法: 调用方法<span>$("元素").find("要查找的元素")</span>'
+            },
+            {
+              id: 3,
+              title: "选取第n个元素",
+              name: "eq",
+              type: "Function",
+              text: "选择第几个元素 下标从0开始",
+              text2: '用法: 调用方法<span>$("元素").eq(n)</span>'
+            },
+            {
+              id: 4,
+              title: "删除元素",
+              name: "remove",
+              type: "Function",
+              text: "可删除指定元素",
+              text2: '用法: 调用方法<span>$("元素").remove("要删除的元素")</span>'
+            },
+            {
+              id: 5,
+              title: "新增class",
+              name: "addClass",
+              type: "Function",
+              text: "要新增的class",
+              text2: '用法: 调用方法<span>$("元素").addClass("class")</span>'
+            },
+            {
+              id: 6,
+              title: "设置文本内容",
+              name: "setText",
+              type: "Function",
+              text: "设置选中标签的文本内容",
+              text2: '用法: 调用方法<span>$("元素").setText("文本内容")</span>'
+            }
+          ]
+        }
+      ],
+      select: '$(DOM) // return DOM Object',
+      chain: `
+        &lt;template&gt;
+          &lt;div&gt;
+            &lt;div&gt;
+              &lt;p class="p1"&gt;111&lt;/p&gt;
+              &lt;p class="p-con"&gt;222&lt;/p&gt;
+              &lt;p&gt;333&lt;/p&gt;
+              &lt;p class="p4"&gt;444&lt;/p&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
+        &lt;/template&gt;
         &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
-              }
-            };
-          },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
+          export default {
+            mounted () {
+              $('.p1').addClass('blue'); // 添加class
+              $('.p4').setText('666666666666');	//	设置文本内容
+              $('div').find('p').eq(1).setText(66666666666).addClass('blue');	//	链式操作
+              let title = $Z('.p-con');	//	获取元素
+              console.log(title,'sss');
+            }
           }
+        &lt;/script&gt;
+        &lt;style&gt;
+        .blue {
+          color: blue !important;
         }
         &lt;/style&gt;
       `
@@ -79,7 +115,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
+.dom-operation {
   h1,h2 {
     margin-bottom: 20px;
   }

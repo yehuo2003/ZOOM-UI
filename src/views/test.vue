@@ -1,22 +1,26 @@
 <template>
   <div>
-    <zoom-gallery :op="op"></zoom-gallery>
+    <div>
+      <p class="p1">111</p>
+      <p class="p-con">222</p>
+      <p>333</p>
+      <p class="p4">444</p>
+    </div>
   </div>
 </template>
 <script>
   export default {
-    data() {
-      return {
-        op: {
-          showZoom: true, //  是否开启放大镜功能, 默认false
-          data: [ //  图片以数组方式保存
-            // require('./static/1.jpg'),
-            // require('./static/2.jpg'),
-            // require('./static/3.jpg'),
-            // require('./static/4.jpg')
-          ]
-        }
-      }
+    mounted () {
+      $('.p1').addClass('blue');
+      $('.p4').setText('666666666666');
+      $('div').find('p').eq(1).setText(66666666666).addClass('blue');
+      let title = $Z('.p-con');
+      console.log(title,'sss');
     }
   }
 </script>
+<style>
+.blue {
+  color: blue !important;
+}
+</style>

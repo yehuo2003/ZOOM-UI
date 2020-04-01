@@ -1,85 +1,31 @@
 <template>
-  <div class="install-develop">
+  <div class="random">
     <h1>随机数</h1>
-    <h2>$zoom</h2>
-    <h3>使用npm安装</h3>
-    <custom-code :html="npm"></custom-code>
-    <h3>使用yarn安装</h3>
-    <custom-code :html="yarn"></custom-code>
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
-    <custom-code :html="quote"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
-    <!-- <custom-code :html="markdownhtml" cls="javascript"></custom-code> -->
+    <h2>random</h2>
+    <div class="tip">
+      对于项目中经常会用到的随机数字, 还有随机颜色 <br>
+      zoom-ui封装成了API, 用户调用时候只需传入最小值和最大值, 就可以获取随机数, 每次调用都会随机
+    </div>
+    <h3>随机数</h3>
+    <p>方法: <span>this.$zoom.$rn(最小数, 最大数)</span></p>
+    <custom-code :html="randomNum"></custom-code>
+    <h3>随机颜色</h3>
+    <p>方法: <span>this.$zoom.$rc(最小值, 最大值)</span></p>
+    <custom-code :html="randomColor"></custom-code>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
-
-        Vue.use(zoomUI);
-      `,
-      markdownhtml: `
-        &lt;zoom-layout class="home-layout"&gt;
-          &lt;div slot="header"&gt;
-            头部
-          &lt;/div&gt;
-          &lt;div slot="aside"&gt;
-            &lt;zoom-tree-menu style="font-size: 14px;" :op="navOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-          &lt;main slot="main" class="home-main"&gt;
-            &lt;!-- 主体部分 --&gt;
-            &lt;router-view&gt;&lt;/router-view&gt;
-          &lt;/main&gt;
-        &lt;/zoom-layout&gt;
-        &lt;script&gt;
-        export default {
-          data() {
-            //数据属性
-            return {
-              navOp: {
-                // width: '18%',
-                accordion: true,
-                data: [
-                  {title: '快速上手', url: '#/component/index', icon: 'icon-set'},
-                  {title: '自定义主题', url: '', children: [
-                    {title: 'Icon图标', url: '#/table/add', icon: 'icon-add-plus'}
-                  ]},
-                  {title: '导航组件', url: '', children: [
-                    {title: '树形菜单', url: '#/dish/list', icon: 'icon-list'},
-                  ]},
-                ]
-              }
-            };
-          },
-        };
-        &lt;/script&gt;
-        &lt;style lang="scss" scoped&gt;
-        .home-layout {
-          .home-main {
-            padding: 0 50px;
-          }
-        }
-        &lt;/style&gt;
-      `
+      randomNum: 'this.$zoom.$rn(1, 100); // 返回 1 ~ 100 之间随机数',
+      randomColor: 'this.$zoom.$rn(0, 255); // 返回 颜色 rgba(随机数, 随机数, 随机数)'
     };
-  },
-  methods: {
-    nextClick() {
-      this.$router.push('/component/custom-color');
-    }
   }
 };
 </script>
 <style lang="scss" scoped>
-.install-develop {
+.random {
   h1,h2 {
     margin-bottom: 20px;
   }
