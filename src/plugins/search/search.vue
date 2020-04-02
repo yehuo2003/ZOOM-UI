@@ -1,5 +1,5 @@
 <template>
-  <div class="zoom-search zoom-input">
+  <div :class="options.disabled ? 'disabled' : '' " class="zoom-search zoom-input">
     <div :class="[ focus ? 'focus' : '', error ? 'error' : ''] " class="select-line">
       <div v-if="list.length > 0" class="search-place">
         <span class="search-text">{{obj.text}}</span>
@@ -26,7 +26,7 @@
         :value="currentValue"
         :placeholder="placeholder ? placeholder : options.placeHolder"
         :readonly="options.readonly"
-        :disabled="options.isdisabled"
+        :disabled="options.disabled"
         type="text"
         class="zoom-input-search"
       />
@@ -49,7 +49,7 @@ export default {
   props: {
     op: {
       placeHolder: [String],
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -86,7 +86,7 @@ export default {
         errMsg: "",
         placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         readonly: false,
-        isdisabled: false
+        disabled: false
       }
     };
   },
@@ -189,7 +189,7 @@ export default {
       this.$emit("input", value);
     },
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -205,7 +205,7 @@ export default {
     handleSearch() {
       this.$emit("search", this.currentValue, this.obj);
       if (this.op && this.op.onClick) {
-        this.op.onClick();
+        this.op.onClick(this.currentValue, this.obj);
       }
     }
   }
@@ -329,5 +329,17 @@ export default {
 }
 .zoom-search.zoom-input .select-line.error {
   border: 1px solid red;
+}
+.zoom-search.disabled>.select-line>input[disabled] {
+  cursor: not-allowed;
+  /* border: 1px solid #d9d9d9; */
+  color: #bfbfbf;
+  background: #f5f5f5;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.zoom-search.disabled>.select-line>.input-btn>.icon-search {
+  color:#bfbfbf;
+  font-weight: bold;
 }
 </style>

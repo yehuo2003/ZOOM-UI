@@ -105,7 +105,7 @@ export default Vue.extend({
       active: '',
       dropdownOp: {
         // isChecked: true,
-        // isdisabled: true,
+        // disabled: true,
         placeHolder: '--请选择--',
         // defalut: '5',
         // readonly: true,
@@ -144,7 +144,7 @@ export default Vue.extend({
       },
       visibility: false,
       switchOp: {
-        isdisabled: false,
+        disabled: false,
         open: '开启',
         close: '关闭',
         status: 'open',
@@ -158,10 +158,10 @@ export default Vue.extend({
       numOp: {
         max: 10,
         min: 0,
-        isdisabled: true
+        disabled: true
       },
       textareaOp: {
-        isdisabled: false,
+        disabled: false,
         placeHolder: '请输入内容',
         errMsg: '姓名长度必须大于10',
         testing:function(value) {
@@ -173,7 +173,7 @@ export default Vue.extend({
         }
       },
       nameOp: {
-        isdisabled: false,
+        disabled: false,
         type: 'text',
         IconStyle: 'icon-add',
         onClick:()=> {
@@ -205,7 +205,7 @@ export default Vue.extend({
       },
       name: '',
       uploadOp: {
-        isdisabled: false,  //是否禁用
+        disabled: false,  //是否禁用
         type: 'warning',     //颜色状态
         content: '上传图片',
         // custom: '<span>自定义按钮</span>',         //自定义图标
@@ -229,7 +229,7 @@ export default Vue.extend({
         placeHolder: '请输入名字'
       },
       btnOp: {
-        isdisabled: false,
+        disabled: false,
         // type: 'info',
         onClick: () => {
           console.log(this.radioStatus);
@@ -242,7 +242,7 @@ export default Vue.extend({
         // }
       },
       bigOp: {
-        isdisabled: false,
+        disabled: false,
         type: 'yellow',
         onClick: () => {
           console.log(this.active);

@@ -14,8 +14,8 @@ export default {
   name: "zoom-panel",
   props: {
     op: Object,
-    title: [String],
-    show: {
+    title: [String],	//	标题
+    show: {	//	是否显示, 默认false
       type: Boolean,
       default: false
     }

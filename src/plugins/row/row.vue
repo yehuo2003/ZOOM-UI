@@ -162,9 +162,6 @@ textarea {
 [class*="zoom-"] textarea {
   font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Arial";
   background-color: #fff;
-  margin: 0;
-  padding: 0;
-  outline: none;
   box-sizing: border-box;
 }
 img[src*="zoom-lazy-logo"] {

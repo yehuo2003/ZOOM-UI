@@ -2,7 +2,7 @@
   <span
     :class="status ? 'switch-active' : '' "
     @click="openSwitch"
-    :disabled="isdisabled"
+    :disabled="disabled"
     class="zoom-switch"
   >
     <span class="switch-inner">
@@ -16,7 +16,7 @@ export default {
   props: {
     op: {
       type: Object,
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -36,7 +36,7 @@ export default {
       OPEN: "ON",
       CLOSE: "OFF",
       text: "OFF",
-      isdisabled: false
+      disabled: false
     };
   },
   created() {
@@ -45,8 +45,8 @@ export default {
   methods: {
     reset() {
       if (this.op) {
-        if (this.op.isdisabled) {
-          this.isdisabled = this.op.isdisabled;
+        if (this.op.disabled) {
+          this.disabled = this.op.disabled;
         }
         this.OPEN = this.op.open;
         this.CLOSE = this.op.close;
@@ -59,7 +59,7 @@ export default {
       this.text = this.OPEN;
     },
     openSwitch() {
-      if (this.isdisabled) {
+      if (this.disabled) {
         return;
       }
       if (this.op.beforeClick) {

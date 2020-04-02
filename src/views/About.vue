@@ -91,7 +91,7 @@ export default {
       },
       rateOp: {
         mode: 'xiao',
-        isdisabled: false,
+        disabled: false,
         data: ['很差', '差', '一般', '好', '很好'],
       },
       // url: 'https://www.lagou.com/nearBy/updateMyResume',

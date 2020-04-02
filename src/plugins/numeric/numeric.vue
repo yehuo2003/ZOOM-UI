@@ -10,7 +10,7 @@
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
     class="zoom-numeric zoom-input"
-    :class="options.isdisabled ? 'numeric-disabled' : '' "
+    :class="options.disabled ? 'numeric-disabled' : '' "
   >
     <a @click="subtraction" href="javascript:void(0);" class="num-btn num-subtraction">-</a>
     <input
@@ -25,7 +25,7 @@
       :value="currentValue"
       :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       type="number"
       :class="error ? 'error' : '' "
     />
@@ -61,7 +61,7 @@ export default {
       errMsg: null,
       isOnComposition: false,
       valueBeforeComposition: null,
-      isdisabled: false,
+      disabled: false,
       options: {
         max: 999999,
         min: 0
@@ -89,7 +89,7 @@ export default {
     setCurrentValue(value) {
       // 输入中，直接返回
       if (this.isOnComposition && value === this.valueBeforeComposition) return;
-      this.currentValue = value;
+      this.currentValue = Number(value);
       if (this.isOnComposition) return;
     },
     /**
@@ -151,8 +151,8 @@ export default {
       }
     },
     testing() {
-      if (this.options.isdisabled) {
-        return true;
+      if (this.options.disabled) {
+        return;
       }
       let val = Number(this.currentValue);
       if (isNaN(val)) {
@@ -162,10 +162,10 @@ export default {
         );
       } else {
         if (typeof this.options.max === "number" && val >= this.options.max) {
-          this.currentValue = this.options.max - 1;
+          this.currentValue = this.options.max;
         }
         if (typeof this.options.min === "number" && val <= this.options.min) {
-          this.currentValue = this.options.min + 1;
+          this.currentValue = this.options.min;
         }
         this.error = false;
         return true;
@@ -173,12 +173,20 @@ export default {
     },
     subtraction() {
       if (this.testing()) {
-        this.currentValue = Number(this.currentValue) - 1;
+        let num = 1;
+        if (this.options && this.options.space && !isNaN(this.options.space)) {
+          num = this.options.space
+        }
+        let value = Number(this.currentValue) - num;
+        if (this.options && !isNaN(this.options.min) && value < this.options.min) {
+          value = this.options.min
+        }
+        this.currentValue = value;
       }
     },
     // 重置
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = 0;
         this.$emit("input", 0);
       } else {
@@ -190,7 +198,15 @@ export default {
     },
     add() {
       if (this.testing()) {
-        this.currentValue = Number(this.currentValue) + 1;
+        let num = 1;
+        if (this.options && this.options.space && !isNaN(this.options.space)) {
+          num = this.options.space
+        }
+        let value = Number(this.currentValue) + num;
+        if (this.options && !isNaN(this.options.max) && value > this.options.max) {
+          value = this.options.max
+        }
+        this.currentValue = value;
       }
     },
     Oninput($event) {

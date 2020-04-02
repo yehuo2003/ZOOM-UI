@@ -10,6 +10,7 @@
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
     class="zoom-input"
+    :class="options.disabled ? 'disabled' : '' "
   >
     <input
       @compositionstart="handleComposition"
@@ -22,7 +23,7 @@
       :type="options.type"
       :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :class="error ? 'error' : ''"
     />
     <span
@@ -53,7 +54,7 @@ export default {
         type: String,
         default: null
       },
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -89,7 +90,7 @@ export default {
         type: "text",
         errMsg: "",
         placeHolder: null,
-        isdisabled: false,
+        disabled: false,
         IconStyle: false
       }
     };
@@ -188,7 +189,7 @@ export default {
     },
     // 清除
     clear() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -209,7 +210,7 @@ export default {
     },
     serach() {
       if (this.op && this.op.onClick) {
-        this.op.onClick();
+        this.op.onClick(this.currentValue);
       }
     }
   }
@@ -228,7 +229,7 @@ export default {
   width: 20px;
   line-height: 35px;
 }
-.zoom-input:hover .input-btn .icon-default.icon-close {
+.zoom-input:not(.disabled):hover .input-btn .icon-default.icon-close {
   display: block;
 }
 .zoom-input .input-btn .icon-default.icon-close {
@@ -267,17 +268,17 @@ export default {
   text-align: left;
   width: 270px;
 }
-.zoom-input > input:focus {
+.zoom-input > input:focus:not(:disabled) {
   border: 1px solid #1890ff;
   -webkit-box-shadow: 0 0 0 tansparent;
   box-shadow: 0 0 0 tansparent;
 }
-.zoom-input > input:active {
+.zoom-input > input:active:not(:disabled) {
   border: 1px solid #1890ff;
   -webkit-box-shadow: 0 0 0 tansparent;
   box-shadow: 0 0 0 tansparent;
 }
-.zoom-input > input:hover {
+.zoom-input > input:hover:not(:disabled) {
   border: 1px solid #1890ff;
 }
 .zoom-input > input {

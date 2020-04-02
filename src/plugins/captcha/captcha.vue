@@ -82,7 +82,7 @@ export default {
     }
     this.$nextTick(() => {
       setTimeout(() => {
-        if (this.op.disabled) {
+        if (this.op && this.op.disabled) {
           this.disabled = true;
         } else {
           this.disabled = false;
@@ -94,10 +94,10 @@ export default {
     init() {
       this.canvasInit();
       this.initImg();
-      this.bindEvents();
+      // this.bindEvents();
     },
     onSuccess() {
-      if (this.op.onSuccess) {
+      if (this.op && this.op.onSuccess) {
         // 接收成功信息返回给父组件
         this.op.onSuccess();
       }
@@ -109,7 +109,7 @@ export default {
       this.title = '验证成功'
     },
     onFail() {
-      if (this.op.onFailed) {
+      if (this.op && this.op.onFailed) {
         // 接收失败信息返回给父组件
         this.op.onFailed();
       }
@@ -317,7 +317,6 @@ export default {
       img.onerror = () => {
         img.setSrc(this.getRandomImgSrc());
       };
-
       img.setSrc = src => {
         if (window.navigator.userAgent.indexOf("Trident") > -1) {
           // IE浏览器无法通过img.crossOrigin跨域，使用ajax获取图片blob然后转为dataURL显示

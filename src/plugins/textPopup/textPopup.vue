@@ -2,7 +2,7 @@
   <div style="width: 150px;" class="zoom-text-popup">
     <input
       @focus="hoverInput"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :readonly="options.readonly"
       :placeholder="options.placeHolder"
       :value="currentValue"
@@ -35,7 +35,7 @@ export default {
   props: {
     op: {
       placeHolder: [String],
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -52,8 +52,7 @@ export default {
       errMsg: {
         type: String,
         default: ""
-      },
-      data: Array //  可选的查找数据
+      }
     },
     rows: {
       type: [String, Number],
@@ -73,7 +72,7 @@ export default {
         placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         resize: false,
         readonly: false,
-        isdisabled: false
+        disabled: false
       }
     };
   },
@@ -87,7 +86,7 @@ export default {
   },
   methods: {
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -132,7 +131,7 @@ export default {
     },
     hoverInput() {
       console.log('hoverInput');
-      if (!this.options.isdisabled && !this.options.readonly) {
+      if (!this.options.disabled && !this.options.readonly) {
         this.$refs["zoom-text"].blur();
         this.isShow = false;
         this.focusStatus = true;

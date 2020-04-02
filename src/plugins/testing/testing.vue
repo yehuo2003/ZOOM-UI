@@ -98,7 +98,7 @@ export default {
       }
       this.testCode = testCode;
       // 3.创建5条干扰线
-      for (var i = 0; i < 5; i++) {
+      for (let i = 0; i < 5; i++) {
         ctx.beginPath();
         this.$stroke(this.$zoom.$rc(0, 230), ctx);
         this.$moveTo(this.$zoom.$rn(0, 200), this.$zoom.$rn(0, 100), ctx);
@@ -106,7 +106,7 @@ export default {
         ctx.stroke();
       }
       // 4.创建50个干扰点
-      for (var i = 0; i < 50; i++) {
+      for (let i = 0; i < 50; i++) {
         this.$fill(this.$zoom.$rc(0, 255), ctx);
         ctx.beginPath();
         ctx.arc(
@@ -136,5 +136,10 @@ export default {
   padding: 10px;
   text-decoration: underline;
   color: #1890ff;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>

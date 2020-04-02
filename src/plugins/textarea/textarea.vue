@@ -6,7 +6,7 @@
       :value="currentValue"
       @input="Oninput"
       :placeholder="options.placeHolder"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :maxlength="options.maxLength"
     ></textarea>
     <span
@@ -27,7 +27,7 @@ export default {
         type: String,
         default: null
       },
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      isdisabled: false,
+      disabled: false,
       currentValue: this.value,
       error: false,
       errMsg: null,
@@ -56,7 +56,7 @@ export default {
   },
   created() {
     if (this.op) {
-      this.options.isdisabled = this.op.isdisabled;
+      this.options.disabled = this.op.disabled;
       this.options.maxLength = this.op.maxLength || 50;
       this.options.error = this.op.error;
       this.options.errMsg = this.op.errMsg;
@@ -92,7 +92,7 @@ export default {
       }
     },
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -133,6 +133,7 @@ export default {
   background: #f5f5f5;
   -webkit-box-shadow: none;
   box-shadow: none;
+  resize: none;
 }
 .zoom-textarea > textarea:focus,
 .zoom-textarea > textarea:active {
@@ -168,5 +169,6 @@ export default {
 .zoom-textarea {
   position: relative;
   display: inline-block;
+  width: 100%;
 }
 </style>

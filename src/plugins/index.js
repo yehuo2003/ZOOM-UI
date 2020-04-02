@@ -189,9 +189,9 @@ const install = Vue => {
             if (!max || max > 255) {
                 max = 255;
             }
-            var r = this.$zoom.$rn(min,max);
-            var g = this.$zoom.$rn(min,max);
-            var b = this.$zoom.$rn(min,max);
+            var r = this.$rn(min,max);
+            var g = this.$rn(min,max);
+            var b = this.$rn(min,max);
             return `rgb(${r},${g},${b})`
         },
         /**

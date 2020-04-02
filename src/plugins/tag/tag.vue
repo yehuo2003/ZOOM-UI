@@ -41,7 +41,7 @@ export default {
         // 添加按钮的标题  默认叫 add
         type: String
       },
-      isdisabled: {
+      disabled: {
         // 是否禁用
         type: Boolean,
         default: false
@@ -51,6 +51,11 @@ export default {
         // 默认数据
         type: Array
       }
+    },
+    disabled: {
+      // 是否禁用
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -66,10 +71,10 @@ export default {
   created() {
     if (this.op) {
       // 是否禁用
-      if (this.op.isdisabled) {
-        this.isdisabled = this.op.isdisabled;
+      if (this.op.disabled) {
+        this.isdisabled = this.op.disabled;
       } else {
-        this.isdisabled = false;
+        this.isdisabled = this.disabled;
       }
       if (this.op.data) {
         let data = [];

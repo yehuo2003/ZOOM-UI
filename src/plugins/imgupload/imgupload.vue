@@ -37,7 +37,7 @@ export default {
       fileName: "",
       showFile: false,
       btnOp: {
-        isdisabled: false,
+        disabled: false,
         onClick: this.imgClick
       }
     };
@@ -49,7 +49,7 @@ export default {
     // 加载组件
     loadData() {
       if (this.op) {
-        if (this.op.isdisabled) this.btnOp.isdisabled = this.op.isdisabled;
+        if (this.op.disabled) this.btnOp.disabled = this.op.disabled;
         if (this.op.type) this.btnOp.type = this.op.type;
         if (this.op.content) this.text = this.op.content;
         if (this.op.custom) this.link = this.op.custom;

@@ -1,6 +1,7 @@
 <template>
   <div v-show="visibility" class="zoom-dialog-box zoom-dialog-warpper">
     <div
+      v-drag
       class="dialog-box"
       :style=" 'width:' + width + '; top: 15vh; left: calc((100vw - 30%) / 2);' "
     >
@@ -100,6 +101,7 @@ export default {
   text-decoration: none;
 }
 .zoom-dialog-box>.dialog-box>.dialog-header {
+  cursor: move;
   text-align-last: left;
   padding: 8px 24px;
   height: 40px;

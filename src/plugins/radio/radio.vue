@@ -4,11 +4,11 @@
       v-for="(item, index) of list"
       :key="index"
       @click.prevent="handleClick(item, 'click')"
-      :disabled="isdisabled"
+      :disabled="disabled"
       class="radio-item"
     >
       <i class="zoom-icon" :class="item.checked ? 'icon-radio-fill' : 'icon-success-box'"></i>
-      <input v-show="false" type="radio" :value="item.value" :name="name" :disabled="isdisabled" />
+      <input v-show="false" type="radio" :value="item.value" :name="name" :disabled="disabled" />
       {{item.text}}
     </label>
   </span>
@@ -22,13 +22,13 @@ export default {
       name: String,
       data: Array,
       Bool: Boolean,
-      isdisabled: Boolean
+      disabled: Boolean
     }
   },
   data() {
     return {
       active: false,
-      isdisabled: false,
+      disabled: false,
       list: [],
       name: ""
     };
@@ -62,8 +62,8 @@ export default {
           });
           this.list = this.$zoom.clone(list);
         }
-        if (this.op.isdisabled) {
-          this.isdisabled = !!this.op.isdisabled;
+        if (this.op.disabled) {
+          this.disabled = !!this.op.disabled;
         }
       }
     },
@@ -101,7 +101,7 @@ export default {
       }
     },
     handleClick(item, e) {
-      if (!this.isdisabled) {
+      if (!this.disabled) {
         this.$emit(e);
         this.sendVal(item);
       }

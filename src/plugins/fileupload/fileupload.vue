@@ -252,7 +252,7 @@ export default {
       testList: [],
       radioOp: {
         name: "list",
-        isdisabled: false,
+        disabled: false,
         data: [
           { text: this.$zoom.$t('file.list_view'), value: "listModel", checked: true },  //  列表模式
           { text: this.$zoom.$t('file.thumbnails_view'), value: "imgModel" } //  缩略图模式
@@ -277,16 +277,16 @@ export default {
       //  如果没有要上传的文件, 禁用 开始上传 按钮
       if (!this.custom) {
         if (newVal.length > 0) {
-          this.$refs["startUpload"].isdisabled = false;
+          this.$refs["startUpload"].disabled = false;
         } else {
-          this.$refs["startUpload"].isdisabled = true;
+          this.$refs["startUpload"].disabled = true;
         }
         // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
         if (newVal.length >= this.limit) {
           this.List.length = this.limit;
-          this.$refs["addUpload"].isdisabled = true;
+          this.$refs["addUpload"].disabled = true;
         } else {
-          this.$refs["addUpload"].isdisabled = false;
+          this.$refs["addUpload"].disabled = false;
         }
       }
     }
@@ -611,7 +611,7 @@ export default {
       }
       if (!this.custom) {
         setTimeout(() => {
-          this.$refs["startUpload"].isdisabled = true;
+          this.$refs["startUpload"].disabled = true;
         });
       }
     },

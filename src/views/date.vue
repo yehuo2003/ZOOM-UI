@@ -30,7 +30,6 @@ export default {
           ]
         },
         dateOp: {
-          // isdisabled: true,
           dateTime: 1396945578506,
           maxDate: 1296945578506,
           onComplete: (arr, time) => {

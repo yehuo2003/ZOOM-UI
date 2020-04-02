@@ -22,7 +22,7 @@
               <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
             </zoom-form-item>
             <zoom-form-item label="计数器">
-              <zoom-numeric :op="inputOp"></zoom-numeric>
+              <zoom-numeric :op="numOp"></zoom-numeric>
             </zoom-form-item>
             <zoom-form-item label="复选框">
               <zoom-checkbox :op="checkOp"></zoom-checkbox>
@@ -34,8 +34,8 @@
               <zoom-textarea :op="inputOp"></zoom-textarea>
             </zoom-form-item>
           </zoom-form>
-        <zoom-button type="primary" @click="test">验证</zoom-button>
-        <zoom-button @click="quit">清除</zoom-button>
+        <!-- <zoom-button type="primary" @click="test">验证</zoom-button>
+        <zoom-button @click="quit">清除</zoom-button> -->
       </zoom-tab-item>
       <zoom-tab-item :index="1" :label="'Tab2'">
         <h5 slot="label">
@@ -43,8 +43,8 @@
           <i class="zoom-icon icon-close-plus"></i>
         </h5>
         <zoom-steps type="timeLine" :op="stepsOp" ref="steps" @change="stepsChange"></zoom-steps>
-            <zoom-button @click="prevTest">上一步</zoom-button>
-            <zoom-button @click="nextTest">下一步</zoom-button>
+            <!-- <zoom-button @click="prevTest">上一步</zoom-button>
+            <zoom-button @click="nextTest">下一步</zoom-button> -->
         <!-- <zoom-tabs :value="curTab2" @tabChange="tabChange2">
           <zoom-tab-item :index="0" label="内层tab1">
             内层tab1
@@ -64,9 +64,10 @@
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
+    <!-- <zoom-captcha></zoom-captcha> -->
     <!-- <span>{{$zoom.$t('m.music')}}</span> -->
     <h1>{{$zoom.$t('file.count_error', params)}}</h1>
-    <zoom-button @click="updateI18">{{lang}}</zoom-button>
+    <zoom-button @click="updateI18" :disabled="true">{{lang}}</zoom-button>
   </div>
 </template>
 
@@ -74,6 +75,11 @@
   export default {
     data() {
       return {
+        numOp: {
+          min: 0,
+          max: 20,
+          // space: 5,
+        },
         params: {count: 12, file: 'doc'},
         $t: '',
         lang: 'zh',
@@ -100,6 +106,7 @@
           ]
         },
         inputOp: {
+          disabled: true,
           errMsg: '验证不通过',
           testing: val => {
             return false

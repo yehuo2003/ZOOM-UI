@@ -86,8 +86,8 @@ export default {
           this.css = type;
           break;
       }
-      if (this.op && this.op.isdisabled) {
-        this.isdisabled = !!this.op.isdisabled;
+      if (this.op && this.op.disabled) {
+        this.isdisabled = !!this.op.disabled;
       }
       if (this.op && this.op.IconStyle) {
         if (this.op.IconStyle.indexOf("icon") > -1) {
@@ -103,8 +103,8 @@ export default {
         }
       }
     }
-    if (this.disabled) {
-      this.isdisabled = !!this.disabled;
+    if (this.isdisabled) {
+      this.isdisabled = !!this.isdisabled;
     }
     // 如果设置了重置按钮时间
     if (this.op && this.op.resetTime) {

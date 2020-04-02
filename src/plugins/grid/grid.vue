@@ -87,7 +87,6 @@
                         <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
                       </a>
                     </span>
-                  </span>
                 </td>
               </tr>
             </tbody>
