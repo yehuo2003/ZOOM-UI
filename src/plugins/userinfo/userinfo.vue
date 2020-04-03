@@ -8,6 +8,7 @@
       <span class="zoom-icon icon-up"></span>
     </div>
     <div class="zoom-user-spread">
+      <span v-if="Object.keys($slots).length === 0">{{$zoom.$t('grid.no_data')}}</span>
       <slot></slot>
     </div>
   </div>
@@ -27,7 +28,7 @@ export default {
     return {
       img: "",
       icon: "",
-      title: ""
+      title: this.$zoom.$t('grid.no_data')
     };
   },
   created() {
@@ -71,6 +72,7 @@ export default {
 .zoom-user-info:hover .zoom-user-spread,
 .zoom-user-info:hover .user-info-title .icon-up {
   display: block;
+  min-height: 30px;
 }
 .zoom-user-info .zoom-user-spread {
   margin-top: 5px;

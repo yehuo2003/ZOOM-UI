@@ -1,8 +1,9 @@
 <template>
   <div class="zoom-slider" ref="zoom-slider">
-    <div class="slider-process" :style="{width}"></div>
+    <!-- <div class="slider-process" :style="[{width}, 'background: ' + color]"></div> -->
+    <div class="slider-process" :style="{background: color, width}"></div>
     <div class="zoom-thunk" ref="zoom-thunk" :style="{left}">
-      <div class="slider-block"></div>
+      <div :style="{'border-color': color}" class="slider-block"></div>
       <div class="slider-tips">
         <span>{{ ( scale * 100 ).toFixed() }}%</span>
       </div>

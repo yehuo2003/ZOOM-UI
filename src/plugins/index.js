@@ -4,43 +4,148 @@ import './common/dom.js'
 
 // tip组件 全局注册 v-tip可引用
 import Vtip from './tips/index'
-// 懒加载图片
-import lazyload from './common/lazyLoad.js';
-
+// 国际化
 import lang from './common/lang/index';
 
 // 路径 是否查找子目录 .vue
 const requireComponent = require.context('./', true, /\.vue$/);
 const install = Vue => {
+    // 懒加载 指令 v-lazyload
+    let lazyload = {
+        install(vue, payload) {
+            // 数组扩展移除元素
+            if (!Array.prototype.remove) {
+                Array.prototype.remove = function (item) {
+                    if (!this.length) return
+                    let index = this.indexOf(item);
+                    if (index > -1) {
+                        this.splice(index, 1);
+                        return this
+                    }
+                }
+            }
+
+            // 默认值图片
+            let defaultImage = require('../assets/zoom-lazy-logo.gif');
+            let errorImage = require('../assets/zoom-picture-not-found.jpg');
+
+            // 默认离可视区10px时加载图片
+            let distanece = 10;
+            // 收集未加载的图片元素和资源
+            let listenList = [];
+            // 收集已加载的图片元素和资源
+            let imageCacheList = [];
+
+            // 是否已经加载完成的图片
+            const isAlredyLoad = (imageSrc) => {
+                if (imageCacheList.indexOf(imageSrc) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            //检测图片是否可以加载，如果可以则进行加载
+            const isCanShow = (item) => {
+                let ele = item.ele;
+                let src = item.src;
+                //图片距离页面顶部的距离
+                let top = ele.getBoundingClientRect().top;
+                //页面可视区域的高度
+                // let windowHeight = window.innerHight;
+                // top - distance 距离可视区域还有distance像素
+                if (top - distanece < window.innerHeight) {
+                    let image = new Image();
+                    image.src = src;
+                    image.onload = function () {
+                        ele.src = src;
+                        imageCacheList.push(src);
+                        listenList.remove(item);
+                    }
+                    image.onerror = function () {
+                        ele.src = errorImage;
+                        imageCacheList.push(src);
+                        listenList.remove(item);
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            const onListenScroll = () => {
+                window.addEventListener('scroll', function () {
+                    let length = listenList.length;
+                    for (let i = 0; i < length; i++) {
+                        isCanShow(listenList[i]);
+                    }
+                })
+            }
+
+            //Vue 指令最终的方法
+            const addListener = (ele, binding) => {
+                //绑定的图片地址
+                let imageSrc = binding.value;
+
+                // 防止重复加载。如果已经加载过，则无需重新加载，直接将src赋值
+                if (isAlredyLoad(imageSrc)) {
+                    ele.src = imageSrc;
+                    return false;
+                }
+
+                let item = {
+                    ele: ele,
+                    src: imageSrc
+                }
+
+                //图片显示默认的图片
+                ele.src = defaultImage;
+
+                //再看看是否可以显示此图片
+                if (isCanShow(item)) {
+                    return
+                }
+
+                //否则将图片地址和元素均放入监听的lisenList里
+                listenList.push(item);
+
+                //然后开始监听页面scroll事件
+                onListenScroll();
+            }
+
+            Vue.directive('lazyload', {
+                inserted: addListener,
+                updated: addListener
+            })
+        }
+    }
     // 注册指令使用
     Vue.use(Vtip.directive);
-	// 参数均为可选
-    Vue.use(lazyload, {
-        scrollDistance: 15, // 距离可视区还有15px时开发加载资源
-    })
+    // 参数均为可选
+    Vue.use(lazyload);
 
     Vue.directive('focus', {
-        inserted: function(el) {
+        inserted: function (el) {
             el.focus();
         },
-        update: function(el, value) {
+        update: function (el, value) {
             if (value) {
                 el.focus();
             }
         }
     })
     Vue.directive('drag', {
-        inserted: function(el) {
-            el.onmousedown = function(e) {
-                var disx = e.pageX - el.offsetLeft;
-                var disy = e.pageY - el.offsetTop;
+        inserted: function (el) {
+            el.onmousedown = function (e) {
+                let disx = e.pageX - el.offsetLeft;
+                let disy = e.pageY - el.offsetTop;
 
-                document.onmousemove = function(e) {
+                document.onmousemove = function (e) {
                     el.style.left = e.pageX - disx + 'px';
                     el.style.top = e.pageY - disy + 'px';
                 }
 
-                document.onmouseup = function() {
+                document.onmouseup = function () {
                     document.onmousemove = document.onmouseup = null;
                 }
             }
@@ -54,7 +159,7 @@ const install = Vue => {
          */
         getLanguage() {
             let lang = localStorage.getItem('language') || 'zh';
-            return {locale: lang, detail: this.LanguageInfo};
+            return { locale: lang, detail: this.LanguageInfo };
         },
         /**
          * @function 设置国际化语言传入对象
@@ -68,8 +173,8 @@ const install = Vue => {
                 localStorage.setItem('language', lang.locale);
                 // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
                 if (lang.detail && Object.prototype.toString.call(lang.detail) === '[object Object]') {
-                    for(var key in lang.detail) {
-                        this.LanguageInfo[key] = Object.assign({}, lang.detail[key] ,this.LanguageInfo[key])
+                    for (let key in lang.detail) {
+                        this.LanguageInfo[key] = Object.assign({}, lang.detail[key], this.LanguageInfo[key])
                     }
                 }
             }
@@ -170,7 +275,7 @@ const install = Vue => {
          * 输入最小数和最大数, 获取其中的随机数
          */
         $rn(min, max) {
-            var n = Math.random()*(max-min)+min;
+            let n = Math.random() * (max - min) + min;
             return Math.floor(n)
         },
         /**
@@ -189,9 +294,9 @@ const install = Vue => {
             if (!max || max > 255) {
                 max = 255;
             }
-            var r = this.$zoom.$rn(min,max);
-            var g = this.$zoom.$rn(min,max);
-            var b = this.$zoom.$rn(min,max);
+            let r = this.$zoom.$rn(min, max);
+            let g = this.$zoom.$rn(min, max);
+            let b = this.$zoom.$rn(min, max);
             return `rgb(${r},${g},${b})`
         },
         /**
@@ -217,9 +322,9 @@ const install = Vue => {
                 if (!name) {
                     throw Error('zoom-ui SyntaxError: cookie名称和值为必填属性! ')
                 }
-                var cookieText = "", subName, cookieParts = [];
+                let cookieText = "", subName, cookieParts = [];
                 cookieText += encodeURIComponent(name) + "=";
-                for(subName in subCookies) {
+                for (subName in subCookies) {
                     cookieParts.push(encodeURIComponent(subName) + "=" + encodeURIComponent(subCookies[subName]));
                 }
                 if (cookieParts.length > 0) {
@@ -255,7 +360,7 @@ const install = Vue => {
                 if (!name || !subName || !value) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称以及cookie子属性的值为必填属性! ')
                 }
-                var cookies = this.get(name) || {};
+                let cookies = this.get(name) || {};
                 cookies[subName] = value;
                 this.set(name, cookies, expires, domain, path, secure);
             },
@@ -269,11 +374,11 @@ const install = Vue => {
                 if (!name) {
                     return document.cookie;
                 }
-                var cookieName = encodeURIComponent(name) + "=",
+                let cookieName = encodeURIComponent(name) + "=",
                     cookieStart = document.cookie.indexOf(cookieName),
                     cookieValue = "", i, len, subCookies, parts, result = {};
                 if (cookieStart > -1) {
-                    var cookieEnd = document.cookie.indexOf (";", cookieStart);
+                    let cookieEnd = document.cookie.indexOf(";", cookieStart);
                     if (cookieEnd == -1) {
                         cookieEnd = document.cookie.length;
                     }
@@ -299,7 +404,7 @@ const install = Vue => {
                 if (!name || !subName) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称为必填属性! ')
                 }
-                var cookies = this.get(name);
+                let cookies = this.get(name);
                 if (cookies) {
                     return cookies[subName];
                 } else {
@@ -331,7 +436,7 @@ const install = Vue => {
                 if (!name || !subName) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称为必填属性! ')
                 }
-                var cookies = this.get(name);
+                let cookies = this.get(name);
                 if (cookies) {
                     delete cookies[subName];
                     this.set(name, cookies, null, domain, path, secure);
@@ -341,9 +446,9 @@ const install = Vue => {
              * 清除当前所有cookie
              */
             clear() {
-                var keys = document.cookie.match(/[^ =;]+(?==)/g)
+                let keys = document.cookie.match(/[^ =;]+(?==)/g)
                 if (keys) {
-                    for (var i = keys.length; i--;) {
+                    for (let i = keys.length; i--;) {
                         document.cookie = keys[i] + '=0;path=/;expires=' + new Date(0).toUTCString() // 清除当前域名下的,例如：m.zoom.cn
                         document.cookie = keys[i] + '=0;path=/;domain=' + document.domain + ';expires=' + new Date(0).toUTCString() // 清除当前域名下的，例如 .m.zoom.cn
                         document.cookie = keys[i] + '=0;path=/;domain=ratingdog.cn;expires=' + new Date(0).toUTCString() // 清除一级域名下的或指定的，例如 .zoom.cn

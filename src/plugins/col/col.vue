@@ -7,13 +7,14 @@
 export default {
   name: "zoom-col",
   props: {
-    order: String, //  如果需要排序可以添加
-    span: String, //  每行占比 最少1 最多12
-    xl: String, //  超大屏
-    lg: String, //  大屏
-    md: String, //  中屏
-    sm: String, //  小屏
-    xs: String //  超小屏
+    order: [String, Number], //  如果需要排序可以添加
+    span: [String, Number], //  每行占比 最少1 最多12
+    offset: [String, Number], //  偏移量
+    xl: [String, Number], //  超大屏
+    lg: [String, Number], //  大屏
+    md: [String, Number], //  中屏
+    sm: [String, Number], //  小屏
+    xs: [String, Number] //  超小屏
   },
   data() {
     return {
@@ -21,14 +22,14 @@ export default {
     };
   },
   created() {
+    let cls = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12";
     if (this.span) {
       // 如果有传入span
       if (this.testing(this.span)) {
-        this.cls = `col-xs-${this.span} col-sm-${this.span} col-md-${this.span} col-lg-${this.span} col-xl-${this.span}`;
+        cls = `col-xs-${this.span} col-sm-${this.span} col-md-${this.span} col-lg-${this.span} col-xl-${this.span}`;
       }
     } else {
       // 如果没有span
-      let cls = "col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12";
       if (this.xl && this.testing(this.xl)) {
         cls = cls.replace(/col-xl-12/g, `col-lg-${this.xl}`);
       }
@@ -44,8 +45,11 @@ export default {
       if (this.xs && this.testing(this.xs)) {
         cls = cls.replace(/col-xs-12/g, `col-xs-${this.xs}`);
       }
-      this.cls = cls;
     }
+    if (this.offset && this.testing(this.offset)) {
+      cls += ` offset-${this.offset}`;
+    }
+    this.cls = cls;
   },
   methods: {
     // 验证方法
@@ -269,6 +273,39 @@ export default {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+.offset-1 {
+  margin-left: 8.33333333%;
+}
+.offset-2 {
+  margin-left: 16.66666667%;
+}
+.offset-3 {
+  margin-left: 25%;
+}
+.offset-4 {
+  margin-left: 33.33333333%;
+}
+.offset-5 {
+  margin-left: 41.66666667%;
+}
+.offset-6 {
+  margin-left: 50%;
+}
+.offset-7 {
+  margin-left: 58.33333333%;
+}
+.offset-8 {
+  margin-left: 66.66666667%;
+}
+.offset-9 {
+  margin-left: 75%;
+}
+.offset-10 {
+  margin-left: 83.33333333%;
+}
+.offset-11 {
+  margin-left: 91.66666667%;
 }
 .col-xs-1,
 .col-xs-2,

@@ -55,6 +55,10 @@ export default {
         type: String,
         default: "100%" //单位：rem
       },
+      space: {  //  轮播间隔时间
+        type: Number,
+        default: 3000
+      },
       height: {
         type: String,
         default: "100%" //单位：rem
@@ -110,12 +114,16 @@ export default {
      */
     handleGo() {
       this.control = false;
+      let time = 3000;
+      if (this.op && this.op.space && !isNaN(Number(this.op.space))) {
+        time = this.op.space;
+      }
       this.timer = setInterval(() => {
         this.currentIndex++;
         if (this.currentIndex > this.op.images.length - 1) {
           this.currentIndex = 0;
         }
-      }, 3000);
+      }, time);
     },
     /**
      * 停止轮播

@@ -7,13 +7,15 @@
     <zoom-button type="info">信息按钮</zoom-button>
     <zoom-button type="danger">危险按钮</zoom-button>
     <zoom-row flex="true" justify="space-around" align="middle">
-      <zoom-col span="3">
-        <div class="item">第一个</div>
+      <zoom-col span="3" offset="1">
+        <div class="item">
+          <zoom-switch open="开启" close="关闭"></zoom-switch>
+        </div>
       </zoom-col>
       <zoom-col span="3">
         <div class="item">第二个</div>
       </zoom-col>
-      <zoom-col span="3">
+      <zoom-col span="3" offset="2">
         <div class="item">第三个</div>
       </zoom-col>
     </zoom-row>

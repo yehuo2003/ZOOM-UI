@@ -1,7 +1,7 @@
 <template>
   <div
     :class="toggle ? 'zoom-float-toggle' : 'zoom-float-suspended' "
-    :style=" left ? 'left: 5px;' : 'right: 5px;' "
+    :style=" this.position + ': 5px;' "
     class="zoom-float-bar"
   >
     <div v-if="toggle" :class=" fix ? 'fix' : '' " class="float-content">
@@ -28,13 +28,16 @@ export default {
     op: {
       type: Object,
       data: Array, //  如果有配置data则展示列表数据, 否则显示自定义内容
-      left: Boolean //  为true显示在左边
+      position: { // left right
+        type: String,
+        default: 'right'
+      }
     }
   },
   data() {
     return {
       toolList: [],
-      left: false, //  为true靠左
+      position: "right", //  为true靠左
       toggle: true, //  模式切换
       fix: false //  是否固定
     };
@@ -49,10 +52,18 @@ export default {
         this.toggle = true;
         this.toolList = [];
       }
-      if (this.op.left) {
-        this.left = true;
+      if (this.op.position) {
+        let arr = ['left', 'right'];
+        if (arr.includes(this.op.position)) {
+          this.position = this.op.position;
+        } else {
+          throw new Error(
+            // `zoom-ui TypeError: ${position} 语法错误, 请参考zoom-ui手册并检查语法!`
+            `${this.$zoom.$t('err.zoom_ui_grammar')}: ${this.$zoom.$t('err.attribute', {err_attribute: this.op.position, attribute: 'position'})}`
+          );
+        }
       } else {
-        this.left = false;
+        this.position = 'right';
       }
     }
   },

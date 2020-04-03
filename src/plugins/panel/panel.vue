@@ -66,8 +66,7 @@ export default {
 .zoom-panel-header .panel-icon {
   position: absolute;
   color: #333;
-  font-size: 25px;
-  line-height: 45px;
+  font-size: 16px;
 }
 .zoom-panel-header {
   height: 46px;

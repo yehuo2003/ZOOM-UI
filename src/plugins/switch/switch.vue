@@ -28,6 +28,14 @@ export default {
         type: String,
         default: "close"
       }
+    },
+    open: {
+      type: String,
+      default: "ON"
+    },
+    close: {
+      type: String,
+      default: "close"
     }
   },
   data() {
@@ -55,6 +63,9 @@ export default {
         } else {
           this.status = false;
         }
+      } else {
+        this.OPEN = this.open;
+        this.CLOSE = this.close;
       }
       this.text = this.OPEN;
     },
@@ -62,7 +73,7 @@ export default {
       if (this.isdisabled) {
         return;
       }
-      if (this.op.beforeClick) {
+      if (this.op && this.op.beforeClick) {
         this.op.beforeClick(this.status);
       }
       this.status = !this.status;
@@ -72,7 +83,7 @@ export default {
         this.text = this.CLOSE;
       }
       this.$emit("change", this.status);
-      if (this.op.afterClick) {
+      if (this.op && this.op.afterClick) {
         this.op.afterClick(this.status);
       }
     }

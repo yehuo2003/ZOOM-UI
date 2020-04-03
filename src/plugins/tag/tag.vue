@@ -4,7 +4,7 @@
       <li v-if="addTag" :class="addFocus ? 'focus' : '' " @click="addValue" class="add info">
         <span v-show="!addFocus" class="zoom-icon icon">+</span>
         <span v-show="!addFocus">{{addtitle}}</span>
-        <input ref="tag-input" v-show="addFocus" v-model="addVal" @blur="addBlur" type="text" />
+        <input ref="tag-input" v-show="addFocus" v-model="addVal" @blur="addBlur" @keyup.enter="addBlur" type="text" />
       </li>
       <li
         :disabled="isdisabled"

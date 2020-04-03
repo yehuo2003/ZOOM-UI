@@ -4,7 +4,7 @@
       <slot></slot>
     </ul>
     <!-- 把panels数组拆分, 循环出来渲染, 并且把带有active的元素传给子组件 -->
-    <zoom-tabs-content v-for="(item, i) of panels" :key="i" :active="item[0].active" :panels="panels[i]" />
+    <zoom-tabs-content v-for="(item, i) of panels" :key="i" :active="item[0].active" :border="border" :panels="panels[i]" />
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
       type: String,
       default: null
     },
+    border: [Boolean],
     value: {
       type: [String, Number],
       required: true

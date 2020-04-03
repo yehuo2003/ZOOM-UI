@@ -1,21 +1,21 @@
 <template>
   <div class="zoom-layout">
     <!-- 头部 -->
-    <div v-if="$slots.header" :style="headerStyle" class="zoom-header">
+    <header v-if="$slots.header" :style="headerStyle" class="zoom-header">
       <slot name="header"></slot>
-    </div>
+    </header>
     <!-- 底部 -->
-    <div v-if="$slots.footer" :style="footerStyle" class="zoom-footer">
+    <footer v-if="$slots.footer" :style="footerStyle" class="zoom-footer">
       <slot name="footer"></slot>
-    </div>
+    </footer>
     <!-- 左侧单栏 -->
-    <div v-if="$slots.aside" :style="asideStyle" class="zoom-aside">
-      <slot name="aside" ></slot>
-    </div>
+    <aside v-if="$slots.aside" :style="asideStyle" class="zoom-aside">
+      <slot name="aside"></slot>
+    </aside>
     <!-- 主程序 -->
-    <div v-if="$slots.main" :style="mainStyle" class="zoom-main">
+    <main v-if="$slots.main" :style="mainStyle" class="zoom-main">
       <slot name="main"></slot>
-    </div>
+    </main>
   </div>
 </template>
 <script>
@@ -93,6 +93,36 @@ export default {
   bottom: 0;
   right: 0;
   margin: 0;
+}
+.zoom-layout>.zoom-aside {
+  overflow: auto;
+}
+.zoom-layout>.zoom-main {
+  overflow: auto;
+}
+.zoom-layout>.zoom-aside::-webkit-scrollbar,
+.zoom-layout>.zoom-main::-webkit-scrollbar {
+  width: 10px;
+  background-color: inherit;
+}
+.zoom-layout>.zoom-aside::-webkit-scrollbar-thumb,
+.zoom-layout>.zoom-main::-webkit-scrollbar-thumb {
+  position: absolute;
+  background: inherit;
+}
+.zoom-layout>.zoom-aside:hover::-webkit-scrollbar-thumb,
+.zoom-layout>.zoom-main:hover::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
+  box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
+  background: rgba(85,85,85, .5);
+}
+.zoom-layout>.zoom-aside::-webkit-scrollbar-track,
+.zoom-layout>.zoom-main::-webkit-scrollbar-track {/*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);
+  box-shadow: inset 0 0 1px rgba(0,0,0,0);
+  border-radius: 10px;
+  background: inherit;
 }
 .zoom-layout>.zoom-footer {
   top: auto;

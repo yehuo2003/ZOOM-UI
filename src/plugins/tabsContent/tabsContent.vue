@@ -3,6 +3,7 @@ export default {
   name: "zoom-tabs-content",
   props: {
     active: [String, Boolean],
+    border: [Boolean],
     panels: {
       type: Array,
       default: function() {
@@ -15,7 +16,7 @@ export default {
     return h(
       "div",
       {
-        class: ["zoom-tabs-content", this.active ? 'content-active' : '']
+        class: ["zoom-tabs-content", this.active ? 'content-active' : '', this.border ? 'is-border' : '']
       },
       contents
     );
@@ -32,5 +33,8 @@ export default {
 }
 .zoom-tabs-content.content-active {
   display: block;
+}
+.zoom-tabs-content.content-active.is-border {
+  border: 1px solid #d9d9d9;
 }
 </style>

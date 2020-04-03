@@ -81,6 +81,7 @@ export default {
         type: Array,
         default: []
       },
+      onClick: Function,
       accordion: {
         // 手风琴效果
         type: Boolean,
@@ -127,9 +128,12 @@ export default {
     // 展开下拉树事件
     showTree(item, index, tier) {
       let value = JSON.parse(JSON.stringify(item));
+      delete value.load;
       if (item.load) {
-        delete value.load;
         item.load(value, index);
+      }
+      if (this.op && this.op.onClick) {
+        this.op.onClick(value, index);
       }
       // 判断是否开启手风琴模式   只有一级菜单才有作用
       if (this.op.accordion && tier) {

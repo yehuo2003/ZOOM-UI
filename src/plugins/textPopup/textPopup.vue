@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 150px;" class="zoom-text-popup">
+  <div :style="{width: op ? op.width : width}" class="zoom-text-popup">
     <input
       @focus="hoverInput"
       :disabled="options.isdisabled"
@@ -33,6 +33,10 @@
 export default {
   name: "zoom-text-popup",
   props: {
+    width: {
+      type: [Number, String],
+      default: '150px'
+    },
     op: {
       placeHolder: [String],
       isdisabled: {
@@ -70,7 +74,7 @@ export default {
       currentValue: this.value,
       options: {
         errMsg: "",
-        placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
+        placeHolder: "......", // 请输入关键词
         resize: false,
         readonly: false,
         isdisabled: false
@@ -81,7 +85,7 @@ export default {
     if (this.op) {
       this.options = this.op;
       if (!this.options.placeHolder) {
-        this.options.placeHolder =  this.$zoom.$t('search.msg') // 请输入关键词
+        this.options.placeHolder =  "......" // 请输入关键词
       }
     }
   },

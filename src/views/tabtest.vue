@@ -1,6 +1,6 @@
 <template>
   <div>
-    <zoom-tabs position="left" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs :border="true" position="left" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" :label="'Tab1'">
           <div>
             Tab1的内容
@@ -61,6 +61,7 @@
         <div v-tip.transition.success.right="'tip测绘师'">
           drag测试
         </div>
+        <zoom-text-popup></zoom-text-popup>
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
