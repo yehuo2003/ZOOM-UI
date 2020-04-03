@@ -75,12 +75,12 @@ export default {
             },
             {
               id: 4,
-              title: "左定位",
-              name: "left",
-              type: "Boolean",
+              title: "定位",
+              name: "position",
+              type: "String",
               text:
-                "浮动块左定位, 默认为 <span>false</span>, 为<span>true</span>开启",
-              text2: '用法: 配置op对象, 设置 <span>left: true</span>'
+                "浮动块定位, 默认在右边, 可选参数: <span>right</span>, <span>left</span>",
+              text2: '用法: 配置op对象, 设置 <span>position: "right"</span>'
             }
           ]
         },
@@ -100,7 +100,7 @@ export default {
         }
       ],
       op: {
-        left: false,	// 如果为true,则显示在浏览器左边
+        position: 'right',	// 默认right 可选参数 left, right
         data: [	//	如果未设置data 则默认显示自定义内容
           {text: '购物车', icon: 'icon-shopping-cart', onClick: val => {console.log(val);}},
           {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
@@ -108,7 +108,7 @@ export default {
         ]
       },
       floatBarOp: {
-        left: true,	// 如果为true,则显示在浏览器左边
+        position: 'left',
       },
       curTab: 0,
       reseTab: 0,
@@ -127,8 +127,8 @@ export default {
             data() {
               return {
                 floatBarOp: {
-                left: true
-              }
+                  position: 'left',
+                }
               }
             }
           }
@@ -145,7 +145,7 @@ export default {
             data() {
               return {
                 op: {
-                  left: false,	// 如果为true,则显示在浏览器左边
+                  position: 'right',	// 默认right 可选参数 left, right
                   data: [	//	如果未设置data 则默认显示自定义内容
                     {text: '购物车', icon: 'icon-shopping-cart', onClick: val =&gt; {console.log(val);}},
                     {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},

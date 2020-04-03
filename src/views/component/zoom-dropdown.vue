@@ -2,6 +2,7 @@
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
     <h2>使用方法</h2>
+    <img v-lazyload>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-dropdown></zoom-dropdown>
@@ -65,7 +66,7 @@ export default {
             {
               id: 3,
               title: "默认选中",
-              name: "defalut",
+              name: "default",
               type: "String",
               text: "<span>default</span>为默认展示的数据, 必须要是<span>data</span>数组里有的数据, <span>default</span>请和<span>value</span>值保持一致",
               text2: '用法: 配置op对象, 设置 <span></span>default="属性"'
@@ -158,7 +159,7 @@ export default {
         isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
         isdisabled: false,			// 是否禁用
         placeHolder: '--请选择--',	//占位符
-        defalut: '2',			//默认选中的值, 写value
+        default: '2',			//默认选中的值, 写value
         readonly: false,		//是否禁止输入
         errMsg: '必填',
         testing: val => {
@@ -238,10 +239,10 @@ export default {
                   isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
                   isdisabled: false,			// 是否禁用
                   placeHolder: '--请选择--',	//占位符
-                  defalut: '2',			//默认选中的值, 写value
+                  default: '2',			//默认选中的值, 写value
                   readonly: false,		//是否禁止输入
                   errMsg: '必填',
-                  testing: val =>; {
+                  testing: val => {
                     if (!val) {
                       return false;
                     } else {
@@ -254,8 +255,8 @@ export default {
                     {value: '2', text: '上海'},
                     {value: '3', text: '广州'},
                     {value: '4', text: '深圳'}
-                  ],
-                },
+                  ]
+                }
               }
             }
           }

@@ -57,6 +57,16 @@ export default {
                 "配置轮播的图片, 传数组,数组里面对象,src是图片路径,title是图片标题, url是要跳转的链接,跳转方式为打开新页面",
               text2:
                 '用法: 配置op对象并设置images数组, 设置<span>images: []</span>'
+            },
+            {
+              id: 3,
+              title: "图片自动切换间隔时间",
+              name: "space",
+              type: "Number",
+              text:
+                "配置轮播图片切换时间的间隔, 单位是毫秒, 默认是3000毫秒",
+              text2:
+                '用法: 配置op对象并设置<span>space: 3000</span>'
             }
           ]
         }
