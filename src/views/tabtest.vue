@@ -10,13 +10,13 @@
               <zoom-input v-model="name" :op="inputOp" placeholder="请输入名字"></zoom-input>
             </zoom-form-item>
             <zoom-form-item inline="true" label="密码">
-              <zoom-date></zoom-date>
+              <zoom-date :op="dateOp"></zoom-date>
             </zoom-form-item>
             <zoom-form-item label="下拉框">
               <zoom-dropdown ref="dropdown"></zoom-dropdown>
             </zoom-form-item>
             <zoom-form-item :require="true" label="搜索">
-              <zoom-search :op="inputOp"></zoom-search>
+              <zoom-search :op="searchOp"></zoom-search>
             </zoom-form-item>
             <zoom-form-item :require="true" label="部门">
               <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
@@ -65,6 +65,7 @@
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
+    <img v-lazyload>
     <!-- <span>{{$zoom.$t('m.music')}}</span> -->
     <h1>{{$zoom.$t('file.count_error', params)}}</h1>
     <zoom-button @click="updateI18">{{lang}}</zoom-button>
@@ -75,6 +76,19 @@
   export default {
     data() {
       return {
+        searchOp: {
+          // disabled: true,
+          placeHolder: '搜索框已禁用',
+          hideClose: false,
+          data: [
+            {value: '1', text: '所有'},
+            {value: '2', text: '找人'},
+            {value: '3', text: '文章'}
+          ],
+        },
+        dateOp: {
+          disabled: true
+        },
         params: {count: 12, file: 'doc'},
         $t: '',
         lang: 'zh',
@@ -101,13 +115,17 @@
           ]
         },
         inputOp: {
+          // disabled: true,
+          min: 0,
+          max: 10,
+          space: 5,
           errMsg: '验证不通过',
           testing: val => {
             return false
           }
         },
         uname: '',
-        curTab: 2, // 当前激活的tab索引
+        curTab: 0, // 当前激活的tab索引
         curTab2: 2
       }
     },
@@ -154,12 +172,21 @@
         this.$refs['steps'].next();
       },
       test() {
+        // let data = [
+        //           {value: '1', text: '北京'},
+        //           {value: '2', text: '上海'},
+        //           {value: '3', text: '广州'},
+        //           {value: '4', text: '深圳'}
+        //         ];
+        //         this.$refs['dropdown'].load(data);
         // let obj = { value: '666', text: '设置选中值'};
         // this.$refs['dropdown'].load(obj);
         this.$refs['form'].valid();
+        this.$zoom.loading.show({color: 'red', full: true});
       },
       quit() {
         this.$refs['form'].reset();
+        this.$zoom.loading.hide();
         // console.log(this.uname, '==');
         // this.uname = '';
       },

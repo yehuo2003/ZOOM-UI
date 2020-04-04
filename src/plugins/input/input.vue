@@ -22,7 +22,7 @@
       :type="options.type"
       :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :class="error ? 'error' : ''"
     />
     <span
@@ -53,7 +53,7 @@ export default {
         type: String,
         default: null
       },
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -89,7 +89,7 @@ export default {
         type: "text",
         errMsg: "",
         placeHolder: null,
-        isdisabled: false,
+        disabled: false,
         IconStyle: false
       }
     };
@@ -188,7 +188,7 @@ export default {
     },
     // 清除
     clear() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -267,17 +267,17 @@ export default {
   text-align: left;
   width: 270px;
 }
-.zoom-input > input:focus {
+.zoom-input > input:not([disabled]):focus {
   border: 1px solid #1890ff;
   -webkit-box-shadow: 0 0 0 tansparent;
   box-shadow: 0 0 0 tansparent;
 }
-.zoom-input > input:active {
+.zoom-input > input:not([disabled]):active {
   border: 1px solid #1890ff;
   -webkit-box-shadow: 0 0 0 tansparent;
   box-shadow: 0 0 0 tansparent;
 }
-.zoom-input > input:hover {
+.zoom-input > input:not([disabled]):hover {
   border: 1px solid #1890ff;
 }
 .zoom-input > input {

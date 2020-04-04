@@ -2,7 +2,7 @@
   <div :style="{width: op ? op.width : width}" class="zoom-text-popup">
     <input
       @focus="hoverInput"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :readonly="options.readonly"
       :placeholder="options.placeHolder"
       :value="currentValue"
@@ -19,6 +19,7 @@
     ></span>
     <textarea
       :style=" options.resize ? '' : 'resize: none;' "
+      :maxlength="options.maxLength"
       @blur="blurInput"
       v-model="currentValue"
       v-focus="focusStatus"
@@ -27,6 +28,7 @@
       :rows="rows"
       class="zoom-area zoom-area-popup"
     ></textarea>
+    <div v-show="!isShow" class="zoom-statistics">{{currentValue?currentValue.length:0}}/{{options.maxLength}}</div>
   </div>
 </template>
 <script>
@@ -39,7 +41,7 @@ export default {
     },
     op: {
       placeHolder: [String],
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -52,6 +54,10 @@ export default {
         // 是否禁止输入默认false
         type: Boolean,
         default: false
+      },
+      maxLength: {
+        type: Number,
+        default: 50
       },
       errMsg: {
         type: String,
@@ -74,24 +80,25 @@ export default {
       currentValue: this.value,
       options: {
         errMsg: "",
-        placeHolder: "......", // 请输入关键词
+        maxLength: 50,
+        placeHolder: "", // 请输入关键词
         resize: false,
         readonly: false,
-        isdisabled: false
+        disabled: false
       }
     };
   },
   created() {
     if (this.op) {
       this.options = this.op;
-      if (!this.options.placeHolder) {
-        this.options.placeHolder =  "......" // 请输入关键词
+      if (!this.options.maxLength) {
+        this.options.maxLength = 50;
       }
     }
   },
   methods: {
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -136,7 +143,7 @@ export default {
     },
     hoverInput() {
       console.log('hoverInput');
-      if (!this.options.isdisabled && !this.options.readonly) {
+      if (!this.options.disabled && !this.options.readonly) {
         this.$refs["zoom-text"].blur();
         this.isShow = false;
         this.focusStatus = true;

@@ -6,7 +6,7 @@
       :value="currentValue"
       @input="Oninput"
       :placeholder="options.placeHolder"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :maxlength="options.maxLength"
     ></textarea>
     <span
@@ -27,7 +27,7 @@ export default {
         type: String,
         default: null
       },
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      isdisabled: false,
+      disabled: false,
       currentValue: this.value,
       error: false,
       errMsg: null,
@@ -56,7 +56,7 @@ export default {
   },
   created() {
     if (this.op) {
-      this.options.isdisabled = this.op.isdisabled;
+      this.options.disabled = this.op.disabled;
       this.options.maxLength = this.op.maxLength || 50;
       this.options.error = this.op.error;
       this.options.errMsg = this.op.errMsg;
@@ -92,7 +92,7 @@ export default {
       }
     },
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -126,6 +126,7 @@ export default {
   text-align: right;
 }
 .zoom-textarea > textarea[disabled] {
+  resize: none;
   cursor: not-allowed;
   /* pointer-events: none; */
   border: 1px solid #d9d9d9;
@@ -134,14 +135,14 @@ export default {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.zoom-textarea > textarea:focus,
-.zoom-textarea > textarea:active {
+.zoom-textarea > textarea:not([disabled]):focus,
+.zoom-textarea > textarea:not([disabled]):active {
   border: 1px solid #1890ff;
   color: #333;
   -webkit-box-shadow: 0 0 0 transparent;
   box-shadow: 0 0 0 transparent;
 }
-.zoom-textarea > textarea:hover {
+.zoom-textarea > textarea:not([disabled]):hover {
   border: 1px solid #bfbfbf;
   color: #333;
 }

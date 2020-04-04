@@ -1,9 +1,11 @@
 <template>
   <div
-    v-show="show"
+    id="zoom-loading"
+    :class="full ? 'loading-full' : ''"
     class="zoom-loading"
     :style="'color:' + color + ';border: 1px solid ' + color + ';' "
   >
+  <div v-if="full" class="show-warpper"></div>
     <div class="load-text">loading</div>
     <div
       v-for="item of ['one', 'two', 'three', 'four', 'five']"
@@ -17,20 +19,38 @@
 <script>
 export default {
   name: "zoom-loading",
-  props: {
-    color: {
-      type: String,
-      default: "#00ff00"
-    },
-    show: {
-      type: Boolean,
-      default: true
+  data() {
+    return {
+      color: '#1890ff',
+      full: false,
     }
   }
 };
 </script>
 <style>
+.zoom-loading.loading-full {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.show-warpper {
+  z-index: -1;
+  width: 9999px;
+  height: 9999px;
+  position: fixed;
+  background: rgba(0, 0, 0, .1);
+  transform: translate(-50%, -50%);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  margin: 0;
+}
 .zoom-loading {
+  z-index: 9999;
+  cursor: progress;
   margin: 0 auto;
   width: 180px;
   padding-left: 20px;
@@ -44,6 +64,9 @@ export default {
   float: left;
   line-height: 50px;
   padding-right: 5px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 .zoom-loading .loading-item {
   width: 5px;

@@ -161,16 +161,13 @@ textarea {
 [class*="zoom-"] select,
 [class*="zoom-"] textarea {
   font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Arial";
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  outline: none;
   box-sizing: border-box;
 }
-img[src*="zoom-lazy-logo"] {
+img[src*="T1NXW19jZ2tvc3d7f4OHi4+Tl5ufo6err7O3u7/Dx8vP09fb3og0T+FL6/j4LDAxAA"] {
   animation: lazy-logo 2s infinite linear;
+  width: 10rem;
 }
-img[src*="zoom-picture-not-found"] {
+img[src*="b5cdkzoGd5vkzvN8qaYaZ7QTzvN8md5vlTTPaaZ7QTzvN8md5v"] {
   width: 10rem;
 }
 @keyframes lazy-logo {

@@ -1,23 +1,23 @@
 <template>
   <div class="zoom-tag medium">
     <ul>
-      <li v-if="addTag" :class="addFocus ? 'focus' : '' " @click="addValue" class="add info">
+      <li v-if="addTag" :class="[addFocus ? 'focus' : '', disabled ? 'disabled' : '']" @click="addValue" class="add info">
         <span v-show="!addFocus" class="zoom-icon icon">+</span>
         <span v-show="!addFocus">{{addtitle}}</span>
         <input ref="tag-input" v-show="addFocus" v-model="addVal" @blur="addBlur" @keyup.enter="addBlur" type="text" />
       </li>
       <li
-        :disabled="isdisabled"
+        :disabled="disabled"
         v-for="(item, index) of tagList"
         :key="index"
         :class="item.active ? 'selected' : '' "
-        @click="isdisabled ? null : item.active = !item.active"
+        @click="disabled ? null : item.active = !item.active"
         :zoom-type="item.type ? item.type : 'primary' "
         class="tag zoom-border"
       >
         <span :title="item.title" class="text">{{item.title}}</span>
         <span
-          v-show="!isdisabled"
+          v-show="!disabled"
           v-if="addTag"
           @click.stop="closeTag(item, index)"
           class="zoom-icon icon-close close"
@@ -41,12 +41,14 @@ export default {
         // 添加按钮的标题  默认叫 add
         type: String
       },
-      isdisabled: {
+      disabled: {
         // 是否禁用
         type: Boolean,
         default: false
       },
       addType: String, // 新增的标签数据类型
+      beforeAddValue: Function, //  添加数据前事件
+      afterAddValue: Function, //  添加数据成功后
       data: {
         // 默认数据
         type: Array
@@ -57,7 +59,7 @@ export default {
     return {
       addTag: false, //  为true可以手动添加tag标签
       addtitle: "add",
-      isdisabled: false, //  是否禁用
+      disabled: false, //  是否禁用
       tagList: [],
       addFocus: false,
       addVal: ""
@@ -66,10 +68,10 @@ export default {
   created() {
     if (this.op) {
       // 是否禁用
-      if (this.op.isdisabled) {
-        this.isdisabled = this.op.isdisabled;
+      if (this.op.disabled) {
+        this.disabled = this.op.disabled;
       } else {
-        this.isdisabled = false;
+        this.disabled = false;
       }
       if (this.op.data) {
         let data = [];
@@ -98,7 +100,7 @@ export default {
   methods: {
     // 关闭标签
     closeTag(e, index) {
-      if (this.isdisabled) {
+      if (this.disabled) {
         return;
       } else {
         let arr = JSON.parse(JSON.stringify(this.tagList));
@@ -108,6 +110,9 @@ export default {
     },
     // 点击按钮添加
     addValue() {
+      if (this.disabled) {
+        return
+      }
       this.addVal = "";
       this.addFocus = true;
       this.$nextTick(() => {
@@ -116,20 +121,33 @@ export default {
     },
     // 失去焦点时候添加进数组
     addBlur() {
+      if (!this.addVal) {
+        return
+      }
       let obj = {
         title: this.addVal,
         type: this.op.addType ? this.op.addType : "primary",
         active: false
       };
+      if (this.op && this.op.beforeAddValue && !this.op.beforeAddValue(this.addVal)) {
+        this.addFocus = false;
+        this.addVal = "";
+        return false;
+      }
       this.tagList.push(obj);
       this.addFocus = false;
       this.addVal = "";
+      if (this.op && this.op.afterAddValue) {
+        this.op.afterAddValue(this.addVal);
+      }
     }
   }
 };
 </script>
 <style>
+.zoom-tag .disabled,
 .zoom-tag .tag[disabled] {
+  cursor: no-drop;
   border-color: rgba(0, 0, 0, 0.2) !important;
   color: rgba(0, 0, 0, 0.5) !important;
   background: rgba(0, 0, 0, 0.1) !important;

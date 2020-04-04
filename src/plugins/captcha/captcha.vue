@@ -82,7 +82,7 @@ export default {
     }
     this.$nextTick(() => {
       setTimeout(() => {
-        if (this.op.disabled) {
+        if (this.op && this.op.disabled) {
           this.disabled = true;
         } else {
           this.disabled = false;

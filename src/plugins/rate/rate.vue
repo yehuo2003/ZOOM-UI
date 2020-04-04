@@ -1,7 +1,7 @@
 <template>
   <div class="zoom-rate">
     <!-- 遮罩层 禁用状态使用 -->
-    <div v-show="isdisabled" class="warp"></div>
+    <div v-show="disabled" class="warp"></div>
     <input
       v-model="status"
       v-for="item of rateList"
@@ -20,16 +20,21 @@ export default {
       type: Object,
       data: Array, //  绑定的评分内容, 数组形式
       mode: String, //  评分样式    目前只有星星和表情
-      isdisabled: Boolean //   是否禁用
+      disabled: Boolean //   是否禁用
     }
   },
   data() {
     return {
       mode: "stars",
-      isdisabled: false,
+      disabled: false,
       rateList: [5, 4, 3, 2, 1],
       status: null
     };
+  },
+  watch: {
+    status: function(newVal, oldValue) {
+      this.$emit('input', newVal);
+    }
   },
   created() {
     if (this.op) {
@@ -40,8 +45,8 @@ export default {
       if (this.op.mode) {
         this.mode = this.op.mode;
       }
-      if (this.op.isdisabled) {
-        this.isdisabled = this.op.isdisabled;
+      if (this.op.disabled) {
+        this.disabled = this.op.disabled;
       }
     }
   },

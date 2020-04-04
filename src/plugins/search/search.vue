@@ -1,5 +1,5 @@
 <template>
-  <div class="zoom-search zoom-input">
+  <div :class="options.disabled ? 'disabled' : ''" class="zoom-search zoom-input">
     <div :class="[ focus ? 'focus' : '', error ? 'error' : ''] " class="select-line">
       <div v-if="list.length > 0" class="search-place">
         <span class="search-text">{{obj.text}}</span>
@@ -26,7 +26,7 @@
         :value="currentValue"
         :placeholder="placeholder ? placeholder : options.placeHolder"
         :readonly="options.readonly"
-        :disabled="options.isdisabled"
+        :disabled="options.disabled"
         type="text"
         class="zoom-input-search"
       />
@@ -49,7 +49,7 @@ export default {
   props: {
     op: {
       placeHolder: [String],
-      isdisabled: {
+      disabled: {
         type: Boolean,
         default: false
       },
@@ -86,7 +86,7 @@ export default {
         errMsg: "",
         placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         readonly: false,
-        isdisabled: false
+        disabled: false
       }
     };
   },
@@ -189,7 +189,7 @@ export default {
       this.$emit("input", value);
     },
     reset() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.$emit("input", "");
       } else {
@@ -250,7 +250,7 @@ export default {
   font-size: 12px;
 }
 /* 搜索框 */
-.zoom-search.zoom-input .select-line:hover .zoom-search-select {
+.zoom-search.zoom-input:not(.disabled) .select-line:hover .zoom-search-select {
   display: block;
 }
 .zoom-search.zoom-input .select-line.focus {
@@ -263,7 +263,7 @@ export default {
   a {
   color: #333;
 }
-.zoom-search.zoom-input .select-line .input-btn:hover a {
+.zoom-search.zoom-input:not(.disabled) .select-line .input-btn:hover a {
   font-weight: bold;
 }
 .zoom-search.zoom-input .select-line .input-btn {
@@ -277,6 +277,7 @@ export default {
 .zoom-search.zoom-input .input-btn a,
 .zoom-search.zoom-input .input-btn span {
   text-decoration: none;
+  cursor: pointer;
   display: block;
   float: left;
   color: #1890ff;
@@ -306,10 +307,12 @@ export default {
   border-right: 1px solid #d9d9d9;
 }
 .zoom-search.zoom-input .select-line .search-place .search-text {
-  color: #333;
+  color: inherit;
+  font-size: 14px;
   margin-left: 4px;
 }
 .zoom-search.zoom-input .select-line .search-place {
+  z-index: 100;
   line-height: 30px;
   display: table-cell;
   padding: 0 8px;
@@ -329,5 +332,14 @@ export default {
 }
 .zoom-search.zoom-input .select-line.error {
   border: 1px solid red;
+}
+.zoom-search.disabled>.select-line>.input-btn,
+.zoom-search.disabled>.select-line>.search-place,
+.zoom-search.disabled>.select-line>input[disabled] {
+  cursor: not-allowed;
+  color: #bfbfbf;
+  background: #f5f5f5;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 </style>

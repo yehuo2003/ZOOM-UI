@@ -98,6 +98,7 @@ export default {
   border-radius: 50%;
   margin: 0 5px;
   width: 30px;
+  height: 30px;
 }
 .zoom-user-info {
   position: relative;

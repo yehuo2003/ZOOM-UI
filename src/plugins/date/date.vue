@@ -1,11 +1,11 @@
 <template>
   <div @click.stop="bindEvent" ref="zoom-date" class="zoom-date">
     <div
-      @click.stop="isdisabled ? null : show = !show"
-      :class="isdisabled ? 'zoom-date-disabled' : '' "
+      @click.stop="disabled ? null : show = !show"
+      :class="disabled ? 'zoom-date-disabled' : '' "
       class="zoom-input"
     >
-      <input v-model="dateTime" :disabled="isdisabled" type="text" readonly />
+      <input v-model="dateTime" :disabled="disabled" type="text" readonly />
       <div class="input-btn">
         <a class="zoom-icon icon-calendar"></a>
       </div>
@@ -98,7 +98,7 @@ export default {
   props: {
     op: {
       type: Object,
-      isdisabled: Boolean, //  是否禁用
+      disabled: Boolean, //  是否禁用
       maxDate: String, //  最大日期
       minDate: String, //  最小日期
       onComplete: Function, //  组件编译完成时执行的事件
@@ -115,7 +115,7 @@ export default {
   data() {
     return {
       moment: "",
-      isdisabled: false,
+      disabled: false,
       dateTime: "", //  显示的时间
       show: false, // 控制日历面板的显示与隐藏
       selectYear: false, // 控制年份的面板的显示和隐藏
@@ -173,18 +173,19 @@ export default {
   },
 
   created() {
+    this.moment = new Date().getTime();
     if (this.op) {
-      this.moment = this.op.dateTime;
-      if (this.op.isdisabled) {
-        this.isdisabled = this.op.isdisabled;
+      if (this.op.dateTime) {
+        this.moment = this.op.dateTime;
       }
-    } else {
-      this.moment = new Date().getTime();
+      if (this.op.disabled) {
+        this.disabled = this.op.disabled;
+      }
+      if (this.op.onComplete) {
+        this.op.onComplete(this.select, this.dateTime);
+      }
     }
     this.load();
-    if (this.op && this.op.onComplete) {
-      this.op.onComplete(this.select, this.dateTime);
-    }
   },
 
   mounted() {

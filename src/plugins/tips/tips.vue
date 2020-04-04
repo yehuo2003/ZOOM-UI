@@ -365,6 +365,7 @@ export default {
   text-align: left;
   word-wrap: break-word;
   background-color: inherit;
+  color: inherit !important;
 }
 .zoom-tip-container .zoom-tip-arrows {
   z-index: -1;

@@ -4,7 +4,7 @@
       v-for="(item, index) of list"
       :key="index"
       @click.prevent="handleClick(item, 'click')"
-      :disabled="isdisabled"
+      :disabled="disabled"
       class="checkbox-item"
     >
       <i class="zoom-icon" :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"></i>
@@ -22,13 +22,13 @@ export default {
       name: String,
       data: Array,
       Bool: Boolean,
-      isdisabled: Boolean
+      disabled: Boolean
     }
   },
   data() {
     return {
       active: false,
-      isdisabled: false,
+      disabled: false,
       list: [],
       name: ""
     };
@@ -59,8 +59,8 @@ export default {
           this.list = this.$zoom.clone(list);
           this.sendVal();
         }
-        if (this.op.isdisabled) {
-          this.isdisabled = !!this.op.isdisabled;
+        if (this.op.disabled) {
+          this.disabled = !!this.op.disabled;
         }
       }
     },
@@ -97,7 +97,7 @@ export default {
       }
     },
     handleClick(item, e) {
-      if (!this.isdisabled) {
+      if (!this.disabled) {
         this.$emit(e);
         item.checked = !item.checked;
         this.sendVal();

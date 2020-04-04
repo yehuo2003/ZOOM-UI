@@ -1,7 +1,7 @@
 <template>
   <a
-    :href="isDisabled ? null : url"
-    :class="[ cls, isDisabled ? 'link-disabled' : line ? 'link-underline' : '' ]"
+    :href="disabled ? null : url"
+    :class="[ cls, disabled ? 'link-disabled' : line ? 'link-underline' : '' ]"
     class="zoom-link"
   >
     <span class="link-inner">
@@ -26,7 +26,6 @@ export default {
     return {
       text: "",
       cls: "",
-      isDisabled: false,
       line: true
     };
   },
@@ -53,11 +52,6 @@ export default {
         cls += "default";
       }
       this.cls = cls;
-      if (this.disabled) {
-        this.isDisabled = true;
-      } else {
-        this.isDisabled = false;
-      }
       if (this.underline === false) {
         this.line = false;
       } else {

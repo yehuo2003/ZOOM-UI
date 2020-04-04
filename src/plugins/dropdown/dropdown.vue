@@ -9,6 +9,7 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
+    :class=" options.disabled ? 'disabled' : '' "
     class="zoom-input zoom-dropdown"
   >
     <input
@@ -20,7 +21,7 @@
       @input="Oninput"
       :value="currentValue"
       :placeholder="options.placeHolder"
-      :disabled="options.isdisabled"
+      :disabled="options.disabled"
       :readonly="options.readonly"
       :id="id"
       :class="error ? 'error' : ''"
@@ -81,7 +82,7 @@ export default {
         type: String,
         default: null
       },
-      isdisabled: {
+      disabled: {
         //是否禁用 默认false
         type: Boolean,
         default: false
@@ -140,7 +141,7 @@ export default {
         data: [],
         errMsg: "",
         placeHolder: null,
-        isdisabled: false
+        disabled: false
       }
     };
   },
@@ -227,7 +228,11 @@ export default {
     },
     load(data) {
       if (data && data.length && data instanceof Array) {
-        this.list = data;
+        if (this.op && this.op.isChecked) {
+          this.list = data;
+        } else {
+          this.options.data = data;
+        }
       } else if (Object.prototype.toString.call(data) === '[object Object]' && data.value && data.text) {
         this.currentValue = data.text;
         this.$refs["downVal"].value = data.value;
@@ -313,7 +318,7 @@ export default {
       this.clear();
     },
     clear() {
-      if (!this.options.isdisabled) {
+      if (!this.options.disabled) {
         this.currentValue = "";
         this.list = [];
         this.$emit("input", this.currentValue);
@@ -342,7 +347,7 @@ export default {
       this.$emit("input", value);
     },
     serach() {
-      if (this.options.isdisabled) {
+      if (this.options.disabled) {
         return;
       }
       this.showDown = !this.showDown;
@@ -414,8 +419,15 @@ export default {
   width: 20px;
   line-height: 35px;
 }
+.disabled.zoom-input .input-btn a {
+  color: #bfbfbf;
+  cursor: no-drop;
+}
 .zoom-input:hover .input-btn .icon-default.icon-close {
   display: block;
+}
+.disabled.zoom-input:hover .input-btn .icon-default.icon-close {
+  display: none;
 }
 .zoom-input .input-btn .icon-default.icon-close {
   display: none;
