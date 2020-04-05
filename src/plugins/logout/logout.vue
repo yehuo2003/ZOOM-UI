@@ -62,14 +62,15 @@ export default {
           // content = "确认要注销吗?";
           content = this.$zoom.$t('logout.confim');
         }
-        this.$zoom.popup({
-          title: this.$zoom.$t('public.hint'),  //  提示
-          type: "query",
-          content,
-          onClick: () => {
+        this.$zoom.confim(content, this.$zoom.$t('public.hint'),{
+          type: 'query'
+        })
+        .then(() => {
+            //点登录
             this.logout();
-          }
-        });
+        }).catch(() => {
+
+        })
       } else {
         this.logout();
       }

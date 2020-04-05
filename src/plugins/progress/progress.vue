@@ -89,8 +89,8 @@ export default {
     }
   },
   created() {
-    if (this.ValProgress) {
-      this.progress = this.ValProgress;
+    if (this.progress) {
+      this.ValProgress = this.progress;
     }
     if (this.op) {
       if (this.op.progress) {
@@ -104,8 +104,6 @@ export default {
       }
       if (this.op.status) {
         this.statusProgress = this.op.status;
-      } else if (this.status) {
-        this.statusProgress = this.status;
       }
       if (this.op.automatic) {
         //   结束值
@@ -123,6 +121,8 @@ export default {
           }
         }, time);
       }
+    } else if (this.status) {
+      this.statusProgress = this.status;
     }
   }
 };

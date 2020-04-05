@@ -48,8 +48,9 @@ export default {
   data() {
     return {
       uploadOp: {
-        limit: 5,
-        fileSize: '50MB',
+        // limit: 3,
+        fileSize: '50KB',
+        // fileType: 'jpg',
         multiple: true,
         closeProgress: false,
         url: 'http://127.0.0.1:8081/profile',

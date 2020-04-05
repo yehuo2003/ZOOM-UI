@@ -85,7 +85,20 @@ window.$Z = $ = Zoom = (function(window, undefined) {
             let className = classes.split(' ');
             className.forEach(item => {
                 this.each(function(index, obj) {
+                    debugger
                     obj.classList.add(item);
+                    doms.push(obj);
+                })
+            });
+            return new Z(doms, this.selector);
+        },
+        // 移除class
+        removeClass(classes) {
+            let doms = [];
+            let className = classes.split(' ');
+            className.forEach(item => {
+                this.each(function(index, obj) {
+                    obj.classList.remove(item);
                     doms.push(obj);
                 })
             });

@@ -312,7 +312,7 @@ export default {
   margin-left: 4px;
 }
 .zoom-search.zoom-input .select-line .search-place {
-  z-index: 100;
+  z-index: 2;
   line-height: 30px;
   display: table-cell;
   padding: 0 8px;

@@ -5,7 +5,7 @@
     class="zoom-loading"
     :style="'color:' + color + ';border: 1px solid ' + color + ';' "
   >
-  <div v-if="full" class="show-warpper"></div>
+  <div v-if="full" class="loading-warpper"></div>
     <div class="load-text">loading</div>
     <div
       v-for="item of ['one', 'two', 'three', 'four', 'five']"
@@ -34,7 +34,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.show-warpper {
+.zoom-loading .loading-warpper {
   z-index: -1;
   width: 9999px;
   height: 9999px;
@@ -49,6 +49,10 @@ export default {
   margin: 0;
 }
 .zoom-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 9999;
   cursor: progress;
   margin: 0 auto;

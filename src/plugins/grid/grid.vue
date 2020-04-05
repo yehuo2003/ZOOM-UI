@@ -38,7 +38,6 @@
             <!-- 暂无数据 -->
             <span>{{$zoom.$t('grid.no_data')}}</span>
           </p>
-          <zoom-loading color="#1890ff" :show="loading"></zoom-loading>
         </div>
         <div class="grid-body-box">
           <table class="grid-table grid-tbody">
@@ -245,6 +244,7 @@ export default {
       this.titleData = data;
     },
     load(gridData) {
+      this.loading = true;
       if (this.op && this.op.hideIndex) {
         this.serial = this.op.hideIndex;
       }
@@ -342,17 +342,9 @@ export default {
         //   this.bodyData = dataArr;
         // }
         this.bodyData = dataArr;
-        // this.loading = false;
       }
       this.setWidth();
-    },
-    /**
-     * loading 开关
-     * showLoad(true)  开启
-     * showLoad(false) 关闭
-     */
-    showLoad(show) {
-      this.loading = show;
+      this.loading = false;
     },
     //   排序方法
     compare(fun, property) {
@@ -521,8 +513,7 @@ export default {
   font-size: 4em;
   font-weight: bold;
 }
-.grid-body .zoom-not-data .no-text,
-.grid-body .zoom-not-data .zoom-loading {
+.grid-body .zoom-not-data .no-text {
   transform: translate(-50%, -50%);
   position: absolute;
   top: 50%;

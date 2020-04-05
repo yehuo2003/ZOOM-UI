@@ -1,12 +1,10 @@
 <template>
   <div class="container">
     <zoom-layout>
-      <div slot="header">
-        头部
+      <div slot="header" style="disaplay: flex;">
+        <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
+        <zoom-internationalisation :op="interOp"></zoom-internationalisation>
       </div>
-      <!-- <div slot="aside">
-        左侧单栏
-      </div> -->
       <div slot="main">
         <zoom-layout>
           <zoom-tree-menu :op="navOp" slot="aside"></zoom-tree-menu>
@@ -23,6 +21,7 @@
             <zoom-userinfo> 111</zoom-userinfo>
             <img v-lazyload>
             <zoom-button @click="visibility = true">弹框测试</zoom-button>
+            <zoom-button @click="confimClick">confim测试</zoom-button>
           </div>
         </zoom-layout>
       </div>
@@ -36,6 +35,24 @@
 export default {
   data() {
     return {
+      interOp: {
+        title: 'china',
+        // url: 'http://www.baidu.com',
+        data: [
+          {value: 'zh', text: 'china'},
+          {value: 'en', text: 'enlish'},
+          {value: 'ja', text: 'japan'}
+        ]
+      },
+      titleOp: {  //  顶部导航栏
+        data: [
+          {title: '首页', url: '#/'},
+          {title: '环境搭建', url: '#/develop/'},
+          {title: '组件', url: '#/component/'},
+          {title: '软件开发包', url: '#/SDK'},
+          {title: '更多'}
+        ]
+      },
       navOp: {  //  侧边栏
         accordion: true,
         onClick: (val, index) => {
@@ -113,14 +130,31 @@ export default {
     }
   },
   methods: {
+    confimClick() {
+      this.$zoom.confim('是否登录?',{
+        yesBtnText:'登录',
+      }).then(() => {
+          //点登录
+          console.log('登录');
+      }).catch(() => {
+          console.log('取消');
+          //点取消
+      });
+    },
     handleClose(val) {
-      console.log(val);
+      console.log(this.$zoom.confim, '=this.$zoom.confim');
       this.visibility = false;
     }
   }
 };
 </script>
 <style>
+.zoom-header .zoom-internationalisation {
+  position: absolute;
+  z-index: 1000;
+  right: 0;
+  top: 0;
+}
 .container .zoom-header {
   background:#1890ff;
 }

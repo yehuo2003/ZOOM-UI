@@ -112,4 +112,6 @@ export default {  //  中文
   'transfer.list': '所有数据列表',
   'transfer.list_select': '已选中数据列表',
   'transfer.search': '请输入要搜索的元素内容',
+  // zoom-internationalisation
+  'internationalisation-toggle': '确认要切换语言为 {lang}？'
 }

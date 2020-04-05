@@ -254,6 +254,9 @@ export default {
   width: 66px;
   text-align: center;
 }
+.zoom-tag .add>input {
+  height: 20px;
+}
 .zoom-tag .add,
 .zoom-tag .tag {
   height: 22px;

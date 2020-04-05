@@ -2,7 +2,7 @@
   <div class="zoom-notice">
     <div v-if="vertical" class="vertical-notice">
       <div class="rolling-header">
-        <div class="rolling-header-body">{{title}}</div>
+        <div class="rolling-header-body">{{op ? op.title : title}}</div>
       </div>
       <div class="rolling-container">
         <div
@@ -68,9 +68,6 @@ export default {
         this.isSuspend = false;
       } else {
         this.isSuspend = true;
-      }
-      if (this.op.title) {
-        this.title = this.op.title;
       }
       if (this.op.IconStyle) {
         this.icon = this.op.IconStyle;

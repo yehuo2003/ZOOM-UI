@@ -2,7 +2,7 @@
   <div class="zoom-user-info">
     <div class="user-info-title">
       <img v-if="img" :src="img" :alt="title" />
-      <i v-else :class=" icon ? icon : 'icon-user' " class="zoom-icon icon-user"></i>
+      <i v-else :class=" icon ? icon : 'icon-user' " class="zoom-icon"></i>
       <span>{{title}}</span>
       <span class="zoom-icon icon-down"></span>
       <span class="zoom-icon icon-up"></span>
@@ -32,17 +32,18 @@ export default {
     };
   },
   created() {
-    if (this.op) {
-      if (this.op.img) {
-        this.img = this.op.img;
-      }
-      if (this.op.title) {
-        this.title = this.op.title;
-      }
-      if (this.op.icon) {
-        this.icon = this.op.icon;
-      }
-    }
+    this.load(this.op);
+    // if (this.op) {
+    //   if (this.op.img) {
+    //     this.img = this.op.img;
+    //   }
+    //   if (this.op.title) {
+    //     this.title = this.op.title;
+    //   }
+    //   if (this.op.icon) {
+    //     this.icon = this.op.icon;
+    //   }
+    // }
   },
   methods: {
     //   父组件动态设置属性

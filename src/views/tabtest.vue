@@ -65,7 +65,11 @@
         <!-- <zoom-loading></zoom-loading> -->
       </zoom-tab-item>
     </zoom-tabs>
-    <img v-lazyload>
+    <zoom-internationalisation></zoom-internationalisation>
+    <zoom-logout :op="logoutOp"></zoom-logout>
+    <zoom-button @click="confimClick(222)">conmig</zoom-button>
+    <!-- <zoom-progress :progress="num" :status="status"></zoom-progress> -->
+    <img ref="confim" v-lazyload>
     <!-- <span>{{$zoom.$t('m.music')}}</span> -->
     <h1>{{$zoom.$t('file.count_error', params)}}</h1>
     <zoom-button @click="updateI18">{{lang}}</zoom-button>
@@ -76,6 +80,21 @@
   export default {
     data() {
       return {
+        num: 0,
+        status: 'danger',
+        progressOp: {
+            status: 'danger',   // 开始时候的状态
+            progress: 30,
+            inside: true
+        },
+        logoutOp: {
+          url: '/',  //  注销后要跳转的url
+          point: true,  //  是否需要提示
+          onClick: () => {
+            console.log('注销');
+          }, //  点击事件
+          text: '注销登录'  //  文字内容, 默认为注销
+        },
         searchOp: {
           // disabled: true,
           placeHolder: '搜索框已禁用',
@@ -115,7 +134,7 @@
           ]
         },
         inputOp: {
-          // disabled: true,
+          disabled: true,
           min: 0,
           max: 10,
           space: 5,
@@ -138,6 +157,42 @@
       console.log(this.$zoom.getLanguage(), '=this.$zoom.getLanguage()');
     },
     methods: {
+      confimClick(a) {
+        // this.$zoom.tip({
+        //   // title: '标题',
+        //   // content: '内容',
+        //   customComponent: 'zoom-switch',
+        //   customProps: {
+        //     open: '开启',
+        //     close: '关闭',
+        //   },
+        //   target: this.$refs['confim']
+        // })
+        this.$zoom.prompt({
+          content: '此操作将永久删除该文件, 是否继续？',
+          value: '2222',
+          title: '标题',
+          confirmText:'是',
+          cancelText:'否',
+          type: 'warning'
+        }).then((res) => {
+          console.log(res, 'res==');
+          console.log('确定');
+            //点是
+        }).catch(() => {
+          console.log('关闭');
+            //点否
+        });
+        // this.$zoom.confim('是否登录?',{
+        //   confirmText:'登录',
+        // }).then((res) => {
+        //     //点登录
+        //     console.log('登录', res);
+        // }).catch(() => {
+        //     console.log('取消');
+        //     //点取消
+        // });
+      },
       updateI18() {
         let locale = ''
         if ( this.lang === 'zh' ) {
@@ -183,10 +238,11 @@
         // this.$refs['dropdown'].load(obj);
         this.$refs['form'].valid();
         this.$zoom.loading.show({color: 'red', full: true});
+        // this.$zoom.loading.show();
       },
       quit() {
-        this.$refs['form'].reset();
         this.$zoom.loading.hide();
+        this.$refs['form'].reset();
         // console.log(this.uname, '==');
         // this.uname = '';
       },

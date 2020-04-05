@@ -34,7 +34,7 @@
       <div class="upload-header">
         <!-- 选择文件 -->
         <div class="upload-title">{{ $zoom.$t('file.select') }}</div>
-        <div class="alert-upload upload-info">
+        <div v-if="limit || size" class="alert-upload upload-info">
           <i class="zoom-icon close-alert icon-hint"></i>
           <!-- 最多上传{{limit}}个文件! -->
           <span v-if="limit">{{ $zoom.$t('file.max_count', {limit}) }}</span>
@@ -262,7 +262,7 @@ export default {
       active: "", // 单选框
       successCount: 0, //上传成功的文件数量
       errCount: 0, //上传失败的文件数量
-      size: "10GB",
+      size: null,
       filelist: [],
       List: []
     };
@@ -277,16 +277,16 @@ export default {
       //  如果没有要上传的文件, 禁用 开始上传 按钮
       if (!this.custom) {
         if (newVal.length > 0) {
-          this.$refs["startUpload"].disabled = false;
+          this.$refs["startUpload"].isdisabled = false;
         } else {
-          this.$refs["startUpload"].disabled = true;
+          this.$refs["startUpload"].isdisabled = true;
         }
         // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
-        if (newVal.length >= this.limit) {
+        if (this.limit && newVal.length >= this.limit) {
           this.List.length = this.limit;
-          this.$refs["addUpload"].disabled = true;
+          this.$refs["addUpload"].isdisabled = true;
         } else {
-          this.$refs["addUpload"].disabled = false;
+          this.$refs["addUpload"].isdisabled = false;
         }
       }
     }
@@ -336,7 +336,16 @@ export default {
         if (data.length < 1) {
           return; // 检测是否有文件拖拽到页面
         }
-        this.addFile({ target: { files: [data] } }); //上传文件的方法
+        if (this.filelist && this.limit && (this.filelist[0].length + 1) > this.limit) {
+          this.$zoom.alert({
+            title: "提示",
+            // 已超出上传文件最大数量
+            content: `${this.$zoom.$t('file.over_count')}`,
+            type: "warning"
+          });
+        } else {
+          this.addFile({ target: { files: [data] } }); //上传文件的方法
+        }
       };
       select_frame.ondragenter = e => {
         e.preventDefault(); // 阻止拖入时的浏览器默认行为
@@ -378,7 +387,19 @@ export default {
     },
     //  添加文件
     addFileClick() {
-      this.$refs["zoom-upload"].click();
+      if (this.filelist.length) {
+        console.log(this.filelist[0].length, '=this.filelist.length');
+      }
+      if (this.filelist & this.filelist.length && this.limit && this.filelist.length > this.limit) {
+        this.$zoom.alert({
+          title: "提示",
+          // 已超出上传文件最大数量
+          content: `${this.$zoom.$t('file.over_count')}`,
+          type: "warning"
+        });
+      } else {
+        this.$refs["zoom-upload"].click();
+      }
     },
     //  文件大小验证
     testSize(file) {
@@ -456,6 +477,14 @@ export default {
     //  methods内一共4个方法，添加文件、移除文件、提交、检测（上传之前的检验）
     //  添加文件
     addFile({ target: { files } }) {
+      if (this.filelist && this.filelist.length && files.length && this.limit && (this.filelist.length + files.length) > this.limit) {
+        this.$zoom.alert({
+          title: "提示",
+          // 上传文件个数已达上限：{file_count}，请先删除已上传的文件后方可继续上传其他文件
+          content: `${this.$zoom.$t('file.over_max', {file_count: this.limit})}`,
+          type: "warning"
+        });
+      }
       //input标签触发onchange事件时，将文件加入待上传列表
       for (let i = 0, l = files.length; i < l; i++) {
         if (this.testSize(files[i])) {
@@ -502,6 +531,14 @@ export default {
         fileList = [...fileList, ...files];
         let len = fileList.length;
         let limit = this.limit;
+        if (limit && len > limit) {
+          this.$zoom.alert({
+            title: "提示",
+            // 最多上传{{limit}}个文件!
+            content: `${this.$zoom.$t('file.max_count', {limit})}`,
+            type: "warning"
+          });
+        }
         if (
           limit &&
           typeof limit === "number" &&
@@ -540,13 +577,13 @@ export default {
     },
     // 移除文件 中转方法
     removeConfirmation(index) {
-      this.$zoom.popup({
-        // 确定要删除吗？
-        content: this.$zoom.$t('del.comfirm.msg'),
-        status: "primary",
-        onClick: () => {
+      this.$zoom.confim(this.$zoom.$t('del.comfirm.msg'),{
+        title: this.$zoom.$t('public.hint'),
+        type: "query",
+      }).then(() => {
           this.remove(index);
-        }
+      }).catch(() => {
+          //点取消
       });
     },
     // 移除文件 这个简单,有时候在父组件叉掉某文件的时候，传一个index即可。
@@ -611,7 +648,7 @@ export default {
       }
       if (!this.custom) {
         setTimeout(() => {
-          this.$refs["startUpload"].disabled = true;
+          this.$refs["startUpload"].isdisabled = true;
         });
       }
     },
@@ -1053,6 +1090,10 @@ export default {
   cursor: pointer;
   text-align: center;
   padding: 20px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .zoom-file-upload .upload-content {
   position: relative;
@@ -1090,6 +1131,7 @@ export default {
 }
 /* 上传提示 */
 .zoom-file-upload .upload-header .upload-info .icon-hint {
+  padding-right: 10px;
   color: #1890ff;
 }
 .zoom-file-upload .upload-header .alert-upload {

@@ -340,6 +340,7 @@ export default {
 .zoom-btn[disabled]:hover,
 .zoom-btn[disabled]:focus,
 .zoom-btn[disabled]:active {
+  cursor: no-drop;
   background: #d9d9d9;
   border-color: #d9d9d9;
   color: #fff;

@@ -168,8 +168,7 @@ const install = Vue => {
          * @type String
          */
         setLanguage(lang) {
-            let langArr = ['zh', 'en'];
-            if (lang.locale && langArr.includes(lang.locale.toLowerCase())) {
+            if (lang.locale) {
                 localStorage.setItem('language', lang.locale);
                 // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
                 if (lang.detail && Object.prototype.toString.call(lang.detail) === '[object Object]') {
@@ -501,6 +500,72 @@ const install = Vue => {
             }
             Vue.prototype.$zoom.alert = Alert.install;
         }
+        // confim 组件
+        if (componentName === 'zoom-confim') {
+            const confim = config.default;
+            const ConfirmBox = Vue.extend(confim);
+            confim.install = (content, title, options) => {
+                if (typeof title === 'object') {
+                    options = title;
+                    title = '';
+                } else if (title === undefined) {
+                    title = '';
+                }
+                if (typeof content === 'object') {
+                    options = content;
+                    content = '';
+                } else if (content === undefined) {
+                    content = '';
+                }
+
+                options = Object.assign({
+                    title: title,
+                    content: content,
+                }, options);
+
+                let instance = new ConfirmBox({
+                    data: options
+                }).$mount();
+
+                document.body.appendChild(instance.$el);
+
+                return instance.confirm();
+            };
+            Vue.prototype.$zoom.confim = confim.install;
+        }
+        // prompt 组件
+        if (componentName === 'zoom-prompt') {
+            const prompt = config.default;
+            const PromptBox = Vue.extend(prompt);
+            prompt.install = (content, title, options) => {
+                if (typeof title === 'object') {
+                    options = title;
+                    title = '';
+                } else if (title === undefined) {
+                    title = '';
+                }
+                if (typeof content === 'object') {
+                    options = content;
+                    content = '';
+                } else if (content === undefined) {
+                    content = '';
+                }
+
+                options = Object.assign({
+                    title: title,
+                    content: content,
+                }, options);
+
+                let instance = new PromptBox({
+                    data: options
+                }).$mount();
+
+                document.body.appendChild(instance.$el);
+
+                return instance.confirm();
+            };
+            Vue.prototype.$zoom.prompt = prompt.install;
+        }
         // 全局注册 loading 组件
         if (componentName === 'zoom-loading') {
             let Loading = {}
@@ -511,7 +576,7 @@ const install = Vue => {
                 Vue.prototype.$zoom.loading = {}
                 Vue.prototype.$zoom.loading.show = data => {
                     // 如果页面有loading则不继续执行
-                    if (document.querySelector('#zoom-loading')) return
+                    if (document.getElementById('zoom-loading')) return
                     // 1、创建构造器，定义loading模板
                     let LoadingTip = Vue.extend(config.default)
                     // 2、创建实例，挂载到文档以后的地方 data 颜色
@@ -521,7 +586,7 @@ const install = Vue => {
                     Loading.installed = true
                 }
                 Vue.prototype.$zoom.loading.hide = () => {
-                    let tpl = document.querySelector('#zoom-loading')
+                    let tpl = document.getElementById('zoom-loading')
                     document.body.removeChild(tpl)
                 }
             }

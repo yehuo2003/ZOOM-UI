@@ -22,7 +22,6 @@
 export default {
   name: 'zoom-layout',
   props: {
-    format: String,  //  default/fashion
     headerHeight: { //  头部高
       type: [Number, String],
       default: 60
@@ -56,26 +55,13 @@ export default {
       if (this.$slots.footer) {
         this.mainStyle += `bottom: ${this.footerHeight}px;`
       }
-
-      if (this.format === 'fashion') {
-        if (this.$slots.header) {
-          this.mainStyle += `top: ${this.headerHeight}px;`
-        }
-        if (this.$slots.aside) {
-          this.headerStyle += `left: ${this.asideWidth}px;`
-          this.mainStyle += `left: ${this.asideWidth}px;`
-          this.footerStyle += `left: ${this.asideWidth}px;`
-        }
-      } else {
-        // default
-        if (this.$slots.header) {
-          this.asideStyle += `top: ${this.headerHeight}px;`
-          this.mainStyle += `top: ${this.headerHeight}px;`
-        }
-        if (this.$slots.aside) {
-          this.mainStyle += `left: ${this.asideWidth}px;`
-          this.footerStyle += `left: ${this.asideWidth}px;`
-        }
+      if (this.$slots.header) {
+        this.asideStyle += `top: ${this.headerHeight}px;`
+        this.mainStyle += `top: ${this.headerHeight}px;`
+      }
+      if (this.$slots.aside) {
+        this.mainStyle += `left: ${this.asideWidth}px;`
+        this.footerStyle += `left: ${this.asideWidth}px;`
       }
     }
   }

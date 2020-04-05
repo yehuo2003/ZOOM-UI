@@ -112,4 +112,6 @@ export default {   //  英文
   'transfer.list': 'All data lists',
   'transfer.list_select': 'The listed data list',
   'transfer.search': 'Please enter the elements to search',
+  // zoom-internationalisation
+  'internationalisation-toggle': 'Confirm to switch language {lang}?'
 }

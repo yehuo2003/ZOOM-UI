@@ -248,6 +248,7 @@ export default {
 }
 .zoom-numeric.numeric-disabled .num-btn {
   color: #bfbfbf;
+  cursor: no-drop;
 }
 .zoom-numeric .num-subtraction {
   border-right: 1px solid #d9d9d9;

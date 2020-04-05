@@ -112,4 +112,6 @@ export default {  //  日文
   'transfer.list': 'すべてのデータリスト',
   'transfer.list_select': '選択したデータリスト',
   'transfer.search': '検索する要素の内容を入力してください。',
+  // zoom-internationalisation
+  'internationalisation-toggle': '言語の切り替えを確認する {lang}?'
 }

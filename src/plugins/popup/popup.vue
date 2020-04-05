@@ -141,6 +141,12 @@ export default {
 .zoom-popup .popup-modal-body .popup-status .icon-stop-fill {
   color: #333;
 }
+.zoom-popup .import-msage {
+  padding: 0 16px 12px 16px;
+}
+.zoom-popup .import-msage .zoom-input {
+  width: 100%;
+}
 /* 全局弹框 */
 .zoom-popup .popup-modal-footer .zoom-btn {
   margin-left: 10px;

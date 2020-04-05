@@ -9,6 +9,7 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
+    :class="options.disabled ? 'disabled' : ''"
     class="zoom-input"
   >
     <input
@@ -228,7 +229,7 @@ export default {
   width: 20px;
   line-height: 35px;
 }
-.zoom-input:hover .input-btn .icon-default.icon-close {
+.zoom-input:not(.disabled):hover .input-btn .icon-default.icon-close {
   display: block;
 }
 .zoom-input .input-btn .icon-default.icon-close {

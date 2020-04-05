@@ -221,7 +221,7 @@ export default {
 .tree:hover > a {
   background: #10a491;
   color: #fff;
-  padding: 10px 20px;
+  padding: 13px 20px;
   transform: rotate(0);
 }
 .tree > a {
