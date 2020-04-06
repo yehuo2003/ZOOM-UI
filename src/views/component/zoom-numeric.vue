@@ -40,7 +40,7 @@ export default {
               name: "min",
               type: "Number",
               text: "设置用户可输入的的最小值, 设置之后, 用户输入范围最小不得小于最小值, 也无法通过减号按钮让当前值小于最小值",
-              text2: '用法: 配置op对象, 设置 <span>min="最小值"</span>'
+              text2: '用法: 配置op对象, 设置 <span>min: "最小值"</span>'
             },
             {
               id: 2,
@@ -48,7 +48,7 @@ export default {
               name: "max",
               type: "Number",
               text: "设置用户可输入的的最大值, 设置之后, 用户输入范围最大不得大于最大值, 也无法通过减号按钮让当前值大于最大值",
-              text2: '用法: 配置op对象, 设置 <span>max="最大值"</span>'
+              text2: '用法: 配置op对象, 设置 <span>max: "最大值"</span>'
             },
             {
               id: 3,
@@ -56,23 +56,31 @@ export default {
               name: "errMsg",
               type: "String",
               text: "需要配置testing方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
-              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+              text2: '用法: 配置op对象, 设置 <span>errMsg: "要提示用户的错误信息"</span>'
             },
             {
               id: 4,
               title: "禁止输入",
               name: "readonly",
               type: "Boolean",
-              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
-              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+              text: "默认<span>false</span>, 为<span>true</span>禁止输入数值, 开启后用户无法输入但是可以通过加减按钮修改输入框里的数值",
+              text2: '用法: 配置op对象, 设置 <span>readonly: "true"</span>'
             },
             {
               id: 5,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
-              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里数值",
+              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
+            },
+            {
+              id: 6,
+              title: "加减幅度",
+              name: "space",
+              type: "Number",
+              text: "默认 <span>1</span>, 可自定义每次点击加号或减号的加减幅度, 但是加减幅度不会超过最大值和最小值",
+              text2: '用法: 配置op对象, 设置 <span>space: "数字"</span>'
             }
           ]
         },
@@ -93,12 +101,13 @@ export default {
       ],
       num: 5,
       numericOp2: {
-        isdisabled: true,
+        disabled: true,
       },
       numericOp: {
-        max: 10,  //  最大值
+        max: 20,  //  最大值
         min: 0,   //  最小值
-        isdisabled: false,			// 是否禁用
+        space: 5, //  每次加减幅度
+        disabled: false,			// 是否禁用
         readonly: false,		//是否禁止输入
         errMsg: '必填',
         testing: val => {
@@ -124,13 +133,14 @@ export default {
               return {
                 num: 5,
                 numericOp2: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 numericOp: {
-                  max: 10,  //  最大值
+                  max: 20,  //  最大值
                   min: 0,   //  最小值
-                  isdisabled: false,			// 是否禁用
-                  readonly: false,		//是否禁止输入
+                  space: 5, //  每次加减幅度
+                  disabled: false,	// 是否禁用
+                  readonly: false,	//是否禁止输入
                   errMsg: '必填',
                   testing: val => {
                     if (!val) {

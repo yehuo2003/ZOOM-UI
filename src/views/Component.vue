@@ -1,12 +1,12 @@
 <template>
-  <zoom-layout class="home-layout">
+  <zoom-layout asideWidth="220" class="home-layout">
     <zoom-tree-menu slot="aside" style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
     <!-- 主体部分 -->
       <zoom-layout slot="main">
         <h1 class="component-header" slot="header">
           {{nowTitle}}
         </h1>
-        <router-view slot="main"></router-view>
+        <router-view ref="main" slot="main"></router-view>
       </zoom-layout>
     <div slot="footer">
       <p @click="toClick(leftUrl)" v-show="leftTitle" style="float: left;">
@@ -37,6 +37,11 @@ export default {
         data: []
       }
     };
+  },
+  watch: {
+    '$route.path': function(newVal, oldVal) {
+      this.loadUrl('#' + newVal);
+    }
   },
   created() {
     /**
@@ -82,12 +87,15 @@ export default {
      * 先获取当前url地址, 然后循环list列表, 找到和当前地址匹配的, 如果当前地址在list列表里不是第一个元素,
      * 那就取它前一个作为left的信息, 如果当前地址在list列表里不是最后一个, 就取它后一个作为right的信息
      */
-    loadUrl() {
+    loadUrl(url) {
       let leftTitle = null;
       let rightTitle = null;
       let leftUrl = null;
       let rightUrl = null;
       let current = '#' + this.$route.path;
+      if (url) {
+        current = url;
+      }
       let currentIndex = 0;
       this.list.forEach((item, index) => {
         if (item.url === current) {
@@ -133,30 +141,7 @@ export default {
   }
   .zoom-main {
     padding: 0 50px;
-    margin-bottom: 50px;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-      width: 10px;
-      background-color: #F5F5F5;
-    }
-    &::-webkit-scrollbar-thumb {
-      position: absolute;
-      background: #fff;
-    }
-    &:hover {
-      &::-webkit-scrollbar-thumb {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
-        box-shadow: inset 0 0 6px rgba(20, 117, 173, 0.3);
-        background: rgba(85,85,85, .5);
-      }
-    }
-    &::-webkit-scrollbar-track {/*滚动条里面轨道*/
-      -webkit-box-shadow: inset 0 0 1px rgba(0,0,0,0);
-      box-shadow: inset 0 0 1px rgba(0,0,0,0);
-      border-radius: 10px;
-      background: #F5F5F5;
-    }
+    margin-bottom: 20px;
     .content-active {
       border: 1px solid #d9d9d9;
     }

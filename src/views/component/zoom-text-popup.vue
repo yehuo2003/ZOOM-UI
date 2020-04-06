@@ -41,7 +41,7 @@ export default {
               name: "rows",
               type: "Number",
               text: "弹出后编辑框默认展示的行数, 默认为5",
-              text2: '用法: 在标签上直接配置 <span>rows="参数"</span>'
+              text2: '用法: 在标签上直接配置 <span>rows: "参数"</span>'
             },
             {
               id: 2,
@@ -49,7 +49,7 @@ export default {
               name: "placeHolder",
               type: "String",
               text: "可自定义占位符内容",
-              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+              text2: '用法: 配置op对象, 设置 <span>placeHolder:"参数"</span>'
             },
             {
               id: 3,
@@ -57,26 +57,42 @@ export default {
               name: "readonly",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
-              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>readonly: "true"</span>'
             },
             {
               id: 4,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
+            },
+            {
+              id: 5,
+              title: "自定义宽",
+              name: "width",
+              type: "String",
+              text: "默认 <span>150px</span>, 可以自定义宽度",
+              text2: '用法: 配置op对象, 设置 <span>width: "宽度"</span>'
+            },
+            {
+              id: 6,
+              title: "最大输入字符",
+              name: "maxLength",
+              type: "Number",
+              text: "默认 <span>50</span>, 可以自定义最大输入长度",
+              text2: '用法: 配置op对象, 设置 <span>maxLength: 50</span>'
             }
           ]
         }
       ],
       textPopupOp2: {
-        isdisabled: true,
+        disabled: true,
       },
       textPopupOp: {
         placeHolder: '请输入内容',	// 占位符
         resize: false,						// 是否禁止拖动默认false
-        isdisabled: false,			// 是否禁用默认false
+        disabled: false,			// 是否禁用默认false
         readonly: false		//是否禁止输入
       },
       opTab: 0,
@@ -94,12 +110,12 @@ export default {
             data() {
               return {
                 textPopupOp2: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 textPopupOp: {
                   placeHolder: '请输入内容',	// 占位符
                   resize: false,						// 是否禁止拖动默认false
-                  isdisabled: false,			// 是否禁用默认false
+                  disabled: false,			// 是否禁用默认false
                   readonly: false		//是否禁止输入
                 }
               }

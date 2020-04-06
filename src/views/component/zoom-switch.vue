@@ -4,7 +4,7 @@
     <h2>使用方法</h2>
     <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-switch open="开启" close="关闭" :op="switchOp"></zoom-switch>
+        <zoom-switch open="开启" close="关闭"></zoom-switch>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="ipt"></custom-code>
@@ -42,10 +42,10 @@ export default {
             {
               id: 1,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>则禁用开关, 禁用状态下, 无法开启或关闭开关",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
             },
             {
               id: 2,
@@ -53,7 +53,7 @@ export default {
               name: "open",
               type: "String",
               text: "打开状态下, 要展示给用户看的文本内容",
-              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>open="文本内容"</span>'
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>open: "文本内容"</span>'
             },
             {
               id: 3,
@@ -61,7 +61,7 @@ export default {
               name: "close",
               type: "String",
               text: "打开状态下, 要展示给用户看的文本内容",
-              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>close="文本内容"</span>'
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>close: "文本内容"</span>'
             },
             {
               id: 4,
@@ -69,7 +69,7 @@ export default {
               name: "status",
               type: "String",
               text: "默认<span>close</span>, 为<span>open</span>则是打开状态,",
-              text2: '用法: 配置op对象, 设置 <span>status="open"</span>'
+              text2: '用法: 配置op对象, 设置 <span>status: "open"</span>'
             }
           ]
         },
@@ -82,25 +82,23 @@ export default {
               title: "点击按钮前触发的回调函数",
               name: "beforeClick",
               type: "Function",
-              text: "",
-              text2: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变前的值'
+              text: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变前的值'
             },
             {
               id: 2,
               title: "点击按钮后触发的回调函数",
               name: "afterClick",
               type: "Function",
-              text: "",
-              text2: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变后的值'
+              text: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变后的值'
             }
           ]
         }
       ],
       switchOp2: {
-        isdisabled: true,
+        disabled: true,
       },
       switchOp: {
-        isdisabled: false,	// 是否禁用 默认false
+        disabled: false,	// 是否禁用 默认false
         open: '开启',				// 打开的文本
         close: '关闭',			// 关闭的文本
         status: 'open',			// 初始状态(可选open || close, 默认是close)
@@ -126,10 +124,10 @@ export default {
             data() {
               return {
                 switchOp2: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 switchOp: {
-                  isdisabled: false,	// 是否禁用 默认false
+                  disabled: false,	// 是否禁用 默认false
                   open: '开启',	        // 打开的文本
                   close: '关闭',	// 关闭的文本
                   status: 'open',	// 初始状态(可选open || close, 默认是close)

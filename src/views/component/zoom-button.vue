@@ -37,12 +37,15 @@
       </zoom-tab-item>
     </zoom-tabs>
     <!-- 禁用间隔 -->
-    <h2>按钮禁用时间间隔</h2>
+    <h2>禁用/防抖</h2>
     <p>
       通过
-      <span>isdisabled</span>属性设置按钮为禁用状态
+      <span>disabled</span>属性设置按钮为禁用状态
     </p>
-    <p>点击按钮后禁用的时间，默认为1秒，可以手动设置reset-time属性，单位为毫秒</p>
+    <p>
+      通过
+      <span>reset-time</span>属性设置按钮防抖时间, 单位为毫秒, 默认 <span>1000</span> 毫秒
+    </p>
     <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button>正常按钮</zoom-button>
@@ -133,10 +136,10 @@ export default {
             {
               id: 5,
               title: "按钮禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "可选参数: <span>true</span> / <span>false</span>, 默认 <span>false</span>",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled="true"</span>'
             }
           ]
         },
@@ -157,14 +160,14 @@ export default {
       ],
       op: {
         type: "primary",
-        isdisabled: false, // 是否禁用 类型 布尔
+        disabled: false, // 是否禁用 类型 布尔
         onClick: () => {
           console.log("按钮被点击了");
         } //回调函数 点击时候触发
       },
       op2: {
         type: "warning",
-        isdisabled: true, // 是否禁用 类型 布尔
+        disabled: true, // 是否禁用 类型 布尔
         IconStyle: "icon-close", // 启用字体图标,传入icon开头的字体图标class,类型为字符串
         onClick: function() {
           console.log("按钮被点击了");
@@ -202,14 +205,14 @@ export default {
               return {
                 op: {
                   type: 'primary',
-                  isdisabled: false,	// 是否禁用 类型 布尔
+                  disabled: false,	// 是否禁用 类型 布尔
                   onClick: () =>; {   //回调函数 点击时候触发
                     console.log('按钮被点击了')
                   }
                 },
                 op2: {
                   type: 'warning',  // 按钮类型
-                  isdisabled: true,	// 是否禁用 类型 布尔
+                  disabled: true,	// 是否禁用 类型 布尔
                   IconStyle: 'icon-close',		// 启用字体图标,传入icon开头的字体图标class,类型为字符串
                   onClick: () =>; {
                     console.log('禁用状态无法点击')

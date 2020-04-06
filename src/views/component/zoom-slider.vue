@@ -15,7 +15,6 @@
     <p>比如:min=0, :max="500",	那么进度条10%的时候,值就是50,以此类推</p>
     <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
       <zoom-tab-item :index="0" label="效果">
-        滑块1
         <zoom-slider v-model="num1"></zoom-slider>
         <zoom-button @click="slider1Num">滑块1的值</zoom-button>
         <br>
@@ -45,7 +44,7 @@ export default {
               name: "min",
               type: "Number",
               text: "滑块的最小值, 默认 <span>0</span>",
-              text2: '用法: <span>min="0"</span>'
+              text2: '用法: 组件标签上设置属性 <span>min="0"</span>'
             },
             {
               id: 2,
@@ -53,7 +52,15 @@ export default {
               name: "max",
               type: "Number",
               text: "滑块的最大值, 默认 <span>100</span>",
-              text2: '用法: <span>min="100"</span>'
+              text2: '用法: 组件标签上设置属性 <span>min="100"</span>'
+            },
+            {
+              id: 3,
+              title: "自定义颜色",
+              name: "color",
+              type: "String",
+              text: "可以自定义滑块组件颜色, 默认蓝色",
+              text2: '用法: 组件标签上设置属性 <span> color="颜色"</span>'
             }
           ]
         },

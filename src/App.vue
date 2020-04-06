@@ -3,7 +3,10 @@
     <zoom-layout>
       <header slot="header">
         <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
-        <zoom-search v-model="searchVal" @search="search"></zoom-search>
+        <div class="header-right">
+          <zoom-search v-model="searchVal" @search="search"></zoom-search>
+          <zoom-internationalisation></zoom-internationalisation>
+        </div>
       </header>
       <router-view slot="main"/>
     </zoom-layout>
@@ -85,11 +88,21 @@ export default {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   .zoom-header {
-    .zoom-search {
+    .header-right {
       position: absolute;
-      right: 50px;
-      top: 7px;
+      color: #fff;
       z-index: 999;
+      right: 10px;
+      top: 7px;
+      .zoom-internationalisation {
+        padding-left: 10px;
+        .zoom-internationalisation-spread {
+          background: #fff;
+          ul {
+            color: #333;
+          }
+        }
+      }
     }
   }
   .attribute-type {

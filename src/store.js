@@ -53,11 +53,14 @@ export default new Vuex.Store({
       {title: '提示组件', children: [
         {title: 'Alert警告', url: '#/component/zoom-alert'},
         {title: 'Popup弹出框', url: '#/component/zoom-popup'},
+        {title: 'Confim确认框', url: '#/component/zoom-confim'},
+        {title: 'Prompt提示框', url: '#/component/zoom-prompt'},
         {title: 'Tip文字提示', url: '#/component/zoom-tip'},
         {title: 'loading加载', url: '#/component/zoom-loading'}
       ]},
       {title: '业务组件', children: [
         {title: 'Logout注销组件', url: '#/component/zoom-logout'},
+        {title: 'i18n国际化组件', url: '#/component/zoom-internationalisation'},
         {title: 'Userinfo用户组件', url: '#/component/zoom-userinfo'}
       ]},
       {title: '其他组件', children: [

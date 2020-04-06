@@ -12,12 +12,11 @@ import 'highlight.js/styles/atom-one-dark.css'	//	yes
 //import 'highlight.js/styles/darkula.css'		//	橙色标签
 //import 'highlight.js/styles/atelier-seaside-dark.css'	//	清晰
 
-// 路由守卫 每次跳转完了后默认回到顶部
-router.afterEach((to,from,next)=>{
-  window.scrollTo(0, 0);
-})
-
 Vue.use(zoomUI);
+
+// 注册复制组件
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 // 全局注册Highlight v-highlight
 let Highlight = {}

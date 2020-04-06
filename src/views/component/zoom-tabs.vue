@@ -107,6 +107,16 @@ export default {
                 "为每个Tab-item组件绑定独一无二的下标, 避免更新错误",
               text2:
                 '用法: 在组件Tab-item上绑定设置<span>:index="索引"</span>'
+            },
+            {
+              id: 4,
+              title: "显示边框",
+              name: "border",
+              type: "Boolean",
+              text:
+                "默认<span>false</span>, 设置为<span>true</span>可以显示边框",
+              text2:
+                '用法: 在组件Tab-tabs上绑定设置<span>:border="true"</span>'
             }
           ]
         },

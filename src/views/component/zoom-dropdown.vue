@@ -2,7 +2,6 @@
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <img v-lazyload>
     <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-dropdown></zoom-dropdown>
@@ -53,7 +52,7 @@ export default {
               name: "placeHolder",
               type: "String",
               text: "可自定义占位符内容",
-              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+              text2: '用法: 配置op对象, 设置 <span>placeHolder: "参数"</span>'
             },
             {
               id: 2,
@@ -61,7 +60,7 @@ export default {
               name: "data",
               type: "Array",
               text: "默认为暂无数据, 可手动配置数组对象, 对象里设置<span>value</span>和<span>text</span>, <span>text</span>为前端展示文本, <span>value</span>是传给后台的值",
-              text2: '用法: 配置op对象, 设置 <span>data=[{value: "xx", text: "xxx"}]</span>'
+              text2: '用法: 配置op对象, 设置 <span>data: [{value: "xx", text: "xxx"}]</span>'
             },
             {
               id: 3,
@@ -69,7 +68,7 @@ export default {
               name: "default",
               type: "String",
               text: "<span>default</span>为默认展示的数据, 必须要是<span>data</span>数组里有的数据, <span>default</span>请和<span>value</span>值保持一致",
-              text2: '用法: 配置op对象, 设置 <span></span>default="属性"'
+              text2: '用法: 配置op对象, 设置 <span>default: "属性"</span>'
             },
             {
               id: 4,
@@ -77,7 +76,7 @@ export default {
               name: "errMsg",
               type: "String",
               text: "需要配置<span>testing</span>方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
-              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+              text2: '用法: 配置op对象, 设置 <span>errMsg: "要提示用户的错误信息"</span>'
             },
             {
               id: 5,
@@ -85,15 +84,15 @@ export default {
               name: "readonly",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
-              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>readonly: "true"</span>'
             },
             {
               id: 6,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
             },
             {
               id: 7,
@@ -101,7 +100,7 @@ export default {
               name: "hideClose",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>则不显示清除按钮",
-              text2: '用法: 配置op对象, 设置 <span>hideClose="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>hideClose: "true"</span>'
             },
             {
               id: 8,
@@ -109,7 +108,7 @@ export default {
               name: "isChecked",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>则启用多选功能, 样式为复选框",
-              text2: '用法: 配置op对象, 设置 <span>isChecked="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>isChecked: "true"</span>'
             }
           ]
         },
@@ -140,11 +139,11 @@ export default {
         placeHolder: '--等待加载数据--',
       },
       dropdownOp3: {
-        isdisabled: true,
+        disabled: true,
       },
       dropdownOp2: {
         isChecked: true,
-        isdisabled: false,
+        disabled: false,
         placeHolder: '--请选择--',
         readonly: true,
         hideClose: false,
@@ -157,7 +156,7 @@ export default {
       },
       dropdownOp: {
         isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
-        isdisabled: false,			// 是否禁用
+        disabled: false,			// 是否禁用
         placeHolder: '--请选择--',	//占位符
         default: '2',			//默认选中的值, 写value
         readonly: false,		//是否禁止输入
@@ -220,11 +219,11 @@ export default {
             data() {
               return {
                 dropdownOp3: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 dropdownOp2: {
                   isChecked: true,
-                  isdisabled: false,
+                  disabled: false,
                   placeHolder: '--请选择--',
                   readonly: true,
                   hideClose: false,
@@ -237,7 +236,7 @@ export default {
                 },
                 dropdownOp: {
                   isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
-                  isdisabled: false,			// 是否禁用
+                  disabled: false,			// 是否禁用
                   placeHolder: '--请选择--',	//占位符
                   default: '2',			//默认选中的值, 写value
                   readonly: false,		//是否禁止输入

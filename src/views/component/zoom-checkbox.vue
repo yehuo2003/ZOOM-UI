@@ -50,10 +50,10 @@ export default {
             {
               id: 2,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认<span>false</span>, 禁用状态下, 无法选择",
-              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>isdisabled:"true"</span>'
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>disabled:"true"</span>'
             },
             {
               id: 3,
@@ -99,7 +99,7 @@ export default {
       },
       checkboxOp2: {
         name: 'list',
-        isdisabled: true,
+        disabled: true,
         data: [
           {text: '唱歌', value: 'sing', checked: true},
           {text: '跳舞', value: 'dance'},
@@ -109,7 +109,7 @@ export default {
       },
       checkboxOp: {
         name: 'age',	//	复选框的name
-        isdisabled: false,	//	是否禁用,为true可禁用
+        disabled: false,	//	是否禁用,为true可禁用
         Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
         data: [	//	复选框数据	checked: true	默认选中
           {text: '唱歌', value: 'sing'},
@@ -137,7 +137,7 @@ export default {
                 fondness: 'sports',
                 checkboxOp2: {
                   name: 'list',
-                  isdisabled: true,
+                  disabled: true,
                   data: [
                     {text: '唱歌', value: 'sing', checked: true},
                     {text: '跳舞', value: 'dance'},
@@ -147,7 +147,7 @@ export default {
                 },
                 checkboxOp: {
                   name: 'age',	//	复选框的name
-                  isdisabled: false,	//	是否禁用,为true可禁用
+                  disabled: false,	//	是否禁用,为true可禁用
                   Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
                   data: [	//	复选框数据	checked: true	默认选中
                     {text: '唱歌', value: 'sing'},

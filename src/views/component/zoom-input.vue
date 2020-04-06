@@ -78,10 +78,10 @@ export default {
             {
               id: 6,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled="true"</span>'
             }
           ]
         },
@@ -113,7 +113,7 @@ export default {
         readonly: true
       },
       inputOp3: {
-        isdisabled: true,
+        disabled: true,
       },
       inputOp2: {
         placeHolder: '请输入密码',
@@ -130,7 +130,7 @@ export default {
         }
       },
       inputOp: {
-        isdisabled: false,		// 是否禁用
+        disabled: false,		// 是否禁用
         placeHolder: '请输入姓名',  //  占位符
         readonly: true,     //  是否禁止输入
         type: 'text',					// 输入框类型 可选text或password
@@ -167,7 +167,7 @@ export default {
                   readonly: true
                 },
                 op3: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 op2: {
                   placeHolder: '请输入密码',
@@ -183,7 +183,7 @@ export default {
                   }
                 },
                 op: {
-                  isdisabled: false,		// 是否禁用
+                  disabled: false,		// 是否禁用
                   placeHolder: '请输入姓名',  //  占位符
                   readonly: false,     //  是否禁止输入
                   type: 'text',					// 输入框类型 可选text或password

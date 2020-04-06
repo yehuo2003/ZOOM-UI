@@ -178,25 +178,27 @@ export default {
   .basic {
     .zoom-layout {
       text-align: center;
+      color: #fff;
       /deep/ .zoom-header {
-        background: #ecf8ff;
+        padding: 10px;
+        background: #40a9ff;
         border: 3px solid #fff;
-        color: #5b90af;
       }
       /deep/ .zoom-aside {
-        background: #fff0f0;
+        padding: 10px;
+        background: #ff4d4f;
         border: 3px solid #fff;
-        color: #d27070;
       }
       /deep/ .zoom-main {
-        background: #fffdec;
+        padding: 10px;
+        background: #ffc53d;
         border: 3px solid #fff;
-        color: #b1a859;
+        margin-bottom: 0;
       }
       /deep/ .zoom-footer {
-        background: #e8ffed;
+        padding: 10px;
+        background: #73d13d;
         border: 3px solid #fff;
-        color: #84a18a;
       }
     }
   }

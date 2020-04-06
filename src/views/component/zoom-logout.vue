@@ -39,27 +39,27 @@ export default {
           content: [
             {
               id: 1,
-              title: "选择每页展示数量",
-              name: "pageSizes",
-              type: "Array",
-              text: "配置可供用户选择的每页展示数量, 以下拉框形式呈现",
-              text2: '用法: 配置op属性, 设置<span>pageSizes: [每页数量]</span>'
+              title: "注销后要跳转的页面",
+              name: "url",
+              type: "String",
+              text: "注销后要跳转的页面, 可不配置",
+              text2: '用法: 配置op属性, 设置<span>url: "跳转地址"</span>'
             },
             {
               id: 2,
-              title: "分页模式",
-              name: "mode",
-              type: "String",
-              text: "默认<span>Number</span>, 可选参数<span>mini</span>, <span>Number</span>",
-              text2: '用法: 配置op属性, 设置<span>mode: "mini"</span>'
+              title: "是否提示",
+              name: "point",
+              type: "Boolean",
+              text: "为了防止用户误操作, 属性默认为<span>false</span>设置为<span>true</span>则不提示",
+              text2: '用法: 配置op属性, 设置<span>point: true</span>'
             },
             {
               id: 3,
-              title: "分页数据",
-              name: "pageVal",
-              type: "Object",
-              text: "以对象形式设置分页数据<span>pageVal</span>, 对象内有三个参数可设置: 总条数<span>total</span>, 当前页<span>curPage</span>, 每页展示数据<span>pageSize</span>",
-              text2: '用法: 配置op属性, 设置<span>pageVal: "对象"</span>'
+              title: "文字内容",
+              name: "text",
+              type: "String",
+              text: "默认显示 <span>注销</span>可自定义修改",
+              text2: '用法: 配置op属性, 设置<span>text: "文字"</span>'
             }
           ]
         },
@@ -69,35 +69,11 @@ export default {
           content: [
             {
               id: 1,
-              title: "监听下拉数据变化的回调",
-              name: "pageSizeSkip",
+              title: "点击注销前的回调",
+              name: "onClick",
               type: "Function",
-              text: "监听每页大小的下拉框数据发生改变事件, 有两个参数<span>val</span>当前页数据, <span>pageVal</span>分页对象",
-              text2: '用法: 配置op属性, 设置<span>pageSizeSkip: (val, pageVal) => {}</span>'
-            },
-            {
-              id: 2,
-              title: "监听跳转前的回调",
-              name: "beforeSkip",
-              type: "Function",
-              text: "监听分页组件跳转事件, 有两个参数<span>val</span>当前页数据, <span>pageVal</span>分页对象",
-              text2: '用法: 配置op属性, 设置<span>beforeSkip: (val, pageVal) => {}</span>'
-            },
-            {
-              id: 3,
-              title: "监听跳转后的回调",
-              name: "skip",
-              type: "Function",
-              text: "监听分页组件跳转后事件, 有两个参数<span>val</span>当前页数据, <span>pageVal</span>分页对象",
-              text2: '用法: 配置op属性, 设置<span>skip: (val, pageVal) => {}</span>'
-            },
-            {
-              id: 4,
-              title: "动态设置分页数据",
-              name: "load",
-              type: "Function",
-              text: "动态设置分页数据, 需要绑定<span>ref</span>来动态设置数据",
-              text2: '用法: 标签中绑定ref, <span>this.$refs["page"].load(pageVal)</span>'
+              text: "点击注销前触发的回调函数",
+              text2: '用法: 配置op属性, 设置<span>onClick: () => {}</span>'
             },
           ]
         }

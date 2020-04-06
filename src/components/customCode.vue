@@ -1,40 +1,56 @@
 <template>
-  <div v-highlight v-html="customHtml" class="zoom-code" zoom-label="复制" @click="handleClick">
-  </div>
+  <div
+    v-highlight
+    v-clipboard:copy="copyHtml"
+    v-clipboard:success="onCopy"
+    v-clipboard:error="onError"
+    v-html="customHtml"
+    class="zoom-code"
+    zoom-label="复制"
+  ></div>
 </template>
 
 <script>
 export default {
-  name: 'custom-code',
+  name: "custom-code",
   props: {
-    html: { //  自定义代码片段
+    html: {
+      //  自定义代码片段
       type: String,
       default: null
     },
-    cls: {  //  自定义class
+    cls: {
+      //  自定义class
       type: String,
       default: null
     }
   },
   data() {
     return {
-      customHtml: null
-    }
+      customHtml: null,
+      copyHtml: null
+    };
   },
   created() {
     if (this.html) {
       this.customHtml = `
         <pre>
-          <code ${this.cls ? 'class=' + this.cls : ''}">
+          <code ${this.cls ? "class=" + this.cls : ""}">
           ${this.html}
           </code>
         </pre>
-      `
+      `;
     }
+    this.copyHtml = this.html.replace(/&lt;/g,"<").replace(/&gt;/g,">")
   },
   methods: {
-    handleClick() {
-      console.log(666);
+    // 复制成功
+    onCopy(e) {
+      console.log(e, "onCopy");
+    },
+    // 复制失败
+    onError(e) {
+      alert("失败", e);
     }
   }
 };
@@ -42,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 .zoom-code {
   position: relative;
-  pointer-events: none;
+  pointer-events:none;
   &::after {
     content: attr(zoom-label);
     pointer-events: auto;

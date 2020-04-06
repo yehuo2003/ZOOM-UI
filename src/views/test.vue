@@ -1,26 +1,27 @@
 <template>
   <div>
-    <div>
-      <p class="p1">111</p>
-      <p class="p-con">222</p>
-      <p>333</p>
-      <p class="p4">444</p>
-    </div>
+    <zoom-button ref="btn" @click="handleClick">触发</zoom-button>
   </div>
 </template>
 <script>
   export default {
-    mounted () {
-      $('.p1').addClass('blue');
-      $('.p4').setText('666666666666');
-      $('div').find('p').eq(1).setText(66666666666).addClass('blue');
-      let title = $Z('.p-con');
-      console.log(title,'sss');
+    data () {
+      return {
+      }
+    },
+    methods: {
+      handleClick() {
+        this.$zoom.tip({
+        // title: '标题',
+        // content: '内容',
+        customComponent: 'zoom-input',
+        customProps: { // 要传入的参数
+          open: '开启',
+          close: '关闭',
+        },
+        target: this.$refs['btn']	//	目标元素
+      })
+      }
     }
   }
 </script>
-<style>
-.blue {
-  color: blue !important;
-}
-</style>

@@ -49,10 +49,10 @@ export default {
             {
               id: 2,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认<span>false</span>, 禁用状态下, 无法选择",
-              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>isdisabled:"true"</span>'
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>disabled: true</span>'
             },
             {
               id: 3,
@@ -60,7 +60,7 @@ export default {
               name: "Bool",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>的情况下, 用户用<span>v-model</span>绑定后, 得到的值为布尔值",
-              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>close="文本内容"</span>'
+              text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>close: "文本内容"</span>'
             },
             {
               id: 4,
@@ -98,7 +98,7 @@ export default {
       },
       radioOp2: {
         name: 'list',
-        isdisabled: true,
+        disabled: true,
         data: [
           {text: '男', value: 'man'},
           {text: '女', value: 'woman'},
@@ -107,7 +107,7 @@ export default {
       },
       radioOp: {
         name: 'age',	//	单选框的name
-        isdisabled: false,	//	是否禁用,为true可禁用
+        disabled: false,	//	是否禁用,为true可禁用
         Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
         data: [	//	单选框数据	checked: true	默认选中
           {text: '男', value: 'man'},
@@ -133,7 +133,7 @@ export default {
                 age: 'secrecy',
                 radioOp2: {
                   name: 'list',
-                  isdisabled: true,
+                  disabled: true,
                   data: [
                     {text: '男', value: 'man'},
                     {text: '女', value: 'woman'},
@@ -142,7 +142,7 @@ export default {
                 },
                 radioOp: {
                   name: 'age',	//	单选框的name
-                  isdisabled: false,	//	是否禁用,为true可禁用
+                  disabled: false,	//	是否禁用,为true可禁用
                   Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
                   data: [	//	单选框数据	checked: true	默认选中
                     {text: '男', value: 'man'},

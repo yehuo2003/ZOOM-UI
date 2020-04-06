@@ -56,10 +56,10 @@ export default {
             {
               id: 3,
               title: "是否禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认为<span>false</span>, 设置为<span>true</span>可以禁用组件, 禁用状态下用户无法选择",
-              text2: '用法: 配置op属性, 设置<span>isdisabled: true</span>'
+              text2: '用法: 配置op属性, 设置<span>disabled: true</span>'
             },
             {
               id: 4,
@@ -90,6 +90,22 @@ export default {
               type: "Function",
               text: "获取tag组件的完整数据",
               text2: '用法: 在组件标签上绑定ref, 并通过<span>this.$refs[属性].tagList</span>获取数据'
+            },
+            {
+              id: 2,
+              title: "添加标签前的回调",
+              name: "beforeAddValue",
+              type: "Function",
+              text: "参数<span>val</span>当前值, 如果用户设置了并且返回<span>false</span>则不添加",
+              text2: '用法:  配置op属性, 设置<span>beforeAddValue: val => {}</span>调用函数'
+            },
+            {
+              id: 3,
+              title: "添加标签成功后的回调",
+              name: "afterAddValue",
+              type: "Function",
+              text: "添加标签成功后, 执行的方法",
+              text2: '用法:  配置op属性, 设置<span>afterAddValue: val => {}</span>调用函数'
             }
           ]
         }

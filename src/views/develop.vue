@@ -26,8 +26,7 @@ export default {
 .home-layout {
   .zoom-main {
     padding: 0 50px;
-    margin-bottom: 50px;
-    overflow-y: auto;
+    margin-bottom: 20px;
     .attribute-type {
       p {
         line-height: inherit;

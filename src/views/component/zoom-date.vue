@@ -39,10 +39,10 @@ export default {
             {
               id: 1,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 选择日期",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled="true"</span>'
             },
             {
               id: 2,
@@ -94,11 +94,11 @@ export default {
         }
       ],
       dateOp2: {
-        isdisabled: true,
+        disabled: true,
         dateTime: '2020-02-02'
       },
       dateOp: {
-        isdisabled: false,  //  是否禁用
+        disabled: false,  //  是否禁用
         dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
         onComplete: (arr, time) => {	//	arr是日期数组(年月日周几 + 时分秒)
           console.log('组件编译完成onComplete', arr, time);
@@ -125,11 +125,11 @@ export default {
             data() {
               return {
                 dateOp2: {
-                  isdisabled: true,
+                  disabled: true,
                   dateTime: '2020-02-02'
                 },
                 dateOp: {
-                  isdisabled: false,  //  是否禁用
+                  disabled: false,  //  是否禁用
                   dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
                   onComplete: (arr, time) =&gt; {	//	arr是日期数组(年月日周几 + 时分秒)
                     console.log('组件编译完成onComplete', arr, time);

@@ -41,7 +41,7 @@ export default {
               name: "placeHolder",
               type: "String",
               text: "可自定义占位符内容",
-              text2: '用法: 配置op对象, 设置 <span>placeHolder="参数"</span>'
+              text2: '用法: 配置op对象, 设置 <span>placeHolder: "参数"</span>'
             },
             {
               id: 2,
@@ -49,7 +49,7 @@ export default {
               name: "errMsg",
               type: "String",
               text: "需要配置testing方法, 并且在方法返回<span>false</span>的情况下, 才会出现",
-              text2: '用法: 配置op对象, 设置 <span>errMsg="要提示用户的错误信息"</span>'
+              text2: '用法: 配置op对象, 设置 <span>errMsg: "要提示用户的错误信息"</span>'
             },
             {
               id: 3,
@@ -57,15 +57,15 @@ export default {
               name: "readonly",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
-              text2: '用法: 配置op对象, 设置 <span>readonly="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>readonly: "true"</span>'
             },
             {
               id: 4,
               title: "禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>isdisabled="true"</span>'
+              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
             }
           ]
         },
@@ -85,12 +85,12 @@ export default {
         }
       ],
       textareaOp2: {
-        isdisabled: true,
+        disabled: true,
       },
       textareaOp: {
         placeHolder: '请输入内容',	// 占位符
         maxLength: 100,						// 最大输入长度, 默认为50
-        isdisabled: false,			// 是否禁用
+        disabled: false,			// 是否禁用
         readonly: false,		//是否禁止输入
         errMsg: '必填',
         testing: val => {
@@ -116,12 +116,12 @@ export default {
             data() {
               return {
                 textareaOp2: {
-                  isdisabled: true,
+                  disabled: true,
                 },
                 textareaOp: {
                   placeHolder: '请输入内容',	// 占位符
                   maxLength: 100,	// 最大输入长度, 默认为50
-                  isdisabled: false,			// 是否禁用
+                  disabled: false,			// 是否禁用
                   readonly: false,		//是否禁止输入
                   errMsg: '必填',
                   testing: val => {

@@ -48,10 +48,10 @@ export default {
             {
               id: 2,
               title: "是否禁用",
-              name: "isdisabled",
+              name: "disabled",
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>禁用组件",
-              text2: '用法: 配置op属性, 设置<span>isdisabled: "true"</span>'
+              text2: '用法: 配置op属性, 设置<span>disabled: "true"</span>'
             },
             {
               id: 3,
@@ -66,7 +66,7 @@ export default {
       ],
       rateOp: {
         mode: 'emotions',	//	默认 stars, 星星图标, emotions为表情
-        isdisabled: false,  //  是否禁用
+        disabled: false,  //  是否禁用
         data: ['很差', '差', '一般', '好', '很好'],
       },
       opTab: 0,
@@ -83,7 +83,7 @@ export default {
               return {
                 rateOp: {
                   mode: 'emotions',	//	默认 stars, 星星图标, emotions为表情
-                  isdisabled: false,  //  是否禁用
+                  disabled: false,  //  是否禁用
                   data: ['很差', '差', '一般', '好', '很好'], //  对应绑定图标的属性
                 }
               }
