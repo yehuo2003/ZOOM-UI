@@ -17,12 +17,11 @@ export default {
   data() {
     return {
       use: '&lt;zoom-button&gt;测试按钮&lt;/zoom-button&gt;',
-      quote: `
-        import zoomUI from 'zoom-ui-1.0';
-        import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
+      quote:
+        `import zoomUI from 'zoom-ui-1.0';
+          import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
 
-        Vue.use(zoomUI);
-      `,
+          Vue.use(zoomUI);`,
     };
   },
   methods: {

@@ -16,7 +16,7 @@
         <zoom-button @click="promptClick">提示框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="promptCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化操作</h2>
@@ -30,7 +30,7 @@
         <zoom-button @click="styleClick('info')" type="info">普通提示框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="promptCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -112,62 +112,60 @@ export default {
       ],
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点提示框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功提示框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告提示框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险提示框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通提示框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              styleClick(type) {
-                this.$zoom.prompt({
-                  title: type,	//	默认 提示
-                  content: '&lt;h5&gt;自定义内容&lt;/h5&gt;', // 可传入HTML片段
-                  type: type,	// 状态 有成功 失败 primary和info
-                  confirmText: '自定义确认',	//	自定义按钮文字, 默认为确认
-                  cancelText: '自定义取消'
-                }).then(response => {
-                    //点确认
-                    console.log('输入的内容是' + response);
-                }).catch(() => {
-                    console.log('自定义取消');
-                    //点取消
-                });
+      promptCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点提示框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功提示框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告提示框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险提示框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通提示框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                styleClick(type) {
+                  this.$zoom.prompt({
+                    title: type,	//	默认 提示
+                    content: '&lt;h5&gt;自定义内容&lt;/h5&gt;', // 可传入HTML片段
+                    type: type,	// 状态 有成功 失败 primary和info
+                    confirmText: '自定义确认',	//	自定义按钮文字, 默认为确认
+                    cancelText: '自定义取消'
+                  }).then(response => {
+                      //点确认
+                      console.log('输入的内容是' + response);
+                  }).catch(() => {
+                      console.log('自定义取消');
+                      //点取消
+                  });
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="promptClick"&gt;确认登录框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              promptClick() {
-                this.$zoom.prompt('是否登录?', '登录确认', { // 第一个参数为content, 第二个参数为title
-                  confirmText:'登录',
-                }).then(response => {
-                    //点确认
-                    console.log('输入的信息是', response);
-                }).catch(() => {
-                    console.log('取消');
-                    //点取消
-                });
+          &lt;/script&gt;`,
+      promptCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="promptClick"&gt;确认登录框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                promptClick() {
+                  this.$zoom.prompt('是否登录?', '登录确认', { // 第一个参数为content, 第二个参数为title
+                    confirmText:'登录',
+                  }).then(response => {
+                      //点确认
+                      console.log('输入的信息是', response);
+                  }).catch(() => {
+                      console.log('取消');
+                      //点取消
+                  });
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

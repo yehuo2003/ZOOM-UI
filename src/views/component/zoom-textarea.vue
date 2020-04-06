@@ -7,7 +7,7 @@
         <zoom-textarea></zoom-textarea>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="textareaCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -20,7 +20,7 @@
         <zoom-textarea :op="textareaOp2"></zoom-textarea>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="textareaCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -103,41 +103,40 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-textarea :op="textareaOp"&gt;&lt;/zoom-textarea&gt;&lt;br&gt;
-            禁用文本域：&lt;br&gt;
-            &lt;zoom-textarea :op="textareaOp2"&gt;&lt;/zoom-textarea&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                textareaOp2: {
-                  disabled: true,
-                },
-                textareaOp: {
-                  placeHolder: '请输入内容',	// 占位符
-                  maxLength: 100,	// 最大输入长度, 默认为50
-                  disabled: false,			// 是否禁用
-                  readonly: false,		//是否禁止输入
-                  errMsg: '必填',
-                  testing: val => {
-                    if (!val) {
-                      return false;
-                    } else {
-                      return true;
-                    }
+      textareaCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-textarea :op="textareaOp"&gt;&lt;/zoom-textarea&gt;&lt;br&gt;
+              禁用文本域：&lt;br&gt;
+              &lt;zoom-textarea :op="textareaOp2"&gt;&lt;/zoom-textarea&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  textareaOp2: {
+                    disabled: true,
                   },
+                  textareaOp: {
+                    placeHolder: '请输入内容',	// 占位符
+                    maxLength: 100,	// 最大输入长度, 默认为50
+                    disabled: false,			// 是否禁用
+                    readonly: false,		//是否禁止输入
+                    errMsg: '必填',
+                    testing: val => {
+                      if (!val) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    },
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-textarea&gt;&lt;/zoom-textarea&gt;`
+          &lt;/script&gt;`,
+      textareaCode: `&lt;zoom-textarea&gt;&lt;/zoom-textarea&gt;`
     }
   },
   mounted () {

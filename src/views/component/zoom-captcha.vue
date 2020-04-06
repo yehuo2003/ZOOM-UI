@@ -7,7 +7,7 @@
         <zoom-captcha :op="captchaOp2"></zoom-captcha>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="captchaCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -20,7 +20,7 @@
         <zoom-captcha :op="captchaOp2"></zoom-captcha>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="captchaCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -103,40 +103,39 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-captcha :op="captchaOp"&gt;&lt;/zoom-captcha&gt;
-            禁用状态
-            &lt;zoom-captcha :op="captchaOp2"&gt;&lt;/zoom-captcha&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                captchaOp2: {
-                  disabled: true,
-                },
-                captchaOp: {
-                  show: true, //  总是显示  默认false, 鼠标经过时候才显示
-                  disabled: false, //  是否禁用 默认false, 验证成功后自动为true
-                  // RandomSrc: () =&gt; {  //  方法必须返回一个有效的图片链接, 如果未设置, 则展示默认地址
-                  //   return '图片地址'
-                  // },
-                  onSuccess: () =&gt; {  //  监听验证成功的回调
-                    console.log('验证成功');
+      captchaCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-captcha :op="captchaOp"&gt;&lt;/zoom-captcha&gt;
+              禁用状态
+              &lt;zoom-captcha :op="captchaOp2"&gt;&lt;/zoom-captcha&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  captchaOp2: {
+                    disabled: true,
                   },
-                  onFailed: () =&gt; { //  监听验证失败后的回调
-                    console.log('验证失败');
+                  captchaOp: {
+                    show: true, //  总是显示  默认false, 鼠标经过时候才显示
+                    disabled: false, //  是否禁用 默认false, 验证成功后自动为true
+                    // RandomSrc: () =&gt; {  //  方法必须返回一个有效的图片链接, 如果未设置, 则展示默认地址
+                    //   return '图片地址'
+                    // },
+                    onSuccess: () =&gt; {  //  监听验证成功的回调
+                      console.log('验证成功');
+                    },
+                    onFailed: () =&gt; { //  监听验证失败后的回调
+                      console.log('验证失败');
+                    }
                   }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-captcha&gt;&lt;/zoom-captcha&gt;`
+          &lt;/script&gt;`,
+      captchaCode: `&lt;zoom-captcha&gt;&lt;/zoom-captcha&gt;`
     }
   },
   mounted () {

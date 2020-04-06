@@ -84,39 +84,35 @@ export default {
       reseTab: 0,
       opTab: 0,
       sizeTab: 0,
-      color: `
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-primary"&gt;bg-primary&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-success"&gt;bg-success&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-warning"&gt;bg-warning&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-danger"&gt;bg-danger&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-info"&gt;bg-info&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      color2: `
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-primary"&gt;bg-primary&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-primary-hover"&gt;bg-primary-hover&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-primary-active"&gt;bg-primary-active&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      color3: `
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-primary hover active"&gt;bg-primary&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-success hover active"&gt;bg-success&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-warning hover active"&gt;bg-warning&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-danger hover active"&gt;bg-danger&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-info hover active"&gt;bg-info&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      color4: `
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-navigation"&gt;bg-navigation&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-info-darker"&gt;bg-info-darker&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-info-dark"&gt;bg-info-dark&lt;/zoom-col&gt;
-          &lt;zoom-col span="2" class="zoom-custom-color bg-info"&gt;bg-info&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `
+      color:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-primary"&gt;bg-primary&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-success"&gt;bg-success&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-warning"&gt;bg-warning&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-danger"&gt;bg-danger&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-info"&gt;bg-info&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      color2:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-primary"&gt;bg-primary&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-primary-hover"&gt;bg-primary-hover&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-primary-active"&gt;bg-primary-active&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      color3:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-primary hover active"&gt;bg-primary&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-success hover active"&gt;bg-success&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-warning hover active"&gt;bg-warning&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-danger hover active"&gt;bg-danger&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-info hover active"&gt;bg-info&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      color4:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-navigation"&gt;bg-navigation&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-info-darker"&gt;bg-info-darker&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-info-dark"&gt;bg-info-dark&lt;/zoom-col&gt;
+            &lt;zoom-col span="2" class="zoom-custom-color bg-info"&gt;bg-info&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`
     }
   },
   methods: {

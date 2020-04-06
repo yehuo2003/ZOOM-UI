@@ -7,7 +7,7 @@
         <zoom-checkbox :op="op"></zoom-checkbox>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="checkboxCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>标签属性</h3>
@@ -24,7 +24,7 @@
         <zoom-checkbox :op="checkboxOp2"></zoom-checkbox>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="checkboxCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -120,75 +120,73 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;span&gt;爱好&lt;/span&gt;&lt;br&gt;
-            &lt;zoom-checkbox v-model="fondness" :op="checkboxOp"&gt;&lt;/zoom-checkbox&gt;
-            &lt;zoom-button @click="checkboxClick"&gt;当前选中的值&lt;/zoom-button&gt;&lt;br&gt;
-            禁用复选框:&lt;br&gt;
-            &lt;zoom-checkbox :op="checkboxOp2"&gt;&lt;/zoom-checkbox&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                fondness: 'sports',
-                checkboxOp2: {
-                  name: 'list',
-                  disabled: true,
-                  data: [
-                    {text: '唱歌', value: 'sing', checked: true},
-                    {text: '跳舞', value: 'dance'},
-                    {text: '音乐', value: 'music'},
-                    {text: '运动', value: 'sports', checked: true}
-                  ]
-                },
-                checkboxOp: {
-                  name: 'age',	//	复选框的name
-                  disabled: false,	//	是否禁用,为true可禁用
-                  Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
-                  data: [	//	复选框数据	checked: true	默认选中
-                    {text: '唱歌', value: 'sing'},
-                    {text: '跳舞', value: 'dance'},
-                    {text: '音乐', value: 'music'},
-                    {text: '运动', value: 'sports', checked: true}
-                  ]
+      checkboxCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;span&gt;爱好&lt;/span&gt;&lt;br&gt;
+              &lt;zoom-checkbox v-model="fondness" :op="checkboxOp"&gt;&lt;/zoom-checkbox&gt;
+              &lt;zoom-button @click="checkboxClick"&gt;当前选中的值&lt;/zoom-button&gt;&lt;br&gt;
+              禁用复选框:&lt;br&gt;
+              &lt;zoom-checkbox :op="checkboxOp2"&gt;&lt;/zoom-checkbox&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  fondness: 'sports',
+                  checkboxOp2: {
+                    name: 'list',
+                    disabled: true,
+                    data: [
+                      {text: '唱歌', value: 'sing', checked: true},
+                      {text: '跳舞', value: 'dance'},
+                      {text: '音乐', value: 'music'},
+                      {text: '运动', value: 'sports', checked: true}
+                    ]
+                  },
+                  checkboxOp: {
+                    name: 'age',	//	复选框的name
+                    disabled: false,	//	是否禁用,为true可禁用
+                    Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
+                    data: [	//	复选框数据	checked: true	默认选中
+                      {text: '唱歌', value: 'sing'},
+                      {text: '跳舞', value: 'dance'},
+                      {text: '音乐', value: 'music'},
+                      {text: '运动', value: 'sports', checked: true}
+                    ]
+                  }
                 }
-              }
-            },
-            methods: {
-              checkboxClick() {
-                console.log('当前值是', this.fondness);
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-checkbox :op="op"&gt;&lt;/zoom-checkbox&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  name: 'test',
-                  data: [
-                    {text: '选项1', value: '1'},
-                    {text: '选项2', value: '2'},
-                    {text: '选项3', value: '3'}
-                  ]
+              },
+              methods: {
+                checkboxClick() {
+                  console.log('当前值是', this.fondness);
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`,
+      checkboxCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-checkbox :op="op"&gt;&lt;/zoom-checkbox&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    name: 'test',
+                    data: [
+                      {text: '选项1', value: '1'},
+                      {text: '选项2', value: '2'},
+                      {text: '选项3', value: '3'}
+                    ]
+                  }
+                }
+              }
+            }
+          &lt;/script&gt;`
     }
   },
   methods: {

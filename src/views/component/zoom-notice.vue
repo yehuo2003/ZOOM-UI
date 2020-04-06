@@ -13,7 +13,7 @@
         <zoom-notice>这是一段滚动文字内容</zoom-notice>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="noticeCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>设置纵向滚动</h2>
@@ -23,7 +23,7 @@
         <zoom-notice :op="noticeOp">这是一段滚动文字内容</zoom-notice>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="noticeCodeCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -82,31 +82,28 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-notice :op="noticeOp"&gt;这是一段滚动文字内容&lt;/zoom-notice&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                noticeOp: {
-                  IconStyle: 'icon-trumpet',  //  横向滚动时候的图标
-                  title: '纵向滚动栏',      //  设置标题
-                  notSuspend: false,  //  滚动时候鼠标经过暂停, 设置true关闭
-                  vertical: true,  //  是否垂直滚动, 默认false
-                  time: 5000  //  滚动的时间
+      noticeCodeCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-notice :op="noticeOp"&gt;这是一段滚动文字内容&lt;/zoom-notice&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  noticeOp: {
+                    IconStyle: 'icon-trumpet',  //  横向滚动时候的图标
+                    title: '纵向滚动栏',      //  设置标题
+                    notSuspend: false,  //  滚动时候鼠标经过暂停, 设置true关闭
+                    vertical: true,  //  是否垂直滚动, 默认false
+                    time: 5000  //  滚动的时间
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-notice&gt;这是一段滚动文字内容&lt;/zoom-notice&gt;
-      `
+          &lt;/script&gt;`,
+      noticeCode: `&lt;zoom-notice&gt;这是一段滚动文字内容&lt;/zoom-notice&gt;`
     }
   },
   methods: {

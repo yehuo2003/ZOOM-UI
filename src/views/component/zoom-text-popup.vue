@@ -7,7 +7,7 @@
         <zoom-text-popup></zoom-text-popup>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="popupCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -20,7 +20,7 @@
         <zoom-text-popup :op="textPopupOp2"></zoom-text-popup>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="popupCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -97,33 +97,31 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-text-popup :op="textPopupOp"&gt;&lt;/zoom-text-popup&gt;&lt;br&gt;
-            禁用文本域：&lt;br&gt;
-            &lt;zoom-text-popup :op="textPopupOp2"&gt;&lt;/zoom-text-popup&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                textPopupOp2: {
-                  disabled: true,
-                },
-                textPopupOp: {
-                  placeHolder: '请输入内容',	// 占位符
-                  resize: false,						// 是否禁止拖动默认false
-                  disabled: false,			// 是否禁用默认false
-                  readonly: false		//是否禁止输入
+      popupCustom: `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-text-popup :op="textPopupOp"&gt;&lt;/zoom-text-popup&gt;&lt;br&gt;
+              禁用文本域：&lt;br&gt;
+              &lt;zoom-text-popup :op="textPopupOp2"&gt;&lt;/zoom-text-popup&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  textPopupOp2: {
+                    disabled: true,
+                  },
+                  textPopupOp: {
+                    placeHolder: '请输入内容',	// 占位符
+                    resize: false,						// 是否禁止拖动默认false
+                    disabled: false,			// 是否禁用默认false
+                    readonly: false		//是否禁止输入
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-text-popup&gt;&lt;/zoom-text-popup&gt;`
+          &lt;/script&gt;`,
+      popupCode: `&lt;zoom-text-popup&gt;&lt;/zoom-text-popup&gt;`
     }
   },
   mounted () {

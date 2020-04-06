@@ -12,7 +12,7 @@
         <zoom-rate></zoom-rate>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="rateCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -22,7 +22,7 @@
         <zoom-rate :op="rateOp"></zoom-rate>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="rateCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -71,29 +71,26 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-rate :op="rateOp"&gt;&lt;/zoom-rate&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                rateOp: {
-                  mode: 'emotions',	//	默认 stars, 星星图标, emotions为表情
-                  disabled: false,  //  是否禁用
-                  data: ['很差', '差', '一般', '好', '很好'], //  对应绑定图标的属性
+      rateCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-rate :op="rateOp"&gt;&lt;/zoom-rate&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  rateOp: {
+                    mode: 'emotions',	//	默认 stars, 星星图标, emotions为表情
+                    disabled: false,  //  是否禁用
+                    data: ['很差', '差', '一般', '好', '很好'], //  对应绑定图标的属性
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-rate&gt;&lt;/zoom-rate&gt;
-      `
+          &lt;/script&gt;`,
+      rateCode: `&lt;zoom-rate&gt;&lt;/zoom-rate&gt;`
     }
   },
   methods: {

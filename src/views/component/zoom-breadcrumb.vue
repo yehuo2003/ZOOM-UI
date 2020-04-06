@@ -8,7 +8,7 @@
         <zoom-breadcrumb :op="op"></zoom-breadcrumb>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="breadcrumbCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>自定义分隔符</h2>
@@ -21,7 +21,7 @@
         <zoom-breadcrumb :op="breadcrumbOp"></zoom-breadcrumb>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
+        <custom-code :html="breadcrumbFlag"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>自定义样式</h2>
@@ -34,7 +34,7 @@
         <zoom-breadcrumb :op="breadcrumbOp2"></zoom-breadcrumb>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="sizeBtn"></custom-code>
+        <custom-code :html="breadcrumbCss"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -154,87 +154,84 @@ export default {
       curTab: 0,
       reseTab: 0,
       sizeTab: 0,
-      sizeBtn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-breadcrumb :op="breadcrumbOp2"&gt;&lt;/zoom-breadcrumb&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                breadcrumbOp2: {
-                  data: [
-                    {id: 1, title: '首页'},
-                    {id: 2, css: 'custom', title: '详情'},
-                    {id: 3, title: '面包屑导航'}
-                  ]
+      breadcrumbCss:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-breadcrumb :op="breadcrumbOp2"&gt;&lt;/zoom-breadcrumb&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  breadcrumbOp2: {
+                    data: [
+                      {id: 1, title: '首页'},
+                      {id: 2, css: 'custom', title: '详情'},
+                      {id: 3, title: '面包屑导航'}
+                    ]
+                  }
                 }
               }
             }
+          &lt;/script&gt;
+          &lt;style&gt;
+          .custom {
+            color: red;
           }
-        &lt;/script&gt;
-        &lt;style&gt;
-        .custom {
-          color: red;
-        }
-        &lt;/style&gt;
-      `,
-      resetBtn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-breadcrumb :op="breadcrumbOp"&gt;&lt;/zoom-breadcrumb&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                breadcrumbOp: {
-                  flag: '/',
-                  data: [
-                    {id: 1, title: '首页'},
-                    {id: 2, title: '详情'},
-                    {id: 3, title: '面包屑导航'}
-                  ]
+          &lt;/style&gt;`,
+      breadcrumbFlag:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-breadcrumb :op="breadcrumbOp"&gt;&lt;/zoom-breadcrumb&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  breadcrumbOp: {
+                    flag: '/',
+                    data: [
+                      {id: 1, title: '首页'},
+                      {id: 2, title: '详情'},
+                      {id: 3, title: '面包屑导航'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-breadcrumb :op="op"&gt;&lt;/zoom-breadcrumb&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  data: [
-                    {
-                      id: 1,
-                      url: "#/home",
-                      target: "blank",
-                      title: "首页"
-                    },
-                    { id: 2,
-                      title: "详情",
-                      onClick: (val, index) =&gt; {
-                        console.log(val, index);
+          &lt;/script&gt;`,
+      breadcrumbCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-breadcrumb :op="op"&gt;&lt;/zoom-breadcrumb&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    data: [
+                      {
+                        id: 1,
+                        url: "#/home",
+                        target: "blank",
+                        title: "首页"
+                      },
+                      { id: 2,
+                        title: "详情",
+                        onClick: (val, index) =&gt; {
+                          console.log(val, index);
+                        }
                       }
-                    }
-                  ] //回调函数 点击时候触发
+                    ] //回调函数 点击时候触发
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     };
   },
   methods: {

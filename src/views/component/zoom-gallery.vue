@@ -14,7 +14,7 @@
         <zoom-gallery :op="op"></zoom-gallery>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="galleryCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -58,30 +58,29 @@ export default {
         ]
       },
       curTab: 0,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-gallery :op="op"&gt;&lt;/zoom-gallery&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  showZoom: true, //  是否开启放大镜功能, 默认false
-                  data: [ //  图片以数组方式保存
-                    require('./static/1.jpg'),
-                    require('./static/2.jpg'),
-                    require('./static/3.jpg'),
-                    require('./static/4.jpg')
-                  ]
+      galleryCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-gallery :op="op"&gt;&lt;/zoom-gallery&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    showZoom: true, //  是否开启放大镜功能, 默认false
+                    data: [ //  图片以数组方式保存
+                      require('./static/1.jpg'),
+                      require('./static/2.jpg'),
+                      require('./static/3.jpg'),
+                      require('./static/4.jpg')
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

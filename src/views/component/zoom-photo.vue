@@ -15,7 +15,7 @@
         </div>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="photoCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>内部显示放大镜</h2>
@@ -25,7 +25,7 @@
         <zoom-photo :op="photoOp"></zoom-photo>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="photoCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -143,54 +143,52 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-photo :op="photoOp"&gt;&lt;/zoom-photo&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                photoOp: {
-                  outShow: false,
-                  lazyload: true,
-                  url: require('./static/2.jpg'),
-                  scale: 4,
-                  width: 300,
+      photoCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-photo :op="photoOp"&gt;&lt;/zoom-photo&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  photoOp: {
+                    outShow: false,
+                    lazyload: true,
+                    url: require('./static/2.jpg'),
+                    scale: 4,
+                    width: 300,
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-photo :op="op"&gt;&lt;/zoom-photo&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  baseline: true,  // 外部区域的基线
-                  pointer: true, // 外部区域的中心点
-                  outShow: true, // 图片展示区域会在图片外部
-                  lazyload: true, //  开启图片懒加载
-                  url: require('./static/1.jpg'), //  图片地址
-                  scale: 3, // 放大倍数
-                  selectorStyle: {"display": "none;"},  // 放大镜样式
-                  type: 'square', // 放大镜类型(circle,square)
-                  width: 100, //  放大镜宽度
+          &lt;/script&gt;`,
+      photoCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-photo :op="op"&gt;&lt;/zoom-photo&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    baseline: true,  // 外部区域的基线
+                    pointer: true, // 外部区域的中心点
+                    outShow: true, // 图片展示区域会在图片外部
+                    lazyload: true, //  开启图片懒加载
+                    url: require('./static/1.jpg'), //  图片地址
+                    scale: 3, // 放大倍数
+                    selectorStyle: {"display": "none;"},  // 放大镜样式
+                    type: 'square', // 放大镜类型(circle,square)
+                    width: 100, //  放大镜宽度
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

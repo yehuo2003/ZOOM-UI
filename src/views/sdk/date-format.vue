@@ -14,10 +14,9 @@
 export default {
   data() {
     return {
-      format: `
-        let date = 1585735759701;
-        this.$zoom.dateFormat("YYYY-mm-dd HH:MM", date);  //  2020-04-01 18:09
-      `
+      format:
+        `let date = 1585735759701;
+          this.$zoom.dateFormat("YYYY-mm-dd HH:MM", date);  //  2020-04-01 18:09`
     };
   }
 };

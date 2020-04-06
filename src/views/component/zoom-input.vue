@@ -149,63 +149,62 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            姓名：&lt;zoom-input :op="inputOp"&gt;&lt;/zoom-input&gt;
-            密码：&lt;zoom-input :op="inputOp2"&gt;&lt;/zoom-input&gt;
-            禁用：&lt;zoom-input :op="inputOp3"&gt;&lt;/zoom-input&gt;
-            禁止输入：&lt;zoom-input v-model="value" :op="inputOp4"&gt;&lt;/zoom-input&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                value: '输入框内容',
-                inputOp4: {
-                  readonly: true
-                },
-                op3: {
-                  disabled: true,
-                },
-                op2: {
-                  placeHolder: '请输入密码',
-                  type: 'password',
-                  errMsg: '密码必须是大写英文',
-                  testing: value =>; {
-                    let reg = /^[A-Z]+$/;
-                    if(reg.test(value)) {
-                      return true;
-                    } else {
-                      return false;
-                    }
-                  }
-                },
-                op: {
-                  disabled: false,		// 是否禁用
-                  placeHolder: '请输入姓名',  //  占位符
-                  readonly: false,     //  是否禁止输入
-                  type: 'text',					// 输入框类型 可选text或password
-                  IconStyle: 'icon-add',	// 在输入框尾部追加自定义icon
-                  onClick:()=>; {					// 当配置了自定义icon, 可以自定义回调函数 点击自定义图标触发
-                    console.log('按钮被点击');
+      opIpt:
+        `&lt;template&gt;
+            &lt;div&gt;
+              姓名：&lt;zoom-input :op="inputOp"&gt;&lt;/zoom-input&gt;
+              密码：&lt;zoom-input :op="inputOp2"&gt;&lt;/zoom-input&gt;
+              禁用：&lt;zoom-input :op="inputOp3"&gt;&lt;/zoom-input&gt;
+              禁止输入：&lt;zoom-input v-model="value" :op="inputOp4"&gt;&lt;/zoom-input&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  value: '输入框内容',
+                  inputOp4: {
+                    readonly: true
                   },
-                  errMsg: '姓名长度必须大于10',		// 验证错误时候的提示信息
-                  testing: value =>; {			// 用来验证的回调函数 可用正则匹配,如果写了此函数要写验证方法否则默认返回true
-                    if (value.length > 10) {
-                      return true;
-                    } else {
-                      return false;
+                  op3: {
+                    disabled: true,
+                  },
+                  op2: {
+                    placeHolder: '请输入密码',
+                    type: 'password',
+                    errMsg: '密码必须是大写英文',
+                    testing: value =>; {
+                      let reg = /^[A-Z]+$/;
+                      if(reg.test(value)) {
+                        return true;
+                      } else {
+                        return false;
+                      }
                     }
-                  }
-                },
+                  },
+                  op: {
+                    disabled: false,		// 是否禁用
+                    placeHolder: '请输入姓名',  //  占位符
+                    readonly: false,     //  是否禁止输入
+                    type: 'text',					// 输入框类型 可选text或password
+                    IconStyle: 'icon-add',	// 在输入框尾部追加自定义icon
+                    onClick:()=>; {					// 当配置了自定义icon, 可以自定义回调函数 点击自定义图标触发
+                      console.log('按钮被点击');
+                    },
+                    errMsg: '姓名长度必须大于10',		// 验证错误时候的提示信息
+                    testing: value =>; {			// 用来验证的回调函数 可用正则匹配,如果写了此函数要写验证方法否则默认返回true
+                      if (value.length > 10) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    }
+                  },
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-input&gt;&lt;/zoom-input&gt;`
+          &lt;/script&gt;`,
+      ipt: `&lt;zoom-input&gt;&lt;/zoom-input&gt;`
     }
   },
   methods: {

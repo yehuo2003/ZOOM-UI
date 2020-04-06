@@ -7,7 +7,7 @@
         <zoom-search></zoom-search>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="searchCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -18,7 +18,7 @@
         禁用搜索框：<zoom-search :op="searchOp2"></zoom-search>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="searchCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -131,54 +131,53 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-search :op="searchOp"&gt;&lt;/zoom-search&gt;
-            禁用搜索框：&lt;zoom-search :op="searchOp2"&gt;&lt;/zoom-search&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                searchOp2: {
-                  disabled: true,
-                  placeHolder: '搜索框已禁用',
-                  hideClose: false,
-                  data: [
-                    {value: '1', text: '所有'},
-                    {value: '2', text: '找人'},
-                    {value: '3', text: '文章'}
-                  ],
-                },
-                searchOp: {
-                  disabled: false,			// 是否禁用
-                  placeHolder: '查找需要的内容',	//占位符  默认为 请输入关键词
-                  readonly: false,		//是否禁止输入
-                  errMsg: '必填',
-                  testing: val =>; {
-                    if (!val) {
-                      return false;
-                    } else {
-                      return true;
-                    }
+      searchCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-search :op="searchOp"&gt;&lt;/zoom-search&gt;
+              禁用搜索框：&lt;zoom-search :op="searchOp2"&gt;&lt;/zoom-search&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  searchOp2: {
+                    disabled: true,
+                    placeHolder: '搜索框已禁用',
+                    hideClose: false,
+                    data: [
+                      {value: '1', text: '所有'},
+                      {value: '2', text: '找人'},
+                      {value: '3', text: '文章'}
+                    ],
                   },
-                  onClick: (val, key) =&gt; {
-                    console.log(val, key);
+                  searchOp: {
+                    disabled: false,			// 是否禁用
+                    placeHolder: '查找需要的内容',	//占位符  默认为 请输入关键词
+                    readonly: false,		//是否禁止输入
+                    errMsg: '必填',
+                    testing: val =>; {
+                      if (!val) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    },
+                    onClick: (val, key) =&gt; {
+                      console.log(val, key);
+                    },
+                    data: [	//下拉框数据, 键值对的方式, text是展示的文本
+                      {value: '1', text: '所有'},
+                      {value: '2', text: '找人'},
+                      {value: '3', text: '文章'}
+                    ],
                   },
-                  data: [	//下拉框数据, 键值对的方式, text是展示的文本
-                    {value: '1', text: '所有'},
-                    {value: '2', text: '找人'},
-                    {value: '3', text: '文章'}
-                  ],
-                },
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-search&gt;&lt;/zoom-search&gt;`
+          &lt;/script&gt;`,
+      searchCode: `&lt;zoom-search&gt;&lt;/zoom-search&gt;`
     }
   },
   mounted () {

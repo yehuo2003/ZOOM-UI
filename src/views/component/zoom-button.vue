@@ -190,8 +190,7 @@ export default {
         &lt;zoom-button type="success" size="small"&gt;小按钮&lt;/zoom-button&gt;
         &lt;zoom-button&gt;普通按钮&lt;/zoom-button&gt;
         &lt;zoom-button type="danger" size="medium"&gt;中等按钮&lt;/zoom-button&gt;
-        &lt;zoom-button type="info" size="large"&gt;大按钮&lt;/zoom-button&gt;
-      `,
+        &lt;zoom-button type="info" size="large"&gt;大按钮&lt;/zoom-button&gt;`,
       opBtn: `
         &lt;template&gt;
           &lt;div&gt;
@@ -220,13 +219,11 @@ export default {
               }
             }
           }
-        &lt;/script&gt;
-      `,
+        &lt;/script&gt;`,
       resetBtn: `
         &lt;zoom-button&gt;正常按钮&lt;/zoom-button&gt;
         &lt;zoom-button reset-time="5000"&gt;禁用5秒&lt;/zoom-button&gt;
-        &lt;zoom-button r/78eset-time="0"&gt;禁用0秒&lt;/zoom-button&gt;
-      `,
+        &lt;zoom-button r/78eset-time="0"&gt;禁用0秒&lt;/zoom-button&gt;`,
       btn: `
         &lt;zoom-button&gt;普通按钮&lt;/zoom-button&gt;
         &lt;zoom-button type="primary"&gt;普通按钮&lt;/zoom-button&gt;
@@ -254,8 +251,7 @@ export default {
         &lt;zoom-button shape="circle" type="success"&gt;圆形&lt;/zoom-button&gt;
         &lt;zoom-button shape="circle" type="warning"&gt;圆形&lt;/zoom-button&gt;
         &lt;zoom-button shape="circle" type="danger"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="info"&gt;圆形&lt;/zoom-button&gt;
-      `
+        &lt;zoom-button shape="circle" type="info"&gt;圆形&lt;/zoom-button&gt;`
     };
   },
   methods: {

@@ -8,7 +8,7 @@
         <zoom-tree-menu :op="op"></zoom-tree-menu>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="treeCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>手风琴模式</h2>
@@ -22,7 +22,7 @@
         <zoom-tree-menu :op="threeMenuOp"></zoom-tree-menu>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
+        <custom-code :html="treeCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -170,73 +170,71 @@ export default {
       },
       curTab: 0,
       reseTab: 0,
-      resetBtn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tree-menu :op="threeMenuOp"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                threeMenuOp: {
-                  accordion: true,  //  手风琴模式开启
-                  data: [
-                    {title: '首页', url: ''},
-                    {title: '导航组件', url: '', children: [
-                      {title: '导航', children: [
-                        {title: '导航'}
+      treeCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tree-menu :op="threeMenuOp"&gt;&lt;/zoom-tree-menu&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  threeMenuOp: {
+                    accordion: true,  //  手风琴模式开启
+                    data: [
+                      {title: '首页', url: ''},
+                      {title: '导航组件', url: '', children: [
+                        {title: '导航', children: [
+                          {title: '导航'}
+                        ]},
+                        {title: '菜单', children: [
+                          {title: '瀑布菜单'},
+                          {title: '树形菜单'}
+                        ]},
                       ]},
-                      {title: '菜单', children: [
-                        {title: '瀑布菜单'},
-                        {title: '树形菜单'}
-                      ]},
-                    ]},
-                    {title: '表单组件', children: [
-                      {title: '按钮组件', url: '#/component/zoom-button'},
-                      {title: '输入框组件', url: '#/component/zoom-input', target: 'blank'}
-                    ]}
-                  ]
+                      {title: '表单组件', children: [
+                        {title: '按钮组件', url: '#/component/zoom-button'},
+                        {title: '输入框组件', url: '#/component/zoom-input', target: 'blank'}
+                      ]}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tree-menu :op="op"&gt;&lt;/zoom-tree-menu&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  data: [
-                    {title: '首页', icon: 'icon-entrepot', url: ''},	// 一级菜单, url是要跳转的地址, 默认当前页, 加target: 'blank' 可打开新页面
-                    {title: '导航组件', url: '', children: [	// children可配置二级菜单	当有子数据的时候 可以看到扩展箭头,鼠标hover显示数据
-                      {title: '导航', children: [	// 三级菜单 目前最高支持到三级
-                        {title: '导航'}
+          &lt;/script&gt;`,
+      treeCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tree-menu :op="op"&gt;&lt;/zoom-tree-menu&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    data: [
+                      {title: '首页', icon: 'icon-entrepot', url: ''},	// 一级菜单, url是要跳转的地址, 默认当前页, 加target: 'blank' 可打开新页面
+                      {title: '导航组件', url: '', children: [	// children可配置二级菜单	当有子数据的时候 可以看到扩展箭头,鼠标hover显示数据
+                        {title: '导航', children: [	// 三级菜单 目前最高支持到三级
+                          {title: '导航'}
+                        ]},
+                        {title: '菜单', children: [
+                          {title: '瀑布菜单'},
+                          {title: '树形菜单'}
+                        ]},
                       ]},
-                      {title: '菜单', children: [
-                        {title: '瀑布菜单'},
-                        {title: '树形菜单'}
-                      ]},
-                    ]},
-                    {title: '表单组件', icon: 'icon-channel', children: [
-                      {title: '按钮组件', url: '#/component/zoom-button'},
-                      {title: '输入框组件', url: '#/component/zoom-input', target: 'blank'}
-                    ]}
-                  ]
+                      {title: '表单组件', icon: 'icon-channel', children: [
+                        {title: '按钮组件', url: '#/component/zoom-button'},
+                        {title: '输入框组件', url: '#/component/zoom-input', target: 'blank'}
+                      ]}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     };
   },
   methods: {

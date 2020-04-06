@@ -7,7 +7,7 @@
         <zoom-dropdown></zoom-dropdown>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="dropdownCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -20,7 +20,7 @@
         下拉禁用：<zoom-dropdown :op="dropdownOp3"></zoom-dropdown>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="dropdownCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>动态设置数据</h3>
@@ -31,7 +31,7 @@
         <zoom-button @click="handleClick">点击加载数据</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="loadIpt"></custom-code>
+        <custom-code :html="dropdownLoad"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -179,89 +179,87 @@ export default {
       opTab: 0,
       curTab: 0,
       loadTab: 0,
-      loadIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            默认无数据：&lt;zoom-dropdown ref="dropdown"&gt;&lt;/zoom-dropdown&gt;&lt;br&gt;
-            &lt;zoom-button @click="handleClick"&gt;点击加载数据&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-              }
-            },
-            methods: {
-              handleClick() {
-                let data = [
-                  {value: '1', text: '北京'},
-                  {value: '2', text: '上海'},
-                  {value: '3', text: '广州'},
-                  {value: '4', text: '深圳'}
-                ];
-                this.$refs['dropdown'].load(data);
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            下拉单选：&lt;zoom-dropdown :op="dropdownOp"&gt;&lt;/zoom-dropdown&gt;
-            下拉多选：&lt;zoom-dropdown :op="dropdownOp2"&gt;&lt;/zoom-dropdown&gt;
-            下拉禁用：&lt;zoom-dropdown :op="dropdownOp3"&gt;&lt;/zoom-dropdown&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                dropdownOp3: {
-                  disabled: true,
-                },
-                dropdownOp2: {
-                  isChecked: true,
-                  disabled: false,
-                  placeHolder: '--请选择--',
-                  readonly: true,
-                  hideClose: false,
-                  data: [
+      dropdownLoad:
+        `&lt;template&gt;
+            &lt;div&gt;
+              默认无数据：&lt;zoom-dropdown ref="dropdown"&gt;&lt;/zoom-dropdown&gt;&lt;br&gt;
+              &lt;zoom-button @click="handleClick"&gt;点击加载数据&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                }
+              },
+              methods: {
+                handleClick() {
+                  let data = [
                     {value: '1', text: '北京'},
                     {value: '2', text: '上海'},
                     {value: '3', text: '广州'},
                     {value: '4', text: '深圳'}
-                  ],
-                },
-                dropdownOp: {
-                  isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
-                  disabled: false,			// 是否禁用
-                  placeHolder: '--请选择--',	//占位符
-                  default: '2',			//默认选中的值, 写value
-                  readonly: false,		//是否禁止输入
-                  errMsg: '必填',
-                  testing: val => {
-                    if (!val) {
-                      return false;
-                    } else {
-                      return true;
-                    }
-                  },
-                  hideClose: true,			//是否隐藏清除按钮 默认false
-                  data: [						//下拉框数据, 键值对的方式, text是展示的文本
-                    {value: '1', text: '北京'},
-                    {value: '2', text: '上海'},
-                    {value: '3', text: '广州'},
-                    {value: '4', text: '深圳'}
-                  ]
+                  ];
+                  this.$refs['dropdown'].load(data);
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;`
+          &lt;/script&gt;`,
+      dropdownCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              下拉单选：&lt;zoom-dropdown :op="dropdownOp"&gt;&lt;/zoom-dropdown&gt;
+              下拉多选：&lt;zoom-dropdown :op="dropdownOp2"&gt;&lt;/zoom-dropdown&gt;
+              下拉禁用：&lt;zoom-dropdown :op="dropdownOp3"&gt;&lt;/zoom-dropdown&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  dropdownOp3: {
+                    disabled: true,
+                  },
+                  dropdownOp2: {
+                    isChecked: true,
+                    disabled: false,
+                    placeHolder: '--请选择--',
+                    readonly: true,
+                    hideClose: false,
+                    data: [
+                      {value: '1', text: '北京'},
+                      {value: '2', text: '上海'},
+                      {value: '3', text: '广州'},
+                      {value: '4', text: '深圳'}
+                    ],
+                  },
+                  dropdownOp: {
+                    isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
+                    disabled: false,			// 是否禁用
+                    placeHolder: '--请选择--',	//占位符
+                    default: '2',			//默认选中的值, 写value
+                    readonly: false,		//是否禁止输入
+                    errMsg: '必填',
+                    testing: val => {
+                      if (!val) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    },
+                    hideClose: true,			//是否隐藏清除按钮 默认false
+                    data: [						//下拉框数据, 键值对的方式, text是展示的文本
+                      {value: '1', text: '北京'},
+                      {value: '2', text: '上海'},
+                      {value: '3', text: '广州'},
+                      {value: '4', text: '深圳'}
+                    ]
+                  }
+                }
+              }
+            }
+          &lt;/script&gt;`,
+      dropdownCode: `&lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;`
     }
   },
   methods: {

@@ -14,7 +14,7 @@
         <zoom-button @click="handleClick">显示对话框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="dialogCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -83,33 +83,32 @@ export default {
       ],
       curTab: 0,
       visibility: false,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="handleClick"&gt;显示对话框&lt;/zoom-button&gt;
-            &lt;zoom-dialog-box title="对话框标题" :show="visibility" @close="visibility=false"&gt;
-              自定义内容,可任意html片段
-              &lt;div slot="footer"&gt;
-                &lt;zoom-button @click="visibility=false"&gt;关闭&lt;/zoom-button&gt;
-              &lt;/div&gt;
-            &lt;/zoom-dialog-box&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                visibility: false,
-              }
-            },
-            methods: {
-              handleClick() {
-                this.visibility = true;
+      dialogCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="handleClick"&gt;显示对话框&lt;/zoom-button&gt;
+              &lt;zoom-dialog-box title="对话框标题" :show="visibility" @close="visibility=false"&gt;
+                自定义内容,可任意html片段
+                &lt;div slot="footer"&gt;
+                  &lt;zoom-button @click="visibility=false"&gt;关闭&lt;/zoom-button&gt;
+                &lt;/div&gt;
+              &lt;/zoom-dialog-box&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  visibility: false,
+                }
+              },
+              methods: {
+                handleClick() {
+                  this.visibility = true;
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     };
   },
   methods: {

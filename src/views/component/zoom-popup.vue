@@ -15,7 +15,7 @@
         <zoom-button @click="popupClick">弹出警告框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="popupCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化操作</h2>
@@ -29,7 +29,7 @@
         <zoom-button @click="styleClick('info')" type="info">普通弹框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="popupCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -95,54 +95,52 @@ export default {
       ],
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通弹框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              styleClick(type) {
-                this.$zoom.popup({
-                  title: type,	//默认 提示
-                  content: '自定义内容',
-                  container: '&lt;h1&gt;自定义html片段&lt;/h1&gt;',	//有设置时会覆盖content
-                  type: type,	// 状态 有成功 失败 primary和info
-                  onClick: ()=&gt;{},	//要执行的回调函数
-                  btnText: '自定义确认'	//自定义按钮文字, 默认为确认
-                })
+      popupCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通弹框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                styleClick(type) {
+                  this.$zoom.popup({
+                    title: type,	//默认 提示
+                    content: '自定义内容',
+                    container: '&lt;h1&gt;自定义html片段&lt;/h1&gt;',	//有设置时会覆盖content
+                    type: type,	// 状态 有成功 失败 primary和info
+                    onClick: ()=&gt;{},	//要执行的回调函数
+                    btnText: '自定义确认'	//自定义按钮文字, 默认为确认
+                  })
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="popupClick"&gt;弹出警告框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              popupClick() {
-                this.$zoom.popup({
-                  content: '普通弹框',
-                  onClick: () =&gt; {
-                    console.log('确认按钮被触发');
-                  }
-                })
+          &lt;/script&gt;`,
+      popupCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="popupClick"&gt;弹出警告框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                popupClick() {
+                  this.$zoom.popup({
+                    content: '普通弹框',
+                    onClick: () =&gt; {
+                      console.log('确认按钮被触发');
+                    }
+                  })
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

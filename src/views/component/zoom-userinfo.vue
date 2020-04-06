@@ -12,7 +12,7 @@
         <zoom-userinfo></zoom-userinfo>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="userinfoCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -29,7 +29,7 @@
         </zoom-userinfo>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="userinfoCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -78,36 +78,33 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-userinfo  ref="user" :op="userinfoOp"&gt;
-              &lt;ul&gt;
-                &lt;li @click="usetTest(1)"&gt;1号用户&lt;/li&gt;
-                &lt;li @click="usetTest(2)"&gt;2号用户&lt;/li&gt;
-                &lt;li @click="usetTest(3)"&gt;3号用户&lt;/li&gt;
-                &lt;li @click="usetTest(4)"&gt;4号用户&lt;/li&gt;
-              &lt;/ul&gt;
-            &lt;/zoom-userinfo&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                userinfoOp: {
-                  title: '1号用户',
-                  icon: 'icon-user',
-                  img: require('./static/1.jpg')
+      userinfoCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-userinfo  ref="user" :op="userinfoOp"&gt;
+                &lt;ul&gt;
+                  &lt;li @click="usetTest(1)"&gt;1号用户&lt;/li&gt;
+                  &lt;li @click="usetTest(2)"&gt;2号用户&lt;/li&gt;
+                  &lt;li @click="usetTest(3)"&gt;3号用户&lt;/li&gt;
+                  &lt;li @click="usetTest(4)"&gt;4号用户&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/zoom-userinfo&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  userinfoOp: {
+                    title: '1号用户',
+                    icon: 'icon-user',
+                    img: require('./static/1.jpg')
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-userinfo&gt;&lt;/zoom-userinfo&gt;
-      `
+          &lt;/script&gt;`,
+      userinfoCode: `&lt;zoom-userinfo&gt;&lt;/zoom-userinfo&gt;`
     }
   },
   methods: {

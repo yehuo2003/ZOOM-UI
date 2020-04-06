@@ -8,7 +8,7 @@
         <zoom-floatbar :op="op"></zoom-floatbar>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="floatbarCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>自定义模式</h2>
@@ -24,7 +24,7 @@
         </zoom-floatbar>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
+        <custom-code :html="floatbarCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -112,51 +112,49 @@ export default {
       },
       curTab: 0,
       reseTab: 0,
-      resetBtn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-floatbar :op="floatBarOp"&gt;
-              &lt;a&gt;自定义内容&lt;/a&gt;
-              &lt;p&gt;点击按钮&lt;/p&gt;
-              &lt;p&gt;解除固定&lt;/p&gt;
-            &lt;/zoom-floatbar&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                floatBarOp: {
-                  position: 'left',
+      floatbarCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-floatbar :op="floatBarOp"&gt;
+                &lt;a&gt;自定义内容&lt;/a&gt;
+                &lt;p&gt;点击按钮&lt;/p&gt;
+                &lt;p&gt;解除固定&lt;/p&gt;
+              &lt;/zoom-floatbar&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  floatBarOp: {
+                    position: 'left',
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-floatbar :op="op"&gt;&lt;/zoom-floatbar&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  position: 'right',	// 默认right 可选参数 left, right
-                  data: [	//	如果未设置data 则默认显示自定义内容
-                    {text: '购物车', icon: 'icon-shopping-cart', onClick: val =&gt; {console.log(val);}},
-                    {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
-                    {text: '导航', icon: 'icon-nav'}
-                  ]
+          &lt;/script&gt;`,
+      floatbarCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-floatbar :op="op"&gt;&lt;/zoom-floatbar&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    position: 'right',	// 默认right 可选参数 left, right
+                    data: [	//	如果未设置data 则默认显示自定义内容
+                      {text: '购物车', icon: 'icon-shopping-cart', onClick: val =&gt; {console.log(val);}},
+                      {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
+                      {text: '导航', icon: 'icon-nav'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     };
   },
   methods: {

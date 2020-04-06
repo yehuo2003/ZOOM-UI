@@ -15,7 +15,7 @@
         <zoom-progress :op="progressOp"></zoom-progress>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="progressCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>自定义状态</h2>
@@ -41,7 +41,7 @@
         <zoom-button @click="addProgress">点我试试</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="progressCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -132,86 +132,83 @@ export default {
       opTab: 0,
       curTab: 0,
       statusTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-progress :progress="progressVal" :status="status"&gt;&lt;/zoom-progress&gt;
-            &lt;zoom-button @click="addProgress"&gt;点我试试&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                progressVal: 0,
-                status: 'danger',
-              }
-            },
-            methods: {
-              addProgress() {
-                this.progressVal = 0;
-                let progressTime = setInterval(() =&gt; {
-                  this.progressVal += 1;
-                  if (this.progressVal &gt; 30) {
-                    this.status = 'info'
-                  }
-                  if (this.progressVal &gt; 60) {
-                    this.status = 'warning'
-                  }
-                  if (this.progressVal &gt; 99) {
-                    this.status = 'success'
-                  }
-                  if (this.progressVal === 100) {
-                    clearInterval(progressTime);
-                  }
-                }, 100);
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      iptStatus: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-progress :progress="progressNumber"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
-            &lt;zoom-progress :progress="progressNumber" status="danger"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
-            &lt;zoom-progress :progress="progressNumber" status="warning"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
-            &lt;zoom-progress :progress="progressNumber" status="info"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
-            &lt;zoom-progress :progress="progressNumber" status="success"&gt;&lt;/zoom-progress&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                progressNumber: 50
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-progress :progress="progressNumber"&gt;&lt;/zoom-progress&gt;
-            &lt;zoom-progress :op="progressOp"&gt;&lt;/zoom-progress&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                progressNumber: 50,
-                progressOp: {
-                  status: 'danger', // 进度条状态
-                  progress: 30,   //  进度条的值
-                  inside: true  //  是否显示外部, 设置false显示在内部
+      progressCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-progress :progress="progressVal" :status="status"&gt;&lt;/zoom-progress&gt;
+              &lt;zoom-button @click="addProgress"&gt;点我试试&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  progressVal: 0,
+                  status: 'danger',
+                }
+              },
+              methods: {
+                addProgress() {
+                  this.progressVal = 0;
+                  let progressTime = setInterval(() =&gt; {
+                    this.progressVal += 1;
+                    if (this.progressVal &gt; 30) {
+                      this.status = 'info'
+                    }
+                    if (this.progressVal &gt; 60) {
+                      this.status = 'warning'
+                    }
+                    if (this.progressVal &gt; 99) {
+                      this.status = 'success'
+                    }
+                    if (this.progressVal === 100) {
+                      clearInterval(progressTime);
+                    }
+                  }, 100);
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`,
+      iptStatus:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-progress :progress="progressNumber"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
+              &lt;zoom-progress :progress="progressNumber" status="danger"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
+              &lt;zoom-progress :progress="progressNumber" status="warning"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
+              &lt;zoom-progress :progress="progressNumber" status="info"&gt;&lt;/zoom-progress&gt;&lt;br&gt;
+              &lt;zoom-progress :progress="progressNumber" status="success"&gt;&lt;/zoom-progress&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  progressNumber: 50
+                }
+              }
+            }
+          &lt;/script&gt;`,
+      progressCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-progress :progress="progressNumber"&gt;&lt;/zoom-progress&gt;
+              &lt;zoom-progress :op="progressOp"&gt;&lt;/zoom-progress&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  progressNumber: 50,
+                  progressOp: {
+                    status: 'danger', // 进度条状态
+                    progress: 30,   //  进度条的值
+                    inside: true  //  是否显示外部, 设置false显示在内部
+                  }
+                }
+              }
+            }
+          &lt;/script&gt;`
     }
   },
   methods: {

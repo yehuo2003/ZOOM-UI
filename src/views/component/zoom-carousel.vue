@@ -12,7 +12,7 @@
         <zoom-carousel :op="op"></zoom-carousel>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="carouselCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -59,7 +59,7 @@ export default {
                 '用法: 配置op对象并设置images数组, 设置<span>images: []</span>'
             },
             {
-              id: 3,
+              id: 4,
               title: "图片自动切换间隔时间",
               name: "space",
               type: "Number",
@@ -83,32 +83,31 @@ export default {
         ]
       },
       curTab: 0,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-carousel :op="op"&gt;&lt;/zoom-carousel&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  space: 3000, //  轮播间隔时间 默认3000毫秒
-                  width: 28,	// 轮播图的宽度 默认是28
-                  height: 19, // 轮播图高度 默认是19
-                  images: [		// 配置轮播的图片, 传数组,数组里面对象,src是图片路径,title是图片标题, url是要跳转的链接,跳转方式为打开新页面
-                    {src: require('./static/1.jpg'), title: '大山', url: ''},
-                    {src: require('./static/2.jpg'), title: '城堡', url: ''},
-                    {src: require('./static/3.jpg'), title: '峡谷', url: ''},
-                    {src: require('./static/4.jpg'), title: '瀑布', url: ''},
-                  ]
+      carouselCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-carousel :op="op"&gt;&lt;/zoom-carousel&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    space: 3000, //  轮播间隔时间 默认3000毫秒
+                    width: 28,	// 轮播图的宽度 默认是28
+                    height: 19, // 轮播图高度 默认是19
+                    images: [		// 配置轮播的图片, 传数组,数组里面对象,src是图片路径,title是图片标题, url是要跳转的链接,跳转方式为打开新页面
+                      {src: require('./static/1.jpg'), title: '大山', url: ''},
+                      {src: require('./static/2.jpg'), title: '城堡', url: ''},
+                      {src: require('./static/3.jpg'), title: '峡谷', url: ''},
+                      {src: require('./static/4.jpg'), title: '瀑布', url: ''},
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     };
   },
   methods: {

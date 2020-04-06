@@ -30,7 +30,7 @@
 
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="tabsCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>竖排显示</h2>
@@ -62,7 +62,7 @@
 
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
+        <custom-code :html="tabsCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -138,80 +138,78 @@ export default {
       curTab: 0,
       curTab2: 0,
       reseTab: 0,
-      resetBtn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tabs position="left" :value="curTab" @tabChange="tabChange"&gt;
-              &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
-                &lt;div&gt;
-                  Tab1的内容
-                &lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-              &lt;zoom-tab-item :index="1" :label="'Tab2'"&gt;
-                &lt;h5 slot="label"&gt;
-                  我是tab2
-                  &lt;i class="zoom-icon icon-close-plus"&gt;&lt;/i&gt;
-                &lt;/h5&gt;
-                &lt;div&gt;Tab2的内容&lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-              &lt;zoom-tab-item :index="2" :label="'Tab3'"&gt;
-                &lt;div&gt;Tab3的内容&lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-            &lt;/zoom-tabs&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                curTab: 0 // 当前激活的tab索引
-              }
-            },
-            methods: {
-              tabChange(index) {
-                this.curTab = index
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      btn: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tabs :value="curTab" @tabChange="tabChange"&gt;
-              &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
-                &lt;div&gt;
-                  Tab1的内容
-                &lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-              &lt;zoom-tab-item :index="1" :label="'Tab2'"&gt;
-                &lt;h5 slot="label"&gt;
-                  我是tab2
-                  &lt;i class="zoom-icon icon-close-plus"&gt;&lt;/i&gt;
-                &lt;/h5&gt;
-                &lt;div&gt;Tab2的内容&lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-              &lt;zoom-tab-item :index="2" :label="'Tab3'"&gt;
-                &lt;div&gt;Tab3的内容&lt;/div&gt;
-              &lt;/zoom-tab-item&gt;
-            &lt;/zoom-tabs&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                curTab: 0 // 当前激活的tab索引
-              }
-            },
-            methods: {
-              tabChange(index) {
-                this.curTab = index
+      tabsCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tabs position="left" :value="curTab" @tabChange="tabChange"&gt;
+                &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
+                  &lt;div&gt;
+                    Tab1的内容
+                  &lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+                &lt;zoom-tab-item :index="1" :label="'Tab2'"&gt;
+                  &lt;h5 slot="label"&gt;
+                    我是tab2
+                    &lt;i class="zoom-icon icon-close-plus"&gt;&lt;/i&gt;
+                  &lt;/h5&gt;
+                  &lt;div&gt;Tab2的内容&lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+                &lt;zoom-tab-item :index="2" :label="'Tab3'"&gt;
+                  &lt;div&gt;Tab3的内容&lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+              &lt;/zoom-tabs&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  curTab: 0 // 当前激活的tab索引
+                }
+              },
+              methods: {
+                tabChange(index) {
+                  this.curTab = index
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`,
+      tabsCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tabs :value="curTab" @tabChange="tabChange"&gt;
+                &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
+                  &lt;div&gt;
+                    Tab1的内容
+                  &lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+                &lt;zoom-tab-item :index="1" :label="'Tab2'"&gt;
+                  &lt;h5 slot="label"&gt;
+                    我是tab2
+                    &lt;i class="zoom-icon icon-close-plus"&gt;&lt;/i&gt;
+                  &lt;/h5&gt;
+                  &lt;div&gt;Tab2的内容&lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+                &lt;zoom-tab-item :index="2" :label="'Tab3'"&gt;
+                  &lt;div&gt;Tab3的内容&lt;/div&gt;
+                &lt;/zoom-tab-item&gt;
+              &lt;/zoom-tabs&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  curTab: 0 // 当前激活的tab索引
+                }
+              },
+              methods: {
+                tabChange(index) {
+                  this.curTab = index
+                }
+              }
+            }
+          &lt;/script&gt;`
     };
   },
   methods: {

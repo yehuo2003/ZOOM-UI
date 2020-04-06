@@ -7,7 +7,7 @@
         <zoom-date></zoom-date>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="dateCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -21,7 +21,7 @@
         <zoom-date :op="dateOp2"></zoom-date>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="dateCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -112,41 +112,40 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-date :op="dateOp"&gt;&lt;/zoom-date&gt;&lt;br&gt;
-            禁用日期选择：&lt;br&gt;
-            &lt;zoom-date :op="dateOp2"&gt;&lt;/zoom-date&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                dateOp2: {
-                  disabled: true,
-                  dateTime: '2020-02-02'
-                },
-                dateOp: {
-                  disabled: false,  //  是否禁用
-                  dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
-                  onComplete: (arr, time) =&gt; {	//	arr是日期数组(年月日周几 + 时分秒)
-                    console.log('组件编译完成onComplete', arr, time);
+      dateCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-date :op="dateOp"&gt;&lt;/zoom-date&gt;&lt;br&gt;
+              禁用日期选择：&lt;br&gt;
+              &lt;zoom-date :op="dateOp2"&gt;&lt;/zoom-date&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  dateOp2: {
+                    disabled: true,
+                    dateTime: '2020-02-02'
                   },
-                  onRender: (arr, time) =&gt; {  //  组件渲染完成时执行的事件
-                    console.log('组件渲染完成onRender', arr, time);
-                  },
-                  onShow: day =&gt; {	// 选择日期框日期后执行的事件 日期对象 flag 是否当前月 false则表示不在当前月
-                    console.log('选择日期框日期后执行的事件', day);
+                  dateOp: {
+                    disabled: false,  //  是否禁用
+                    dateTime: 1396945578506,	//	或者字符串 '2019-01-01'  '2019-01-01 12:30:50'	也可以
+                    onComplete: (arr, time) =&gt; {	//	arr是日期数组(年月日周几 + 时分秒)
+                      console.log('组件编译完成onComplete', arr, time);
+                    },
+                    onRender: (arr, time) =&gt; {  //  组件渲染完成时执行的事件
+                      console.log('组件渲染完成onRender', arr, time);
+                    },
+                    onShow: day =&gt; {	// 选择日期框日期后执行的事件 日期对象 flag 是否当前月 false则表示不在当前月
+                      console.log('选择日期框日期后执行的事件', day);
+                    }
                   }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-date&gt;&lt;/zoom-date&gt;`
+          &lt;/script&gt;`,
+      dateCode: `&lt;zoom-date&gt;&lt;/zoom-date&gt;`
     }
   },
   mounted () {

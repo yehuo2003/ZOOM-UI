@@ -18,7 +18,7 @@
         <span v-tip.tranfrom="'tip内容展示'">带过渡效果</span>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="tipCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化操作</h2>
@@ -36,7 +36,7 @@
         </div>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="tipCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -96,21 +96,19 @@ export default {
       ],
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;div class="custom-tip"&gt;
-          &lt;p v-tip.primary.bottom="'tip提示内容'"&gt;tip 主题 primary&lt;/p&gt;
-          &lt;p v-tip.success.right="'tip提示内容'"&gt;tip 主题 success&lt;/p&gt;
-          &lt;p v-tip.warning.top="'tip提示内容'"&gt;tip 主题 warning&lt;/p&gt;
-          &lt;p v-tip.danger.right="'tip提示内容'"&gt;tip 主题 danger&lt;/p&gt;
-          &lt;p v-tip.info.left="'tip提示内容'"&gt;tip 主题 info&lt;/p&gt;
-          &lt;p v-tip.left="'tip提示内容'"&gt;tip 主题 正常&lt;/p&gt;
-        &lt;/div&gt;
-      `,
-      ipt:`
-        &lt;span v-tip="'tip内容展示'"&gt;鼠标经过&lt;/span&gt;&lt;br&gt;
-        &lt;span v-tip.click="'tip内容展示'"&gt;点击我&lt;/span&gt;&lt;br&gt;
-        &lt;span v-tip.tranfrom="'tip内容展示'"&gt;带过渡效果&lt;/span&gt;
-      `
+      tipCustom:
+        `&lt;div class="custom-tip"&gt;
+            &lt;p v-tip.primary.bottom="'tip提示内容'"&gt;tip 主题 primary&lt;/p&gt;
+            &lt;p v-tip.success.right="'tip提示内容'"&gt;tip 主题 success&lt;/p&gt;
+            &lt;p v-tip.warning.top="'tip提示内容'"&gt;tip 主题 warning&lt;/p&gt;
+            &lt;p v-tip.danger.right="'tip提示内容'"&gt;tip 主题 danger&lt;/p&gt;
+            &lt;p v-tip.info.left="'tip提示内容'"&gt;tip 主题 info&lt;/p&gt;
+            &lt;p v-tip.left="'tip提示内容'"&gt;tip 主题 正常&lt;/p&gt;
+          &lt;/div&gt;`,
+      tipCode:
+        `&lt;span v-tip="'tip内容展示'"&gt;鼠标经过&lt;/span&gt;&lt;br&gt;
+          &lt;span v-tip.click="'tip内容展示'"&gt;点击我&lt;/span&gt;&lt;br&gt;
+          &lt;span v-tip.tranfrom="'tip内容展示'"&gt;带过渡效果&lt;/span&gt;`
     }
   },
   methods: {

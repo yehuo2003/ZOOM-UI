@@ -14,7 +14,7 @@
         <zoom-internationalisation></zoom-internationalisation>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="internationalisationCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -24,7 +24,7 @@
         <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="internationalisationCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -90,32 +90,29 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-internationalisation :op="op"&gt;&lt;/zoom-internationalisation&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data () {
-              return {
-                op: {
-                  url: '/',  //  国际化切换后要跳转的url
-                  title: 'China', //  默认要展示的标题, 请与data数组里的text值对应
-                  data: [ // 国际化数据 value是要切换的国际化名, text是展示给用户的, 与title对应的条目将不会展示在下拉框中
-                    {value: 'zh', text: 'China'},
-                    {value: 'en', text: 'English'}
-                  ]
+      internationalisationCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-internationalisation :op="op"&gt;&lt;/zoom-internationalisation&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data () {
+                return {
+                  op: {
+                    url: '/',  //  国际化切换后要跳转的url
+                    title: 'China', //  默认要展示的标题, 请与data数组里的text值对应
+                    data: [ // 国际化数据 value是要切换的国际化名, text是展示给用户的, 与title对应的条目将不会展示在下拉框中
+                      {value: 'zh', text: 'China'},
+                      {value: 'en', text: 'English'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-internationalisation&gt;&lt;/zoom-internationalisation&gt;
-      `
+          &lt;/script&gt;`,
+      internationalisationCode: `&lt;zoom-internationalisation&gt;&lt;/zoom-internationalisation&gt;`
     }
   },
   methods: {

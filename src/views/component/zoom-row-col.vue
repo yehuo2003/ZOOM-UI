@@ -165,80 +165,75 @@ export default {
       flexTab: 0,
       orderTab: 0,
       offsetTab: 0,
-      offsetrHtml: `
-        &lt;zoom-row>
-          &lt;zoom-col span="2">第一个&lt;/zoom-col>
-          &lt;zoom-col span="2" offset="1">第二个&lt;/zoom-col>
-          &lt;zoom-col span="2">第三个&lt;/zoom-col>
-          &lt;zoom-col span="2" offset="2">第四个&lt;/zoom-col>
-        &lt;/zoom-row>
-        &lt;zoom-row>
-          &lt;zoom-col span="2" offset="3">第一个&lt;/zoom-col>
-          &lt;zoom-col span="2">第二个&lt;/zoom-col>
-        &lt;/zoom-row&gt;
-      `,
-      orderHtml: `
-        &lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
-          &lt;zoom-col order="2" span="3"&gt;第一个&lt;/zoom-col&gt;
-          &lt;zoom-col order="1" span="3"&gt;第二个&lt;/zoom-col&gt;
-          &lt;zoom-col order="3" span="3"&gt;第三个&lt;/zoom-col&gt;
-          &lt;zoom-col order="4" span="3"&gt;第四个&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-        &lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
-          &lt;zoom-col order="4" span="3"&gt;第一个&lt;/zoom-col&gt;
-          &lt;zoom-col order="3" span="3"&gt;第二个&lt;/zoom-col&gt;
-          &lt;zoom-col order="2" span="3"&gt;第三个&lt;/zoom-col&gt;
-          &lt;zoom-col order="1" span="3"&gt;第四个&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      flexHtml: `
-        &lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
-          &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-        &lt;zoom-row flex="true" justify="space-around" align="top"&gt;
-          &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-        &lt;zoom-row flex="true" justify="end" align="middle"&gt;
-          &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
-          &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      adaption: `
-        &lt;zoom-row&gt;
-          &lt;zoom-col xl="3" lg="4" md="6" sm="9" xs="12"&gt;不同屏自适应&lt;/zoom-col&gt;
-          &lt;zoom-col span="12"&gt;通用&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `,
-      basicRow:`
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="12"&gt;12&lt;/zoom-col&gt;
-          &lt;zoom-col span="6"&gt;6&lt;/zoom-col&gt;
-          &lt;zoom-col span="6"&gt;6&lt;/zoom-col&gt;
-          &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
-          &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
-          &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-        &lt;zoom-row&gt;
-          &lt;zoom-col span="1"&gt;1&lt;/zoom-col&gt;
-          &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
-          &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
-          &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
-          &lt;zoom-col span="1"&gt;1&lt;/zoom-col&gt;
-        &lt;/zoom-row&gt;
-      `
+      offsetrHtml:
+        `&lt;zoom-row>
+            &lt;zoom-col span="2">第一个&lt;/zoom-col>
+            &lt;zoom-col span="2" offset="1">第二个&lt;/zoom-col>
+            &lt;zoom-col span="2">第三个&lt;/zoom-col>
+            &lt;zoom-col span="2" offset="2">第四个&lt;/zoom-col>
+          &lt;/zoom-row>
+          &lt;zoom-row>
+            &lt;zoom-col span="2" offset="3">第一个&lt;/zoom-col>
+            &lt;zoom-col span="2">第二个&lt;/zoom-col>
+          &lt;/zoom-row&gt;`,
+      orderHtml:
+        `&lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
+            &lt;zoom-col order="2" span="3"&gt;第一个&lt;/zoom-col&gt;
+            &lt;zoom-col order="1" span="3"&gt;第二个&lt;/zoom-col&gt;
+            &lt;zoom-col order="3" span="3"&gt;第三个&lt;/zoom-col&gt;
+            &lt;zoom-col order="4" span="3"&gt;第四个&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;
+          &lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
+            &lt;zoom-col order="4" span="3"&gt;第一个&lt;/zoom-col&gt;
+            &lt;zoom-col order="3" span="3"&gt;第二个&lt;/zoom-col&gt;
+            &lt;zoom-col order="2" span="3"&gt;第三个&lt;/zoom-col&gt;
+            &lt;zoom-col order="1" span="3"&gt;第四个&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      flexHtml:
+        `&lt;zoom-row flex="true" justify="space-around" align="middle"&gt;
+            &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;
+          &lt;zoom-row flex="true" justify="space-around" align="top"&gt;
+            &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;
+          &lt;zoom-row flex="true" justify="end" align="middle"&gt;
+            &lt;zoom-col span="3"&gt;第一个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第二个&lt;/zoom-col&gt;
+            &lt;zoom-col span="3"&gt;第三个&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      adaption:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col xl="3" lg="4" md="6" sm="9" xs="12"&gt;不同屏自适应&lt;/zoom-col&gt;
+            &lt;zoom-col span="12"&gt;通用&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`,
+      basicRow:
+        `&lt;zoom-row&gt;
+            &lt;zoom-col span="12"&gt;12&lt;/zoom-col&gt;
+            &lt;zoom-col span="6"&gt;6&lt;/zoom-col&gt;
+            &lt;zoom-col span="6"&gt;6&lt;/zoom-col&gt;
+            &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
+            &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
+            &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;
+          &lt;zoom-row&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;
+          &lt;zoom-row&gt;
+            &lt;zoom-col span="1"&gt;1&lt;/zoom-col&gt;
+            &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
+            &lt;zoom-col span="2"&gt;2&lt;/zoom-col&gt;
+            &lt;zoom-col span="4"&gt;4&lt;/zoom-col&gt;
+            &lt;zoom-col span="1"&gt;1&lt;/zoom-col&gt;
+          &lt;/zoom-row&gt;`
     }
   },
   methods: {

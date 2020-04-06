@@ -19,7 +19,7 @@
         </zoom-form>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="formCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>高级用法</h2>
@@ -64,7 +64,7 @@
         </zoom-form>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="formCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -156,89 +156,87 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-form ref="form" label-width="120px"&gt;
-              &lt;zoom-form-item inline="true" :require="true" label="名字"&gt;
-                &lt;zoom-input :op="inputOp" placeholder="请输入名字"&gt;&lt;/zoom-input&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item inline="true" label="密码"&gt;
-                &lt;zoom-input&gt;&lt;/zoom-input&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item label="下拉框"&gt;
-                &lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item :require="true" label="搜索"&gt;
-                &lt;zoom-search :op="inputOp"&gt;&lt;/zoom-search&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item :require="true" label="部门"&gt;
-                &lt;zoom-input :op="inputOp" placeholder="请输入部门"&gt;&lt;/zoom-input&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item label="计数器"&gt;
-                &lt;zoom-numeric :op="inputOp"&gt;&lt;/zoom-numeric&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item label="复选框"&gt;
-                &lt;zoom-checkbox :op="checkOp"&gt;&lt;/zoom-checkbox&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item label="单选框"&gt;
-                &lt;zoom-radio :op="checkOp"&gt;&lt;/zoom-radio&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item :require="true" label="长框"&gt;
-                &lt;zoom-textarea :op="inputOp"&gt;&lt;/zoom-textarea&gt;
-              &lt;/zoom-form-item&gt;
-              &lt;zoom-form-item style="text-align: center"&gt;
-                &lt;zoom-button @click="testingClick" type="primary"&gt;验证表单&lt;/zoom-button&gt;
-                &lt;zoom-button @click="resetClick"&gt;重置表单&lt;/zoom-button&gt;
-              &lt;/zoom-form-item&gt;
-            &lt;/zoom-form&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                checkOp: {
-                  data: [
-                    {value: 1, text: '唱', checked: true},
-                    {value: 2, text: '跳'},
-                    {value: 3, text: 'rap'},
-                    {value: 4, text: '篮球'}
-                  ]
-                },
-                inputOp: {
-                  errMsg: '验证不通过',
-                  testing: val =&gt; {
-                    if (!val) {
-                      return false
-                    } else {
-                      return true
+      formCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-form ref="form" label-width="120px"&gt;
+                &lt;zoom-form-item inline="true" :require="true" label="名字"&gt;
+                  &lt;zoom-input :op="inputOp" placeholder="请输入名字"&gt;&lt;/zoom-input&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item inline="true" label="密码"&gt;
+                  &lt;zoom-input&gt;&lt;/zoom-input&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item label="下拉框"&gt;
+                  &lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item :require="true" label="搜索"&gt;
+                  &lt;zoom-search :op="inputOp"&gt;&lt;/zoom-search&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item :require="true" label="部门"&gt;
+                  &lt;zoom-input :op="inputOp" placeholder="请输入部门"&gt;&lt;/zoom-input&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item label="计数器"&gt;
+                  &lt;zoom-numeric :op="inputOp"&gt;&lt;/zoom-numeric&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item label="复选框"&gt;
+                  &lt;zoom-checkbox :op="checkOp"&gt;&lt;/zoom-checkbox&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item label="单选框"&gt;
+                  &lt;zoom-radio :op="checkOp"&gt;&lt;/zoom-radio&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item :require="true" label="长框"&gt;
+                  &lt;zoom-textarea :op="inputOp"&gt;&lt;/zoom-textarea&gt;
+                &lt;/zoom-form-item&gt;
+                &lt;zoom-form-item style="text-align: center"&gt;
+                  &lt;zoom-button @click="testingClick" type="primary"&gt;验证表单&lt;/zoom-button&gt;
+                  &lt;zoom-button @click="resetClick"&gt;重置表单&lt;/zoom-button&gt;
+                &lt;/zoom-form-item&gt;
+              &lt;/zoom-form&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  checkOp: {
+                    data: [
+                      {value: 1, text: '唱', checked: true},
+                      {value: 2, text: '跳'},
+                      {value: 3, text: 'rap'},
+                      {value: 4, text: '篮球'}
+                    ]
+                  },
+                  inputOp: {
+                    errMsg: '验证不通过',
+                    testing: val =&gt; {
+                      if (!val) {
+                        return false
+                      } else {
+                        return true
+                      }
                     }
                   }
                 }
-              }
-            },
-            methods: {
-              testingClick() {
-                this.$refs['form'].valid()
               },
-              resetClick() {
-                this.$refs['form'].reset()
+              methods: {
+                testingClick() {
+                  this.$refs['form'].valid()
+                },
+                resetClick() {
+                  this.$refs['form'].reset()
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-form @submit.prevent="false" label-width="100px"&gt;
-          &lt;zoom-form-item label="姓名"&gt;
-            &lt;zoom-input&gt;&lt;/zoom-input&gt;
-          &lt;/zoom-form-item&gt;
-          &lt;zoom-form-item label="地址"&gt;
-            &lt;zoom-input&gt;&lt;/zoom-input&gt;
-          &lt;/zoom-form-item&gt;
-        &lt;/zoom-form&gt;
-      `
+          &lt;/script&gt;`,
+      formCode:
+        `&lt;zoom-form @submit.prevent="false" label-width="100px"&gt;
+            &lt;zoom-form-item label="姓名"&gt;
+              &lt;zoom-input&gt;&lt;/zoom-input&gt;
+            &lt;/zoom-form-item&gt;
+            &lt;zoom-form-item label="地址"&gt;
+              &lt;zoom-input&gt;&lt;/zoom-input&gt;
+            &lt;/zoom-form-item&gt;
+          &lt;/zoom-form&gt;`
     }
   },
   methods: {

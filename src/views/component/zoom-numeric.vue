@@ -7,7 +7,7 @@
         <zoom-numeric></zoom-numeric>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="numericCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -19,7 +19,7 @@
         禁用数字框：<zoom-numeric v-model="num" :op="numericOp2"></zoom-numeric>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="numericCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -120,42 +120,41 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-numeric :op="numericOp"&gt;&lt;/zoom-numeric&gt;
-            禁用数字框：&lt;zoom-numeric v-model="num" :op="numericOp2"&gt;&lt;/zoom-numeric&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                num: 5,
-                numericOp2: {
-                  disabled: true,
-                },
-                numericOp: {
-                  max: 20,  //  最大值
-                  min: 0,   //  最小值
-                  space: 5, //  每次加减幅度
-                  disabled: false,	// 是否禁用
-                  readonly: false,	//是否禁止输入
-                  errMsg: '必填',
-                  testing: val => {
-                    if (!val) {
-                      return false;
-                    } else {
-                      return true;
-                    }
+      numericCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-numeric :op="numericOp"&gt;&lt;/zoom-numeric&gt;
+              禁用数字框：&lt;zoom-numeric v-model="num" :op="numericOp2"&gt;&lt;/zoom-numeric&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  num: 5,
+                  numericOp2: {
+                    disabled: true,
                   },
-                },
+                  numericOp: {
+                    max: 20,  //  最大值
+                    min: 0,   //  最小值
+                    space: 5, //  每次加减幅度
+                    disabled: false,	// 是否禁用
+                    readonly: false,	//是否禁止输入
+                    errMsg: '必填',
+                    testing: val => {
+                      if (!val) {
+                        return false;
+                      } else {
+                        return true;
+                      }
+                    },
+                  },
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-numeric&gt;&lt;/zoom-numeric&gt;`
+          &lt;/script&gt;`,
+      numericCode: `&lt;zoom-numeric&gt;&lt;/zoom-numeric&gt;`
     }
   },
   mounted () {

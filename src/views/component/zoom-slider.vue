@@ -7,7 +7,7 @@
         <zoom-slider></zoom-slider>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="sliderCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -23,7 +23,7 @@
         <zoom-button @click="slider2Num">滑块2的值</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="sliderCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -69,38 +69,37 @@ export default {
       num2: 100,
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            滑块1
-            &lt;zoom-slider v-model="number1"&gt;&lt;/zoom-slider&gt;
-            &lt;zoom-button @click="slider1Num"&gt;滑块1的值&lt;/zoom-button&gt;
-            &lt;br&gt;
-            滑块2：&lt;br&gt;
-            &lt;zoom-slider v-model="number2" min="50" max="200"&gt;&lt;/zoom-slider&gt;
-            &lt;zoom-button @click="slider2Num"&gt;滑块2的值&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                number1: 0,
-                number2: 100,
-              }
-            },
-            methods: {
-              slider2Num() {
-                console.log('滑块2当前值是' + this.number2);
+      sliderCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              滑块1
+              &lt;zoom-slider v-model="number1"&gt;&lt;/zoom-slider&gt;
+              &lt;zoom-button @click="slider1Num"&gt;滑块1的值&lt;/zoom-button&gt;
+              &lt;br&gt;
+              滑块2：&lt;br&gt;
+              &lt;zoom-slider v-model="number2" min="50" max="200"&gt;&lt;/zoom-slider&gt;
+              &lt;zoom-button @click="slider2Num"&gt;滑块2的值&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  number1: 0,
+                  number2: 100,
+                }
               },
-              slider1Num() {
-                console.log('滑块1当前值是' + this.number1);
+              methods: {
+                slider2Num() {
+                  console.log('滑块2当前值是' + this.number2);
+                },
+                slider1Num() {
+                  console.log('滑块1当前值是' + this.number1);
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-slider&gt;&lt;/zoom-slider&gt;`
+          &lt;/script&gt;`,
+      sliderCode: `&lt;zoom-slider&gt;&lt;/zoom-slider&gt;`
     }
   },
   mounted () {

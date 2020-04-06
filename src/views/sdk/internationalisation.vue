@@ -22,51 +22,48 @@
 export default {
   data() {
     return {
-      getLanguage: `
-        this.$zoom.getLanguage();
-        /**
-         * return {
-         *   locale: "zh",
-         *   detail: {  //  当前所有语言详情
-         *     en: {'xxx': 'xxx'}, // 英文
-         *     zh: {'xx': 'xxx'}  //  中文
-         *     ...
-         *   }
-         * };
-         */
-      `,
-      setLanguage: `
-        let lang = {
-          locale: 'en',	//	要修改的语言
-          detail: { //  要设置/修改的国际化
-              zh: {
-                'set.success': '设置成功',
-                'set.failed': '设置失败'
-              },
-              en: {
-                'set.success': 'set success',
-                'set.failed': 'set failed',
-              }
-          },
-          ...
-        }
-        this.$zoom.setLanguage(lang);
-        //  return {locale: "en", detail: {en: {'xxx': 'xxx'}, zh: {'xx': 'xxx'}, ... }};  //  返回设置完的最新国际化
-      `,
-      use: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            created() {
-              console.log(this.$zoom.$t("search.msg"), 'this.$zoom.$t("search.msg")');
-            }
+      getLanguage:
+        `this.$zoom.getLanguage();
+          /**
+           * return {
+           *   locale: "zh",
+           *   detail: {  //  当前所有语言详情
+           *     en: {'xxx': 'xxx'}, // 英文
+           *     zh: {'xx': 'xxx'}  //  中文
+           *     ...
+           *   }
+           * };
+           */`,
+      setLanguage:
+        `let lang = {
+            locale: 'en',	//	要修改的语言
+            detail: { //  要设置/修改的国际化
+                zh: {
+                  'set.success': '设置成功',
+                  'set.failed': '设置失败'
+                },
+                en: {
+                  'set.success': 'set success',
+                  'set.failed': 'set failed',
+                }
+            },
+            ...
           }
-        &lt;/script&gt;
-      `,
+          this.$zoom.setLanguage(lang);
+          //  return {locale: "en", detail: {en: {'xxx': 'xxx'}, zh: {'xx': 'xxx'}, ... }};  //  返回设置完的最新国际化`,
+      use:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              created() {
+                console.log(this.$zoom.$t("search.msg"), 'this.$zoom.$t("search.msg")');
+              }
+            }
+          &lt;/script&gt;`,
     };
   }
 };

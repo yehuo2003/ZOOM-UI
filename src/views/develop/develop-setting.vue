@@ -43,14 +43,12 @@ export default {
       npm: 'npm -v',
       updateNpm: 'npm install -g npm',
       cnpm: 'npm install -g cnpm --registry=http://registry.npm.taobao.org',
-      yarn: `
-        yarn config set registry https://registry.npm.taobao.org -g
-        yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
-      `,
-      cyarn: `
-        npm install -g yarn
-        yarn --version  //  查看版本
-      `,
+      yarn:
+        `yarn config set registry https://registry.npm.taobao.org -g
+          yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g`,
+      cyarn:
+        `npm install -g yarn
+          yarn --version  //  查看版本`,
       vue: 'npm install --global vue-cli',
       vue2: 'npm install -g vue-cli',
       vueVersions: 'vue -V',

@@ -12,7 +12,7 @@
         <zoom-tag :op="op"></zoom-tag>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="tagCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -22,7 +22,7 @@
         <zoom-tag :op="tagOp"></zoom-tag>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="tagCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -132,56 +132,54 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tag :op="tagOp"&gt;&lt;/zoom-tag&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                tagOp: {
-                  addTag: true, // 启用添加tag标签, 为true时候启用 用户可自由添加 or 删除
-                  addType: 'primary',  // 新增的标签数据类型
-                  title: '添加',  // 添加按钮的标题  默认叫 add
-                  data: [	// active是选中状态 为true选中
-                    {title: 'javascript', type: 'success', active: true},
-                    {title: 'Python', type: 'warning'},
-                    {title: 'Java', type: 'danger'},
-                    {title: 'PHP', type: 'info'}
-                  ]
+      tagCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tag :op="tagOp"&gt;&lt;/zoom-tag&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  tagOp: {
+                    addTag: true, // 启用添加tag标签, 为true时候启用 用户可自由添加 or 删除
+                    addType: 'primary',  // 新增的标签数据类型
+                    title: '添加',  // 添加按钮的标题  默认叫 add
+                    data: [	// active是选中状态 为true选中
+                      {title: 'javascript', type: 'success', active: true},
+                      {title: 'Python', type: 'warning'},
+                      {title: 'Java', type: 'danger'},
+                      {title: 'PHP', type: 'info'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-tag :op="op"&gt;&lt;/zoom-tag&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  data: [
-                    {title: 'javascript', type: 'success', active: true},
-                    {title: 'Python', type: 'warning'},
-                    {title: 'Java', type: 'danger'},
-                    {title: 'C++', type: 'primary'},
-                    {title: 'PHP', type: 'info'}
-                  ]
+          &lt;/script&gt;`,
+      tagCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-tag :op="op"&gt;&lt;/zoom-tag&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    data: [
+                      {title: 'javascript', type: 'success', active: true},
+                      {title: 'Python', type: 'warning'},
+                      {title: 'Java', type: 'danger'},
+                      {title: 'C++', type: 'primary'},
+                      {title: 'PHP', type: 'info'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

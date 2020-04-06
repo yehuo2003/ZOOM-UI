@@ -10,7 +10,7 @@
         </zoom-card>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
+        <custom-code :html="cardCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>边框阴影</h2>
@@ -27,7 +27,7 @@
         </zoom-card>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
+        <custom-code :html="cardBorder"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -72,17 +72,15 @@ export default {
       ],
       curTab: 0,
       reseTab: 0,
-      resetBtn: `
-        &lt;zoom-card border="true" hover-shadow="true"&gt;
-          &lt;h1&gt;自定义内容&lt;/h1&gt;
-          &lt;h3&gt;边框阴影&lt;/h3&gt;
-        &lt;/zoom-card&gt;
-      `,
-      btn: `
-        &lt;zoom-card&gt;
-          &lt;h1&gt;自定义内容&lt;/h1&gt;
-        &lt;/zoom-card&gt;
-      `
+      cardBorder:
+        `&lt;zoom-card border="true" hover-shadow="true"&gt;
+            &lt;h1&gt;自定义内容&lt;/h1&gt;
+            &lt;h3&gt;边框阴影&lt;/h3&gt;
+          &lt;/zoom-card&gt;`,
+      cardCode:
+        `&lt;zoom-card&gt;
+            &lt;h1&gt;自定义内容&lt;/h1&gt;
+          &lt;/zoom-card&gt;`
     };
   },
   methods: {

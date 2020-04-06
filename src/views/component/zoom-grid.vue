@@ -14,7 +14,7 @@
         <zoom-grid :op="gridOp"></zoom-grid>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="gridCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>手动加载数据</h2>
@@ -25,7 +25,7 @@
         <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="gridLoad"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>带复选功能的表格</h3>
@@ -36,7 +36,7 @@
         <zoom-grid :op="gridOp3"></zoom-grid>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="gridHtml3"></custom-code>
+        <custom-code :html="gridCheck"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
@@ -282,148 +282,145 @@ export default {
       opTab: 0,
       checkTab: 0,
       curTab: 0,
-      gridHtml3: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-grid :op="gridOp3"&gt;&lt;/zoom-grid&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                gridOp3: {
-                  hideIndex: true,
-                  isChecked: true,
-                  title: [
-                    {fieId: 'age',tip: false, header: '年龄'},
-                    {fieId: 'name',tip: false, header: '姓名'},
-                    {fieId: 'gender', header: '性别'},
-                    {fieId: 'city',tip: true, header: '地址'},
-                    {fieId: 'phone',tip: true, header: '联系方式'}
-                  ],
-                  data: [ // 表格内容数据 键名需要和表头配置的对应
+      gridCheck:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-grid :op="gridOp3"&gt;&lt;/zoom-grid&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  gridOp3: {
+                    hideIndex: true,
+                    isChecked: true,
+                    title: [
+                      {fieId: 'age',tip: false, header: '年龄'},
+                      {fieId: 'name',tip: false, header: '姓名'},
+                      {fieId: 'gender', header: '性别'},
+                      {fieId: 'city',tip: true, header: '地址'},
+                      {fieId: 'phone',tip: true, header: '联系方式'}
+                    ],
+                    data: [ // 表格内容数据 键名需要和表头配置的对应
+                      {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
+                      {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
+                      {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
+                      {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
+                    ]
+                  }
+                }
+              }
+            }
+          &lt;/script&gt;`,
+      gridLoad:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="loadData"&gt;手动加载数据&lt;/zoom-button&gt;
+              &lt;zoom-grid ref="grid" :op="gridOp2"&gt;&lt;/zoom-grid&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  list: [ // 表格内容数据 键名需要和表头配置的对应
                     {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
                     {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
                     {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
                     {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
-                  ]
-                }
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="loadData"&gt;手动加载数据&lt;/zoom-button&gt;
-            &lt;zoom-grid ref="grid" :op="gridOp2"&gt;&lt;/zoom-grid&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                list: [ // 表格内容数据 键名需要和表头配置的对应
-                  {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
-                  {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
-                  {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
-                  {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
-                ],
-                gridOp2: {
-                  title: [
-                    {fieId: 'age',tip: false, header: '年龄'},
-                    {fieId: 'name',tip: false, header: '姓名'},
-                    {fieId: 'gender', header: '性别'},
-                    {fieId: 'city',tip: true, header: '地址'},
-                    {fieId: 'phone',tip: true, header: '联系方式'}
                   ],
-                  data: []
+                  gridOp2: {
+                    title: [
+                      {fieId: 'age',tip: false, header: '年龄'},
+                      {fieId: 'name',tip: false, header: '姓名'},
+                      {fieId: 'gender', header: '性别'},
+                      {fieId: 'city',tip: true, header: '地址'},
+                      {fieId: 'phone',tip: true, header: '联系方式'}
+                    ],
+                    data: []
+                  }
+                }
+              },
+              methods: {
+                loadData() {
+                  this.$refs['grid'].showLoad(true);
+                  setTimeout(() =&gt; {
+                    this.$refs['grid'].load(this.list);
+                    this.$refs['grid'].showLoad(false);
+                  }, 2000);
                 }
               }
-            },
-            methods: {
-              loadData() {
-                this.$refs['grid'].showLoad(true);
-                setTimeout(() =&gt; {
-                  this.$refs['grid'].load(this.list);
-                  this.$refs['grid'].showLoad(false);
-                }, 2000);
-              }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-grid :op="gridOp"&gt;&lt;/zoom-grid&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                gridOp: {
-                  height: '150px',	//	当设置了高度, 则对表格内容限制了高度 如果内容溢出将出现滚动条
-                  hideIndex: false, //	默认false 为true不显示排序
-                  tip: true,  //  是否开启tip, 默认false, 开启后在对应列中还要设置tip: true才会生效
-                  isChecked: false,	//	是否启用复选框选项,默认否 开启后点击表头可以全选或取消, 开启后绑定 @fullClick 函数,可以监听全选/取消的状态值变化
-                  onClick: (dom, elem, col) =&gt; { // 点击行事件 dom为当前行dom元素 td当前点击单元格 col当前行
-                    console.log(dom, elem, col);
-                  },
-                  title: [
-                    {
-                      fieId: "btns",  // id,也是键值, 除了btns, 其它表格内容数据要与其对应
-                      header: '操作', // 表头文本名称
-                      width: 10,	  // 列宽度
-                      sort: false,	// 是否启用排序(为true显示上下箭头排序按钮,点击可根据索引值升序或者降序)
-                      btns: [
-                        {
-                          title: '移除',
-                          css: {
-                            icon: "icon-close"
-                          },
-                          onClick: (val, index) =&gt; {
-                            console.log('点击的当前行是:', val);
-                            console.log('点击的当前行下标是:', index);
-                          }
-                        },
-                        {
-                          title: '编辑',
-                          css: {
-                            icon: "icon-edit"
-                          },
-                          onClick: (val, index) =&gt; {
-                            console.log('点击的当前行是:', val);
-                            console.log('点击的当前行下标是:', index);
-                          }
-                        },
-                      ]
+          &lt;/script&gt;`,
+      gridCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-grid :op="gridOp"&gt;&lt;/zoom-grid&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  gridOp: {
+                    height: '150px',	//	当设置了高度, 则对表格内容限制了高度 如果内容溢出将出现滚动条
+                    hideIndex: false, //	默认false 为true不显示排序
+                    tip: true,  //  是否开启tip, 默认false, 开启后在对应列中还要设置tip: true才会生效
+                    isChecked: false,	//	是否启用复选框选项,默认否 开启后点击表头可以全选或取消, 开启后绑定 @fullClick 函数,可以监听全选/取消的状态值变化
+                    onClick: (dom, elem, col) =&gt; { // 点击行事件 dom为当前行dom元素 td当前点击单元格 col当前行
+                      console.log(dom, elem, col);
                     },
-                    {fieId: 'age',tip: false, header: '年龄'},
-                    {fieId: 'name',tip: false, header: '姓名'},
-                    {fieId: 'gender', header: '性别'},
-                    {fieId: 'city',tip: true, header: '地址'},
-                    {fieId: 'phone',tip: true, header: '联系方式'}
-                  ],
-                  data: [ // 表格内容数据 键名需要和表头配置的对应
-                    {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
-                    {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
-                    {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
-                    {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
-                  ],
-                  // beforeLoad: () =&gt; { // 组件加载时调用, 可以这时挂载数据
-                  //   console.log('加载数据');
-                  //   this.load();
-                  // },
+                    title: [
+                      {
+                        fieId: "btns",  // id,也是键值, 除了btns, 其它表格内容数据要与其对应
+                        header: '操作', // 表头文本名称
+                        width: 10,	  // 列宽度
+                        sort: false,	// 是否启用排序(为true显示上下箭头排序按钮,点击可根据索引值升序或者降序)
+                        btns: [
+                          {
+                            title: '移除',
+                            css: {
+                              icon: "icon-close"
+                            },
+                            onClick: (val, index) =&gt; {
+                              console.log('点击的当前行是:', val);
+                              console.log('点击的当前行下标是:', index);
+                            }
+                          },
+                          {
+                            title: '编辑',
+                            css: {
+                              icon: "icon-edit"
+                            },
+                            onClick: (val, index) =&gt; {
+                              console.log('点击的当前行是:', val);
+                              console.log('点击的当前行下标是:', index);
+                            }
+                          },
+                        ]
+                      },
+                      {fieId: 'age',tip: false, header: '年龄'},
+                      {fieId: 'name',tip: false, header: '姓名'},
+                      {fieId: 'gender', header: '性别'},
+                      {fieId: 'city',tip: true, header: '地址'},
+                      {fieId: 'phone',tip: true, header: '联系方式'}
+                    ],
+                    data: [ // 表格内容数据 键名需要和表头配置的对应
+                      {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
+                      {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
+                      {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
+                      {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
+                    ],
+                    // beforeLoad: () =&gt; { // 组件加载时调用, 可以这时挂载数据
+                    //   console.log('加载数据');
+                    //   this.load();
+                    // },
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

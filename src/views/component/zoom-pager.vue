@@ -13,7 +13,7 @@
         <zoom-pager :op="pagerOp"></zoom-pager>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="pagerCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>迷你版</h2>
@@ -23,7 +23,7 @@
         <zoom-pager :op="miniOp"></zoom-pager>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="pagerCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -131,62 +131,60 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-pager :op="miniOp"&gt;&lt;/zoom-pager&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                miniOp: {
-                mode: 'mini',
-                  pageVal: {
-                    total: 100,	// 总条数
-                    curPage: 1,	// 展示的当前页
-                    pageSize: 20	// 每页要展示多少条数据
+      pagerCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-pager :op="miniOp"&gt;&lt;/zoom-pager&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  miniOp: {
+                  mode: 'mini',
+                    pageVal: {
+                      total: 100,	// 总条数
+                      curPage: 1,	// 展示的当前页
+                      pageSize: 20	// 每页要展示多少条数据
+                    }
                   }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-pager :op="pagerOp"&gt;&lt;/zoom-pager&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                pagerOp: {
-                  pageSizes: [5, 10, 20],	// 可选择每页展示数量
-                  mode: 'Number',	// 展示模式 mini为简单版, Number为完全版 默认Number
-                  pageVal: {
-                    total: 100,	// 总条数
-                    curPage: 3,	// 展示的当前页
-                    pageSize: 20	// 每页要展示多少条数据
-                  },
-                  pageSizeSkip: (val, pageVal) =&gt; {
-                    this.pageSize = val;	// 每页大小的下拉框数据发生改变事件
-                  },
-                  beforeSkip: (val, pageVal) =&gt; {
-                    console.log('要跳转到',val);	//跳转前事件
-                  },
-                  skip: (val, pageVal) =&gt; {
-                    console.log('当前页是',val);	//点击跳转触发获取当前页
+          &lt;/script&gt;`,
+      pagerCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-pager :op="pagerOp"&gt;&lt;/zoom-pager&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  pagerOp: {
+                    pageSizes: [5, 10, 20],	// 可选择每页展示数量
+                    mode: 'Number',	// 展示模式 mini为简单版, Number为完全版 默认Number
+                    pageVal: {
+                      total: 100,	// 总条数
+                      curPage: 3,	// 展示的当前页
+                      pageSize: 20	// 每页要展示多少条数据
+                    },
+                    pageSizeSkip: (val, pageVal) =&gt; {
+                      this.pageSize = val;	// 每页大小的下拉框数据发生改变事件
+                    },
+                    beforeSkip: (val, pageVal) =&gt; {
+                      console.log('要跳转到',val);	//跳转前事件
+                    },
+                    skip: (val, pageVal) =&gt; {
+                      console.log('当前页是',val);	//点击跳转触发获取当前页
+                    }
                   }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

@@ -7,7 +7,7 @@
         <zoom-switch open="开启" close="关闭"></zoom-switch>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="switchCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>标签属性</h3>
@@ -24,7 +24,7 @@
         <zoom-switch :op="switchOp2"></zoom-switch>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="switchCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -111,39 +111,38 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-switch :op="switchOp"&gt;&lt;/zoom-switch&gt;
-            禁用开关:
-            &lt;zoom-switch :op="switchOp2"&gt;&lt;/zoom-switch&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                switchOp2: {
-                  disabled: true,
-                },
-                switchOp: {
-                  disabled: false,	// 是否禁用 默认false
-                  open: '开启',	        // 打开的文本
-                  close: '关闭',	// 关闭的文本
-                  status: 'open',	// 初始状态(可选open || close, 默认是close)
-                  beforeClick: val => {	//点击前的回调函数
-                    console.log('点击前触发', val);
+      switchCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-switch :op="switchOp"&gt;&lt;/zoom-switch&gt;
+              禁用开关:
+              &lt;zoom-switch :op="switchOp2"&gt;&lt;/zoom-switch&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  switchOp2: {
+                    disabled: true,
                   },
-                  afterClick: val => {	//点击后的回调函数
-                    console.log('点击后触发', val);
+                  switchOp: {
+                    disabled: false,	// 是否禁用 默认false
+                    open: '开启',	        // 打开的文本
+                    close: '关闭',	// 关闭的文本
+                    status: 'open',	// 初始状态(可选open || close, 默认是close)
+                    beforeClick: val => {	//点击前的回调函数
+                      console.log('点击前触发', val);
+                    },
+                    afterClick: val => {	//点击后的回调函数
+                      console.log('点击后触发', val);
+                    }
                   }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-switch open="开启" close="关闭"&gt;&lt;/zoom-switch&gt;`
+          &lt;/script&gt;`,
+      switchCode: `&lt;zoom-switch open="开启" close="关闭"&gt;&lt;/zoom-switch&gt;`
     }
   },
   methods: {

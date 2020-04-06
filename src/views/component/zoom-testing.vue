@@ -11,7 +11,7 @@
         <zoom-testing></zoom-testing>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="testingCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>设置属性</h3>
@@ -23,7 +23,7 @@
         <zoom-testing :op="testingOp"></zoom-testing>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="testingCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -86,27 +86,26 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-testing :op="testingOp"&gt;&lt;/zoom-testing&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                testingOp: {
-                  id: 'test666',	// id
-                  pool: '这是一段随机文本验证码将在这段文本内进行取',	// 自定义随机范围
-                  hideText: true	// 隐藏提示切换的文字信息, 为true时,可点击图片重新随机生成
+      testingCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-testing :op="testingOp"&gt;&lt;/zoom-testing&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  testingOp: {
+                    id: 'test666',	// id
+                    pool: '这是一段随机文本验证码将在这段文本内进行取',	// 自定义随机范围
+                    hideText: true	// 隐藏提示切换的文字信息, 为true时,可点击图片重新随机生成
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`&lt;zoom-testing&gt;&lt;/zoom-testing&gt;`
+          &lt;/script&gt;`,
+      testingCode: `&lt;zoom-testing&gt;&lt;/zoom-testing&gt;`
     }
   },
   mounted () {

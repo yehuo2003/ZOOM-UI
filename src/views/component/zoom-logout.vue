@@ -12,7 +12,7 @@
         <zoom-logout></zoom-logout>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="logoutCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -22,7 +22,7 @@
         <zoom-logout :op="logoutOp"></zoom-logout>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="logoutCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -88,32 +88,29 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-logout :op="logoutOp"&gt;&lt;/zoom-logout&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                logoutOp: {
-                  url: '/',  //  注销后要跳转的url
-                  point: true,  //  是否需要提示
-                  onClick: () =&gt; {
-                    console.log('注销');
-                  }, //  点击事件
-                  text: '注销登录'  //  文字内容, 默认为注销
+      logoutCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-logout :op="logoutOp"&gt;&lt;/zoom-logout&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  logoutOp: {
+                    url: '/',  //  注销后要跳转的url
+                    point: true,  //  是否需要提示
+                    onClick: () =&gt; {
+                      console.log('注销');
+                    }, //  点击事件
+                    text: '注销登录'  //  文字内容, 默认为注销
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;zoom-logout&gt;&lt;/zoom-logout&gt;
-      `
+          &lt;/script&gt;`,
+      logoutCode: `&lt;zoom-logout&gt;&lt;/zoom-logout&gt;`
     }
   },
   methods: {

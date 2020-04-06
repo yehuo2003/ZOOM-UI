@@ -40,17 +40,23 @@ export default {
           </code>
         </pre>
       `;
+      this.copyHtml = this.html.replace(/&lt;/g,"<").replace(/&gt;/g,">")
     }
-    this.copyHtml = this.html.replace(/&lt;/g,"<").replace(/&gt;/g,">")
   },
   methods: {
     // 复制成功
     onCopy(e) {
-      console.log(e, "onCopy");
+      this.$zoom.alert({
+        type: 'success',
+        content: '复制成功'
+      })
     },
     // 复制失败
     onError(e) {
-      alert("失败", e);
+      this.$zoom.alert({
+        type: 'danger',
+        content: '复制失败'
+      })
     }
   }
 };

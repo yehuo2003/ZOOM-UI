@@ -7,7 +7,7 @@
         <zoom-radio :op="op"></zoom-radio>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="radioCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h3>标签属性</h3>
@@ -23,7 +23,7 @@
         <zoom-radio :op="radioOp2"></zoom-radio>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="radioCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -117,72 +117,70 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-radio v-model="age" :op="radioOp"&gt;&lt;/zoom-radio&gt;
-            &lt;zoom-button @click="radioClick"&gt;当前选中的值&lt;/zoom-button&gt;&lt;br&gt;
-            禁用单选框:&lt;br&gt;
-            &lt;zoom-radio :op="radioOp2"&gt;&lt;/zoom-radio&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                age: 'secrecy',
-                radioOp2: {
-                  name: 'list',
-                  disabled: true,
-                  data: [
-                    {text: '男', value: 'man'},
-                    {text: '女', value: 'woman'},
-                    {text: '保密', value: 'secrecy', checked: true}
-                  ]
-                },
-                radioOp: {
-                  name: 'age',	//	单选框的name
-                  disabled: false,	//	是否禁用,为true可禁用
-                  Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
-                  data: [	//	单选框数据	checked: true	默认选中
-                    {text: '男', value: 'man'},
-                    {text: '女', value: 'woman'},
-                    {text: '保密', value: 'secrecy', checked: true}
-                  ]
+      radioCustom:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-radio v-model="age" :op="radioOp"&gt;&lt;/zoom-radio&gt;
+              &lt;zoom-button @click="radioClick"&gt;当前选中的值&lt;/zoom-button&gt;&lt;br&gt;
+              禁用单选框:&lt;br&gt;
+              &lt;zoom-radio :op="radioOp2"&gt;&lt;/zoom-radio&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  age: 'secrecy',
+                  radioOp2: {
+                    name: 'list',
+                    disabled: true,
+                    data: [
+                      {text: '男', value: 'man'},
+                      {text: '女', value: 'woman'},
+                      {text: '保密', value: 'secrecy', checked: true}
+                    ]
+                  },
+                  radioOp: {
+                    name: 'age',	//	单选框的name
+                    disabled: false,	//	是否禁用,为true可禁用
+                    Bool: false,			//	v-model 绑定默认是value值, 如果Bool设置为true,那么选中后获取的是true
+                    data: [	//	单选框数据	checked: true	默认选中
+                      {text: '男', value: 'man'},
+                      {text: '女', value: 'woman'},
+                      {text: '保密', value: 'secrecy', checked: true}
+                    ]
+                  }
                 }
-              }
-            },
-            methods: {
-              radioClick() {
-                console.log('当前值是', this.age);
-              }
-            }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-radio :op="op"&gt;&lt;/zoom-radio&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                op: {
-                  name: 'test',
-                  data: [
-                    {text: '选项1', value: '1'},
-                    {text: '选项2', value: '2'},
-                    {text: '选项3', value: '3'}
-                  ]
+              },
+              methods: {
+                radioClick() {
+                  console.log('当前值是', this.age);
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`,
+      radioCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-radio :op="op"&gt;&lt;/zoom-radio&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  op: {
+                    name: 'test',
+                    data: [
+                      {text: '选项1', value: '1'},
+                      {text: '选项2', value: '2'},
+                      {text: '选项3', value: '3'}
+                    ]
+                  }
+                }
+              }
+            }
+          &lt;/script&gt;`
     }
   },
   methods: {

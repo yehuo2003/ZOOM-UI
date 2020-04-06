@@ -77,34 +77,33 @@ export default {
         }
       ],
       select: '$(DOM) // return DOM Object',
-      chain: `
-        &lt;template&gt;
-          &lt;div&gt;
+      chain:
+        `&lt;template&gt;
             &lt;div&gt;
-              &lt;p class="p1"&gt;111&lt;/p&gt;
-              &lt;p class="p-con"&gt;222&lt;/p&gt;
-              &lt;p&gt;333&lt;/p&gt;
-              &lt;p class="p4"&gt;444&lt;/p&gt;
+              &lt;div&gt;
+                &lt;p class="p1"&gt;111&lt;/p&gt;
+                &lt;p class="p-con"&gt;222&lt;/p&gt;
+                &lt;p&gt;333&lt;/p&gt;
+                &lt;p class="p4"&gt;444&lt;/p&gt;
+              &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            mounted () {
-              $('.p1').addClass('blue'); // 添加class
-              $('.p4').setText('666666666666');	//	设置文本内容
-              $('div').find('p').eq(1).setText(66666666666).addClass('blue');	//	链式操作
-              let title = $Z('.p-con');	//	获取元素
-              console.log(title,'sss');
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              mounted () {
+                $('.p1').addClass('blue'); // 添加class
+                $('.p4').setText('666666666666');	//	设置文本内容
+                $('div').find('p').eq(1).setText(66666666666).addClass('blue');	//	链式操作
+                let title = $Z('.p-con');	//	获取元素
+                console.log(title,'sss');
+              }
             }
+          &lt;/script&gt;
+          &lt;style&gt;
+          .blue {
+            color: blue !important;
           }
-        &lt;/script&gt;
-        &lt;style&gt;
-        .blue {
-          color: blue !important;
-        }
-        &lt;/style&gt;
-      `
+          &lt;/style&gt;`
     };
   },
   methods: {

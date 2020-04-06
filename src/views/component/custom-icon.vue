@@ -18,10 +18,9 @@
 export default {
   data() {
     return {
-      icon: `
-        &lt;!-- zoom-icon + 自定义图标类名 --&gt;
-        &lt;span class="zoom-icon icon-laugh"&gt;&lt;/span&gt;
-      `,
+      icon:
+        `&lt;!-- zoom-icon + 自定义图标类名 --&gt;
+          &lt;span class="zoom-icon icon-laugh"&gt;&lt;/span&gt;`,
       list: [
         {cls: 'icon-laugh', name: '笑脸'},
         {cls: 'icon-cry', name: '哭'},

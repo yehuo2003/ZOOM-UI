@@ -15,7 +15,7 @@
         <zoom-button @click="alertClick">弹出警告框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="aletCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>不同类型弹框</h2>
@@ -29,7 +29,7 @@
         <zoom-button @click="styleClick('info')" type="info">普通弹框</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="aletType"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>设置弹框存在时间</h2>
@@ -43,7 +43,7 @@
         <zoom-button @click="timeClick('info', 5000)" type="info">5000毫秒后关闭</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="timeIpt"></custom-code>
+        <custom-code :html="aletTime"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -96,73 +96,70 @@ export default {
       opTab: 0,
       curTab: 0,
       timeTab: 0,
-      timeIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="timeClick('primary', 1000)" type="primary"&gt;1000毫秒后关闭&lt;/zoom-button&gt;
-            &lt;zoom-button @click="timeClick('success', 2000)" type="success"&gt;2000毫秒后关闭&lt;/zoom-button&gt;
-            &lt;zoom-button @click="timeClick('warning', 3000)" type="warning"&gt;3000毫秒后关闭&lt;/zoom-button&gt;
-            &lt;zoom-button @click="timeClick('danger', 4000)" type="danger"&gt;4000毫秒后关闭&lt;/zoom-button&gt;
-            &lt;zoom-button @click="timeClick('info', 5000)" type="info"&gt;5000毫秒后关闭&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              timeClick(type, time) {
-                this.$zoom.alert({
-                  title: type,
-                  content: '普通弹框',
-                  type: type,
-                  time: time
-                })
+      aletTime:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="timeClick('primary', 1000)" type="primary"&gt;1000毫秒后关闭&lt;/zoom-button&gt;
+              &lt;zoom-button @click="timeClick('success', 2000)" type="success"&gt;2000毫秒后关闭&lt;/zoom-button&gt;
+              &lt;zoom-button @click="timeClick('warning', 3000)" type="warning"&gt;3000毫秒后关闭&lt;/zoom-button&gt;
+              &lt;zoom-button @click="timeClick('danger', 4000)" type="danger"&gt;4000毫秒后关闭&lt;/zoom-button&gt;
+              &lt;zoom-button @click="timeClick('info', 5000)" type="info"&gt;5000毫秒后关闭&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                timeClick(type, time) {
+                  this.$zoom.alert({
+                    title: type,
+                    content: '普通弹框',
+                    type: type,
+                    time: time
+                  })
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      opIpt: `
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险弹框&lt;/zoom-button&gt;
-            &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通弹框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              styleClick(type) {
-                this.$zoom.alert({
-                  title: type,
-                  content: '普通弹框',
-                  type: type
-                })
+          &lt;/script&gt;`,
+      aletType:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="styleClick('primary')" type="primary"&gt;重点弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('success')" type="success"&gt;成功弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('warning')" type="warning"&gt;警告弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('danger')" type="danger"&gt;危险弹框&lt;/zoom-button&gt;
+              &lt;zoom-button @click="styleClick('info')" type="info"&gt;普通弹框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                styleClick(type) {
+                  this.$zoom.alert({
+                    title: type,
+                    content: '普通弹框',
+                    type: type
+                  })
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="alertClick"&gt;弹出警告框&lt;/zoom-button&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              alertClick() {
-                this.$zoom.alert({
-                  content: '普通弹框'
-                })
+          &lt;/script&gt;`,
+      aletCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="alertClick"&gt;弹出警告框&lt;/zoom-button&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                alertClick() {
+                  this.$zoom.alert({
+                    content: '普通弹框'
+                  })
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

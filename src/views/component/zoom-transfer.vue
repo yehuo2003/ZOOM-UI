@@ -13,7 +13,7 @@
         <zoom-transfer :op="transferOp"></zoom-transfer>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="transferCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -88,39 +88,38 @@ export default {
         ]
       },
       curTab: 0,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-transfer :op="transferOp"&gt;&lt;/zoom-transfer&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            data() {
-              return {
-                transferOp: {
-                  title: [
-                    {fieId: 'name', header: '公司名称'},
-                    {fieId: 'area', header: '区域'},
-                    {fieId: 'province', header: '省份'},
-                    {fieId: 'city', header: '城市'}
-                  ],
-                  data: [
-                    {name: 'a公司', area: '华中区', province: '广东省', city: '广州市'},
-                    {name: 'f公司', area: '华东区', province: '福建省', city: '福州市'},
-                    {name: 'c公司', area: '华中区', province: '广东省', city: '中山市'},
-                    {name: 'd公司', area: '华东区', province: '福建省', city: '三明市'},
-                    {name: 'g公司', area: '华北区', province: '河北省', city: '邯郸市'},
-                    {name: 'e公司', area: '华东区', province: '福建省', city: '厦门市'},
-                    {name: 'b公司', area: '华中区', province: '广东省', city: '深圳市'},
-                    {name: 'h公司', area: '华北区', province: '河北省', city: '石家庄'}
-                  ]
+      transferCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-transfer :op="transferOp"&gt;&lt;/zoom-transfer&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  transferOp: {
+                    title: [
+                      {fieId: 'name', header: '公司名称'},
+                      {fieId: 'area', header: '区域'},
+                      {fieId: 'province', header: '省份'},
+                      {fieId: 'city', header: '城市'}
+                    ],
+                    data: [
+                      {name: 'a公司', area: '华中区', province: '广东省', city: '广州市'},
+                      {name: 'f公司', area: '华东区', province: '福建省', city: '福州市'},
+                      {name: 'c公司', area: '华中区', province: '广东省', city: '中山市'},
+                      {name: 'd公司', area: '华东区', province: '福建省', city: '三明市'},
+                      {name: 'g公司', area: '华北区', province: '河北省', city: '邯郸市'},
+                      {name: 'e公司', area: '华东区', province: '福建省', city: '厦门市'},
+                      {name: 'b公司', area: '华中区', province: '广东省', city: '深圳市'},
+                      {name: 'h公司', area: '华北区', province: '河北省', city: '石家庄'}
+                    ]
+                  }
                 }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

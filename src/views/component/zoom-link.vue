@@ -12,7 +12,7 @@
         <zoom-link>普通文字链接</zoom-link>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="linkCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
@@ -26,7 +26,7 @@
         <zoom-link type="warning">warning 文字链接</zoom-link><br>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
+        <custom-code :html="linkCustom"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -86,17 +86,14 @@ export default {
       },
       opTab: 0,
       curTab: 0,
-      opIpt: `
-        &lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;&lt;br&gt;
-        &lt;zoom-link type="primary"&gt;primary 文字链接&lt;/zoom-link&gt;&lt;br&gt;
-        &lt;zoom-link type="success"&gt;success 文字链接&lt;/zoom-link&gt;&lt;br&gt;
-        &lt;zoom-link type="info"&gt;info 文字链接&lt;/zoom-link&gt;&lt;br&gt;
-        &lt;zoom-link type="danger"&gt;danger 文字链接&lt;/zoom-link&gt;&lt;br&gt;
-        &lt;zoom-link type="warning"&gt;warning 文字链接&lt;/zoom-link&gt;&lt;br&gt;
-      `,
-      ipt:`
-        &lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;
-      `
+      linkCustom:
+        `&lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;&lt;br&gt;
+          &lt;zoom-link type="primary"&gt;primary 文字链接&lt;/zoom-link&gt;&lt;br&gt;
+          &lt;zoom-link type="success"&gt;success 文字链接&lt;/zoom-link&gt;&lt;br&gt;
+          &lt;zoom-link type="info"&gt;info 文字链接&lt;/zoom-link&gt;&lt;br&gt;
+          &lt;zoom-link type="danger"&gt;danger 文字链接&lt;/zoom-link&gt;&lt;br&gt;
+          &lt;zoom-link type="warning"&gt;warning 文字链接&lt;/zoom-link&gt;&lt;br&gt;`,
+      linkCode: `&lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;`
     }
   },
   methods: {

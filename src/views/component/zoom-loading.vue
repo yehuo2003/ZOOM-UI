@@ -19,7 +19,7 @@
         <zoom-button @click="customLoading">红色loading</zoom-button> <span>5秒后消失</span>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
+        <custom-code :html="loadingCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
     <attribute :list="attributeList"></attribute>
@@ -77,32 +77,31 @@ export default {
       ],
       opTab: 0,
       curTab: 0,
-      ipt:`
-        &lt;template&gt;
-          &lt;div&gt;
-            &lt;zoom-button @click="openLoading"&gt;默认loading&lt;/zoom-button&gt; &lt;span&gt;3秒后消失&lt;/span&gt;&lt;br&gt;
-            &lt;zoom-button @click="customLoading"&gt;红色loading&lt;/zoom-button&gt; &lt;span&gt;5秒后消失&lt;/span&gt;
-          &lt;/div&gt;
-        &lt;/template&gt;
-        &lt;script&gt;
-          export default {
-            methods: {
-              customLoading() {
-                this.$zoom.loading.show({color: 'red', full: true});
-                setTimeout(() =&gt; {
-                  this.$zoom.loading.hide();
-                }, 5000);
-              },
-              openLoading() {
-                this.$zoom.loading.show();
-                setTimeout(() =&gt; {
-                  this.$zoom.loading.hide();
-                }, 3000);
+      loadingCode:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-button @click="openLoading"&gt;默认loading&lt;/zoom-button&gt; &lt;span&gt;3秒后消失&lt;/span&gt;&lt;br&gt;
+              &lt;zoom-button @click="customLoading"&gt;红色loading&lt;/zoom-button&gt; &lt;span&gt;5秒后消失&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              methods: {
+                customLoading() {
+                  this.$zoom.loading.show({color: 'red', full: true});
+                  setTimeout(() =&gt; {
+                    this.$zoom.loading.hide();
+                  }, 5000);
+                },
+                openLoading() {
+                  this.$zoom.loading.show();
+                  setTimeout(() =&gt; {
+                    this.$zoom.loading.hide();
+                  }, 3000);
+                }
               }
             }
-          }
-        &lt;/script&gt;
-      `
+          &lt;/script&gt;`
     }
   },
   methods: {

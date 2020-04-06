@@ -114,44 +114,39 @@ export default {
       flexTab: 0,
       orderTab: 0,
       offsetTab: 0,
-      offsetrHtml: `
-        &lt;zoom-layout style="height: 300px;"&gt;
-          &lt;div slot="header"&gt;header&lt;/div&gt;
-          &lt;zoom-layout slot="main"&gt;
+      offsetrHtml:
+        `&lt;zoom-layout style="height: 300px;"&gt;
+            &lt;div slot="header"&gt;header&lt;/div&gt;
+            &lt;zoom-layout slot="main"&gt;
+              &lt;div slot="aside"&gt;aside&lt;/div&gt;
+              &lt;div slot="main"&gt;main&lt;/div&gt;
+            &lt;/zoom-layout&gt;
+            &lt;div slot="footer"&gt;footer&lt;/div&gt;
+          &lt;/zoom-layout&gt;`,
+      orderHtml:
+        `&lt;zoom-layout style="height: 300px;"&gt;
+            &lt;div slot="header"&gt;header&lt;/div&gt;
             &lt;div slot="aside"&gt;aside&lt;/div&gt;
             &lt;div slot="main"&gt;main&lt;/div&gt;
-          &lt;/zoom-layout&gt;
-          &lt;div slot="footer"&gt;footer&lt;/div&gt;
-        &lt;/zoom-layout&gt;
-      `,
-      orderHtml: `
-        &lt;zoom-layout style="height: 300px;"&gt;
-          &lt;div slot="header"&gt;header&lt;/div&gt;
-          &lt;div slot="aside"&gt;aside&lt;/div&gt;
-          &lt;div slot="main"&gt;main&lt;/div&gt;
-          &lt;div slot="footer"&gt;footer&lt;/div&gt;
-        &lt;/zoom-layout&gt;
-      `,
-      flexHtml: `
-        &lt;zoom-layout style="height: 300px;"&gt;
-          &lt;div slot="header"&gt;header&lt;/div&gt;
-          &lt;div slot="main"&gt;main&lt;/div&gt;
-          &lt;div slot="footer"&gt;footer&lt;/div&gt;
-        &lt;/zoom-layout&gt;
-      `,
-      adaption: `
-        &lt;zoom-layout style="height: 300px;">
-          &lt;div slot="aside">aside&lt;/div>
-          &lt;div slot="main">main&lt;/div>
-        &lt;/zoom-layout&gt;
-      `,
-      basiclayout:`
-        &lt;zoom-layout style="height: 300px;"&gt;
-          &lt;div slot="header"&gt;header&lt;/div&gt;
-          &lt;div slot="aside"&gt;aside&lt;/div&gt;
-          &lt;div slot="main"&gt;main&lt;/div&gt;
-        &lt;/zoom-layout&gt;
-      `
+            &lt;div slot="footer"&gt;footer&lt;/div&gt;
+          &lt;/zoom-layout&gt;`,
+      flexHtml:
+        `&lt;zoom-layout style="height: 300px;"&gt;
+            &lt;div slot="header"&gt;header&lt;/div&gt;
+            &lt;div slot="main"&gt;main&lt;/div&gt;
+            &lt;div slot="footer"&gt;footer&lt;/div&gt;
+          &lt;/zoom-layout&gt;`,
+      adaption:
+        `&lt;zoom-layout style="height: 300px;">
+            &lt;div slot="aside">aside&lt;/div>
+            &lt;div slot="main">main&lt;/div>
+          &lt;/zoom-layout&gt;`,
+      basiclayout:
+        `&lt;zoom-layout style="height: 300px;"&gt;
+            &lt;div slot="header"&gt;header&lt;/div&gt;
+            &lt;div slot="aside"&gt;aside&lt;/div&gt;
+            &lt;div slot="main"&gt;main&lt;/div&gt;
+          &lt;/zoom-layout&gt;`
     }
   },
   methods: {
