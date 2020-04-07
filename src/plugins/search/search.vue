@@ -286,6 +286,7 @@ export default {
   line-height: 30px;
 }
 .zoom-search.zoom-input .select-line input.zoom-input-search {
+  color: #333;
   padding-left: 8px;
   outline: 0;
   border: 0;

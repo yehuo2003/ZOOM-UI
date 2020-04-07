@@ -19,9 +19,9 @@ export default {
   props: {
     op: {
       type: Object,
-      url: String, // 切换后要去的页面
-      title: String, //  用户名
-      data: Array //  自定义候选国际化数据
+      url: String, // 国际化切换后要跳转的url
+      title: String, //  默认要展示的标题, 请与data数组里的text值对应
+      data: Array //  国际化数据 value是要切换的国际化名, text是展示给用户的, 与title对应的条目将不会展示在下拉框中
     }
   },
   data() {

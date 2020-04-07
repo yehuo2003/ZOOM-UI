@@ -1,9 +1,13 @@
 <template>
-  <div class="zoom-nav">
+  <div :class=" 'zoom-nav ' + themeColor">
     <ul>
       <!-- 左边 -->
       <li v-if="showDownTree" class="tree">
-        <a>|||</a>
+        <label class="menu-btn">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </label>
         <div class="tree-list">
           <ul>
             <li
@@ -93,6 +97,10 @@ export default {
         type: Array,
         default: []
       },
+      theme: {  // 颜色主题 默认绿色  可选 primary, warning, info success, danger
+        type: String,
+        default: 'success'
+      },
       hideTree: {
         type: Boolean,
         default: false
@@ -102,6 +110,7 @@ export default {
   data() {
     return {
       showDownTree: true,
+      themeColor: 'success',
       navList: []
     };
   },
@@ -114,6 +123,9 @@ export default {
       }
       if (this.op.data) {
         this.navList = this.op.data;
+      }
+      if (this.op.theme) {
+        this.themeColor = this.op.theme;
       }
     }
   },
@@ -129,6 +141,72 @@ export default {
 };
 </script>
 <style>
+.zoom-nav .tree>.menu-btn {
+  --menu-btn-radius: 3em;
+  position: relative;
+  z-index: 100;
+  display: block;
+  width: var(--menu-btn-radius);
+  height: var(--menu-btn-radius);
+  outline: none;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+.zoom-nav .tree>.menu-btn .line {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: rgba(43, 61, 79, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+.zoom-nav .tree>.menu-btn .line:nth-child(1) {
+  top: 30%;
+}
+.zoom-nav .tree>.menu-btn .line:nth-child(2) {
+  top: 50%;
+}
+.zoom-nav .tree>.menu-btn .line:nth-child(3) {
+  top: 70%;
+}
+.zoom-nav .tree>.menu-btn .line::after {
+  position: absolute;
+  content:"";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #10a491;
+  transform: translateX(-100%);
+  transition: all 0.25s ease;
+}
+.zoom-nav.primary .menu-btn .line::after {
+  background: #1890ff;
+}
+.zoom-nav.warning .menu-btn .line::after {
+  background: #faad14;
+}
+.zoom-nav.danger .menu-btn .line::after {
+  background: #f5222d;
+}
+.zoom-nav.info .menu-btn .line::after {
+  background: #333;
+}
+.zoom-nav .tree>.menu-btn .line:nth-child(2)::after {
+  transition-delay: 0.1s;
+}
+.zoom-nav .tree>.menu-btn .line:nth-child(3)::after {
+  transition-delay: 0.2s;
+}
+.zoom-nav .tree>.menu-btn:hover {
+  box-shadow: 0.4px 0.4px 0.8px rgba(0, 0, 0, 0.042), 1px 1px 2px rgba(0, 0, 0, 0.061), 1.9px 1.9px 3.8px rgba(0, 0, 0, 0.075), 3.4px 3.4px 6.7px rgba(0, 0, 0, 0.089), 6.3px 6.3px 12.5px rgba(0, 0, 0, 0.108), 15px 15px 30px rgba(0, 0, 0, 0.15);
+}
+.zoom-nav .tree>.menu-btn:hover .line::after {
+  transform: translateX(0);
+}
+
 .tree .tree-list > ul .tree-extend:hover::after {
   color: #1890ff;
 }
@@ -205,6 +283,24 @@ export default {
 .tree .tree-list > ul li:hover {
   background: #e6f7ff;
 }
+.warning .tree .tree-list > ul li:hover a {
+  color: #faad14;
+}
+.warning .tree .tree-list > ul li:hover {
+  background: #f8fc6e;
+}
+.danger .tree .tree-list > ul li:hover a {
+  color: #f5222d;
+}
+.danger .tree .tree-list > ul li:hover {
+  background: #ffc1c1;
+}
+.info .tree .tree-list > ul li:hover a {
+  color: #333;
+}
+.info .tree .tree-list > ul li:hover {
+  background: #999;
+}
 .tree .tree-list > ul a {
   color: #333;
 }
@@ -218,21 +314,6 @@ export default {
   width: 160px;
   position: absolute;
 }
-.tree:hover > a {
-  background: #10a491;
-  color: #fff;
-  padding: 13px 20px;
-  transform: rotate(0);
-}
-.tree > a {
-  padding: 10px 20px;
-  color: #fff;
-  display: block;
-  font-weight: bold;
-  transform: rotate(90deg);
-  transition: all 0.3s ease;
-  -webkit-transform: rotate(90deg);
-}
 .tree {
   transition: all 0.5s linear;
   float: left;
@@ -241,6 +322,18 @@ export default {
 /* 横向导航栏 */
 .zoom-list > a:hover {
   background: #10a491;
+}
+.zoom-nav.primary .zoom-list > a:hover {
+  background: #1890ff;
+}
+.zoom-nav.warning .zoom-list > a:hover {
+  background: #faad14;
+}
+.zoom-nav.danger .zoom-list > a:hover {
+  background: #f5222d;
+}
+.zoom-nav.info .zoom-list > a:hover {
+  background: #54657e;
 }
 .zoom-nav
   ul
@@ -285,6 +378,18 @@ export default {
   z-index: 999;
   position: relative;
   padding: 0 24px;
+}
+.zoom-nav.primary {
+  background: #40a9ff;
+}
+.zoom-nav.warning {
+  background: #ffc53d;
+}
+.zoom-nav.info {
+  background: #666;
+}
+.zoom-nav.danger {
+  background: #ff4d4f;
 }
 .zoom-nav ul li.zoom-list {
   transition: background 0.3s ease-in-out;

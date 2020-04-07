@@ -1,19 +1,19 @@
 <template>
   <div class="zoom-layout">
     <!-- 头部 -->
-    <header v-if="$slots.header" :style="headerStyle" class="zoom-header">
+    <header v-if="$slots.header" ref="header" :style="headerStyle" class="zoom-header">
       <slot name="header"></slot>
     </header>
     <!-- 底部 -->
-    <footer v-if="$slots.footer" :style="footerStyle" class="zoom-footer">
+    <footer v-if="$slots.footer" ref="footer" :style="footerStyle" class="zoom-footer">
       <slot name="footer"></slot>
     </footer>
     <!-- 左侧单栏 -->
-    <aside v-if="$slots.aside" :style="asideStyle" class="zoom-aside">
+    <aside v-if="$slots.aside" ref="aside" :style="asideStyle" class="zoom-aside">
       <slot name="aside"></slot>
     </aside>
     <!-- 主程序 -->
-    <main v-if="$slots.main" :style="mainStyle" class="zoom-main">
+    <main v-if="$slots.main" ref="main" :style="mainStyle" class="zoom-main">
       <slot name="main"></slot>
     </main>
   </div>
@@ -22,6 +22,10 @@
 export default {
   name: 'zoom-layout',
   props: {
+    stopTop: {  //  默认false, 每次页面改变会返回顶部, 为true禁止
+      type: Boolean,
+      default: false
+    },
     headerHeight: { //  头部高
       type: [Number, String],
       default: 60
@@ -46,7 +50,30 @@ export default {
   created() {
     this.load();
   },
+  watch: {
+    '$route.path': function(newVal, oldVal) {
+      if (this.$slots && !this.stopTop && newVal) {
+        this.goTop();
+      }
+    }
+  },
   methods: {
+    // 让main和aside返回顶部
+    goTop() {
+      document.documentElement.scrollTop = 0;
+      if ( this.$slots.aside && this.$refs['aside']) {
+        this.$refs['aside'].scrollTop = 0;
+      }
+      if (this.$slots.main && this.$refs['main']) {
+        this.$refs['main'].scrollTop = 0;
+      }
+      if (this.$slots.header && this.$refs['header']) {
+        this.$refs['header'].scrollTop = 0;
+      }
+      if (this.$slots.footer && this.$refs['footer']) {
+        this.$refs['footer'].scrollTop = 0;
+      }
+    },
     load() {
       this.headerStyle = `height: ${this.headerHeight}px;`
       this.footerStyle = `height: ${this.footerHeight}px;`

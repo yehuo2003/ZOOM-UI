@@ -109,11 +109,11 @@
         this.handleAction();
       },
       handleAction(action){
-        this.visible=false;
+        this.visible = false;
+        window.removeEventListener('keyup', this.keyEnd, true);
         if(action=='yes'){
-          this.promiseStatus && this.promiseStatus.resolve();
-        }else{
-          window.removeEventListener('keyup', this.keyEnd, true);
+          this.promiseStatus && this.promiseStatus.resolve(true);
+        } else {
           this.promiseStatus && this.promiseStatus.reject && this.promiseStatus.reject();
         }
       }

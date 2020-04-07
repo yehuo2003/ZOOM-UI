@@ -46,7 +46,7 @@ export default {
 <style>
 .zoom-panel-content {
   transform: all 0.5s linear;
-  padding: 12px 24px 24px;
+  padding: 0 24px;
   overflow-y: auto;
   font-size: 0.875em;
   color: #333;

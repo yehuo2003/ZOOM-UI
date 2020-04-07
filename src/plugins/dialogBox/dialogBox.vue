@@ -75,6 +75,8 @@ export default {
 };
 </script>
 <style>
+
+
 .zoom-dialog-box>.dialog-box>.dialog-footer .zoom-btn {
   padding: 0 10px;
 }
@@ -96,8 +98,13 @@ export default {
 .zoom-dialog-box>.dialog-box>.dialog-header>a {
   float: right;
   color: #666;
+  font-weight: bold;
   font-size: 25px;
   text-decoration: none;
+  transition: color ease-in-out .3s;
+}
+.zoom-dialog-box>.dialog-box>.dialog-header>a:hover {
+  color: #1890ff;
 }
 .zoom-dialog-box>.dialog-box>.dialog-header {
   text-align-last: left;

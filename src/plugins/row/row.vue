@@ -163,6 +163,78 @@ textarea {
   font-family: "\5FAE\8F6F\96C5\9ED1", "Microsoft Yahei", "Arial";
   box-sizing: border-box;
 }
+/* 全局色彩 */
+.bg-info {
+  background: #999;
+}
+.bg-info.hover:hover {
+  background: #54657e;
+}
+.bg-info.active:active {
+  background: #666;
+}
+
+.bg-danger {
+  background: #f5222d;
+}
+.bg-danger.hover:hover {
+  background: #ff4d4f;
+}
+.bg-danger.active:active {
+  background: #cf1322;
+}
+
+.bg-success {
+  background: #52c41a;
+}
+.bg-success.hover:hover {
+  background: #73d13d;
+}
+.bg-success.active:active {
+  background: #389e0d;
+}
+
+.bg-warning {
+  background: #faad14;
+}
+.bg-warning.hover:hover {
+  background: #ffc53d;
+}
+.bg-warning.active:active {
+  background: #faad14;
+}
+
+.bg-primary {
+  background: #1890ff;
+}
+.bg-primary.hover:hover {
+  background: #40a9ff;
+}
+.bg-primary.active:active {
+  background: #096dd9;
+}
+
+.bg-btn-active {
+  color: #333;
+  background: #e6f7ff;
+}
+.bg-primary-active {
+  background: #096dd9;
+}
+.bg-primary-hover {
+  background: #40a9ff;
+}
+
+.bg-info-dark {
+  background: #666;
+}
+.bg-info-darker {
+  background: #666;
+}
+.bg-navigation {
+  background: #2e3243;
+}
+
 img[src*="T1NXW19jZ2tvc3d7f4OHi4+Tl5ufo6err7O3u7/Dx8vP09fb3og0T+FL6/j4LDAxAA"] {
   animation: lazy-logo 2s infinite linear;
   width: 10rem;
