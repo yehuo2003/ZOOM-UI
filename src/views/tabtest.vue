@@ -68,6 +68,14 @@
     <zoom-internationalisation></zoom-internationalisation>
     <zoom-logout :op="logoutOp"></zoom-logout>
     <zoom-button @click="confimClick(222)">conmig</zoom-button>
+
+    <zoom-color-picker
+        :defaultColor="color"
+        @onChange="onChange"
+        ref="picker"
+    ></zoom-color-picker>
+
+
     <!-- <zoom-progress :progress="num" :status="status"></zoom-progress> -->
     <img ref="confim" v-lazyload>
     <!-- <span>{{$zoom.$t('m.music')}}</span> -->
@@ -81,6 +89,7 @@
     data() {
       return {
         num: 0,
+        color:"#DDDDDD",
         status: 'danger',
         progressOp: {
             status: 'danger',   // 开始时候的状态
@@ -157,7 +166,12 @@
       console.log(this.$zoom.getLanguage(), '=this.$zoom.getLanguage()');
     },
     methods: {
+      onChange(color){
+        console.log(color, 'color');
+        this.color = color;
+      },
       confimClick(a) {
+        this.$refs['picker'].openPicker();
         // this.$zoom.tip({
         //   // title: '标题',
         //   // content: '内容',
@@ -168,21 +182,21 @@
         //   },
         //   target: this.$refs['confim']
         // })
-        this.$zoom.prompt({
-          content: '此操作将永久删除该文件, 是否继续？',
-          value: '2222',
-          title: '标题',
-          confirmText:'是',
-          cancelText:'否',
-          type: 'warning'
-        }).then((res) => {
-          console.log(res, 'res==');
-          console.log('确定');
-            //点是
-        }).catch(() => {
-          console.log('关闭');
-            //点否
-        });
+        // this.$zoom.prompt({
+        //   content: '此操作将永久删除该文件, 是否继续？',
+        //   value: '2222',
+        //   title: '标题',
+        //   confirmText:'是',
+        //   cancelText:'否',
+        //   type: 'warning'
+        // }).then((res) => {
+        //   console.log(res, 'res==');
+        //   console.log('确定');
+        //     //点是
+        // }).catch(() => {
+        //   console.log('关闭');
+        //     //点否
+        // });
         // this.$zoom.confim('是否登录?',{
         //   confirmText:'登录',
         // }).then((res) => {
