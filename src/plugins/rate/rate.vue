@@ -88,6 +88,7 @@ export default {
 .zoom-rate input[name="rate-star"]:checked,
 .zoom-rate input[name="rate-star"]:hover,
 .zoom-rate input[name="rate-star"]:checked::after,
+.zoom-rate input[name="rate-star"]:hover::after,
 .zoom-rate input[name="rate-star"]:checked ~ input[name="rate-star"]::after,
 .zoom-rate input[name="rate-star"]:checked ~ input[name="rate-star"]::after,
 .zoom-rate input[name="rate-star"]:hover ~ input[name="rate-star"]::after {
@@ -97,19 +98,17 @@ export default {
 .zoom-rate input[name="rate-face"]:checked,
 .zoom-rate input[name="rate-face"]:hover,
 .zoom-rate input[name="rate-face"]:checked::after,
+.zoom-rate input[name="rate-face"]:hover::after,
 .zoom-rate input[name="rate-face"]:checked ~ input[name="rate-face"]::after,
 .zoom-rate input[name="rate-face"]:checked ~ input[name="rate-face"]::after,
 .zoom-rate input[name="rate-face"]:hover ~ input[name="rate-face"]::after {
   content: "\e8ab";
   color: #ffa822;
 }
-.zoom-rate input[name="rate-star"]:hover {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
-}
+.zoom-rate input[name="rate-star"]:hover,
 .zoom-rate input[name="rate-face"]:hover {
-  -webkit-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 }
 .zoom-rate input[name="rate-star"],
 .zoom-rate input[name="rate-face"] {

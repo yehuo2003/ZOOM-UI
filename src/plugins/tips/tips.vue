@@ -323,6 +323,12 @@ export default {
 };
 </script>
 <style>
+.zoom-tip-container.zoom-custom-content {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  top: -8px;
+}
 .zoom-tip-container {
   position: absolute;
   top: 0;

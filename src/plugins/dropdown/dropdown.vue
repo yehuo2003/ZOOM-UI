@@ -9,6 +9,7 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
+    :style=" 'width: ' + options.width"
     :class=" options.disabled ? 'disabled' : '' "
     class="zoom-input zoom-dropdown"
   >
@@ -34,7 +35,7 @@
       v-tip.error.right.multiple.click="errMsg"
       style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
     ></span>
-    <div class="input-btn">
+    <div @click="showTip" class="input-btn">
       <a
         v-if="!options.hideClose"
         @click="clear"
@@ -42,14 +43,14 @@
         class="zoom-icon icon-close icon-default"
       ></a>
       <a
-        @click="serach"
+        @click="close"
         href="javascript:void(0);"
         class="zoom-icon"
         :class="showDown ? 'icon-up' : 'icon-down'"
       ></a>
     </div>
-    <div v-show="showDown" class="zoom-selector">
-      <div class="show-warpper" @click="serach"></div>
+    <div v-show="false" class="zoom-selector">
+      <div class="show-warpper" @click="close"></div>
       <div class="selector-content">
         <ul class="zoom-poplist">
           <li
@@ -75,7 +76,7 @@ export default {
   name: "zoom-dropdown",
   props: {
     id: String,
-    value: [String, Number],
+    value: [String, Number, Array, Boolean],
     op: {
       placeHolder: {
         //  占位符
@@ -111,6 +112,7 @@ export default {
         //  点击事件
         type: Function
       },
+      width: String,  //  组件的宽度 默认270px
       data: {
         //下拉框数据, 键值对的方式, text是展示的文本
         type: Array,
@@ -140,6 +142,7 @@ export default {
       options: {
         data: [],
         errMsg: "",
+        width: null,
         placeHolder: null,
         disabled: false
       }
@@ -185,10 +188,46 @@ export default {
   },
   watch: {
     value(val, oldValue) {
-      this.setCurrentValue(val);
+      /**
+       * 如果是多选的话, 并且用户绑定了v-model, 这里进行逻辑转换
+       */
+      if (val && this.list) {
+        let str = ''
+        this.list.forEach((item, index) => {
+          if (item.value === val[index]) {
+            str += item.text + ';';
+          }
+        })
+        this.setCurrentValue(str);
+      } else {
+        this.setCurrentValue(val);
+      }
     }
   },
   methods: {
+    /**
+     * 显示下拉框tips
+     */
+    showTip() {
+      this.$zoom.tip({
+        customComponent: 'zoom-dropdown-content',
+        width: this.op && this.op.width || '270px',
+        customProps: { // 要传入的参数
+          options: this.options,
+          isChecked: this.isChecked
+        },
+        container: document.body,
+        duration: 1,
+        placements: ['bottom', 'top', 'right', 'left'],
+        customClass: 'zoom-custom-content zoom-dropdown',
+        customListeners: {
+          input: (val) => {
+            this.itemClick(val)
+          }
+        },
+        target: this.$refs['downVal']	//	目标元素
+      })
+    },
     /**
      * 当用户按tab键切换的时候 触发验证功能
      */
@@ -242,7 +281,7 @@ export default {
       this.$emit(e);
     },
     itemClick(e) {
-      if (this.options.onClick) {
+      if (this.options && this.options.onClick) {
         this.options.onClick(e);
       }
       if (e.value === null && e.text === this.$zoom.$t('grid.no_data')) { // 暂无数据
@@ -346,8 +385,8 @@ export default {
       //输入完成时，isOnComposition为false，将值传递给父组件
       this.$emit("input", value);
     },
-    serach() {
-      if (this.options.disabled) {
+    close() {
+      if (this.options && this.options.disabled) {
         return;
       }
       this.showDown = !this.showDown;

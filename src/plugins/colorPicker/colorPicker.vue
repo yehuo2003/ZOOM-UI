@@ -1,25 +1,17 @@
 <template>
 <div class="zoom-color-picker">
-  <div ref="color-picker-container" class="color-picker-container" :class="{'active':isShowPicker}">
+  <div v-drag ref="color-picker-container" class="color-picker-container" :class="{'active':isShowPicker}">
     <div ref="color" class="color"></div>
     <div ref="wheel" class="wheel"></div>
     <div class="overlay"></div>
     <div ref="h-marker" class="h-marker marker"></div>
     <div ref="sl-marker" class="sl-marker marker"></div>
   </div>
-  <!-- <input
-    v-show="!hideSelect"
-    type="text"
-    ref="color-picker"
-    auto-complete="off"
-    @focus="openPicker"
-    class="select-color"
-    :style="'background-color:' + color"
-  > -->
   <button
     v-show="!hideSelect"
     ref="color-picker"
     @click="openPicker"
+    :disabled="disabled"
     class="select-color"
     :style="'background-color:' + color"
   ></button>
@@ -34,6 +26,7 @@ export default {
 			type:String,
 			default:"#000000"
     },
+    disabled: [Boolean],
     hideSelect: {
       type: Boolean,
       default: false
@@ -58,7 +51,7 @@ export default {
 		}
 	},
   mounted(){
-    this.color = this.defaultColor;
+    this.color = this.CheckIsColor(this.defaultColor);
     this.dom.container = this.$refs['color-picker-container'];
     this.dom.hMarker = this.$refs['h-marker'];
     this.dom.slMarker = this.$refs['sl-marker'];
@@ -74,12 +67,28 @@ export default {
       this.setColor(this.color);
     },
     /**
+     * 验证颜色合法性
+     */
+    CheckIsColor(bgVal) {
+      let color = '#000000';
+      if (!bgVal || !bgVal.length) {
+        return color
+      }
+      if (bgVal.indexOf('#') === 0 || bgVal.indexOf('rgb') === 0 || bgVal.indexOf('RGB') === 0) {
+        color = bgVal;
+      }
+      return color;
+    },
+    /**
      * 主动调用选择框
      */
     picker() {
       this.$refs['color-picker'].click();
     },
     openPicker() {
+      if (this.disabled) {
+        return
+      }
       this.isShowPicker = true;
       this.wheel = this.$refs['wheel'];
       /*色盘打开的时候绑定点击事件*/
@@ -419,7 +428,14 @@ export default {
   cursor: pointer;
   border: solid 2px rgba(149, 166, 167, 0.4);
 }
-.zoom-color-picker .select-color:hover {
+.zoom-color-picker .select-color[disabled] {
+  border: 1px solid #d9d9d9;
+  color: #bfbfbf;
+  background: #f5f5f5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.zoom-color-picker .select-color:not([disabled]):hover {
   box-shadow: 0.4px 0.4px 0.8px rgba(0, 0, 0, 0.042), 1px 1px 2px rgba(0, 0, 0, 0.061), 1.9px 1.9px 3.8px rgba(0, 0, 0, 0.075), 3.4px 3.4px 6.7px rgba(0, 0, 0, 0.089), 6.3px 6.3px 12.5px rgba(0, 0, 0, 0.108), 15px 15px 30px rgba(0, 0, 0, 0.15);
 }
 .zoom-color-picker .color-picker-container {

@@ -21,7 +21,7 @@
           </a>
         </div>
         <!-- 二级菜单 -->
-        <transition name="fade">
+        <transition name="zoom-tree-menu">
           <ul v-show="item.show" v-if="item.children" class="zoom-tree-menus">
             <li
               v-for="(i, index) of item.children"
@@ -42,7 +42,7 @@
                 </a>
               </div>
               <!-- 三级菜单 -->
-              <transition name="fade">
+              <transition name="zoom-tree-menu">
                 <ul v-show="i.show" v-if="i.children" class="zoom-tree-menus">
                   <li
                     v-for="(j, index) of i.children"
@@ -157,17 +157,17 @@ export default {
 };
 </script>
 <style>
-.zoom-tree-menu .fade-enter {
-  opacity: 0;
-}
-.zoom-tree-menu .fade-enter-active {
-  transition: opacity 0.5s;
-}
-.zoom-tree-menu .fade-leave-active {
-  transition: opacity 0.5s;
-}
-.zoom-tree-menu .fade-leave-to {
-  transition: opacity 0;
+.zoom-tree-menu .zoom-tree-menu-enter-active {
+  -webkit-animation-name: tree-menu;
+  animation-name: tree-menu;
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
 }
 .zoom-tree-menu .zoom-tree-menus .tree-item:not(.tree-open):hover {
   background: #e4ecef;
@@ -260,5 +260,15 @@ export default {
   position: absolute;
   top: 0;
   bottom: 0;
+}
+@-webkit-keyframes tree-menu {
+  from {
+    -webkit-transform: translateY(-100%);
+            transform: translateY(-100%);
+  }
+  to {
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+  }
 }
 </style>

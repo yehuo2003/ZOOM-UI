@@ -104,6 +104,7 @@ export default {
         hideClose: true,
         isdisable: false,
         default: 10,
+        width: '60px',
         onClick: val => {
           this.op.pageVal.pageSize = this.dropOp.default = val.value;
           this.setPager();
@@ -310,7 +311,6 @@ export default {
 }
 .zoom-pager .zoom-input {
   margin-right: 5px;
-  width: 60px;
 }
 .clear:after {
   content: "";

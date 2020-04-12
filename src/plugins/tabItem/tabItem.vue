@@ -1,3 +1,9 @@
+<template>
+  <li :index="index" @click="activeCurTab" :class="classes">
+    <slot v-if="$slots.label" name="label"></slot>
+    <span v-else v-html="label"></span>
+  </li>
+</template>
 <script>
 export default {
   name: "zoom-tab-item",
@@ -13,21 +19,21 @@ export default {
   mounted() {
     this.$parent.panels.push([this]);
   },
-  render(h) {
-    const tab = this.$slots.label || h("span", this.label); // 如果用name=label的slot,则用slot,否则展示label prop
-    return h(
-      "li",
-      {
-        class: this.classes,
-        on: {
-          click: () => {
-            this.activeCurTab();
-          }
-        }
-      },
-      [tab]
-    );
-  },
+  // render(h) {
+  //   const tab = this.$slots.label || h("span", this.label); // 如果用name=label的slot,则用slot,否则展示label prop
+  //   return h(
+  //     "li",
+  //     {
+  //       class: this.classes,
+  //       on: {
+  //         click: () => {
+  //           this.activeCurTab();
+  //         }
+  //       }
+  //     },
+  //     [tab]
+  //   );
+  // },
   computed: {
     active() {
       return this.index === this.$parent.value;
@@ -62,28 +68,33 @@ export default {
   border-right: 1px solid #d9d9d9;
 }
 .zoom-tab-item {
-  padding: 0 24px;
-  height: 40px;
+  -webkit-transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
+  padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
+  padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  line-height: 40px;
-  display: inline-block;
-  list-style: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  position: relative;
-  cursor: pointer;
-  white-space: nowrap;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   border: 1px solid #d9d9d9;
-  border-right: none;
+  box-sizing: border-box;
+  display: inline-block;
+  white-space: nowrap;
   border-bottom: none;
+  position: relative;
+  border-right: none;
+  line-height: 40px;
+  list-style: none;
+  font-weight: 500;
+  padding: 0 24px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  height: 40px;
   top: 1px;
   z-index: 9;
-  -webkit-transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
-    padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition: color 0.3s cubic-bezier(645, 0.045, 0.355, 1),
-    padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .zoom-tab-item.tab-active::before {
   position: absolute;
@@ -92,10 +103,51 @@ export default {
   height: 3px;
   left: -1px;
   background: #1890ff;
+  -webkit-animation-name: tabitem;
+  animation-name: tabitem;
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
 }
 .zoom-tab-item.tab-active {
   border-bottom: 1px solid #fff;
   border-top: 0;
   color: #1890ff;
+  -webkit-animation-name: tabactive;
+  animation-name: tabactive;
+  -webkit-animation-direction: normal;
+  animation-direction: normal;
+  -webkit-animation-duration: .5s;
+  animation-duration: .5s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+
+@-webkit-keyframes tabitem {
+  from {
+    width: 0;
+  }
+  to {
+    width: calc(100% + 1px);
+  }
+}
+@-webkit-keyframes tabactive {
+  from {
+    color: #333;
+    -webkit-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+  }
+  to {
+    color: #1890ff;
+    -webkit-transform: rotateY(0);
+            transform: rotateY(0);
+  }
 }
 </style>
