@@ -27,6 +27,8 @@
         :placeholder="placeholder ? placeholder : options.placeHolder"
         :readonly="options.readonly"
         :disabled="options.disabled"
+        :maxlength="options.maxLength"
+        :minlength="options.minLength"
         type="text"
         class="zoom-input-search"
       />
@@ -57,6 +59,14 @@ export default {
         type: String,
         default: ""
       },
+      maxLength: {  //  可输入最大字符
+        type: Number,
+        default: null
+      },
+      minLength: {  //  可输入最小字符
+        type: Number,
+        default: 0
+      },
       readonly: {
         // 是否禁止输入默认false
         type: Boolean,
@@ -84,6 +94,8 @@ export default {
       valueBeforeComposition: null,
       options: {
         errMsg: "",
+        maxLength: null,
+        minLength: 0,
         placeHolder: this.$zoom.$t('search.msg'), // 请输入关键词
         readonly: false,
         disabled: false
@@ -148,7 +160,21 @@ export default {
     // 验证功能
     handleBlur() {
       this.focus = false;
-      if (this.options.testing) {
+      if (this.currentValue.length < this.options.minLength) {
+        // 小长度为 {min} 个字符！
+        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+        this.error = true;
+        this.$refs["err"].click();
+        this.$nextTick(() => {
+          this.$refs["err"].click();
+          setTimeout(() => {
+            this.$nextTick(() => {
+              this.error = false;
+              $Z(".zoom-tip-container")[0].remove();
+            });
+          }, 2000);
+        });
+      } else if (this.options.testing) {
         let test = this.options.testing(this.currentValue);
         if (!test) {
           this.error = true;

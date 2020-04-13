@@ -10,6 +10,7 @@
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
     class="zoom-numeric zoom-input"
+    :style=" 'width: ' + options.width"
     :class="options.disabled ? 'numeric-disabled' : '' "
   >
     <a @click="subtraction" href="javascript:void(0);" class="num-btn num-subtraction">-</a>
@@ -64,6 +65,9 @@ export default {
       disabled: false,
       options: {
         max: 999999,
+        width: null,
+        disabled: false,
+        readonly: false,
         min: 0
       }
     };

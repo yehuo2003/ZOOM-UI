@@ -3,10 +3,7 @@
     <zoom-tabs v-model="curTab" :border="true" @change="tabChange">
       <zoom-tab-item :index="0" :label="'Tab1'">
         <div>
-          Tab1的内容
-        </div>
-        <div>
-          <input v-model="name" type="text">
+          <zoom-input v-model="name" :op="inputOp"></zoom-input>
           <button @click="clear">清除</button>
         </div>
         <zoom-dropdown v-model="name" :op="dropdownOp2"></zoom-dropdown>
@@ -48,6 +45,11 @@
   export default {
     data() {
       return {
+        inputOp: {
+          // minLength: 5,
+          maxLength: 10,
+          width: '500px'
+        },
         dropdownOp2: {
           isChecked: true,
           disabled: false,

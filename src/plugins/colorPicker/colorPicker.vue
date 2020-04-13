@@ -420,7 +420,10 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
+.zoom-color-picker {
+  display: inline-block;
+}
 .zoom-color-picker .select-color {
   width: 30px;
   height: 30px;

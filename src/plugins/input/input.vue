@@ -9,6 +9,7 @@
     @mouseover="handleChild('mouseoverChild')"
     @keydown="handleChild('keydownChild')"
     @keyup="handleChild('keyupChild')"
+    :style=" 'width: ' + options.width"
     :class="options.disabled ? 'disabled' : ''"
     class="zoom-input"
   >
@@ -24,6 +25,8 @@
       :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
       :disabled="options.disabled"
+      :maxlength="options.maxLength"
+      :minlength="options.minLength"
       :class="error ? 'error' : ''"
     />
     <span
@@ -63,10 +66,19 @@ export default {
         type: Boolean,
         default: false
       },
-      errMsg: {
+      errMsg: { //  验证失败显示的消息
         type: String,
         default: ""
       },
+      maxLength: {  //  可输入最大字符
+        type: Number,
+        default: null
+      },
+      minLength: {  //  可输入最小字符
+        type: Number,
+        default: 0
+      },
+      width: String,  //  组件的宽度 默认270px
       IconStyle: {
         type: String,
         default: false
@@ -76,7 +88,7 @@ export default {
       type: String,
       default: null
     },
-    value: [String, Number]
+    value: [String, Number, Array]
   },
   data() {
     return {
@@ -90,7 +102,11 @@ export default {
         type: "text",
         errMsg: "",
         placeHolder: null,
+        width: null,
+        maxLength: null,
+        minLength: 0,
         disabled: false,
+        readonly: false,
         IconStyle: false
       }
     };
@@ -158,7 +174,21 @@ export default {
     },
     // 验证功能
     handleBlur() {
-      if (this.options.testing) {
+      if (this.currentValue.length < this.options.minLength) {
+        // 小长度为 {min} 个字符！
+        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+        this.error = true;
+        this.$refs["err"].click();
+        this.$nextTick(() => {
+          this.$refs["err"].click();
+          setTimeout(() => {
+            this.$nextTick(() => {
+              this.error = false;
+              $Z(".zoom-tip-container")[0].remove();
+            });
+          }, 2000);
+        });
+      } else if (this.options.testing) {
         let test = this.options.testing(this.currentValue);
         if (!test) {
           this.error = true;

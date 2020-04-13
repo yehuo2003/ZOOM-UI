@@ -2,11 +2,11 @@
   <div :style="{width: op ? op.width : width}" class="zoom-text-popup">
     <input
       @focus="hoverInput"
+      @input="Oninput"
       :disabled="options.disabled"
       :readonly="options.readonly"
       :placeholder="options.placeHolder"
       :value="currentValue"
-      @input="Oninput"
       v-show="isShow"
       ref="zoom-text"
       class="zoom-text zoom-area"
@@ -21,6 +21,7 @@
       :style=" options.resize ? '' : 'resize: none;' "
       :maxlength="options.maxLength"
       @blur="blurInput"
+      @keydown="handleTab($event)"
       v-model="currentValue"
       v-focus="focusStatus"
       ref="zoom-area"
@@ -59,6 +60,10 @@ export default {
         type: Number,
         default: 50
       },
+      minLength: {  //  可输入最小字符
+        type: Number,
+        default: 0
+      },
       errMsg: {
         type: String,
         default: ""
@@ -81,7 +86,9 @@ export default {
       options: {
         errMsg: "",
         maxLength: 50,
+        minLength: 0,
         placeHolder: "", // 请输入关键词
+        width: null,
         resize: false,
         readonly: false,
         disabled: false
@@ -96,7 +103,49 @@ export default {
       }
     }
   },
+  watch: {
+    value(val, oldValue) {
+      this.setCurrentValue(val);
+    }
+  },
   methods: {
+    /**
+     * 当用户按tab键切换的时候 触发验证功能
+     */
+    handleTab(e) {
+      if (e.keyCode !== 9) return;
+      this.handleBlur();
+    },
+    setCurrentValue(value) {
+      // 输入中，直接返回
+      if (this.isOnComposition && value === this.valueBeforeComposition) return;
+      this.currentValue = value;
+      if (this.isOnComposition) return;
+    },
+    /**
+     * 判断用户输入的是否是拼音, 如果是拼音输入完了返回
+     */
+    handleComposition(event) {
+      // 如果中文输入已完成
+      if (event.type === "compositionend") {
+        //  isOnComposition设置为false
+        this.isOnComposition = false;
+        this.currentValue = this.valueBeforeComposition;
+        this.valueBeforeComposition = null;
+        //触发input事件，因为input事件是在compositionend事件之后触发，这时输入未完成，不会将值传给父组件，所以需要再调一次input方法
+        this.Oninput(event);
+      } else {
+        //如果中文输入未完成
+        const text = event.target.value;
+        const lastCharacter = text[text.length - 1] || "";
+        //isOnComposition用来判断是否在输入拼音的过程中
+        this.isOnComposition = !isKorean(lastCharacter);
+        if (this.isOnComposition && event.type === "compositionstart") {
+          //  输入框中输入的值赋给valueBeforeComposition
+          this.valueBeforeComposition = text;
+        }
+      }
+    },
     reset() {
       if (!this.options.disabled) {
         this.currentValue = "";
@@ -110,7 +159,21 @@ export default {
     },
     // 验证功能
     handleBlur() {
-      if (this.options.testing) {
+      if (this.currentValue.length < this.options.minLength) {
+        // 小长度为 {min} 个字符！
+        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+        this.error = true;
+        this.$refs["err"].click();
+        this.$nextTick(() => {
+          this.$refs["err"].click();
+          setTimeout(() => {
+            this.$nextTick(() => {
+              this.error = false;
+              $Z(".zoom-tip-container")[0].remove();
+            });
+          }, 2000);
+        });
+      } else if (this.options.testing) {
         let test = this.options.testing(this.currentValue);
         if (!test) {
           this.error = true;
@@ -135,14 +198,12 @@ export default {
       }
     },
     blurInput() {
-      console.log('blurInput');
       this.$refs["zoom-area"].blur();
       this.isShow = true;
       this.focusStatus = false;
       // this.$refs["zoom-text"].focus();
     },
     hoverInput() {
-      console.log('hoverInput');
       if (!this.options.disabled && !this.options.readonly) {
         this.$refs["zoom-text"].blur();
         this.isShow = false;
@@ -151,8 +212,13 @@ export default {
       }
     },
     Oninput($event) {
-      this.currentValue = $event.target.value;
-      this.$emit("input", $event.target.value);
+      const value = $event.target.value;
+      //设置当前值
+      this.setCurrentValue(value);
+      //如果还在输入中，将不会把值传给父组件
+      if (this.isOnComposition) return;
+      //输入完成时，isOnComposition为false，将值传递给父组件
+      this.$emit("input", value);
     }
   }
 };

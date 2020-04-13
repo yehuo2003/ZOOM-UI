@@ -78,6 +78,7 @@ export default {  //  日文
 
 //   zoom-input
   'input.msg': '{type}プロパティ解析に失敗しました。「text」、「password」だけをサポートします。',
+  'input.min': '最小長さは {min} 文字！',
 
 //   zoom-logout
   'logout': '抹消する',

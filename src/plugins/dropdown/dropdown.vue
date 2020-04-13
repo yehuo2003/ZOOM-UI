@@ -24,6 +24,8 @@
       :placeholder="options.placeHolder"
       :disabled="options.disabled"
       :readonly="options.readonly"
+      :maxlength="options.maxLength"
+      :minlength="options.minLength"
       :id="id"
       :class="error ? 'error' : ''"
       type="text"
@@ -72,6 +74,7 @@
 </template>
 <script>
 import { isKorean } from "../common/common.js";
+// import dropdownContent from './dropdownContent'
 export default {
   name: "zoom-dropdown",
   props: {
@@ -107,6 +110,14 @@ export default {
         //  验证失败时候显示的信息
         type: String,
         default: ""
+      },
+      maxLength: {  //  可输入最大字符
+        type: Number,
+        default: null
+      },
+      minLength: {  //  可输入最小字符
+        type: Number,
+        default: 0
       },
       onClick: {
         //  点击事件
@@ -144,6 +155,9 @@ export default {
         errMsg: "",
         width: null,
         placeHolder: null,
+        maxLength: null,
+        minLength: 0,
+        readonly: false,
         disabled: false
       }
     };
@@ -209,8 +223,10 @@ export default {
      * 显示下拉框tips
      */
     showTip() {
-      this.$zoom.tip({
-        customComponent: 'zoom-dropdown-content',
+      debugger
+      const tipInstance = this.$zoom.tip({
+        // customComponent: dropdownContent,
+        customComponent: "zoom-dropdown-content",
         width: this.op && this.op.width || '270px',
         customProps: { // 要传入的参数
           options: this.options,
@@ -226,7 +242,27 @@ export default {
           }
         },
         target: this.$refs['downVal']	//	目标元素
-      })
+      });
+      console.log(tipInstance, 'tipInstance==');
+      tipInstance.updateTip();
+      // this.$zoom.tip({
+      //   customComponent: 'zoom-dropdown-content',
+      //   width: this.op && this.op.width || '270px',
+      //   customProps: { // 要传入的参数
+      //     options: this.options,
+      //     isChecked: this.isChecked
+      //   },
+      //   container: document.body,
+      //   duration: 1,
+      //   placements: ['bottom', 'top', 'right', 'left'],
+      //   customClass: 'zoom-custom-content zoom-dropdown',
+      //   customListeners: {
+      //     input: (val) => {
+      //       this.itemClick(val)
+      //     }
+      //   },
+      //   target: this.$refs['downVal']	//	目标元素
+      // })
     },
     /**
      * 当用户按tab键切换的时候 触发验证功能
@@ -327,7 +363,21 @@ export default {
     },
     // 验证功能
     handleBlur() {
-      if (this.options.testing) {
+      if (this.currentValue.length < this.options.minLength) {
+        // 小长度为 {min} 个字符！
+        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+        this.error = true;
+        this.$refs["err"].click();
+        this.$nextTick(() => {
+          this.$refs["err"].click();
+          setTimeout(() => {
+            this.$nextTick(() => {
+              this.error = false;
+              $Z(".zoom-tip-container")[0].remove();
+            });
+          }, 2000);
+        });
+      } else if (this.options.testing) {
         let test = this.options.testing(this.currentValue);
         if (!test) {
           this.error = true;
