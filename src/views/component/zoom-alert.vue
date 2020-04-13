@@ -10,7 +10,7 @@
     <h2>基础使用</h2>
     <h3>使用<span>this.$zoom.alert</span>可以调用弹框</h3>
     <p>点击按钮可触发弹框</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="alertClick">弹出警告框</zoom-button>
       </zoom-tab-item>
@@ -20,7 +20,7 @@
     </zoom-tabs>
     <h2>不同类型弹框</h2>
     <p>可对<span>alert</span>弹框添加标题和不同类型来实现个性化</p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="styleClick('primary')" type="primary">重点弹框</zoom-button>
         <zoom-button @click="styleClick('success')" type="success">成功弹框</zoom-button>
@@ -34,7 +34,7 @@
     </zoom-tabs>
     <h2>设置弹框存在时间</h2>
     <p>弹框存在时间默认为<span>2000</span>毫秒, 可以自定义存在时间</p>
-    <zoom-tabs class="basic" :value="timeTab" @tabChange="timeChange">
+    <zoom-tabs class="basic" :value="timeTab" @change="timeChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="timeClick('primary', 1000)" type="primary">1000毫秒后关闭</zoom-button>
         <zoom-button @click="timeClick('success', 2000)" type="success">2000毫秒后关闭</zoom-button>

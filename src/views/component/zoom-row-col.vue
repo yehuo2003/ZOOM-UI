@@ -8,7 +8,7 @@
     </div>
     <h3>基础用法</h3>
     <p>通过<span>span</span>属性来设置分栏属性, 属性值范围 <span>1 ~ 12</span> 之间，无论大屏小屏，始终按照此比例</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-row>
           <zoom-col span="12">12</zoom-col>
@@ -44,7 +44,7 @@
       超小屏<span>xs</span>
       来分别设置不同屏幕下分栏效果，值范围<span>1 ~ 12</span>
     </p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-row>
           <zoom-col xl="3" lg="4" md="6" sm="9" xs="12">不同屏自适应</zoom-col>
@@ -57,7 +57,7 @@
     </zoom-tabs>
     <h2>Flex布局</h2>
     <p>通过设置<span>flex</span>属性为true来启用<span>flex</span>布局, 并通过<span>justify</span>与<span>align</span>属性调整子元素的对齐方式</p>
-    <zoom-tabs class="basic" :value="flexTab" @tabChange="flexChange">
+    <zoom-tabs class="basic" :value="flexTab" @change="flexChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-row flex="true" justify="space-around" align="middle">
           <zoom-col span="3">第一个</zoom-col>
@@ -81,7 +81,7 @@
     </zoom-tabs>
     <h2>Order排序</h2>
     <p>在启用<span>flex</span>布局时, 可通过设置<span>Row</span>组件的<span>order</span>属性, 给带<span>Col组件</span>进行排序</p>
-    <zoom-tabs class="basic" :value="orderTab" @tabChange="orderChange">
+    <zoom-tabs class="basic" :value="orderTab" @change="orderChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-row flex="true" justify="space-around" align="middle">
           <zoom-col order="2" span="3">第一个</zoom-col>
@@ -102,7 +102,7 @@
     </zoom-tabs>
     <h2>Col列偏移</h2>
     <p>通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数</p>
-    <zoom-tabs class="basic" :value="offsetTab" @tabChange="offsetChange">
+    <zoom-tabs class="basic" :value="offsetTab" @change="offsetChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-row>
           <zoom-col span="2">第一个</zoom-col>
@@ -120,46 +120,61 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>属性</h2>
-    <div class="attribute-type">
-      <zoom-panel title="<span class='name'>flex</span><span class='type'>Boolean</span>">
-        <h3>弹性布局</h3>
-        <p>在 <span>zoom-row</span> 标签上设置属性 <span>:flex="true"</span> 可开启弹性布局, 注意在低版本IE下可能会不兼容</p>
-        <p>用法: 在标签上标记<span>:flex="true"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>justify</span><span class='type'>String</span>">
-        <h3>排列方式</h3>
-        <p>可选参数: <span>center</span> <span>end</span> <span>space-around</span></p>
-        <p>配置了flex弹性布局后, 在 <span>zoom-row</span> 标签上标记 <span>justify</span> 可以定义排列方式</p>
-        <p>用法: 在标签上标记<span>justify="属性"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>align</span><span class='type'>String</span>">
-        <h3>对齐方式</h3>
-        <p>可选参数: <span>top</span> <span>middle</span> <span>bottom</span></p>
-        <p>配置了flex弹性布局后, 在 <span>zoom-row</span> 标签上标记 <span>align</span> 可以定义对齐方式</p>
-        <p>用法: 在标签上标记 <span>align="属性"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>order</span><span class='type'>Number</span>">
-        <h3>自定义列排序</h3>
-        <p>配置了flex弹性布局后, 在 <span>zoom-col</span> 标签上标记 <span>order</span> 可以定义排序顺序</p>
-        <p>用法: 在标签上标记 <span>order="属性"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>span</span><span class='type'>Number</span>">
-        <h3>分栏属性</h3>
-        <p>可选参数: span / xl / lg / md / sm / xs</p>
-        <p>说明: 可以在不同屏幕下适配不同尺寸大小, span默认为所有情况, 范围在 <span>1 ~ 12</span> 之间</p>
-        <p>用法: span="可选参数", 默认: <span>span="12"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>offset</span><span class='type'>Number</span>">
-        <p>说明: 通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数</p>
-        <p>用法: 在标签上标记 <span>offset="col偏移数( 1 ~ 12 之间)"</span></p>
-      </zoom-panel>
-    </div>
+    <attribute :list="attributeList"></attribute>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "分栏属性",
+              name: "span / xl / lg / md / sm / xs",
+              type: "String",
+              text: "说明: 可以在不同屏幕下适配不同尺寸大小, <span>xl</span>为超大屏, <span>lg</span>为大屏, <span>md</span>为中屏, <span>sm</span>为小屏, <span>xs</span>为超小屏, span为所有屏通用, 范围在 <span>1 ~ 12</span> 之间",
+              text2: '用法: span="可选参数",在<span>zoom-col</span> 标签上，绑定属性, 默认: <span>span="12"</span>'
+            },
+            {
+              id: 2,
+              title: "弹性布局",
+              name: "flex",
+              type: "Boolean",
+              text: "在 <span>zoom-row</span> 标签上设置属性 <span>:flex=true</span> 可开启弹性布局, 注意在低版本IE下可能会不兼容",
+              text2: '用法: 在<span>zoom-row</span>标签上标记<span>:flex="true"</span>'
+            },
+            {
+              id: 3,
+              title: "排列方式",
+              name: "justify",
+              type: "String",
+              text: "配置了flex弹性布局后，可以定义排列方式。可选参数: <span>center</span> <span>end</span> <span>space-around</span>",
+              text2: '用法: 在<span>zoom-row</span> 标签上，绑定属性 <span>justify="属性"</span>'
+            },
+            {
+              id: 4,
+              title: "对齐方式",
+              name: "align",
+              type: "String",
+              text: "配置了flex弹性布局后，可以定义对齐方式。可选参数: <span>top</span> <span>middle</span> <span>bottom</span>",
+              text2: '用法: 在<span>zoom-row</span> 标签上，绑定属性 <span>align="属性"</span>'
+            },
+            {
+              id: 5,
+              title: "偏移",
+              name: "offset",
+              type: "String",
+              text: "说明: 通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数, 范围 1 ~ 12 之间",
+              text2: '用法: 在<span>zoom-col</span> 标签上，绑定属性 <span>offset="col偏移数( 1 ~ 12 之间)"</span>'
+            }
+          ]
+        }
+      ],
       opTab: 0,
       curTab: 0,
       flexTab: 0,

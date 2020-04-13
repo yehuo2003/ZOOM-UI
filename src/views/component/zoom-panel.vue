@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>使用方法</h2>
     <p>可通过<span>title</span>来自定义标题, <span>show</span>属性控制默认隐藏或显示</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-panel title="折叠面板">
           内容
@@ -20,7 +20,7 @@
     </zoom-tabs>
     <h2>自定义title标签</h2>
     <p>可对<span>title</span>绑定自定义html片段</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-panel :title="panelTitle">
           内容
@@ -94,16 +94,7 @@ export default {
           &lt;/zoom-panel&gt;`
     }
   },
-  mounted () {
-    window.scrollTo(0, 0);
-  },
   methods: {
-    panel2Num() {
-      console.log('滑块2当前值是' + this.num2);
-    },
-    panel1Num() {
-      console.log('滑块1当前值是' + this.num1);
-    },
     opChange(index) {
       this.opTab = index
     },
@@ -113,3 +104,14 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.custom-zoom-panel {
+  .basic {
+    /deep/ .content-active {
+      p {
+        line-height: 3;
+      }
+    }
+  }
+}
+</style>

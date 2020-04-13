@@ -9,7 +9,7 @@
       如果有按钮的话, 则加载在索引值的后面,  即第二列
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-grid :op="gridOp"></zoom-grid>
       </zoom-tab-item>
@@ -19,7 +19,7 @@
     </zoom-tabs>
     <h2>手动加载数据</h2>
     <p>请点击 <span>手动加载数据</span> 按钮试试</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="loadData">手动加载数据</zoom-button>
         <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
@@ -30,7 +30,7 @@
     </zoom-tabs>
     <h3>带复选功能的表格</h3>
     <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
-    <zoom-tabs class="data-drop" :value="checkTab" @tabChange="checkChange">
+    <zoom-tabs class="data-drop" :value="checkTab" @change="checkChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="loadData">手动加载数据</zoom-button>
         <zoom-grid :op="gridOp3"></zoom-grid>

@@ -2,7 +2,7 @@
   <div class="custom-zoom-slider">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-slider></zoom-slider>
       </zoom-tab-item>
@@ -13,7 +13,7 @@
     <h3>设置属性</h3>
     <p>zoom-ui提供的滑块组件，可以用v-model绑定数值，滑块显示内容为百分比0~100%, 数据可绑定:min最小值和:max最大值</p>
     <p>比如:min=0, :max="500",	那么进度条10%的时候,值就是50,以此类推</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-slider v-model="num1"></zoom-slider>
         <zoom-button @click="slider1Num">滑块1的值</zoom-button>
@@ -101,9 +101,6 @@ export default {
           &lt;/script&gt;`,
       sliderCode: `&lt;zoom-slider&gt;&lt;/zoom-slider&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     slider2Num() {

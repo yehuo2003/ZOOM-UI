@@ -2,7 +2,7 @@
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-dropdown></zoom-dropdown>
       </zoom-tab-item>
@@ -12,7 +12,7 @@
     </zoom-tabs>
     <h3>设置属性</h3>
     <p>zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         下拉单选：<zoom-dropdown :op="dropdownOp"></zoom-dropdown><br>
         下拉多选：<zoom-dropdown :op="dropdownOp2"></zoom-dropdown>
@@ -25,7 +25,7 @@
     </zoom-tabs>
     <h3>动态设置数据</h3>
     <p>有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发</p>
-    <zoom-tabs class="data-drop" :value="loadTab" @tabChange="loadChange">
+    <zoom-tabs class="data-drop" :value="loadTab" @change="loadChange">
       <zoom-tab-item :index="0" label="效果">
         默认无数据：<zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown><br>
         <zoom-button @click="handleClick">点击加载数据</zoom-button>
@@ -109,6 +109,30 @@ export default {
               type: "Boolean",
               text: "默认<span>false</span>, 为<span>true</span>则启用多选功能, 样式为复选框",
               text2: '用法: 配置op对象, 设置 <span>isChecked: "true"</span>'
+            },
+            {
+              id: 9,
+              title: "最小输入字符",
+              name: "minLength",
+              type: "Number",
+              text: "默认<span>0</span>, 设置用户可以输入的最小字符长度, 如果输入字符小于该长度会有提示",
+              text2: '用法: 配置op对象, 设置 <span>minLength: 0</span>'
+            },
+            {
+              id: 10,
+              title: "最大输入字符",
+              name: "maxLength",
+              type: "Number",
+              text: "设置用户可以输入的最大字符长度, 如果输入字符大于该长度将无法继续输入",
+              text2: '用法: 配置op对象, 设置 <span>maxLength: 50</span>'
+            },
+            {
+              id: 11,
+              title: "组件宽度",
+              name: "width",
+              type: "String",
+              text: "默认<span>270px</span>, 可自定义组件的宽度",
+              text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
             }
           ]
         },

@@ -11,7 +11,7 @@
     <h2>基础使用</h2>
     <h3>使用<span>v-tip</span>指令可以实现</h3>
     <p>查看<span>zoom-tip</span>效果</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <span v-tip="'tip内容展示'">鼠标经过</span><br>
         <span v-tip.click="'tip内容展示'">点击我</span><br>
@@ -24,7 +24,7 @@
     <h2>个性化操作</h2>
     <p>查看不同主题下的tip提示</p>
     <p>如果设置了方向, 则优先会显示指定方向</p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <div class="custom-tip">
           <p v-tip.primary.bottom="'tip提示内容'">tip 主题 primary</p>

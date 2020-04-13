@@ -2,7 +2,7 @@
   <div class="custom-zoom-numeric">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-numeric></zoom-numeric>
       </zoom-tab-item>
@@ -13,7 +13,7 @@
     <h3>设置属性</h3>
     <p>zoom-ui提供的数字组件，可以用v-model绑定数据, 但是只能绑定Number类型数据，并且进行加或减
       可以绑定op对象，并设置常用属性</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-numeric :op="numericOp"></zoom-numeric>
         禁用数字框：<zoom-numeric v-model="num" :op="numericOp2"></zoom-numeric>
@@ -81,6 +81,14 @@ export default {
               type: "Number",
               text: "默认 <span>1</span>, 可自定义每次点击加号或减号的加减幅度, 但是加减幅度不会超过最大值和最小值",
               text2: '用法: 配置op对象, 设置 <span>space: "数字"</span>'
+            },
+            {
+              id: 7,
+              title: "组件宽度",
+              name: "width",
+              type: "String",
+              text: "默认<span>270px</span>, 可自定义组件的宽度",
+              text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
             }
           ]
         },
@@ -156,9 +164,6 @@ export default {
           &lt;/script&gt;`,
       numericCode: `&lt;zoom-numeric&gt;&lt;/zoom-numeric&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

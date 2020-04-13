@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>基本用法</h2>
     <p>可以对条目自定义自定义点击事件, 在条目上绑定<span>onClick</span>回调函数</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-breadcrumb :op="op"></zoom-breadcrumb>
       </zoom-tab-item>
@@ -16,7 +16,7 @@
       通过
       <span>flag</span>属性修改面包屑导航中间的分隔符
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-breadcrumb :op="breadcrumbOp"></zoom-breadcrumb>
       </zoom-tab-item>
@@ -29,7 +29,7 @@
       通过
       <span>css</span>属性来添加自定义class
     </p>
-    <zoom-tabs class="basic" :value="sizeTab" @tabChange="sizeChange">
+    <zoom-tabs class="basic" :value="sizeTab" @change="sizeChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-breadcrumb :op="breadcrumbOp2"></zoom-breadcrumb>
       </zoom-tab-item>

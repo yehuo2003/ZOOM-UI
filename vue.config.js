@@ -18,6 +18,7 @@ function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
+
 module.exports = {
   // 基本路径
   publicPath: './', //  原先2.x是baseurl  现在publicPath代替

@@ -7,7 +7,7 @@
       可以自定义组件内容、类型、跳转链接和下划线以及是否禁用
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-link>普通文字链接</zoom-link>
       </zoom-tab-item>
@@ -16,7 +16,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>个性化设置</h2>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-link>普通文字链接</zoom-link><br>
         <zoom-link type="primary">primary 文字链接</zoom-link><br>

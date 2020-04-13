@@ -11,7 +11,7 @@
     <p>prompt提示框是以Promise形式调用, 返回两个回调<span>.then()</span>接受确认按钮事件, <span>.catch()</span>接受取消按钮事件</p>
     <p>回调函数中提供一个参数是输入框的值</p>
     <p>请打开控制台看效果</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="promptClick">提示框</zoom-button>
       </zoom-tab-item>
@@ -21,7 +21,7 @@
     </zoom-tabs>
     <h2>个性化操作</h2>
     <p>可对<span>prompt</span>提示框传入对象来配置不同属性来实现个性化</p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="styleClick('primary')" type="primary">重点提示框</zoom-button>
         <zoom-button @click="styleClick('success')" type="success">成功提示框</zoom-button>

@@ -8,7 +8,7 @@
       此外还提供了单文件上传和多文件上传，还可以自定义单个文件上传的大小和类型
     </div>
     <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-file-upload :op="fileOp"></zoom-file-upload>
       </zoom-tab-item>

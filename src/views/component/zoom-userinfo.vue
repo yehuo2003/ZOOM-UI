@@ -7,7 +7,7 @@
       并且可以配置图片作为用户头像
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-userinfo></zoom-userinfo>
       </zoom-tab-item>
@@ -17,7 +17,7 @@
     </zoom-tabs>
     <h2>个性化设置</h2>
     <p>可对用户信息组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-userinfo  ref="user" :op="userinfoOp">
           <ul>

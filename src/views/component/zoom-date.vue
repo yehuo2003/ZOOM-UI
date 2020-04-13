@@ -2,7 +2,7 @@
   <div class="custom-zoom-date">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-date></zoom-date>
       </zoom-tab-item>
@@ -14,7 +14,7 @@
     <p>zoom-ui提供的日期选择组件，组件可以用v-model绑定,默认显示当前时间, 点击输入框,弹出日期选择框,
       点击年份, 可选择前后六年时间,点击月份 可在1~12月份之间选择,也可以点击左右箭头切换。可以绑定op对象，并设置常用属性</p>
     <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-date :op="dateOp"></zoom-date><br>
         禁用日期选择：<br>
@@ -147,9 +147,6 @@ export default {
           &lt;/script&gt;`,
       dateCode: `&lt;zoom-date&gt;&lt;/zoom-date&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>基本用法</h2>
     <p>可以在组件标签中自定义内容</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-card>
           <h1>自定义内容</h1>
@@ -19,7 +19,7 @@
       <span>border="true"</span>开启边框,
       <span>hover-shadow="true"</span>鼠标经过时阴影显示
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-card border="true" hover-shadow="true">
           <h1>自定义内容</h1>
@@ -100,7 +100,6 @@ export default {
 .custom-zoom-card {
   .basic {
     /deep/ .content-active {
-      min-height: 250px;
       overflow: auto;
     }
   }

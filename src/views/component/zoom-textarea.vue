@@ -2,7 +2,7 @@
   <div class="custom-zoom-textarea">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-textarea></zoom-textarea>
       </zoom-tab-item>
@@ -13,7 +13,7 @@
     <h3>设置属性</h3>
     <p>zoom-ui提供的文本域组件，可以用v-model绑定数据，并且可以看到已经输入字节/最大字节。默认宽度为父元素100%，高度用户可自由拖动。可以绑定op对象，并设置常用属性</p>
     <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-textarea :op="textareaOp"></zoom-textarea><br>
         禁用文本域：<br>
@@ -66,6 +66,30 @@ export default {
               type: "Boolean",
               text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
               text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
+            },
+            {
+              id: 5,
+              title: "最小输入字符",
+              name: "minLength",
+              type: "Number",
+              text: "默认<span>0</span>, 设置用户可以输入的最小字符长度, 如果输入字符小于该长度会有提示",
+              text2: '用法: 配置op对象, 设置 <span>minLength: 0</span>'
+            },
+            {
+              id: 6,
+              title: "最大输入字符",
+              name: "maxLength",
+              type: "Number",
+              text: "默认<span>50</span>, 设置用户可以输入的最大字符长度, 如果输入字符大于该长度将无法继续输入",
+              text2: '用法: 配置op对象, 设置 <span>maxLength: 50</span>'
+            },
+            {
+              id: 7,
+              title: "组件宽度",
+              name: "width",
+              type: "String",
+              text: "默认<span>270px</span>, 可自定义组件的宽度",
+              text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
             }
           ]
         },
@@ -130,7 +154,7 @@ export default {
                       } else {
                         return true;
                       }
-                    },
+                    }
                   }
                 }
               }
@@ -138,9 +162,6 @@ export default {
           &lt;/script&gt;`,
       textareaCode: `&lt;zoom-textarea&gt;&lt;/zoom-textarea&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

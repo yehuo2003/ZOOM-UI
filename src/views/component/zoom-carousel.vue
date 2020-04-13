@@ -7,7 +7,7 @@
       图片下方还提供了图片标题，和提示灯，鼠标经过提示灯也可以切换图片。
     </div>
     <h2>用法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-carousel :op="op"></zoom-carousel>
       </zoom-tab-item>

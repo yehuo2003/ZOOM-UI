@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>基本用法</h2>
     <p>基础按钮的用法</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button
           v-for="item of btnList"
@@ -46,7 +46,7 @@
       通过
       <span>reset-time</span>属性设置按钮防抖时间, 单位为毫秒, 默认 <span>1000</span> 毫秒
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button>正常按钮</zoom-button>
         <zoom-button reset-time="5000">禁用5秒</zoom-button>
@@ -59,7 +59,7 @@
     <!-- 大小 -->
     <h2>按钮大小</h2>
     <p>可指定按钮大小, 属性: size</p>
-    <zoom-tabs class="basic" :value="sizeTab" @tabChange="sizeChange">
+    <zoom-tabs class="basic" :value="sizeTab" @change="sizeChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button type="primary" size="mini">迷你</zoom-button>
         <zoom-button type="success" size="small">小按钮</zoom-button>
@@ -74,7 +74,7 @@
     <!-- op -->
     <h2>自定义配置属性</h2>
     <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如type和按钮禁用等</p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button :op="op">按钮1</zoom-button>
         <br />

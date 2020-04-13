@@ -9,7 +9,7 @@
     </div>
     <h2>基础使用</h2>
     <p>点击切换对应国际化后会刷新页面</p>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-internationalisation></zoom-internationalisation>
       </zoom-tab-item>
@@ -19,7 +19,7 @@
     </zoom-tabs>
     <h2>个性化设置</h2>
     <p>可对国际化组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
       </zoom-tab-item>

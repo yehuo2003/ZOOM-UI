@@ -6,7 +6,7 @@
       使用canvas绘制, 有5条干扰线和50个干扰点, 可自定义随机数范围和id
     </div>
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-testing></zoom-testing>
       </zoom-tab-item>
@@ -18,7 +18,7 @@
     <p>可自定义随机数范围, 也可以通过
       <span>pool</span>属性来定义验证码内容为汉字
     </p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-testing :op="testingOp"></zoom-testing>
       </zoom-tab-item>
@@ -107,9 +107,6 @@ export default {
           &lt;/script&gt;`,
       testingCode: `&lt;zoom-testing&gt;&lt;/zoom-testing&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

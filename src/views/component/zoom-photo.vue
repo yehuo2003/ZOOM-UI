@@ -8,7 +8,7 @@
       还可以自定义放大倍数, 和放大镜样式和宽度
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <div style="width: 500px;">
           <zoom-photo :op="op"></zoom-photo>
@@ -20,7 +20,7 @@
     </zoom-tabs>
     <h2>内部显示放大镜</h2>
     <p>通过op对象里的属性<span>outShow</span>来决定放大镜在内部还是外部</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-photo :op="photoOp"></zoom-photo>
       </zoom-tab-item>

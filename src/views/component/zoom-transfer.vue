@@ -8,7 +8,7 @@
       此外组件还自带了搜索功能, 方便用户快速检索数据
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-transfer :op="transferOp"></zoom-transfer>
       </zoom-tab-item>

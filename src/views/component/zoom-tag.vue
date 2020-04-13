@@ -7,7 +7,7 @@
       可配置动态删除或新增标签
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-tag :op="op"></zoom-tag>
       </zoom-tab-item>
@@ -17,7 +17,7 @@
     </zoom-tabs>
     <h2>个性化设置</h2>
     <p>可以在<span>op</span>对象进行个性化设置, 进行动态新增或删除标签</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-tag :op="tagOp"></zoom-tag>
       </zoom-tab-item>

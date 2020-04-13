@@ -13,7 +13,7 @@
       还可以通过 <span>color</span> 改变loading的颜色<br>
       <span>full</span>属性可以设置全屏遮罩层
     </p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="openLoading">默认loading</zoom-button> <span>3秒后消失</span><br>
         <zoom-button @click="customLoading">红色loading</zoom-button> <span>5秒后消失</span>

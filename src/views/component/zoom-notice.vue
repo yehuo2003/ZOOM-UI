@@ -8,7 +8,7 @@
       滚动时候当鼠标经过可以暂停滚动, 可关闭此效果
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-notice>这是一段滚动文字内容</zoom-notice>
       </zoom-tab-item>
@@ -18,7 +18,7 @@
     </zoom-tabs>
     <h2>设置纵向滚动</h2>
     <p>可以通过组件的<span>vertical</span>属性修改组件为纵向滚动条</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-notice :op="noticeOp">这是一段滚动文字内容</zoom-notice>
       </zoom-tab-item>

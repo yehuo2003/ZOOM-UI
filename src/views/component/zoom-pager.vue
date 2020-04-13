@@ -8,7 +8,7 @@
       分页组件还提供了多个点击事件, 来方便开发者使用
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-pager :op="pagerOp"></zoom-pager>
       </zoom-tab-item>
@@ -18,7 +18,7 @@
     </zoom-tabs>
     <h2>迷你版</h2>
     <p>可对<span>title</span>绑定自定义html片段</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-pager :op="miniOp"></zoom-pager>
       </zoom-tab-item>

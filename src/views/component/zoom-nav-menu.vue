@@ -4,7 +4,7 @@
     <h2>基本用法</h2>
     <h3>基础按钮的用法</h3>
     <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-nav-menu :op="op"></zoom-nav-menu>
       </zoom-tab-item>
@@ -18,7 +18,7 @@
       通过设置
       <span>hideTree</span>属性来隐藏左边迷你导航菜单
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-nav-menu :op="navMenuOp"></zoom-nav-menu>
       </zoom-tab-item>
@@ -94,6 +94,14 @@ export default {
               name: 'hideTree',
               type: 'Boolean',
               text: '左侧迷你导航菜单, 默认显示,配置<span>hideTree</span>设置属性为<span>true</span>可隐藏'
+            },
+            {
+              id: 6,
+              title: '自定义主题',
+              name: 'theme',
+              type: 'String',
+              text: '自定义组件主题颜色,可选参数: <span>primary</span>, <span>warning</span>, <span>info</span>, <span>success</span>, <span>danger</span>, 默认<span>success</span>',
+              text2: '用法: 配置op对象, 设置 <span>theme: 属性</span>'
             }
           ]
         },

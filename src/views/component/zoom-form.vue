@@ -7,7 +7,7 @@
     </div>
     <h2>使用方法</h2>
     <p>如果表单中只有一个按钮, 默认可以用回车键提交 或者点击会触发默认事件, 如果不想要的话就在zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-form @submit.prevent="false" label-width="100px">
           <zoom-form-item label="姓名">
@@ -27,7 +27,7 @@
     <p>在<span>zoom-form</span>标签上加 <span>:inline="true"</span> 可以将条目变为行内元素</p>
     <p>在<span>zoom-form-item</span>标签上加 <span>:require="true"</span> 则为必填项, 可配合<span>valid</span>函数做校验</p>
     <p>zoom-ui提供的<span>reset</span>函数可以重置表单内所有表单组件</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-form ref="form" label-width="120px">
           <zoom-form-item inline="true" :require="true" label="名字">
@@ -58,8 +58,8 @@
             <zoom-textarea :op="inputOp"></zoom-textarea>
           </zoom-form-item>
           <zoom-form-item style="text-align: center">
-            <zoom-button @click="testingClick" type="primary">验证表单</zoom-button>
-            <zoom-button @click="resetClick">重置表单</zoom-button>
+            <span @click="testingClick" class="zoom-btn primary">验证表单</span>
+            <span @click="resetClick" class="zoom-btn">重置表单</span>
           </zoom-form-item>
         </zoom-form>
       </zoom-tab-item>

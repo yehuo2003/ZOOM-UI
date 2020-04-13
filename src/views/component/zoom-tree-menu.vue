@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>基本用法</h2>
     <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-tree-menu :op="op"></zoom-tree-menu>
       </zoom-tab-item>
@@ -17,7 +17,7 @@
       通过设置
       <span>hideTree</span>属性来隐藏左边迷你导航菜单
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-tree-menu :op="threeMenuOp"></zoom-tree-menu>
       </zoom-tab-item>

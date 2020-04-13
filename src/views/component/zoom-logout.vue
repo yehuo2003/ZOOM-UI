@@ -7,7 +7,7 @@
       点击注销后清空cookie缓存, 并刷新页面, 如果有指定的url则进行跳转
     </div>
     <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-logout></zoom-logout>
       </zoom-tab-item>
@@ -17,7 +17,7 @@
     </zoom-tabs>
     <h2>个性化设置</h2>
     <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-logout :op="logoutOp"></zoom-logout>
       </zoom-tab-item>

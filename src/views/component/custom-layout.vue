@@ -8,10 +8,11 @@
       <span>slot="aside"</span>、
       <span>slot="main"</span>、
       <span>slot="footer"</span>，
-      开发者可以自由布局定义, 还可以嵌套使用
+      开发者可以自由布局定义, 还可以嵌套使用<br>
+      组件默认每次路由变化后, 会自动将滚动条返回顶部, 可手动关闭该功能
     </div>
     <h3>经典布局</h3>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-layout style="height: 300px;">
           <div slot="header">header</div>
@@ -24,7 +25,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>简单布局</h2>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-layout style="height: 300px;">
           <div slot="aside">aside</div>
@@ -36,7 +37,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>圣杯布局</h2>
-    <zoom-tabs class="basic" :value="flexTab" @tabChange="flexChange">
+    <zoom-tabs class="basic" :value="flexTab" @change="flexChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-layout style="height: 300px;">
           <div slot="header">header</div>
@@ -49,7 +50,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>时尚布局</h2>
-    <zoom-tabs class="basic" :value="orderTab" @tabChange="orderChange">
+    <zoom-tabs class="basic" :value="orderTab" @change="orderChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-layout style="height: 300px;">
           <div slot="header">header</div>
@@ -63,7 +64,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>嵌套用法</h2>
-    <zoom-tabs class="basic" :value="offsetTab" @tabChange="offsetChange">
+    <zoom-tabs class="basic" :value="offsetTab" @change="offsetChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-layout style="height: 300px;">
           <div slot="header">header</div>
@@ -86,29 +87,67 @@
       来修改，主体部分将会自动计算
     </div>
     <h2>属性</h2>
-    <div class="attribute-type">
-      <zoom-panel title="<span class='name'>headerHeight</span><span class='type'>Number</span>">
-        <h3>头部高度</h3>
-        <p>默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性 <span>headerHeight="60"</span> 来自定义头部高度</p>
-        <p>用法: 在标签上标记<span>headerHeight="高度"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>footerHeight</span><span class='type'>Number</span>">
-        <h3>尾部高度</h3>
-        <p>默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性 <span>footerHeight="60"</span> 来自定义尾部高度</p>
-        <p>用法: 在标签上标记<span>footerHeight="高度"</span></p>
-      </zoom-panel>
-      <zoom-panel title="<span class='name'>asideWidth</span><span class='type'>Number</span>">
-        <h3>侧边栏宽度</h3>
-        <p>默认为 <span>200px</span> 可通过<span>zoom-layout</span> 标签上设置属性 <span>asideWidth="200"</span> 来自定义侧边栏宽度</p>
-        <p>用法: 在标签上标记<span>asideWidth="宽度"</span></p>
-      </zoom-panel>
-    </div>
+    <attribute :list="attributeList"></attribute>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      attributeList: [
+        {
+          id: 1,
+          title: "属性",
+          content: [
+            {
+              id: 1,
+              title: "头部高度",
+              name: "headerHeight",
+              type: "Number",
+              text: "默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
+              text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>headerHeight=60</span>'
+            },
+            {
+              id: 2,
+              title: "尾部高度",
+              name: "footerHeight",
+              type: "Number",
+              text: "默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
+              text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>footerHeight=60</span>'
+            },
+            {
+              id: 3,
+              title: "侧边栏宽度",
+              name: "asideWidth",
+              type: "Number",
+              text: "默认为 <span>200px</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
+              text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>asideWidth=200</span>'
+            },
+            {
+              id: 4,
+              title: "关闭返回顶部",
+              name: "stopTop",
+              type: "Boolean",
+              text: "默认为 <span>false</span>, 每次页面改变会返回顶部, 为<span>true</span>禁止",
+              text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>stopTop=true</span>'
+            }
+          ]
+        },
+        {
+          id: 2,
+          title: '方法',
+          content: [
+            {
+              id: 1,
+              title: "返回顶部",
+              name: "goTop",
+              type: "Function",
+              text: "调用该方法可以使zoom-layout布局元素滚动条返回顶部, 即使设置了<span>stopTop</span>属性也可以生效",
+              text2: '用法: 绑定ref属性, 调用方法<span>this.$refs[绑定属性.goTop()</span>'
+            }
+          ]
+        }
+      ],
       opTab: 0,
       curTab: 0,
       flexTab: 0,

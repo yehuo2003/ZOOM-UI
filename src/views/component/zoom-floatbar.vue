@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <h2>基本用法</h2>
     <h3>请看屏幕右边</h3>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-floatbar :op="op"></zoom-floatbar>
       </zoom-tab-item>
@@ -15,7 +15,7 @@
     <p>
       如果op属性里未配置data属性, 则启用自定义模式
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-floatbar :op="floatBarOp">
           <a>自定义内容</a>

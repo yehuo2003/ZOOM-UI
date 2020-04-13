@@ -9,7 +9,7 @@
     </div>
     <h2>基础使用</h2>
     <p>可以按键盘左键或者右键切换上下张</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-gallery :op="op"></zoom-gallery>
       </zoom-tab-item>

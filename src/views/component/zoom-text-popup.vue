@@ -2,7 +2,7 @@
   <div class="custom-zoom-text-popup">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-text-popup></zoom-text-popup>
       </zoom-tab-item>
@@ -13,7 +13,7 @@
     <h3>设置属性</h3>
     <p>zoom-ui提供的弹出编辑组件，可以用v-model绑定数据，默认展示的是输入框，点击编辑状态成文本域，方便用户输入。可以绑定op对象，并设置常用属性</p>
     <p>禁用状态下，无法拖动和编辑</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-text-popup rows="10" :op="textPopupOp"></zoom-text-popup><br>
         禁用文本域：<br>
@@ -80,8 +80,16 @@ export default {
               title: "最大输入字符",
               name: "maxLength",
               type: "Number",
-              text: "默认 <span>50</span>, 可以自定义最大输入长度",
+              text: "设置用户可以输入的最大字符长度, 如果输入字符大于该长度将无法继续输入",
               text2: '用法: 配置op对象, 设置 <span>maxLength: 50</span>'
+            },
+            {
+              id: 7,
+              title: "最小输入字符",
+              name: "minLength",
+              type: "Number",
+              text: "默认<span>0</span>, 设置用户可以输入的最小字符长度, 如果输入字符小于该长度会有提示",
+              text2: '用法: 配置op对象, 设置 <span>minLength: 0</span>'
             }
           ]
         }
@@ -123,9 +131,6 @@ export default {
           &lt;/script&gt;`,
       popupCode: `&lt;zoom-text-popup&gt;&lt;/zoom-text-popup&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

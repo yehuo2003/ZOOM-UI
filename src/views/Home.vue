@@ -22,9 +22,10 @@
         <div v-for="item of 10" :key="item"></div>
       </div>
     </div>
-    <div class="go-to">
+    <div class="go-to-btn go-to-btn-primary go-to-btn-ghost go-to-btn-shine">
       <router-link to="/develop">
-        进入
+        <!-- 进入 -->
+          进入
       </router-link>
     </div>
   </div>
@@ -36,6 +37,75 @@ export default {
   components: {}
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 @import "./home.css";
+.go-to-btn {
+  --hue: 190;
+  position: absolute;
+  bottom: 10%;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: hsl(var(--hue), 100%, 41%);
+  border: 1px solid hsl(var(--hue), 100%, 41%);
+  outline: transparent;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: 0.25s;
+  a {
+    color: #eee;
+    font-weight: bold;
+  }
+  &:hover {
+    background: hsl(var(--hue), 100%, 31%);
+  }
+
+  &-primary {
+    --hue: 187;
+  }
+
+  &-ghost {
+    color: hsl(var(--hue), 100%, 41%);
+    background-color: transparent;
+    border-color: hsl(var(--hue), 100%, 41%);
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  &-shine {
+    color: white;
+
+    &::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        hsla(var(--hue), 100%, 41%, 0.5),
+        transparent
+      );
+      transform: translateX(-100%);
+      transition: 0.6s;
+    }
+
+    &:hover {
+      background: transparent;
+      box-shadow: 0 0 20px 10px hsla(var(--hue), 100%, 41%, 0.5);
+    }
+
+    &:hover::before {
+      transform: translateX(100%);
+    }
+  }
+}
 </style>

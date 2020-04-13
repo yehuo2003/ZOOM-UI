@@ -9,7 +9,7 @@
     </div>
     <h2>基础使用</h2>
     <p>通过参数<span>progress</span>可以动态绑定进度条的状态</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-progress :progress="progressNumber"></zoom-progress>
         <zoom-progress :op="progressOp"></zoom-progress>
@@ -20,7 +20,7 @@
     </zoom-tabs>
     <h2>自定义状态</h2>
     <p>通过参数<span>status</span>可以动态绑定进度条的状态</p>
-    <zoom-tabs class="basic" :value="statusTab" @tabChange="statusChange">
+    <zoom-tabs class="basic" :value="statusTab" @change="statusChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-progress :progress="progressNumber"></zoom-progress><br>
         <zoom-progress :progress="progressNumber" status="danger"></zoom-progress><br>
@@ -35,7 +35,7 @@
     <h2>个性化设置</h2>
     <p>进度条的值和状态均为动态绑定</p>
     <p>点击下面按钮查看效果</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-progress :progress="progressVal" :status="status"></zoom-progress>
         <zoom-button @click="addProgress">点我试试</zoom-button>
@@ -242,3 +242,17 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.custom-zoom-progress {
+  .basic {
+    /deep/ .content-active {
+      p {
+        line-height: 1.2;
+      }
+      .zoom-progress-container {
+        width: 90%;
+      }
+    }
+  }
+}
+</style>

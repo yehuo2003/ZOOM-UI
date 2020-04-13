@@ -7,10 +7,10 @@
       可以配置自定义的标签页title和内容<br>
       默认横排显示, 可以切换竖排显示, 靠左或者靠右显示
     </div>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
 
-        <zoom-tabs :value="curTab2" @tabChange="tabChange2">
+        <zoom-tabs :value="curTab2" @change="tabChange2">
           <zoom-tab-item :index="0" :label="'Tab1'">
             <div>
               Tab1的内容
@@ -39,10 +39,10 @@
       <span>position="left"</span>,
       <span>right</span>就是靠右
     </p>
-    <zoom-tabs class="basic" :value="reseTab" @tabChange="reseChange">
+    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
       <zoom-tab-item :index="0" label="效果">
 
-        <zoom-tabs position="left" :value="curTab2" @tabChange="tabChange2">
+        <zoom-tabs position="left" :value="curTab2" @change="tabChange2">
           <zoom-tab-item :index="0" :label="'Tab1'">
             <div>
               Tab1的内容
@@ -130,7 +130,7 @@ export default {
               name: "tabChange",
               type: "Function",
               text: "切换Tab页时候就会触发该事件, 接受参数val为当前索引",
-              text2: '用法: 在组件Tab标签上绑定<span>@tabChange="自定义监听事件"</span>来监听切换事件'
+              text2: '用法: 在组件Tab标签上绑定<span>@change="自定义监听事件"</span>来监听切换事件'
             }
           ]
         }
@@ -141,7 +141,7 @@ export default {
       tabsCustom:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;zoom-tabs position="left" :value="curTab" @tabChange="tabChange"&gt;
+              &lt;zoom-tabs position="left" :value="curTab" @change="tabChange"&gt;
                 &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
                   &lt;div&gt;
                     Tab1的内容
@@ -177,7 +177,7 @@ export default {
       tabsCode:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;zoom-tabs :value="curTab" @tabChange="tabChange"&gt;
+              &lt;zoom-tabs :value="curTab" @change="tabChange"&gt;
                 &lt;zoom-tab-item :index="0" :label="'Tab1'"&gt;
                   &lt;div&gt;
                     Tab1的内容

@@ -10,7 +10,7 @@
     <h2>基础使用</h2>
     <h3>使用<span>this.$zoom.popup</span>可以调用弹框</h3>
     <p>点击按钮可触发弹框</p>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="popupClick">弹出警告框</zoom-button>
       </zoom-tab-item>
@@ -20,7 +20,7 @@
     </zoom-tabs>
     <h2>个性化操作</h2>
     <p>可对<span>popup</span>弹框添加标题和不同类型等属性来实现个性化</p>
-    <zoom-tabs class="basic" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="styleClick('primary')" type="primary">重点弹框</zoom-button>
         <zoom-button @click="styleClick('success')" type="success">成功弹框</zoom-button>

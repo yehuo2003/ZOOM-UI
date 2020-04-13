@@ -2,7 +2,7 @@
   <div class="custom-zoom-captcha">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-captcha :op="captchaOp2"></zoom-captcha>
       </zoom-tab-item>
@@ -13,7 +13,7 @@
     <h3>设置属性</h3>
     <p>zoom-ui提供的滑块验证码，使用canvas绘制，默认隐藏图片，鼠标经过时候显示。可以绑定op对象，并设置常用属性</p>
     <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs :value="opTab" @tabChange="opChange">
+    <zoom-tabs :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-captcha :op="captchaOp"></zoom-captcha>
         禁用状态
@@ -137,9 +137,6 @@ export default {
           &lt;/script&gt;`,
       captchaCode: `&lt;zoom-captcha&gt;&lt;/zoom-captcha&gt;`
     }
-  },
-  mounted () {
-    window.scrollTo(0, 0);
   },
   methods: {
     opChange(index) {

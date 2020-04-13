@@ -71,6 +71,7 @@ export default new Vuex.Store({
         {title: 'Tag标签', url: '#/component/zoom-tag'},
         {title: 'Link文字链接', url: '#/component/zoom-link'},
         {title: 'Progress进度条', url: '#/component/zoom-progress'},
+        {title: 'colorPicker取色器', url: '#/component/zoom-color-picker'},
         {title: 'Gallery画廊幻灯片', url: '#/component/zoom-gallery'}
       ]}
     ],

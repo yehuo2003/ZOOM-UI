@@ -2,7 +2,7 @@
   <div class="custom-zoom-checkbox">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-checkbox :op="op"></zoom-checkbox>
       </zoom-tab-item>
@@ -15,7 +15,7 @@
       复选框组件需要绑定自定义<span>op</span>对象, <span>op</span>对象中定义<span>name</span>, 和<span>data</span>, 并且可以通过v-model绑定数据
     </div>
     <p>禁用状态下，开启或关闭开关</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <span>爱好</span><br>
         <zoom-checkbox v-model="fondness" :op="checkboxOp"></zoom-checkbox>

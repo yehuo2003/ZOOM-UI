@@ -51,6 +51,7 @@ export default {
     { path: '/component/zoom-link', component: () => import('../views/component/zoom-link.vue') },  //  link
     { path: '/component/zoom-progress', component: () => import('../views/component/zoom-progress.vue') },  //  progress
     { path: '/component/zoom-gallery', component: () => import('../views/component/zoom-gallery.vue') },  //  gallery
+    { path: '/component/zoom-color-picker', component: () => import('../views/component/zoom-color-picker.vue') },  //  color-picker
     { path: '/test', component: () => import('../views/test.vue') },
   ]
 }

@@ -9,7 +9,7 @@
         <zoom-button @click="visibility=false">关闭</zoom-button>
       </div>
     </zoom-dialog-box>
-    <zoom-tabs class="basic" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button @click="handleClick">显示对话框</zoom-button>
       </zoom-tab-item>

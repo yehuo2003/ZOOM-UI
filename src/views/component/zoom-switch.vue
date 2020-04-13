@@ -2,7 +2,7 @@
   <div class="custom-zoom-switch">
     <!-- 普通 -->
     <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @tabChange="tabChange">
+    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-switch open="开启" close="关闭"></zoom-switch>
       </zoom-tab-item>
@@ -17,7 +17,7 @@
       即zoom-ui对标签属性没有做双向绑定(v-model)除外。
     </div>
     <p>禁用状态下，开启或关闭开关</p>
-    <zoom-tabs class="data-drop" :value="opTab" @tabChange="opChange">
+    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-switch :op="switchOp"></zoom-switch>
         禁用开关:
