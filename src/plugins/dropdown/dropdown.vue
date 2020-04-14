@@ -139,6 +139,7 @@ export default {
         this.value === undefined || this.value === null ? "" : this.value,
       error: false,
       errMsg: null,
+      tipInstance: null,
       isOnComposition: false,
       valueBeforeComposition: null,
       list: [], //  多选时候用
@@ -175,6 +176,9 @@ export default {
     }
   },
   created() {
+    if (!this.value) {
+      this.currentValue = '';
+    }
     if (this.op) {
       if (this.op.isChecked) {
         this.isChecked = this.op.isChecked;
@@ -202,6 +206,9 @@ export default {
   },
   watch: {
     value(val, oldValue) {
+      if (!val) {
+        return
+      }
       /**
        * 如果是多选的话, 并且用户绑定了v-model, 这里进行逻辑转换
        */
@@ -218,12 +225,16 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    if (this.tipInstance) {
+      this.tipInstance.destroy();
+    }
+  },
   methods: {
     /**
      * 显示下拉框tips
      */
     showTip() {
-      debugger
       const tipInstance = this.$zoom.tip({
         // customComponent: dropdownContent,
         customComponent: "zoom-dropdown-content",
@@ -232,37 +243,18 @@ export default {
           options: this.options,
           isChecked: this.isChecked
         },
-        container: document.body,
         duration: 1,
         placements: ['bottom', 'top', 'right', 'left'],
         customClass: 'zoom-custom-content zoom-dropdown',
         customListeners: {
-          input: (val) => {
+          input: val => {
             this.itemClick(val)
           }
         },
         target: this.$refs['downVal']	//	目标元素
       });
-      console.log(tipInstance, 'tipInstance==');
       tipInstance.updateTip();
-      // this.$zoom.tip({
-      //   customComponent: 'zoom-dropdown-content',
-      //   width: this.op && this.op.width || '270px',
-      //   customProps: { // 要传入的参数
-      //     options: this.options,
-      //     isChecked: this.isChecked
-      //   },
-      //   container: document.body,
-      //   duration: 1,
-      //   placements: ['bottom', 'top', 'right', 'left'],
-      //   customClass: 'zoom-custom-content zoom-dropdown',
-      //   customListeners: {
-      //     input: (val) => {
-      //       this.itemClick(val)
-      //     }
-      //   },
-      //   target: this.$refs['downVal']	//	目标元素
-      // })
+      this.tipInstance = tipInstance;
     },
     /**
      * 当用户按tab键切换的时候 触发验证功能
@@ -301,7 +293,13 @@ export default {
         }
       }
     },
+    /**
+     * 加载数据 如果有下拉框数据就先销毁
+     */
     load(data) {
+      if (this.tipInstance) {
+        this.tipInstance.destroy();
+      }
       if (data && data.length && data instanceof Array) {
         if (this.op && this.op.isChecked) {
           this.list = data;
@@ -312,6 +310,7 @@ export default {
         this.currentValue = data.text;
         this.$refs["downVal"].value = data.value;
       }
+      console.log(this.options.data, '=this.options.data');
     },
     handleChild(e) {
       this.$emit(e);

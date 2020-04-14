@@ -1,6 +1,5 @@
 <template>
   <div class="zoom-selector">
-    <div class="show-warpper" @click="close"></div>
     <div class="selector-content">
       <ul class="zoom-poplist">
         <li
@@ -36,12 +35,6 @@ export default {
     }
   },
   methods: {
-    close() {
-      if (this.options && this.options.disabled) {
-        return;
-      }
-      // this.showDown = !this.showDown;
-    },
     itemClick(e) {
       this.$emit("input", e);
     },

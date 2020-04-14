@@ -271,4 +271,9 @@ export default {
             transform: translateY(0%);
   }
 }
+@media (min-width:300px) and (max-width:680px) {
+  .zoom-nav ul li.zoom-list {
+    display: none;
+  }
+}
 </style>
