@@ -125,4 +125,51 @@ export default {
     }
   }
 }
+@media (min-width:300px) and (max-width:500px) {
+  #app {
+    font-size: 10px !important;
+    h1 {
+      font-size: 25px !important;
+    }
+    .home-layout>.zoom-aside {
+      width: 0 !important;
+    }
+    .home-layout>.zoom-footer,
+    .home-layout>.zoom-main {
+      left: 0 !important;
+      padding: 0 10px;
+    }
+    .home-layout>.zoom-main>.zoom-layout>.zoom-header {
+      height: 35px !important;
+      .component-header {
+        font-size: 20px !important;
+        padding: 0 10px;
+      }
+    }
+    .home-layout>.zoom-main>.zoom-layout>.zoom-main {
+      top: 35px !important;
+      padding: 0 15px;
+      margin-bottom: 10px;
+      p {
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+      h3 {
+
+      }
+      h2 {
+        margin: 10px 0;
+      }
+      .zoom-panel {
+        padding: 0;
+      }
+    }
+    .zoom-nav ul li.zoom-list {
+      display: none;
+    }
+    .header-right {
+      display: none;
+    }
+  }
+}
 </style>

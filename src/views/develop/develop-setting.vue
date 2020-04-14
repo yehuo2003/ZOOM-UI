@@ -31,7 +31,6 @@
     <custom-code :html="vue2"></custom-code>
     <p>查看 Vue 版本: </p>
     <custom-code :html="vueVersions"></custom-code>
-    <zoom-button @click="nextClick">自定义主题</zoom-button>
   </div>
 </template>
 <script>
@@ -53,11 +52,6 @@ export default {
       vue2: 'npm install -g vue-cli',
       vueVersions: 'vue -V',
     };
-  },
-  methods: {
-    nextClick() {
-      this.$router.push('/component/custom-color');
-    }
   }
 };
 </script>

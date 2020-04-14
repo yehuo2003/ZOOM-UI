@@ -160,7 +160,7 @@ export default {
       border-bottom: 1px solid #eaecef;
     }
     h3 {
-      margin-bottom: 10px;
+      margin: 10px 0;
     }
     p {
       font-size: 16px;
