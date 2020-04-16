@@ -12,11 +12,13 @@
     </div>
     <ul v-else>
       <li v-for="(item, index) of toolList" :key="index" @click="handleClick(item, index)">
-        <span v-show="item.icon" :class="item.icon" class="zoom-icon"></span>
         <a
           :href="item.url ? item.url : 'javascript: void(0);' "
           :target="item.target === 'blank' ? '_blank' : '' "
-        >{{item.text}}</a>
+        >
+          <span v-show="item.icon" :class="item.icon" class="zoom-icon"></span>
+          {{item.text}}
+        </a>
       </li>
     </ul>
   </div>
@@ -137,6 +139,7 @@ export default {
 }
 .zoom-float-suspended ul li span.zoom-icon {
   font-size: 25px;
+  display: block;
 }
 .zoom-float-suspended ul li a {
   display: inline-block;

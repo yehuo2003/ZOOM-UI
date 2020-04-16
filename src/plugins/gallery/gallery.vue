@@ -1,18 +1,20 @@
 <template>
   <div class="zoom-gallery">
-    <div
-      v-show="photos.length"
-      :style=" zoom ? 'position: absolute;' : 'background-image: url(' + photos[activePhoto] + ');' "
-      class="active-photo"
-    >
-      <button
-        v-for="item of ['gallery-prev', 'gallery-next']"
-        :key="item"
-        @click="clickPhoto(item)"
-        :class="item"
-      ></button>
+    <div class="gallery-container">
+      <div
+        v-show="photos.length"
+        :style=" zoom ? 'position: absolute;' : 'background-image: url(' + photos[activePhoto] + ');' "
+        class="active-photo"
+      >
+        <button
+          v-for="item of ['gallery-prev', 'gallery-next']"
+          :key="item"
+          @click="clickPhoto(item)"
+          :class="item"
+        ></button>
+      </div>
+      <zoom-photo v-show="zoom" :op="photoOp" ref="photo"></zoom-photo>
     </div>
-    <zoom-photo v-show="zoom" :op="photoOp" ref="photo"></zoom-photo>
     <div class="gallery-thumbnails">
       <div
         v-for="(photo, index) in photos"
@@ -108,14 +110,18 @@ export default {
 .zoom-gallery .active-photo {
   width: 100%;
   margin-bottom: 5px;
-  padding-bottom: 65%;
+  top: 0;
+  bottom: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border: 2px solid #fff;
   position: relative;
 }
-.zoom-gallery .active-photo button {
+.zoom-gallery .gallery-container {
+  position: relative;
+}
+.zoom-gallery .gallery-container .active-photo button {
   border: none;
   background-color: transparent;
   font-size: 32px;
@@ -125,10 +131,10 @@ export default {
   outline: none;
   height: 100%;
 }
-.zoom-gallery .active-photo button:hover {
+.zoom-gallery .gallery-container .active-photo button:hover {
   opacity: 1;
 }
-.zoom-gallery .active-photo button.gallery-prev {
+.zoom-gallery .gallery-container .active-photo button.gallery-prev {
   cursor: pointer;
   z-index: 999;
   padding: 0 1em 0 0.7em;
@@ -150,7 +156,7 @@ export default {
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
 }
-.zoom-gallery .active-photo button.gallery-next {
+.zoom-gallery .gallery-container .active-photo button.gallery-next {
   cursor: pointer;
   z-index: 999;
   padding: 0 0.7em 0 1em;

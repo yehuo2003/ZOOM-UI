@@ -19,7 +19,7 @@
         <span
           v-show="!disabled"
           v-if="addTag"
-          @click.stop="closeTag(item, index)"
+          @click.stop="deleteTag(item, index)"
           class="zoom-icon icon-close close"
         ></span>
       </li>
@@ -49,6 +49,8 @@ export default {
       addType: String, // 新增的标签数据类型
       beforeAddValue: Function, //  添加数据前事件
       afterAddValue: Function, //  添加数据成功后
+      beforeDelete: Function, //  删除Tag前事件
+      afterDelete: Function, //  删除Tag成功后
       data: {
         // 默认数据
         type: Array
@@ -99,14 +101,15 @@ export default {
   },
   methods: {
     // 关闭标签
-    closeTag(e, index) {
-      if (this.disabled) {
+    deleteTag(e, index) {
+      // 如果设置了beforeDelete方法并返回false就不删除
+      if (this.disabled || this.op && this.op.beforeDelete && !this.op.beforeDelete(e, index)) {
         return;
-      } else {
-        let arr = JSON.parse(JSON.stringify(this.tagList));
-        arr.splice(index, 1);
-        this.tagList = arr;
       }
+      let arr = JSON.parse(JSON.stringify(this.tagList));
+      arr.splice(index, 1);
+      this.tagList = arr;
+      this.op && this.op.afterDelete && this.op.afterDelete(this.tagList)
     },
     // 点击按钮添加
     addValue() {

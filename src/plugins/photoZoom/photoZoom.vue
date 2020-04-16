@@ -1,5 +1,5 @@
 <template>
-  <div class="pic-img">
+  <div class="zoom-photo">
     <div
       class="img-container"
       @mousemove="!moveEvent && mouseMove($event)"

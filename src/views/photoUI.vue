@@ -20,7 +20,7 @@
 				<zoom-input></zoom-input>
 			</zoom-form-item>
 			<zoom-form-item label="验证码">
-				<zoom-captcha :op="testOp"></zoom-captcha>
+				<!-- <zoom-captcha :op="testOp"></zoom-captcha> -->
 			</zoom-form-item>
 		</zoom-form>
 		<zoom-row>
@@ -68,14 +68,10 @@ export default {
 			galleryOp: {
 				showZoom: true,
 				data: [
-					// require('../assets/img/lordea-home-01-min.jpg'),
-					// require('../assets/img/lordea-home-02-min.jpg'),
-					// require('../assets/img/lordea-home-03-min.jpg'),
-					// require('../assets/img/lordea-home-04-min.jpg'),
-					// require('../assets/img/lordea-home-05-min.jpg'),
-					// require('../assets/img/lordea-home-06-min.jpg'),
-					// require('../assets/img/lordea-home-07-min.jpg'),
-					// require('../assets/img/lordea-home-08-min.jpg'),
+					require('../assets/1.jpg'),
+					require('../assets/2.jpg'),
+					require('../assets/3.jpg'),
+					require('../assets/4.jpg'),
 				]
 			}
     }

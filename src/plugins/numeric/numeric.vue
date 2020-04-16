@@ -21,7 +21,6 @@
       @keydown="handleTab($event)"
       @blur="handleBlur"
       @input="Oninput"
-      @oninput="getValue"
       onpaste="return false"
       :value="currentValue"
       :placeholder="placeholder ? placeholder : options.placeHolder"
@@ -40,15 +39,16 @@
   </div>
 </template>
 <script>
-import { isKorean } from "../common/common.js";
+import InputMixin from "../mixins/input";
 export default {
   name: "zoom-numeric",
+  mixins: [InputMixin],
   props: {
     op: Object,
-    placeholder: {
-      type: String,
-      default: null
-    },
+    // placeholder: {
+    //   type: String,
+    //   default: null
+    // },
     value: {
       type: Number,
       default: 0
@@ -56,27 +56,21 @@ export default {
   },
   data() {
     return {
-      currentValue:
-        this.value === undefined || this.value === null ? "" : this.value,
-      error: false,
-      errMsg: null,
-      isOnComposition: false,
-      valueBeforeComposition: null,
-      disabled: false,
+      // disabled: false,
       options: {
         max: 999999,
-        width: null,
-        disabled: false,
-        readonly: false,
-        min: 0
+        // width: null,
+        // disabled: false,
+        // readonly: false,
+        // min: 0
       }
     };
   },
-  watch: {
-    value(val, oldValue) {
-      this.setCurrentValue(val);
-    }
-  },
+  // watch: {
+  //   value(val, oldValue) {
+  //     this.setCurrentValue(val);
+  //   }
+  // },
   created() {
     if (this.op) {
       this.options = this.op;
@@ -86,47 +80,48 @@ export default {
     /**
      * 当用户按tab键切换的时候 触发验证功能
      */
-    handleTab(e) {
-      if (e.keyCode !== 9) return;
-      this.handleBlur();
-    },
-    setCurrentValue(value) {
-      // 输入中，直接返回
-      if (this.isOnComposition && value === this.valueBeforeComposition) return;
-      this.currentValue = value;
-      if (this.isOnComposition) return;
-    },
+    // handleTab(e) {
+    //   if (e.keyCode !== 9) return;
+    //   this.handleBlur();
+    // },
+    // setCurrentValue(value) {
+    //   // 输入中，直接返回
+    //   if (this.isOnComposition && value === this.valueBeforeComposition) return;
+    //   this.currentValue = value;
+    //   if (this.isOnComposition) return;
+    // },
     /**
      * 判断用户输入的是否是拼音, 如果是拼音输入完了返回
      */
-    handleComposition(event) {
-      // 如果中文输入已完成
-      if (event.type === "compositionend") {
-        //  isOnComposition设置为false
-        this.isOnComposition = false;
-        this.currentValue = this.valueBeforeComposition;
-        this.valueBeforeComposition = null;
-        //触发input事件，因为input事件是在compositionend事件之后触发，这时输入未完成，不会将值传给父组件，所以需要再调一次input方法
-        this.Oninput(event);
-      } else {
-        //如果中文输入未完成
-        const text = event.target.value;
-        const lastCharacter = text[text.length - 1] || "";
-        //isOnComposition用来判断是否在输入拼音的过程中
-        this.isOnComposition = !isKorean(lastCharacter);
-        if (this.isOnComposition && event.type === "compositionstart") {
-          //  输入框中输入的值赋给valueBeforeComposition
-          this.valueBeforeComposition = text;
-        }
-      }
-    },
-    handleChild(e) {
-      this.$emit(e);
-    },
+    // handleComposition(event) {
+    //   // 如果中文输入已完成
+    //   if (event.type === "compositionend") {
+    //     //  isOnComposition设置为false
+    //     this.isOnComposition = false;
+    //     this.currentValue = this.valueBeforeComposition;
+    //     this.valueBeforeComposition = null;
+    //     //触发input事件，因为input事件是在compositionend事件之后触发，这时输入未完成，不会将值传给父组件，所以需要再调一次input方法
+    //     this.Oninput(event);
+    //   } else {
+    //     //如果中文输入未完成
+    //     const text = event.target.value;
+    //     const lastCharacter = text[text.length - 1] || "";
+    //     //isOnComposition用来判断是否在输入拼音的过程中
+    //     this.isOnComposition = !isKorean(lastCharacter);
+    //     if (this.isOnComposition && event.type === "compositionstart") {
+    //       //  输入框中输入的值赋给valueBeforeComposition
+    //       this.valueBeforeComposition = text;
+    //     }
+    //   }
+    // },
+    // handleChild(e) {
+    //   this.$emit(e);
+    // },
     //   验证
-    getValue() {
-      this.value = this.value.replace(/[^0-9|-]/g, "");
-    },
+    // getValue() {
+    //   debugger
+    //   this.value = this.value.replace(/[^0-9|-]/g, "");
+    // },
     // 验证功能
     handleBlur() {
       if (this.options.testing) {
@@ -213,17 +208,17 @@ export default {
         this.currentValue = value;
       }
     },
-    Oninput($event) {
-      if (this.testing()) {
-        const value = Number($event.target.value);
-        //设置当前值
-        this.setCurrentValue(value);
-        //如果还在输入中，将不会把值传给父组件
-        if (this.isOnComposition) return;
-        //输入完成时，isOnComposition为false，将值传递给父组件
-        this.$emit("input", value);
-      }
-    }
+    // Oninput($event) {
+    //   if (this.testing()) {
+    //     const value = Number($event.target.value);
+    //     //设置当前值
+    //     this.setCurrentValue(value);
+    //     //如果还在输入中，将不会把值传给父组件
+    //     if (this.isOnComposition) return;
+    //     //输入完成时，isOnComposition为false，将值传递给父组件
+    //     this.$emit("input", value);
+    //   }
+    // }
   }
 };
 </script>
@@ -249,6 +244,10 @@ export default {
   overflow: hidden;
   text-decoration: none;
   color: #1890ff;
+  transition: color .3 ease-in-out;
+}
+.zoom-numeric .num-btn:active {
+  color: #bfbfbf;
 }
 .zoom-numeric.numeric-disabled .num-btn {
   color: #bfbfbf;

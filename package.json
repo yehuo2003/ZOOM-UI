@@ -1,16 +1,16 @@
 {
-  "name": "zoom-ui-1.0",
-  "version": "0.9.3",
+  "name": "zoom-design",
+  "version": "1.0.2",
   "description": "this is zoom-ui",
   "license": "MIT",
   "author": "linzhuming",
-  "main": "lib/zoom-ui-1.0.umd.js",
+  "main": "lib/zoom-design.umd.js",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name zoom-ui-1.0 --dest lib src/plugins/index.js"
+    "lib": "vue-cli-service build --target lib --name zoom-design --dest lib src/plugins/index.js"
   },
   "dependencies": {
     "register-service-worker": "^1.6.2",

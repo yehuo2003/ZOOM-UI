@@ -25,6 +25,7 @@
     <!-- <zoom-tree-menu :op="navOp"></zoom-tree-menu> -->
     <!-- <zoom-transfer></zoom-transfer> -->
     <zoom-file-upload :op="uploadOp"></zoom-file-upload>
+    <zoom-tag :op="tagOp"></zoom-tag>
     <!-- <zoom-rate :op="rateOp" ref="rate"></zoom-rate>
     <zoom-floatbar ref="bar" :op="barOp">
       <h1>自定义</h1>
@@ -40,16 +41,38 @@
         <li @click="usetTest(1)">1号美女</li>
       </ul>
     </zoom-userinfo> -->
-    <zoom-button @click="test">测试</zoom-button>
+    <zoom-button ref="test" @click="test">测试</zoom-button>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      tagOp: {
+        addTag: true, // 启用添加tag标签, 为true时候启用 用户可自由添加 or 删除
+        addType: 'primary',  // 新增的标签数据类型
+        title: '添加',  // 添加按钮的标题  默认叫 add
+        beforeAddValue: val => {
+          console.log('befor', val);
+        },
+        beforeDelete: (e, val) => {
+          console.log(e, 'e');
+          console.log(val, 'val');
+          return true
+        },
+        afterDelete: arr => {
+          console.log(arr, 'arr');
+        },
+        data: [	// active是选中状态 为true选中
+          {title: 'javascript', type: 'success', active: true},
+          {title: 'Python', type: 'warning'},
+          {title: 'Java', type: 'danger'},
+          {title: 'PHP', type: 'info'}
+        ]
+      },
       uploadOp: {
         // limit: 3,
-        fileSize: '50KB',
+        // fileSize: '50KB',
         // fileType: 'jpg',
         multiple: true,
         closeProgress: false,
@@ -96,18 +119,6 @@ export default {
         data: ['很差', '差', '一般', '好', '很好'],
       },
       // url: 'https://www.lagou.com/nearBy/updateMyResume',
-
-      tagOp: {
-        addTag: true,
-        title: '添加',
-        addType: 'danger',
-        data: [
-          {title: 'javascript', type: 'success', active: true},
-          {title: 'Python', type: 'warning'},
-          {title: 'Java', type: 'danger'},
-          {title: 'PHP', type: 'info'}
-        ]
-      },
       navOp: {
         accordion: false,
         data: [
@@ -270,12 +281,19 @@ export default {
       this.$refs['user'].load(data);
     },
     test() {
-      this.$zoom.alert({
-        title: '标题自定义',
-        content: '自定义内容',
-        type: 'warning',
-        time: 5000
-      })
+      this.$refs['test'].setDisabled(true);
+      setTimeout(() => {
+        this.$refs['test'].setDisabled(false);
+      }, 5000);
+      // setTimeout(() => {
+      //   this.$refs['test'].isdisabled = true;
+      // }, 1000);
+      // this.$zoom.alert({
+      //   title: '标题自定义',
+      //   content: '自定义内容',
+      //   type: 'warning',
+      //   time: 5000
+      // })
       // this.$zoom.popup({
       //   title: '我是标题',
       //   content: '我是内容',

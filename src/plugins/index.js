@@ -477,8 +477,8 @@ const install = Vue => {
                 document.body.appendChild(instance.$el)
 
                 Vue.nextTick(() => {
-                    instance.show = true
-                    // show 和弹窗组件里的show对应，用于控制显隐
+                    // visible 和弹窗组件里的visible对应，用于控制显隐
+                    instance.visible = true
                 })
             }
             Vue.prototype.$zoom.popup = Popup.install;

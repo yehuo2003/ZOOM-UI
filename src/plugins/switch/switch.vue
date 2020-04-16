@@ -69,6 +69,12 @@ export default {
       }
       this.text = this.OPEN;
     },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.disabled = status;
+    },
     openSwitch() {
       if (this.disabled) {
         return;

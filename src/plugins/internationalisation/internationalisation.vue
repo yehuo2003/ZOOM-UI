@@ -41,40 +41,38 @@ export default {
     // 切换语言
     toggleLang(item) {
       this.$zoom
-        .confim(
-          this.$zoom.$t("internationalisation-toggle", { lang: item.text }),
-          this.$zoom.$t("public.hint"),
-          {
-            type: "query"
+      .confim(
+        this.$zoom.$t("internationalisation-toggle", { lang: item.text }),
+        this.$zoom.$t("public.hint"),
+        {
+          type: "query"
+        }
+      )
+      .then(() => {
+        let lang = {
+          locale: item.value //	要修改的语言
+        };
+        this.$zoom.setLanguage(lang);
+        setTimeout(() => {
+          this.title = item.text;
+          if (this.op && this.op.url) {
+            window.location.href = this.op.url;
+          } else {
+            window.location.reload();
           }
-        )
-        .then(() => {
-          let lang = {
-            locale: item.value //	要修改的语言
-          };
-          this.$zoom.setLanguage(lang);
-          setTimeout(() => {
-            this.title = item.text;
-            if (this.op && this.op.url) {
-              window.location.href = this.op.url;
-            } else {
-              window.location.reload();
-            }
-          }, 500);
-        })
-        .catch(() => {
-          //点取消
-        });
+        }, 500);
+      })
+      .catch(() => {
+        //点取消
+      });
     },
     //   父组件动态设置属性
     load(op) {
-      if (op) {
-        if (op.data) {
-          this.list = op.data;
-        }
-        if (op.title) {
-          this.title = op.title;
-        }
+      if (op && op.data) {
+        this.list = op.data;
+      }
+      if (op && op.title) {
+        this.title = op.title;
       }
       let lang = this.$zoom.getLanguage().locale;
       this.list.forEach(item => {

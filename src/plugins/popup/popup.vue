@@ -1,6 +1,6 @@
 <template>
   <transition name='fade'>
-    <div v-if="show" v-drag class="zoom-popup">
+    <div v-if="visible" v-drag class="zoom-popup">
       <div class="popup-modal-box">
         <div class="popup-modal-header">
           <span class="modal-title">{{title}}</span>
@@ -16,84 +16,87 @@
           </div>
         </div>
         <div class="popup-modal-footer">
-          <zoom-button @click="close">{{$zoom.$t('public.cancel')}}</zoom-button>
-          <zoom-button @click="btnClick" type="primary">{{btnText}}</zoom-button>
+          <zoom-button @click="close">{{cancelText}}</zoom-button>
+          <zoom-button @click="btnClick" type="primary">{{confirmText}}</zoom-button>
         </div>
       </div>
     </div>
   </transition>
 </template>
 <script>
+import popupMixin from "../mixins/popup";
 export default {
   name: 'zoom-popup',
-  data () {
-    return {
-      show: false,
-      title: this.$zoom.$t('public.hint'),  //  提示
-      content: '',
-      container: null,
-      type: null,
-      css: 'icon-query-fill',
-      btnText: this.$zoom.$t('public.confirm') //  确认
-    }
-  },
-  created () {
-    switch (this.type) {
-      case "err":
-        this.css = "icon-close-fill";
-        break;
-      case "error":
-        this.css = "icon-close-fill";
-        break;
-      case "danger":
-        this.css = "icon-close-fill";
-        break;
-      case "red":
-        this.css = "icon-close-fill";
-        break;
-      case "success":
-        this.css = "icon-success-fill";
-        break;
-      case "green":
-        this.css = "icon-success-fill";
-        break;
-      case "warn":
-        this.css = "icon-hint-fill";
-        break;
-      case "warning":
-        this.css = "icon-hint-fill";
-        break;
-      case "yellow":
-        this.css = "icon-hint-fill";
-        break;
-      case "gray":
-        this.css = "icon-stop-fill";
-        break;
-      case "info":
-        this.css = "icon-stop-fill";
-        break;
-      case "blue":
-        this.css = "icon-query-fill";
-        break;
-      case "primary":
-        this.css = "icon-query-fill";
-        break;
-      case "query":
-        this.css = "icon-query-fill";
-        break;
-      default:
-        this.css = this.type;
-        break;
-    }
-    this.$nextTick(() => {
-      // 监听回车和 Esc事件
-      window.addEventListener('keyup', this.keyEnd, true);
-    })
-  },
+  mixins: [popupMixin],
+  // data () {
+  //   return {
+  //     visible: false,
+  //     title: this.$zoom.$t('public.hint'),  //  提示
+  //     content: '',
+  //     container: null,
+  //     type: null,
+  //     css: 'icon-query-fill',
+  //     cancelText: this.$zoom.$t('public.cancel'), //  取消
+  //     confirmText: this.$zoom.$t('public.confirm') //  确认
+  //   }
+  // },
+  // created () {
+  //   switch (this.type) {
+  //     case "err":
+  //       this.css = "icon-close-fill";
+  //       break;
+  //     case "error":
+  //       this.css = "icon-close-fill";
+  //       break;
+  //     case "danger":
+  //       this.css = "icon-close-fill";
+  //       break;
+  //     case "red":
+  //       this.css = "icon-close-fill";
+  //       break;
+  //     case "success":
+  //       this.css = "icon-success-fill";
+  //       break;
+  //     case "green":
+  //       this.css = "icon-success-fill";
+  //       break;
+  //     case "warn":
+  //       this.css = "icon-hint-fill";
+  //       break;
+  //     case "warning":
+  //       this.css = "icon-hint-fill";
+  //       break;
+  //     case "yellow":
+  //       this.css = "icon-hint-fill";
+  //       break;
+  //     case "gray":
+  //       this.css = "icon-stop-fill";
+  //       break;
+  //     case "info":
+  //       this.css = "icon-stop-fill";
+  //       break;
+  //     case "blue":
+  //       this.css = "icon-query-fill";
+  //       break;
+  //     case "primary":
+  //       this.css = "icon-query-fill";
+  //       break;
+  //     case "query":
+  //       this.css = "icon-query-fill";
+  //       break;
+  //     default:
+  //       this.css = this.type;
+  //       break;
+  //   }
+  //   this.$nextTick(() => {
+  //     // 监听回车和 Esc事件
+  //     window.addEventListener('keyup', this.keyEnd, true);
+  //   })
+  // },
   methods: {
     // 关闭弹框方法
     close() {
-      this.show = false;
+      this.visible = false;
       window.removeEventListener('keyup', this.keyEnd, true);
     },
     keyEnd() {

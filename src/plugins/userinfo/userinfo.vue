@@ -33,17 +33,6 @@ export default {
   },
   created() {
     this.load(this.op);
-    // if (this.op) {
-    //   if (this.op.img) {
-    //     this.img = this.op.img;
-    //   }
-    //   if (this.op.title) {
-    //     this.title = this.op.title;
-    //   }
-    //   if (this.op.icon) {
-    //     this.icon = this.op.icon;
-    //   }
-    // }
   },
   methods: {
     //   父组件动态设置属性

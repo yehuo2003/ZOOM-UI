@@ -3,14 +3,43 @@
     <zoom-tabs v-model="curTab" :border="true" @change="tabChange">
       <zoom-tab-item :index="0" :label="'Tab1'">
         <div>
-          <zoom-input v-model="name" :op="inputOp"></zoom-input>
-          <button @click="clear">清除</button>
+          <zoom-form ref="form" label-width="120px">
+            <zoom-form-item inline="true" :require="true" label="名字">
+              <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
+            </zoom-form-item>
+            <zoom-form-item inline="true" label="密码">
+              <zoom-input></zoom-input>
+            </zoom-form-item>
+            <zoom-form-item label="下拉框">
+              <zoom-dropdown></zoom-dropdown>
+            </zoom-form-item>
+            <zoom-form-item :require="true" label="搜索">
+              <zoom-search :op="inputOp"></zoom-search>
+            </zoom-form-item>
+            <zoom-form-item :require="true" label="部门">
+              <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
+            </zoom-form-item>
+            <zoom-form-item label="计数器">
+              <zoom-numeric :op="inputOp"></zoom-numeric>
+            </zoom-form-item>
+            <zoom-form-item label="复选框">
+              <zoom-checkbox :op="checkOp"></zoom-checkbox>
+            </zoom-form-item>
+            <zoom-form-item label="单选框">
+              <zoom-radio :op="checkOp"></zoom-radio>
+            </zoom-form-item>
+            <zoom-form-item :require="true" label="长框">
+              <zoom-textarea :op="inputOp"></zoom-textarea>
+            </zoom-form-item>
+          </zoom-form>
+          <zoom-button @click="tesging">验证</zoom-button>
+          <zoom-button @click="clear">清除</zoom-button>
           <zoom-panel title="折叠面板">
             内容
             <p>默认隐藏</p>
           </zoom-panel>
         </div>
-        <zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown>
+        <zoom-floatbar :op="op"></zoom-floatbar>
         <!-- <zoom-dropdown v-model="name" :op="dropdownOp2"></zoom-dropdown> -->
       </zoom-tab-item>
       <zoom-tab-item :index="1" :label="'Tab2'">
@@ -50,13 +79,41 @@
   export default {
     data() {
       return {
+        op: {
+          position: 'right',	// 默认right 可选参数 left, right
+          data: [	//	如果未设置data 则默认显示自定义内容
+            {text: '购物车', icon: 'icon-shopping-cart', onClick: val => {console.log(val);}},
+            {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
+            {text: '导航', icon: 'icon-nav'}
+          ]
+        },
+        checkOp: {
+          data: [
+            {value: 1, text: '唱', checked: true},
+            {value: 2, text: '跳'},
+            {value: 3, text: 'rap'},
+            {value: 4, text: '篮球'}
+          ]
+        },
         inputOp: {
-          // minLength: 5,
-          maxLength: 10,
-          width: '500px'
+          errMsg: '验证不通过',
+          testing: val => {
+            if (!val) {
+              return false
+            } else {
+              return true
+            }
+          }
         },
         dropdownOp4: {
           placeHolder: '--等待加载数据--',
+          isChecked: true,
+          data:  [
+            {value: '1', text: '北京'},
+            {value: '2', text: '上海'},
+            {value: '3', text: '广州'},
+            {value: '4', text: '深圳'}
+          ]
         },
         dropdownOp2: {
           isChecked: true,
@@ -84,15 +141,19 @@
           this.curTab ++;
         }
       },
+      tesging() {
+        this.$refs['form'].valid();
+      },
       clear() {
+        this.$refs['form'].reset();
         // this.name = '';
-        let data = [
-          {value: '1', text: '北京'},
-          {value: '2', text: '上海'},
-          {value: '3', text: '广州'},
-          {value: '4', text: '深圳'}
-        ];
-        this.$refs['dropdown'].load(data);
+        // let data = [
+        //   {value: '1', text: '北京'},
+        //   {value: '2', text: '上海'},
+        //   {value: '3', text: '广州'},
+        //   {value: '4', text: '深圳'}
+        // ];
+        // this.$refs['dropdown'].load(data);
       },
       tabChange(index) {
         this.curTab = index;

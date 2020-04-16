@@ -46,6 +46,7 @@ export default {
       css: "",
       shapeType: "plain", //  按钮形状
       time: 1000, //  点击按钮后禁用的时间
+      setDisable: false,  //  设置的禁用状态
       isdisabled: false,
       showIcon: false,
       IconStyle: ""
@@ -157,10 +158,19 @@ export default {
       }
       this.$emit(e);
     },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.isdisabled = status;
+    },
     handleClick() {
       this.isdisabled = true;
       setTimeout(() => {
-        this.isdisabled = false;
+        if (!this.setDisable) {
+          this.isdisabled = false;
+        }
       }, this.time);
       if (this.op && this.op.onClick && !this.isdisabled) {
         if (typeof this.op.onClick === "function") {

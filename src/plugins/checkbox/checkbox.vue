@@ -14,72 +14,67 @@
   </span>
 </template>
 <script>
+import selectBoxMixin from "../mixins/selectBox";
 export default {
   name: "zoom-checkbox",
-  props: {
-    op: {
-      type: Object,
-      name: String,
-      data: Array,
-      Bool: Boolean,
-      disabled: Boolean
-    }
-  },
-  data() {
-    return {
-      active: false,
-      disabled: false,
-      list: [],
-      name: ""
-    };
-  },
-  created() {
-    this.reset();
-  },
+  mixins: [selectBoxMixin],
+  // props: {
+  //   op: {
+  //     type: Object,
+  //     name: String,
+  //     data: Array,
+  //     Bool: Boolean,
+  //     disabled: Boolean
+  //   }
+  // },
+  // data() {
+  //   return {
+  //     active: false,
+  //     disabled: false,
+  //     list: [],
+  //     name: ""
+  //   };
+  // },
+  // created() {
+  //   this.reset();
+  // },
   methods: {
     /**
      * zoom-form组件可以直接调用此功能重置表单
      */
-    reset() {
-      if (this.op) {
-        if (this.op.name) {
-          this.name = this.op.name;
+    // reset() {
+    //   if (this.op) {
+    //     if (this.op.name) {
+    //       this.name = this.op.name;
+    //     }
+    //     if (this.op.data) {
+    //       this.each(this.op.data);
+    //     }
+    //     if (this.op.disabled) {
+    //       this.disabled = !!this.op.disabled;
+    //     }
+    //   }
+    // },
+    each(data) {
+      let list = [];
+      data.forEach(item => {
+        // 判断是否设置了默认项
+        if (!item.checked) {
+          item.checked = false;
+        } else {
+          item.checked = true;
         }
-        if (this.op.data) {
-          let list = [];
-          this.op.data.forEach(item => {
-            // 判断是否设置了默认项
-            if (!item.checked) {
-              item.checked = false;
-            } else {
-              item.checked = true;
-            }
-            list.push(item);
-          });
-          this.list = this.$zoom.clone(list);
-          this.sendVal();
-        }
-        if (this.op.disabled) {
-          this.disabled = !!this.op.disabled;
-        }
-      }
+        list.push(item);
+      });
+      this.list = this.$zoom.clone(list);
+      this.sendVal();
     },
     //   动态加载数据
-    load(data) {
-      if (data) {
-        let list = [];
-        data.forEach(item => {
-          if (!item.checked) {
-            item.checked = false;
-          } else {
-            item.checked = true;
-          }
-          list.push(item);
-        });
-        this.list = this.$zoom.clone(list);
-        this.sendVal();
-      }
-    },
+    // load(data) {
+    //   if (data) {
+    //     this.each(data);
+    //   }
+    // },
     sendVal() {
       let list = [];
       let Bool = false;

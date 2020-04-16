@@ -14,78 +14,69 @@
   </span>
 </template>
 <script>
+import selectBoxMixin from "../mixins/selectBox";
 export default {
   name: "zoom-radio",
-  props: {
-    op: {
-      type: Object,
-      name: String,
-      data: Array,
-      Bool: Boolean,
-      disabled: Boolean
-    }
-  },
-  data() {
-    return {
-      active: false,
-      disabled: false,
-      list: [],
-      name: ""
-    };
-  },
-  created() {
-    this.reset();
-  },
+  mixins: [selectBoxMixin],
+  // props: {
+  //   op: {
+  //     type: Object,
+  //     name: String,
+  //     data: Array,
+  //     Bool: Boolean,
+  //     disabled: Boolean
+  //   }
+  // },
+  // data() {
+  //   return {
+  //     active: false,
+  //     disabled: false,
+  //     list: [],
+  //     name: ""
+  //   };
+  // },
+  // created() {
+  //   this.reset();
+  // },
   methods: {
     /**
      * zoom-form组件可以直接调用此功能重置表单
      */
-    reset() {
-      if (this.op) {
-        if (this.op.name) {
-          this.name = this.op.name;
-        }
-        if (this.op.data) {
-          let list = [];
-          this.op.data.forEach(item => {
-            if (!item.checked) {
-              item.checked = false;
-            } else {
-              item.checked = true;
-              if (this.op.Bool) {
-                this.$emit("input", item.checked);
-              } else {
-                this.$emit("input", item.value);
-              }
-            }
-            list.push(item);
-          });
-          this.list = this.$zoom.clone(list);
-        }
-        if (this.op.disabled) {
-          this.disabled = !!this.op.disabled;
-        }
-      }
-    },
-    load(data) {
-      if (data) {
-        let list = [];
-        data.forEach(item => {
-          if (!item.checked) {
-            item.checked = false;
+    // reset() {
+    //   if (this.op) {
+    //     if (this.op.name) {
+    //       this.name = this.op.name;
+    //     }
+    //     if (this.op.data) {
+    //       this.each(this.op.data);
+    //     }
+    //     if (this.op.disabled) {
+    //       this.disabled = !!this.op.disabled;
+    //     }
+    //   }
+    // },
+    each(data) {
+      let list = [];
+      data.forEach(item => {
+        if (!item.checked) {
+          item.checked = false;
+        } else {
+          item.checked = true;
+          if (this.op.Bool) {
+            this.$emit("input", item.checked);
           } else {
-            item.checked = true;
-            if (this.op.Bool) {
-              this.$emit("input", item.checked);
-            } else {
-              this.$emit("input", item.value);
-            }
+            this.$emit("input", item.value);
           }
-          list.push(item);
-        });
-        this.list = this.$zoom.clone(list);
-      }
+        }
+        list.push(item);
+      });
+      this.list = this.$zoom.clone(list);
     },
+    // load(data) {
+    //   if (data) {
+    //     this.each(data);
+    //   }
+    // },
     sendVal(item) {
       let res = "";
       this.list.forEach(elem => {

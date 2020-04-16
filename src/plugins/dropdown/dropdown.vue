@@ -37,15 +37,15 @@
       v-tip.error.right.multiple.click="errMsg"
       style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
     ></span>
-    <div @click="showTip" class="input-btn">
+    <div class="input-btn">
       <a
         v-if="!options.hideClose"
-        @click="clear"
+        @click="reset"
         href="javascript:void(0);"
         class="zoom-icon icon-close icon-default"
       ></a>
       <a
-        @click="close"
+        @click="showTip(showDown)"
         href="javascript:void(0);"
         class="zoom-icon"
         :class="showDown ? 'icon-up' : 'icon-down'"
@@ -73,59 +73,22 @@
   </div>
 </template>
 <script>
-import { isKorean } from "../common/common.js";
-// import dropdownContent from './dropdownContent'
+import InputMixin from "../mixins/input";
 export default {
   name: "zoom-dropdown",
+  mixins: [InputMixin],
   props: {
     id: String,
     value: [String, Number, Array, Boolean],
     op: {
-      placeHolder: {
-        //  占位符
-        type: String,
-        default: null
-      },
-      disabled: {
-        //是否禁用 默认false
+      isChecked: {  // 是否启用多选功能 默认false
         type: Boolean,
         default: false
       },
-      readonly: {
-        // 是否禁止输入默认false
-        type: Boolean,
-        default: false
-      },
-      isChecked: {
-        // 是否启用多选功能 默认false
-        type: Boolean,
-        default: false
-      },
-      hideClose: {
-        //是否隐藏清除按钮 默认false
-        type: Boolean,
-        default: false
-      },
-      errMsg: {
-        //  验证失败时候显示的信息
-        type: String,
-        default: ""
-      },
-      maxLength: {  //  可输入最大字符
-        type: Number,
-        default: null
-      },
-      minLength: {  //  可输入最小字符
-        type: Number,
-        default: 0
-      },
-      onClick: {
-        //  点击事件
+      onClick: {  //  点击事件
         type: Function
       },
-      width: String,  //  组件的宽度 默认270px
-      data: {
-        //下拉框数据, 键值对的方式, text是展示的文本
+      data: { //下拉框数据, 键值对的方式, text是展示的文本
         type: Array,
         default: function() {
           return [];
@@ -135,13 +98,6 @@ export default {
   },
   data() {
     return {
-      currentValue:
-        this.value === undefined || this.value === null ? "" : this.value,
-      error: false,
-      errMsg: null,
-      tipInstance: null,
-      isOnComposition: false,
-      valueBeforeComposition: null,
       list: [], //  多选时候用
       defaultList: [{ value: null, text: this.$zoom.$t('grid.no_data') }], //  暂无数据
       showDown: false,
@@ -152,14 +108,7 @@ export default {
         data: [{ text: "", value: "" }]
       },
       options: {
-        data: [],
-        errMsg: "",
-        width: null,
-        placeHolder: null,
-        maxLength: null,
-        minLength: 0,
-        readonly: false,
-        disabled: false
+        data: []
       }
     };
   },
@@ -180,7 +129,7 @@ export default {
       this.currentValue = '';
     }
     if (this.op) {
-      if (this.op.isChecked) {
+      if (this.op.isChecked && this.op.data && this.op.data.length) {
         this.isChecked = this.op.isChecked;
         let list = [];
         this.op.data.forEach(item => {
@@ -234,16 +183,18 @@ export default {
     /**
      * 显示下拉框tips
      */
-    showTip() {
+    showTip(showDown) {
+      if (this.op && this.op.disabled) {
+        return;
+      }
       const tipInstance = this.$zoom.tip({
-        // customComponent: dropdownContent,
         customComponent: "zoom-dropdown-content",
         width: this.op && this.op.width || '270px',
         customProps: { // 要传入的参数
           options: this.options,
           isChecked: this.isChecked
         },
-        duration: 1,
+        duration: -1,
         placements: ['bottom', 'top', 'right', 'left'],
         customClass: 'zoom-custom-content zoom-dropdown',
         customListeners: {
@@ -253,45 +204,13 @@ export default {
         },
         target: this.$refs['downVal']	//	目标元素
       });
-      tipInstance.updateTip();
-      this.tipInstance = tipInstance;
-    },
-    /**
-     * 当用户按tab键切换的时候 触发验证功能
-     */
-    handleTab(e) {
-      if (e.keyCode !== 9) return;
-      this.handleBlur();
-    },
-    setCurrentValue(value) {
-      // 输入中，直接返回
-      if (this.isOnComposition && value === this.valueBeforeComposition) return;
-      this.currentValue = value;
-      if (this.isOnComposition) return;
-    },
-    /**
-     * 判断用户输入的是否是拼音, 如果是拼音输入完了返回
-     */
-    handleComposition(event) {
-      // 如果中文输入已完成
-      if (event.type === "compositionend") {
-        //  isOnComposition设置为false
-        this.isOnComposition = false;
-        this.currentValue = this.valueBeforeComposition;
-        this.valueBeforeComposition = null;
-        //触发input事件，因为input事件是在compositionend事件之后触发，这时输入未完成，不会将值传给父组件，所以需要再调一次input方法
-        this.Oninput(event);
+      if (showDown) {
+        tipInstance.hiddenTip(true);
       } else {
-        //如果中文输入未完成
-        const text = event.target.value;
-        const lastCharacter = text[text.length - 1] || "";
-        //isOnComposition用来判断是否在输入拼音的过程中
-        this.isOnComposition = !isKorean(lastCharacter);
-        if (this.isOnComposition && event.type === "compositionstart") {
-          //  输入框中输入的值赋给valueBeforeComposition
-          this.valueBeforeComposition = text;
-        }
+        tipInstance.updateTip();
       }
+      this.tipInstance = tipInstance;
+      this.close();
     },
     /**
      * 加载数据 如果有下拉框数据就先销毁
@@ -310,10 +229,6 @@ export default {
         this.currentValue = data.text;
         this.$refs["downVal"].value = data.value;
       }
-      console.log(this.options.data, '=this.options.data');
-    },
-    handleChild(e) {
-      this.$emit(e);
     },
     itemClick(e) {
       if (this.options && this.options.onClick) {
@@ -361,51 +276,51 @@ export default {
       }
     },
     // 验证功能
-    handleBlur() {
-      if (this.currentValue.length < this.options.minLength) {
-        // 小长度为 {min} 个字符！
-        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
-        this.error = true;
-        this.$refs["err"].click();
-        this.$nextTick(() => {
-          this.$refs["err"].click();
-          setTimeout(() => {
-            this.$nextTick(() => {
-              this.error = false;
-              $Z(".zoom-tip-container")[0].remove();
-            });
-          }, 2000);
-        });
-      } else if (this.options.testing) {
-        let test = this.options.testing(this.currentValue);
-        if (!test) {
-          this.error = true;
-          if (this.options.errMsg) {
-            this.errMsg = this.options.errMsg;
-            this.$nextTick(() => {
-              this.$refs['err'].click();
-              setTimeout(() => {
-                this.$nextTick(() => {
-                  this.error = false;
-                  $Z('.zoom-tip-container')[0].remove();
-                })
-              }, 2000);
-            })
-          }
-          return !!test;
-        } else {
-          this.error = false;
-          return true;
-        }
-      } else {
-        return true;
-      }
-    },
+    // handleBlur() {
+    //   if (this.currentValue.length < this.options.minLength) {
+    //     // 小长度为 {min} 个字符！
+    //     this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+    //     this.error = true;
+    //     this.$refs["err"].click();
+    //     this.$nextTick(() => {
+    //       this.$refs["err"].click();
+    //       setTimeout(() => {
+    //         this.$nextTick(() => {
+    //           this.error = false;
+    //           $Z(".zoom-tip-container")[0].remove();
+    //         });
+    //       }, 2000);
+    //     });
+    //   } else if (this.options.testing) {
+    //     let test = this.options.testing(this.currentValue);
+    //     if (!test) {
+    //       this.error = true;
+    //       if (this.options.errMsg) {
+    //         this.errMsg = this.options.errMsg;
+    //         this.$nextTick(() => {
+    //           this.$refs['err'].click();
+    //           setTimeout(() => {
+    //             this.$nextTick(() => {
+    //               this.error = false;
+    //               $Z('.zoom-tip-container')[0].remove();
+    //             })
+    //           }, 2000);
+    //         })
+    //       }
+    //       return !!test;
+    //     } else {
+    //       this.error = false;
+    //       return true;
+    //     }
+    //   } else {
+    //     return true;
+    //   }
+    // },
     // 重置功能,主要给父组件调用
+    // reset() {
+    //   this.clear();
+    // },
     reset() {
-      this.clear();
-    },
-    clear() {
       if (!this.options.disabled) {
         this.currentValue = "";
         this.list = [];
@@ -425,15 +340,15 @@ export default {
         );
       }
     },
-    Oninput($event) {
-      const value = $event.target.value;
-      //设置当前值
-      this.setCurrentValue(value);
-      //如果还在输入中，将不会把值传给父组件
-      if (this.isOnComposition) return;
-      //输入完成时，isOnComposition为false，将值传递给父组件
-      this.$emit("input", value);
-    },
+    // Oninput($event) {
+    //   const value = $event.target.value;
+    //   //设置当前值
+    //   this.setCurrentValue(value);
+    //   //如果还在输入中，将不会把值传给父组件
+    //   if (this.isOnComposition) return;
+    //   //输入完成时，isOnComposition为false，将值传递给父组件
+    //   this.$emit("input", value);
+    // },
     close() {
       if (this.options && this.options.disabled) {
         return;

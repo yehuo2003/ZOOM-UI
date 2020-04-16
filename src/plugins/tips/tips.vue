@@ -151,10 +151,7 @@ export default {
     arrowBox() {
       return Object.assign(
         {
-          borderWidth: `$ {
-              this.arrowsSize
-          }
-          px`
+          borderWidth: `${this.arrowsSize}px`
         },
         this.arrowsPos
       );

@@ -277,16 +277,16 @@ export default {
       //  如果没有要上传的文件, 禁用 开始上传 按钮
       if (!this.custom) {
         if (newVal.length > 0) {
-          this.$refs["startUpload"].isdisabled = false;
+          this.$refs["startUpload"].setDisabled(false);
         } else {
-          this.$refs["startUpload"].isdisabled = true;
+          this.$refs["startUpload"].setDisabled(true);
         }
         // 如果文件数量大于等于limit, 禁用 添加文件 按钮0
         if (this.limit && newVal.length >= this.limit) {
           this.List.length = this.limit;
-          this.$refs["addUpload"].isdisabled = true;
+          this.$refs["addUpload"].setDisabled(true);
         } else {
-          this.$refs["addUpload"].isdisabled = false;
+          this.$refs["addUpload"].setDisabled(false);
         }
       }
     }
@@ -648,7 +648,7 @@ export default {
       }
       if (!this.custom) {
         setTimeout(() => {
-          this.$refs["startUpload"].isdisabled = true;
+          this.$refs["startUpload"].setDisabled(true);
         });
       }
     },
