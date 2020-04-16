@@ -154,14 +154,23 @@ export default {
         font-size: 12px;
         margin-bottom: 5px;
       }
-      h3 {
-
-      }
       h2 {
         margin: 10px 0;
       }
       .zoom-panel {
         padding: 0;
+        .zoom-panel-content {
+          line-height: 25px !important;
+        }
+      }
+    }
+    .attribute-type {
+      p {
+        .zoom-panel-content {
+          p {
+            line-height: 25px !important;
+          }
+        }
       }
     }
     .zoom-nav ul li.zoom-list {

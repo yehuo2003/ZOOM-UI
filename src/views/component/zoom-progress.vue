@@ -38,7 +38,7 @@
     <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-progress :progress="progressVal" :status="status"></zoom-progress>
-        <zoom-button @click="addProgress">点我试试</zoom-button>
+        <zoom-button reset-time="5200" @click="addProgress">点我试试</zoom-button>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
         <custom-code :html="progressCustom"></custom-code>
@@ -136,7 +136,7 @@ export default {
         `&lt;template&gt;
             &lt;div&gt;
               &lt;zoom-progress :progress="progressVal" :status="status"&gt;&lt;/zoom-progress&gt;
-              &lt;zoom-button @click="addProgress"&gt;点我试试&lt;/zoom-button&gt;
+              &lt;zoom-button reset-time="5000" @click="addProgress"&gt;点我试试&lt;/zoom-button&gt;
             &lt;/div&gt;
           &lt;/template&gt;
           &lt;script&gt;
@@ -164,7 +164,7 @@ export default {
                     if (this.progressVal === 100) {
                       clearInterval(progressTime);
                     }
-                  }, 100);
+                  }, 50);
                 }
               }
             }
@@ -228,7 +228,7 @@ export default {
         if (this.progressVal === 100) {
           clearInterval(progressTime);
         }
-      }, 100);
+      }, 50);
     },
     statusChange(index) {
       this.statusTab = index

@@ -103,6 +103,14 @@ export default {
               type: "String",
               text: "绑定自定义验证方法",
               text2: '用法: 配置op对象, 并设置了<span>errMsg</span>后, 设置 <span>testing:val => {};</span> val为输入框内容, 如果方法返回<span>false</span>则显示<span>errMsg</span>的内容'
+            },
+            {
+              id: 2,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

@@ -83,6 +83,14 @@ export default {
               type: "Function",
               text: "在组件渲染完成后, 可用此方法动态渲染数据",
               text2: '用法: <span>this.$refs[属性].load(arr)</span>, 可动态设置数据,<span>arr</span>数据形式和op中<span>data</span>相同'
+            },
+            {
+              id: 2,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

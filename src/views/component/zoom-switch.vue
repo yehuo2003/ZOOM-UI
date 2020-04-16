@@ -90,6 +90,14 @@ export default {
               name: "afterClick",
               type: "Function",
               text: '用法: 配置op对象后设置回调函数, 会返回一个参数, 是按钮发生改变后的值'
+            },
+            {
+              id: 3,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

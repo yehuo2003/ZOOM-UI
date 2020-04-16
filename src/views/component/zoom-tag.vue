@@ -106,6 +106,22 @@ export default {
               type: "Function",
               text: "添加标签成功后, 执行的方法",
               text2: '用法:  配置op属性, 设置<span>afterAddValue: val => {}</span>调用函数'
+            },
+            {
+              id: 4,
+              title: "删除标签前的回调",
+              name: "beforeDelete",
+              type: "Function",
+              text: "参数<span>index</span>删除tag的下标、<span>val</span>当前值, 如果用户设置了并且返回<span>false</span>则不删除",
+              text2: '用法:  配置op属性, 设置<span>beforeDelete: (index, val) => {}</span>调用函数'
+            },
+            {
+              id: 5,
+              title: "删除标签成功后的回调",
+              name: "afterDelete",
+              type: "Function",
+              text: "参数<span>val</span>为删除后的当前数据列表, 删除标签成功后, 执行的方法",
+              text2: '用法:  配置op属性, 设置<span>afterDelete: val => {}</span>调用函数'
             }
           ]
         }

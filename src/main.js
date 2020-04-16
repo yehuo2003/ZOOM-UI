@@ -2,8 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import zoomUI from 'zoom-ui-1.0'
-import 'zoom-ui-1.0/lib/zoom-ui-1.0.css'
+import zoomUI from 'zoom-design'
+import 'zoom-design/lib/zoom-design.css'
 import Hljs from 'highlight.js'
 import customCode from "./components/customCode";
 import attribute from "./components/attribute";

@@ -106,6 +106,14 @@ export default {
               type: "String",
               text: "默认<span>270px</span>, 可自定义组件的宽度",
               text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
+            },
+            {
+              id: 10,
+              title: "隐藏清除按钮",
+              name: "hideClose",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则不显示清除按钮",
+              text2: '用法: 配置op对象, 设置 <span>hideClose: "true"</span>'
             }
           ]
         },
@@ -128,6 +136,14 @@ export default {
               type: "Function",
               text: "绑定自定义Icon点击事件",
               text2: '用法: 配置op对象, 并设置了自定义icon后, 设置 <span>onClick:val => {};</span> val为输入框内容'
+            },
+            {
+              id: 3,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

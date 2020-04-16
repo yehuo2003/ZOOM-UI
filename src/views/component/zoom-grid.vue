@@ -32,7 +32,6 @@
     <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
     <zoom-tabs class="data-drop" :value="checkTab" @change="checkChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="loadData">手动加载数据</zoom-button>
         <zoom-grid :op="gridOp3"></zoom-grid>
       </zoom-tab-item>
       <zoom-tab-item :index="1" label="代码">
@@ -344,10 +343,10 @@ export default {
               },
               methods: {
                 loadData() {
-                  this.$refs['grid'].showLoad(true);
+                  this.$zoom.loading.show();
                   setTimeout(() =&gt; {
                     this.$refs['grid'].load(this.list);
-                    this.$refs['grid'].showLoad(false);
+                    this.$zoom.loading.hide();
                   }, 2000);
                 }
               }
@@ -425,10 +424,10 @@ export default {
   },
   methods: {
     loadData() {
-      this.$refs['grid'].showLoad(true);
+      this.$zoom.loading.show();
       setTimeout(() => {
         this.$refs['grid'].load(this.list);
-        this.$refs['grid'].showLoad(false);
+        this.$zoom.loading.hide();
       }, 2000);
     },
     opChange(index) {

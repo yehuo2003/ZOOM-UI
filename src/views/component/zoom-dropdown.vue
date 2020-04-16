@@ -155,6 +155,14 @@ export default {
               type: "Function",
               text: "通过ref来获取当前下拉框, 再调用<span></span>load方法, 入参为数组。",
               text2: '用法: <span>this.$refs[属性].load(data)</span>'
+            },
+            {
+              id: 3,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

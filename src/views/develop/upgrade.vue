@@ -18,8 +18,8 @@ export default {
   data() {
     return {
       yarnPromote: 'yarn upgrade',
-      quire: 'npm view zoom-ui-1.0 versions',
-      promote: 'npm update zoom-ui-1.0 --save',
+      quire: 'npm view zoom-design versions',
+      promote: 'npm update zoom-design --save',
     };
   },
   methods: {

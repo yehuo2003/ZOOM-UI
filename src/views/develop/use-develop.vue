@@ -18,8 +18,8 @@ export default {
     return {
       use: '&lt;zoom-button&gt;测试按钮&lt;/zoom-button&gt;',
       quote:
-        `import zoomUI from 'zoom-ui-1.0';
-          import 'zoom-ui-1.0/lib/zoom-ui-1.0.css';
+        `import zoomUI from 'zoom-design';
+          import 'zoom-design/lib/zoom-design.css';
 
           Vue.use(zoomUI);`,
     };

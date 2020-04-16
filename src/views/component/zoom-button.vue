@@ -154,6 +154,14 @@ export default {
               type: "Function",
               text: "可绑定点击事件",
               text2: '用法: 配置op对象, 设置 <span>@click="自定义事件"</span>'
+            },
+            {
+              id: 2,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

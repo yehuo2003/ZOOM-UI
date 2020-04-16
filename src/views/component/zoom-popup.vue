@@ -71,10 +71,18 @@ export default {
             {
               id: 4,
               title: "确认按钮文字",
-              name: "btnText",
+              name: "confirmText",
               type: "String",
               text: "可选参数,如果不传默认为<span>确认</span>字样",
-              text2: '用法: <span>this.$zoom.popup({btnText: 确认})</span>'
+              text2: '用法: <span>this.$zoom.confim({confirmText: 确认})</span>'
+            },
+            {
+              id: 5,
+              title: "取消按钮文字",
+              name: "cancelText",
+              type: "String",
+              text: "可选参数,如果不传默认为<span>取消</span>字样",
+              text2: '用法: <span>this.$zoom.confim({cancelText: 取消})</span>'
             }
           ]
         },

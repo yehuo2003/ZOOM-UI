@@ -118,6 +118,14 @@ export default {
               type: "Function",
               text: "可绑定自定义函数",
               text2: '用法: 配置op对象, 设置 <span>onClick:(val, key) => {}</span>; <span>val</span>为输入框内容，<span>key</span>值为搜索框的值，若未配置则为undefined'
+            },
+            {
+              id: 3,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

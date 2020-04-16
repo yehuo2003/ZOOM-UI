@@ -14,8 +14,8 @@
 export default {
   data() {
     return {
-      npm: 'npm install zoom-ui-1.0 --save',
-      yarn: 'yarn add zoom-ui-1.0'
+      npm: 'npm install zoom-design --save',
+      yarn: 'yarn add zoom-design'
     };
   },
   methods: {
