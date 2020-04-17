@@ -25,7 +25,7 @@ export default {
           {title: '环境搭建', url: '#/develop/'},
           {title: '组件', url: '#/component/'},
           {title: '软件开发包', url: '#/SDK'},
-          {title: '更多'}
+          // {title: '更多'}
         ]
       },
     }

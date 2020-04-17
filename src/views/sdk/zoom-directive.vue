@@ -1,6 +1,5 @@
 <template>
   <div class="zoom-directive">
-    <h1>zoom内置指令</h1>
     <h2>directive</h2>
     <div class="tip">
       zoom-ui基于vue封装的扩展指令、目前有自动聚焦、自由拖拽、提示和懒加载功能<br>

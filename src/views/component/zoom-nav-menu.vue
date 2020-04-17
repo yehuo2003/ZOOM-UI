@@ -96,7 +96,7 @@ export default {
               text: '左侧迷你导航菜单, 默认显示,配置<span>hideTree</span>设置属性为<span>true</span>可隐藏'
             },
             {
-              id: 6,
+              id: 7,
               title: '自定义主题',
               name: 'theme',
               type: 'String',

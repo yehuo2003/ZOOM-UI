@@ -320,7 +320,6 @@ export default {
 .custom-zoom-dropdown {
   .data-drop {
     /deep/ .zoom-tabs-content.content-active {
-      min-height: 250px;
       .zoom-dropdown {
         margin: 10px 0;
       }

@@ -1,6 +1,5 @@
 <template>
   <div class="copy-clone">
-    <h1>深拷贝</h1>
     <h2>copy-clone</h2>
     <div class="tip">
       很多用户都因为引用类型对象, 无法进行深层次拷贝, 而引发不少BUG <br>

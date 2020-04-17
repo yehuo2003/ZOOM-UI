@@ -1,6 +1,5 @@
 <template>
   <div class="date-format">
-    <h1>日期格式化</h1>
     <h2>dateformat</h2>
     <div class="tip">
       zoom-ui封装的日期时间格式化组件, 用户可以自定义要格式化的时间格式

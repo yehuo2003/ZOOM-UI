@@ -1,6 +1,5 @@
 <template>
   <div class="internationalisation">
-    <h1>国际化</h1>
     <h2>internationalisation</h2>
     <div class="tip">
       zoom-ui内部封装的国际化组件, 目前zoom-ui已经引入了三种语言国际化，分别是：简体中文（zh）、英文（en）、日文（ja）<br>

@@ -1,6 +1,5 @@
 <template>
   <div class="install-develop">
-    <h1>环境准备</h1>
     <h2>Node.js</h2>
     <h3>安装zoom-ui前首先确保您的环境安装了Node.js，建议8.0以上版本</h3>
     <h3>如果未安装可以到官网 <a href="https://nodejs.org" target="_blank">https://nodejs.org</a> 进行下载安装</h3>

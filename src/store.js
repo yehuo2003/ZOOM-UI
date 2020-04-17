@@ -76,7 +76,7 @@ export default new Vuex.Store({
       ]}
     ],
     devList: [
-      {title: '环境准备', url: '#/develop/setting '},  //  安装
+      {title: '环境准备', url: '#/develop/setting'},  //  安装
       {title: '组件安装', url: '#/develop/install-develop'},
       {title: '快速上手', url: '#/develop/use-develop'},
       {title: '组件升级', url: '#/develop/upgrade'},  //  升级

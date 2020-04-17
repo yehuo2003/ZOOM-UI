@@ -1,6 +1,5 @@
 <template>
   <div class="dom-operation">
-    <h1>DOM操作</h1>
     <h2>dom-operation</h2>
     <div class="tip">
       zoom-ui内部封装的极简化轻量级的DOM操作工具, 可以用来简单查找, 操作DOM元素<br>

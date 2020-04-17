@@ -1,6 +1,5 @@
 <template>
   <div class="explanation">
-    <h1>SDK说明</h1>
     <h2>Software Development Kit</h2>
     <div class="tip">
       Software Development Kit软件开发包是zoom-ui基于vue和原生js，封装的一套函数库，其中包含一些常用的方法以及指令，已经集成到zoom-ui中，用户无需额外引入，即可直接调用。<br>

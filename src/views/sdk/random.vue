@@ -1,6 +1,5 @@
 <template>
   <div class="random">
-    <h1>随机数</h1>
     <h2>random</h2>
     <div class="tip">
       对于项目中经常会用到的随机数字, 还有随机颜色 <br>
