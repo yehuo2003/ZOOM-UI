@@ -11,7 +11,7 @@
     v-show="!hideSelect"
     ref="color-picker"
     @click="openPicker"
-    :disabled="disabled"
+    :disabled="isdisabled"
     class="select-color"
     :style="'background-color:' + color"
   ></button>
@@ -36,7 +36,9 @@ export default {
 		return {
 			isShowPicker:false,
 			wheel: this.$refs['wheel'] || '',
-			color: this.defaultColor,
+      color: this.defaultColor,
+      setDisable: false,  //  设置的禁用状态
+      isdisabled: false,
 			dom:{
 				hMarker: null,
 				slMarker: null,
@@ -50,7 +52,8 @@ export default {
 			width: 194
 		}
 	},
-  mounted(){
+  mounted() {
+    this.isdisabled = this.disabled;
     this.color = this.CheckIsColor(this.defaultColor);
     this.dom.container = this.$refs['color-picker-container'];
     this.dom.hMarker = this.$refs['h-marker'];
@@ -65,6 +68,13 @@ export default {
       this.eventBind();
         // Init color
       this.setColor(this.color);
+    },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.isdisabled = status;
     },
     /**
      * 验证颜色合法性
