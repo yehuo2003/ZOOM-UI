@@ -6,7 +6,6 @@ import store from './store'
 import zoomUI from './plugins/index.js'
 
 Vue.use(zoomUI)
-// Vue.use(plugin)
 
 Vue.config.productionTip = false
 

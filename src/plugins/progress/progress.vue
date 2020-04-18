@@ -181,5 +181,6 @@ export default {
   font-weight: 100;
   font-size: 12px;
   padding-right: 1em;
+  line-height: 20px;
 }
 </style>

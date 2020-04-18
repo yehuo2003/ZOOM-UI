@@ -66,8 +66,8 @@
         </zoom-tabs>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
-        <div>
-          tab3
+        <div style="width: 500px">
+          <zoom-progress-group ref="group" :op="groupOp"></zoom-progress-group>
         </div>
       </zoom-tab-item>
     </zoom-tabs>
@@ -79,6 +79,17 @@
   export default {
     data() {
       return {
+        groupOp: {
+          inside: true,
+          data: [
+            {progress: 40, status: 'danger'},
+            {progress: 20, status: 'info'},
+            {progress: 60, status: 'primary'},
+            {progress: 30, status: 'warning'},
+            {progress: 50, status: 'success'},
+          ]
+        },
+        progressNumber: 50,
         op: {
           position: 'right',	// 默认right 可选参数 left, right
           data: [	//	如果未设置data 则默认显示自定义内容
@@ -129,17 +140,24 @@
           ],
         },
         name: "",
-        curTab: 0,
+        curTab: 2,
         curTab2: 0
       }
     },
     methods: {
       ceshiClick() {
-        if (this.curTab > 1) {
-          this.curTab = 0;
-        } else {
-          this.curTab ++;
-        }
+        let data = [
+            {progress: 35, status: 'danger'},
+            {progress: 38, status: 'info'},
+            {progress: 50, status: 'primary'},
+            {progress: 100, status: 'warning'},
+          ]
+        this.$refs['group'].load(data);
+        // if (this.curTab > 1) {
+        //   this.curTab = 0;
+        // } else {
+        //   this.curTab ++;
+        // }
       },
       tesging() {
         this.$refs['form'].valid();

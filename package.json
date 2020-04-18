@@ -1,10 +1,13 @@
 {
   "name": "zoom-design",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "this is zoom-ui",
   "license": "MIT",
   "author": "linzhuming",
   "main": "lib/zoom-design.umd.js",
+  "files": [
+    "lib"
+  ],
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
