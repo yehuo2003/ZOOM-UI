@@ -10,6 +10,7 @@
       :disabled="options.disabled"
       :maxlength="options.maxLength"
       :minlength="options.minLength"
+      :id="zoomId"
     ></textarea>
     <span
       v-show="errMsg && error"

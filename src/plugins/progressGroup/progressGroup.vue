@@ -2,13 +2,13 @@
   <div class="zoom-progress-group">
     <div class="zoom-progress-container">
       <div class="text-progress">
-        <span v-for="(item, index) of list" :key="index" :class="item.status" :style="setText(item.progress, index)">{{setProgress(item.progress)}}</span>
+        <span v-for="(item, index) of list" :key="index" :class="item.status" :style="setText(item.progress, index)">{{ item.text || setProgress(item.progress)}}</span>
       </div>
       <p style="width: 0" class="progress"></p>
     </div>
     <div v-for="(item, index) of reverseList" :key="index" class="zoom-progress-container">
       <p :class="item.status" :style="{ width : item.progress + '%' }" class="progress">
-        <b v-show="inside">{{setProgress(item.progress)}}</b>
+        <b v-show="inside">{{ item.text || setProgress(item.progress)}}</b>
       </p>
     </div>
   </div>
@@ -19,7 +19,7 @@ export default {
   props: {
     op: {
       type: Object,
-      data: { //  进度条数据 [{progress: 40, status: 'danger'}]
+      data: { //  进度条数据 [{text: 'danger 400', progress: 40, status: 'danger'}] text如果没有默认显示progress
         type: Array,
         default: []
       },

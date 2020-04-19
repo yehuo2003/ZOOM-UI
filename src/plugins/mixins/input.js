@@ -1,7 +1,9 @@
 import { isKorean } from "../common/common.js";
 export default {
   props: {
+    id: String,
     op: {
+      id: String,
       placeHolder: {
         type: String,
         default: null
@@ -45,6 +47,7 @@ export default {
   },
   data() {
     return {
+      zoomId: null,
       currentValue:
         this.value === undefined || this.value === null ? "" : this.value,
       error: false,
@@ -64,6 +67,9 @@ export default {
         IconStyle: false
       }
     }
+  },
+  created () {
+    this.zoomId = this.op && this.op.id || this.id;
   },
   methods: {
     handleChild(e) {

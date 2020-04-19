@@ -2,21 +2,22 @@
   <div class="zoom-progress">
     <div class="zoom-progress-container">
       <p :class="statusProgress" :style="{ width : Numprogress + '%' }" class="progress">
-        <b v-if="inside">{{Numprogress}}%</b>
+        <b v-if="inside">{{ProgressText || Numprogress + '%'}}</b>
       </p>
     </div>
-    <span v-if="!inside" class="zoom-icon">{{Numprogress}}%</span>
+    <span v-if="!inside" class="zoom-icon">{{ProgressText || Numprogress + '%'}}</span>
   </div>
 </template>
 <script>
 export default {
   name: "zoom-progress",
   props: {
-    progress: Number,
+    progress: [Number, String],
+    text: [Number, String], //  显示的文字
     status: String,
     op: {
       status: String, // 开始时候的状态
-      planList: Array,
+      text: [Number, String],
       automatic: {
         //  有配置时可自动增长
         type: Object,
@@ -42,12 +43,12 @@ export default {
   },
   data() {
     return {
-      statusProgress: "",
+      statusProgress: '',
+      ProgressText: '',
       ValProgress: 0,
       start: 0,
       endVal: null,
-      inside: false,
-      planList: []
+      inside: false
     };
   },
   computed: {
@@ -59,6 +60,7 @@ export default {
     //   监听父组件状态变化
     status(newVal, oldVal) {
       this.statusProgress = newVal;
+      this.ProgressText = this.text;
     },
     progress(newVal, oldVal) {
       this.ValProgress = newVal;
@@ -68,24 +70,10 @@ export default {
       handler: function(val, oldVal) {
         if (val.progress) {
           this.ValProgress = val.progress;
+          this.ProgressText = val.text;
         }
       },
       deep: true
-    },
-    ValProgress(newVal, oldVal) {
-      //   根据数值不同呈现不同颜色, 遍历planList
-      if (this.planList && this.planList.length) {
-        let len = this.planList.length - 1;
-        let data = this.planList[this.start];
-        // 达到或超过临界点时变色
-        if (this.ValProgress >= data.progress) {
-          this.statusProgress = data.status;
-          this.start += 1;
-        }
-      }
-    },
-    planList(newVal, oldVal) {
-      this.start = 0;
     }
   },
   created() {
@@ -99,30 +87,19 @@ export default {
       if (this.op.inside) {
         this.inside = this.op.inside;
       }
-      if (this.op.planList) {
-        this.planList = this.op.planList;
-      }
       if (this.op.status) {
         this.statusProgress = this.op.status;
       }
-      if (this.op.automatic) {
-        //   结束值
-        let endVal = this.op.automatic.endVal || 100;
-        //   每次增长
-        let spacing = this.op.automatic.spacing || 1;
-        //   总结束时间
-        let endTime = this.op.automatic.endTime;
-        //   根据总结束时间计算每秒增长率
-        let time = Math.floor(endTime / endVal);
-        let timer = setInterval(() => {
-          this.ValProgress += spacing;
-          if (this.ValProgress === endVal) {
-            clearInterval(timer);
-          }
-        }, time);
+      if (this.op.text) {
+        this.ProgressText = this.op.text;
       }
-    } else if (this.status) {
-      this.statusProgress = this.status;
+    } else {
+      if (this.status) {
+        this.statusProgress = this.status;
+      }
+      if (this.text) {
+        this.ProgressText = this.text;
+      }
     }
   }
 };

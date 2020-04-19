@@ -27,6 +27,7 @@
       :disabled="options.disabled"
       :maxlength="options.maxLength"
       :minlength="options.minLength"
+      :id="zoomId"
       :class="error ? 'error' : ''"
     />
     <span

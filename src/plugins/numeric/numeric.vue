@@ -26,8 +26,9 @@
       :placeholder="placeholder ? placeholder : options.placeHolder"
       :readonly="options.readonly"
       :disabled="options.disabled"
-      type="number"
+      :id="zoomId"
       :class="error ? 'error' : '' "
+      type="number"
     />
     <span
       v-show="errMsg && error"

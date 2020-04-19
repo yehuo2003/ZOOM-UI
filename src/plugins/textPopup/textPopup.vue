@@ -6,6 +6,7 @@
       :disabled="options.disabled"
       :readonly="options.readonly"
       :placeholder="options.placeHolder"
+      :id="zoomId"
       :value="currentValue"
       v-show="isShow"
       ref="zoom-text"

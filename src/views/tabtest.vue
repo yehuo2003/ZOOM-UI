@@ -66,8 +66,11 @@
         </zoom-tabs>
       </zoom-tab-item>
       <zoom-tab-item :index="2" :label="'Tab3'">
-        <div style="width: 500px">
+        <div style="width: 800px">
           <zoom-progress-group ref="group" :op="groupOp"></zoom-progress-group>
+          <zoom-progress :op="proOp"></zoom-progress>
+          <zoom-button-group :op="btnOp"></zoom-button-group>
+          <zoom-input id="d111"></zoom-input>
         </div>
       </zoom-tab-item>
     </zoom-tabs>
@@ -79,14 +82,32 @@
   export default {
     data() {
       return {
+        btnOp: {
+          disabled: false,
+          resetTime: 5000,
+          type: 'danger',
+          data: [
+            {text: '按钮1', value: 1},
+            {text: '按钮2', value: 2},
+            {text: '按钮3', value: 3}
+          ],
+          onClick: (val, index) => {
+            console.log(val, 'val');
+            console.log(index, 'index');
+          }
+        },
+        proOp: {
+          progress: 80,
+          text: '五十555',
+        },
         groupOp: {
           inside: true,
           data: [
-            {progress: 40, status: 'danger'},
-            {progress: 20, status: 'info'},
-            {progress: 60, status: 'primary'},
-            {progress: 30, status: 'warning'},
-            {progress: 50, status: 'success'},
+            {text: 'danger 400', progress: 40, status: 'danger'},
+            {text: 'info 200', progress: 35, status: 'info'},
+            {text: 'primary 600', progress: 38, status: 'primary'},
+            {text: 'warning 300', progress: 44, status: 'warning'},
+            {text: 'success 500', progress: 65, status: 'success'},
           ]
         },
         progressNumber: 50,

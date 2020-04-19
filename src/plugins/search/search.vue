@@ -29,6 +29,7 @@
         :disabled="options.disabled"
         :maxlength="options.maxLength"
         :minlength="options.minLength"
+        :id="zoomId"
         type="text"
         class="zoom-input-search"
       />

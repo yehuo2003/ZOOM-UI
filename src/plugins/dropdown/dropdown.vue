@@ -26,7 +26,7 @@
       :readonly="options.readonly"
       :maxlength="options.maxLength"
       :minlength="options.minLength"
-      :id="id"
+      :id="zoomId"
       :class="error ? 'error' : ''"
       type="text"
       ref="downVal"
@@ -78,7 +78,6 @@ export default {
   name: "zoom-dropdown",
   mixins: [InputMixin],
   props: {
-    id: String,
     value: [String, Number, Array, Boolean],
     op: {
       isChecked: {  // 是否启用多选功能 默认false
