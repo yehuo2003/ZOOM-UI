@@ -107,7 +107,7 @@ export default {
               name: "type",
               type: "String",
               text: "可选参数: <span>primary</span> / <span>info</span> / <span>warning</span> / <span>success</span> / <span>danger</span>",
-              text2: '用法: <span>shape="可选参数"</span>, 默认: <span>plain</span>'
+              text2: '用法: 配置op对象, 设置 <span>type: "按钮状态"</span>, 或在组件标签上绑定<span>type= "按钮状态"</span>'
             },
             {
               id: 2,
@@ -115,7 +115,7 @@ export default {
               name: "shape",
               type: "String",
               text: "可选参数: <span>plain</span> / <span>round</span> / <span>circle</span>",
-              text2: '用法: <span>shape="可选参数"</span>, 默认: <span>plain</span>'
+              text2: '用法: 配置op对象, 设置 <span>shape: "按钮形状"</span>'
             },
             {
               id: 3,
@@ -123,7 +123,7 @@ export default {
               name: "size",
               type: "String",
               text: "可选参数: <span>mini</span> / <span>small</span> / <span>medium</span> / <span>large</span>",
-              text2: '用法: <span>size="参数"</span>'
+              text2: '用法: 配置op对象, 设置 <span>size: "属性"</span>'
             },
             {
               id: 4,
@@ -131,7 +131,7 @@ export default {
               name: "reset-time",
               type: "Number",
               text: "默认: 1000 毫秒",
-              text2: '用法: <span>:reset-time="时间"</span>'
+              text2: '用法: <span>:reset-time="时间"</span>或者配置op对象, 设置 <span>resetTime: "时间"</span>'
             },
             {
               id: 5,

@@ -27,6 +27,7 @@ export default new Vuex.Store({
       ]},
       {title: '表单组件', children: [
         {title: 'Button按钮', url: '#/component/zoom-button'},
+        {title: 'ButtonGroup按钮群组', url: '#/component/zoom-button-group'},
         {title: 'Input输入框', url: '#/component/zoom-input'},
         {title: 'Dropdown下拉框', url: '#/component/zoom-dropdown'},
         {title: 'Search搜索框', url: '#/component/zoom-search'},
@@ -71,6 +72,7 @@ export default new Vuex.Store({
         {title: 'Tag标签', url: '#/component/zoom-tag'},
         {title: 'Link文字链接', url: '#/component/zoom-link'},
         {title: 'Progress进度条', url: '#/component/zoom-progress'},
+        {title: 'ProgressGroup进度群组', url: '#/component/zoom-progress-group'},
         {title: 'colorPicker取色器', url: '#/component/zoom-color-picker'},
         {title: 'Gallery画廊幻灯片', url: '#/component/zoom-gallery'}
       ]}

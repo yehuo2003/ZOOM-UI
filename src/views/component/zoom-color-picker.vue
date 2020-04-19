@@ -69,6 +69,14 @@ export default {
               type: "Function",
               text: "可以监听取色器值的变化, 取的值默认为16进制颜色",
               text2: '用法: 在组件标签上, 绑定属性<span>@onChange="监听方法"</span>'
+            },
+            {
+              id: 2,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

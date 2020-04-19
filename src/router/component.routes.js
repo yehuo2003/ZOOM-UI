@@ -17,6 +17,7 @@ export default {
     { path: '/component/zoom-tabs', component: () => import('../views/component/zoom-tabs.vue') },  //  tabs
     { path: '/component/zoom-panel', component: () => import('../views/component/zoom-panel.vue') },  //  panel
     { path: '/component/zoom-button', component: () => import('../views/component/zoom-button.vue') },  //  button
+    { path: '/component/zoom-button-group', component: () => import('../views/component/zoom-button-group.vue') },  //  button-group
     { path: '/component/zoom-input', component: () => import('../views/component/zoom-input.vue') },  //  input
     { path: '/component/zoom-dropdown', component: () => import('../views/component/zoom-dropdown.vue') },  //  dropdown
     { path: '/component/zoom-search', component: () => import('../views/component/zoom-search.vue') },  //  search
@@ -50,6 +51,7 @@ export default {
     { path: '/component/zoom-tag', component: () => import('../views/component/zoom-tag.vue') },  //  tag
     { path: '/component/zoom-link', component: () => import('../views/component/zoom-link.vue') },  //  link
     { path: '/component/zoom-progress', component: () => import('../views/component/zoom-progress.vue') },  //  progress
+    { path: '/component/zoom-progress-group', component: () => import('../views/component/zoom-progress-group.vue') },  //  progress-group
     { path: '/component/zoom-gallery', component: () => import('../views/component/zoom-gallery.vue') },  //  gallery
     { path: '/component/zoom-color-picker', component: () => import('../views/component/zoom-color-picker.vue') },  //  color-picker
     { path: '/test', component: () => import('../views/test.vue') },

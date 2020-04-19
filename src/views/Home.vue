@@ -22,11 +22,9 @@
         <div v-for="item of 10" :key="item"></div>
       </div>
     </div>
-    <div class="go-to-btn go-to-btn-primary go-to-btn-ghost go-to-btn-shine">
-      <router-link to="/develop">
-        <!-- 进入 -->
-          进入
-      </router-link>
+    <div @click="$router.push('/develop')" class="go-to-btn go-to-btn-primary go-to-btn-ghost go-to-btn-shine">
+      <!-- 进入 -->
+      进入
     </div>
   </div>
 </template>
