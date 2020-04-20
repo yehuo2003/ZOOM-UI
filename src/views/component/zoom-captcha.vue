@@ -55,7 +55,7 @@ export default {
               name: "RandomSrc",
               type: "Function",
               text: "在op对象中定义，该方法必须返回一个图片地址，用于显示验证码所需要的图片，每次刷新图片时候都会调用一次该方法",
-              text2: '用法: 配置op对象, 在op对象里定义该方法，方法需返回一个有效的图片地址'
+              text2: '用法: 配置op对象, 在op对象里定义该方法 <span>RandomSrc: () => {return 图片地址}</span>，方法需返回一个有效的图片地址'
             },
             {
               id: 2,
@@ -63,7 +63,7 @@ export default {
               name: "onSuccess",
               type: "Function",
               text: "在op对象中定义，当用户验证成功后，可以在该方法中监听到，并做下一步逻辑处理",
-              text2: '用法: 配置op对象, 在op对象里定义该方法'
+              text2: '用法: 配置op对象, 在op对象里定义该方法 <span>onSuccess: () => {}</span>'
             },
             {
               id: 3,
@@ -71,7 +71,7 @@ export default {
               name: "onFailed",
               type: "Function",
               text: "在op对象中定义，当用户验证失败后，可以在该方法中监听到，并做下一步逻辑处理",
-              text2: '用法: 配置op对象, 在op对象里定义该方法'
+              text2: '用法: 配置op对象, 在op对象里定义该方法 <span>onFailed: () => {}</span>'
             }
           ]
         }

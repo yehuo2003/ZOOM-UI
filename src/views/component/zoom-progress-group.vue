@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-zoom-progress">
+  <div class="custom-zoom-progress-group">
     <!-- 普通 -->
     <h2>使用方法</h2>
     <div class="tip">
@@ -178,17 +178,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.custom-zoom-progress {
-  .basic {
-    /deep/ .content-active {
-      p {
-        line-height: 1.2;
-      }
-      .zoom-progress-container {
-        width: 90%;
-      }
-    }
-  }
-}
-</style>

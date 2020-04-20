@@ -57,7 +57,7 @@ export default {
               name: "IconStyle",
               type: "String",
               text: "配置了自定义icon后, 在输入框最右边显示, 可以配合<span>onClick</span>点击事件一起使用",
-              text2: '>用法: 配置op对象, 设置 <span>IconStyle="icon类名"</span>'
+              text2: '用法: 配置op对象, 设置 <span>IconStyle="icon类名"</span>'
             },
             {
               id: 4,

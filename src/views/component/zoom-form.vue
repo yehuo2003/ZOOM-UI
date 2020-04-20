@@ -34,10 +34,10 @@
             <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
           </zoom-form-item>
           <zoom-form-item inline="true" label="密码">
-            <zoom-input></zoom-input>
+            <zoom-input :op="passwordOp"></zoom-input>
           </zoom-form-item>
           <zoom-form-item label="下拉框">
-            <zoom-dropdown></zoom-dropdown>
+            <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
           </zoom-form-item>
           <zoom-form-item :require="true" label="搜索">
             <zoom-search :op="inputOp"></zoom-search>
@@ -154,6 +154,17 @@ export default {
           }
         }
       },
+      passwordOp: {
+        type: 'password'
+      },
+      dropdownOp: {
+        data: [
+          {text: '北京', value: 1},
+          {text: '上海', value: 2},
+          {text: '深圳', value: 3},
+          {text: '广州', value: 4}
+        ]
+      },
       opTab: 0,
       curTab: 0,
       formCustom:
@@ -164,10 +175,10 @@ export default {
                   &lt;zoom-input :op="inputOp" placeholder="请输入名字"&gt;&lt;/zoom-input&gt;
                 &lt;/zoom-form-item&gt;
                 &lt;zoom-form-item inline="true" label="密码"&gt;
-                  &lt;zoom-input&gt;&lt;/zoom-input&gt;
+                  &lt;zoom-input :op="passwordOp"&gt;&lt;/zoom-input&gt;
                 &lt;/zoom-form-item&gt;
                 &lt;zoom-form-item label="下拉框"&gt;
-                  &lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;
+                  &lt;zoom-dropdown :op="dropdownOp"&gt;&lt;/zoom-dropdown&gt;
                 &lt;/zoom-form-item&gt;
                 &lt;zoom-form-item :require="true" label="搜索"&gt;
                   &lt;zoom-search :op="inputOp"&gt;&lt;/zoom-search&gt;
@@ -215,6 +226,17 @@ export default {
                         return true
                       }
                     }
+                  },
+                  passwordOp: {
+                    type: 'password'
+                  },
+                  dropdownOp: {
+                    data: [
+                      {text: '北京', value: 1},
+                      {text: '上海', value: 2},
+                      {text: '深圳', value: 3},
+                      {text: '广州', value: 4}
+                    ]
                   }
                 }
               },

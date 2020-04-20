@@ -73,7 +73,7 @@
     </zoom-tabs>
     <!-- op -->
     <h2>自定义配置属性</h2>
-    <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如type和按钮禁用等</p>
+    <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如按钮类型和按钮禁用等。当配置了op属性后，标签内的属性将会被覆盖失效</p>
     <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-button :op="op">按钮1</zoom-button>
@@ -115,7 +115,7 @@ export default {
               name: "shape",
               type: "String",
               text: "可选参数: <span>plain</span> / <span>round</span> / <span>circle</span>",
-              text2: '用法: 配置op对象, 设置 <span>shape: "按钮形状"</span>'
+              text2: '用法: 配置op对象, 设置 <span>shape: "按钮形状"</span>, 或在组件标签上绑定<span>shape="按钮形状"</span>'
             },
             {
               id: 3,
@@ -123,7 +123,7 @@ export default {
               name: "size",
               type: "String",
               text: "可选参数: <span>mini</span> / <span>small</span> / <span>medium</span> / <span>large</span>",
-              text2: '用法: 配置op对象, 设置 <span>size: "属性"</span>'
+              text2: '用法: 配置op对象, 设置 <span>size: "属性"</span>, 或在组件标签上绑定<span>size="属性"</span>'
             },
             {
               id: 4,
@@ -231,7 +231,7 @@ export default {
       resetBtn: `
         &lt;zoom-button&gt;正常按钮&lt;/zoom-button&gt;
         &lt;zoom-button reset-time="5000"&gt;禁用5秒&lt;/zoom-button&gt;
-        &lt;zoom-button r/78eset-time="0"&gt;禁用0秒&lt;/zoom-button&gt;`,
+        &lt;zoom-button reset-time="0"&gt;禁用0秒&lt;/zoom-button&gt;`,
       btn: `
         &lt;zoom-button&gt;普通按钮&lt;/zoom-button&gt;
         &lt;zoom-button type="primary"&gt;普通按钮&lt;/zoom-button&gt;

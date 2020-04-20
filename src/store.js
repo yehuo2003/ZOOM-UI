@@ -82,6 +82,7 @@ export default new Vuex.Store({
       {title: '组件安装', url: '#/develop/install-develop'},
       {title: '快速上手', url: '#/develop/use-develop'},
       {title: '组件升级', url: '#/develop/upgrade'},  //  升级
+      {title: '组件使用', url: '#/component'},  //  跳转组件
     ],
     sdkList: [
       {title: 'SDK说明', url: '#/SDK/explanation'},  //  说明
@@ -94,6 +95,7 @@ export default new Vuex.Store({
         {title: '深拷贝', url: '#/SDK/copy-clone'}, //  深拷贝
         {title: '随机数/颜色', url: '#/SDK/random'}, //  随机数
       ]},
+      {title: '组件使用', url: '#/component'},  //  跳转组件
     ]
   },
   mutations: {}

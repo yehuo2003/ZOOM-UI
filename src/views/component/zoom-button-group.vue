@@ -15,10 +15,6 @@
         <custom-code :html="btn"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <div class="tip">
-      zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
-      组件暂不支持页面渲染后再改变属性，v-model除外。
-    </div>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
