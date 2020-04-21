@@ -47,6 +47,7 @@ export default {
       title: this.$zoom.$t('captcha.testing'),  //  请完成安全验证
       hide: true,
       disabled: false,
+      setDisable: false,
       cv: {
         w: 310,
         h: 155
@@ -96,11 +97,16 @@ export default {
       this.initImg();
       this.bindEvents();
     },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.disabled = status;
+    },
     onSuccess() {
-      if (this.op.onSuccess) {
-        // 接收成功信息返回给父组件
-        this.op.onSuccess();
-      }
+      // 接收成功信息返回给父组件
+      this.op && this.op.onSuccess();
       this.disabled = true;
       this.$zoom.alert({
         type: "success",
@@ -109,10 +115,8 @@ export default {
       this.title = '验证成功'
     },
     onFail() {
-      if (this.op.onFailed) {
-        // 接收失败信息返回给父组件
-        this.op.onFailed();
-      }
+      // 接收失败信息返回给父组件
+      this.op && this.op.onFailed();
       this.$zoom.alert({
         type: "warning",
         content: this.$zoom.$t('captcha.testing_error') // 验证失败, 请重试！

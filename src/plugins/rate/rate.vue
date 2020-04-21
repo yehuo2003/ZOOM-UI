@@ -27,6 +27,7 @@ export default {
     return {
       mode: "stars",
       disabled: false,
+      setDisable: false,
       rateList: [5, 4, 3, 2, 1],
       status: null
     };
@@ -51,6 +52,13 @@ export default {
     }
   },
   methods: {
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.disabled = status;
+    },
     load(data) {
       if (data) {
         this.rateList = data;

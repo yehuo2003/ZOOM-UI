@@ -63,6 +63,7 @@ export default {
 .zoom-user-info:hover .user-info-title .icon-up {
   display: block;
   min-height: 30px;
+  cursor: pointer;
 }
 .zoom-user-info .zoom-user-spread {
   margin-top: 5px;

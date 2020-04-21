@@ -70,8 +70,8 @@
           <zoom-progress-group ref="group" :op="groupOp"></zoom-progress-group>
           <zoom-progress :op="proOp"></zoom-progress>
           <zoom-button-group :op="btnOp"></zoom-button-group>
-          <zoom-input id="d111"></zoom-input>
         </div>
+        <zoom-date></zoom-date>
       </zoom-tab-item>
     </zoom-tabs>
     <zoom-button @click="ceshiClick">ceshi </zoom-button>

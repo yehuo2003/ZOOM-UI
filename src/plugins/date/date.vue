@@ -11,8 +11,8 @@
       </div>
     </div>
 
-    <div v-if="show" :class="{positionTop:positionTop}" class="zoom-date-wrap">
-      <div class="zoom-date-header" @click.stop>
+    <div v-if="show" :class="{positionTop}" class="zoom-date-wrap">
+      <div class="zoom-date-header">
         <span
           v-if="!selectMonth"
           class="zoom-date-header-btn zoom-date-header-btn-pre"
@@ -116,6 +116,7 @@ export default {
     return {
       moment: "",
       disabled: false,
+      setDisable: false,
       dateTime: "", //  显示的时间
       show: false, // 控制日历面板的显示与隐藏
       selectYear: false, // 控制年份的面板的显示和隐藏
@@ -215,6 +216,13 @@ export default {
       const date = new Date();
       let year = date.getFullYear();
       this.setYear(year);
+    },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.disabled = status;
     },
     /**
      * 将时间转化为具体的 年、月、日、星期

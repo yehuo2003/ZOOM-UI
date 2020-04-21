@@ -263,10 +263,12 @@ export default {
 }
 @-webkit-keyframes tree-menu {
   from {
+    opacity: 0;
     -webkit-transform: translateY(-100%);
             transform: translateY(-100%);
   }
   to {
+    opacity: 1;
     -webkit-transform: translateY(0%);
             transform: translateY(0%);
   }
