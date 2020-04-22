@@ -135,7 +135,7 @@ export default {
 .custom-zoom-internationalisation {
   .data-drop {
     /deep/ .zoom-tabs-content.content-active {
-      min-height: 150px;
+      min-height: 120px;
     }
   }
 }

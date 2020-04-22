@@ -22,6 +22,10 @@
         <div v-for="item of 10" :key="item"></div>
       </div>
     </div>
+    <div class="midden">
+      <img src="./component/static/logo.png" alt="logo">
+      <h1>ZOOM-UI</h1>
+    </div>
     <div @click="$router.push('/develop')" class="go-to-btn go-to-btn-primary go-to-btn-ghost go-to-btn-shine">
       <!-- 进入 -->
       进入

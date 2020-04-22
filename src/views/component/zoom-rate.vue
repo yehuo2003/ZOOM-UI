@@ -60,6 +60,14 @@ export default {
               type: "Array",
               text: "可自定义要绑定的数据, 用<span>v-model</span>动态获取",
               text2: '用法: 配置op属性, 设置<span>data: []</span>'
+            },
+            {
+              id: 4,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }

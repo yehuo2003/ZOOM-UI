@@ -25,6 +25,9 @@
   right: 0;
   bottom: 0;
 }
+.zoom-home>.midden {
+  display: none;
+}
 .zoom-showcase {
   display: grid;
   grid-template-rows: 20px calc(var(--font-size) * 1.25rem) 20px;

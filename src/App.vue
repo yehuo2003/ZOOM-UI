@@ -131,6 +131,21 @@ export default {
     h1 {
       font-size: 25px !important;
     }
+    .zoom-showcase {
+      display: none;
+    }
+    .zoom-home>.midden {
+      display: block;
+      img {
+        width: 200px;
+      }
+      h1 {
+        color: #fff;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 40px !important;
+      }
+    }
     .home-layout>.zoom-aside {
       width: 0 !important;
     }

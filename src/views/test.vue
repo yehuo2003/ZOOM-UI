@@ -1,65 +1,35 @@
 <template>
   <div>
-    <!-- hover按钮 -->
-    <!-- <button class="btn btn-primary btn-ghost btn-shine">
-      hover me
-    </button> -->
-
-    <!-- ×动画 -->
-    <!-- <input type="checkbox" id="burger-toggle">
-    <label for="burger-toggle" class="burger-menu">
-      <div class="line"></div>
-      <div class="line"></div>
-      <div class="line"></div>
-    </label> -->
-    <!-- <div class="overlay"></div> -->
-
-    <!-- <form>
-      <fieldset class="todo-list">
-        <legend class="todo-list__title">My Special Todo List</legend>
-        <label class="todo-list__label">
-          <input type="checkbox" name="" id="" />
-          <i class="check"></i>
-          <span>Make awesome CSS animation</span>
-        </label>
-        <label class="todo-list__label">
-          <input type="checkbox" name="" id="" />
-          <i class="check"></i>
-          <span>Watch awesome bangumi</span>
-        </label>
-        <label class="todo-list__label">
-          <input type="checkbox" name="" id="" />
-          <i class="check"></i>
-          <span>Encounter awesome people</span>
-        </label>
-        <label class="todo-list__label">
-          <input type="checkbox" name="" id="" />
-          <i class="check"></i>
-          <span>Be an awesome man</span>
-        </label>
-      </fieldset>
-    </form> -->
+    <zoom-steps :op="stepsOp" ref="steps"></zoom-steps>
+    <zoom-button @click="handleClick('prev')">上一步</zoom-button>
+    <zoom-button @click="handleClick('next')" type="primary">下一步</zoom-button>
   </div>
 </template>
 <script>
   export default {
     data () {
       return {
+        stepsOp: {
+          active: 7,	//	要激活的下标, 和index绑定
+          disabled: false,  //  是否禁止点击 默认false
+          data:  [	//	类型为'timeLine'时候,time属性有效 time属性要传标准时间格式 类型为advanced时候,可自定义count和type,type属性有'done','doing'
+            {index: 5, name: 'Basic Info.'},
+            {index: 6, name: 'Vics tab.'},
+            {index: 7, name: 'not done.'},
+            {index: 8, name: 'not done2'}
+          ]
+        },
       }
     },
     methods: {
-      handleClick() {
-        this.$zoom.tip({
-        // title: '标题',
-        // content: '内容',
-        customComponent: 'zoom-input',
-        customProps: { // 要传入的参数
-          open: '开启',
-          close: '关闭',
-        },
-        target: this.$refs['btn']	//	目标元素
-      })
-      }
+      handleClick(val) {
+        if (val === 'next') {
+          // 将激活条目往前移一格	如果目前没有激活的条目则无效
+          this.$refs['steps'].next();
+        } else {
+          this.$refs['steps'].prev(); // 将激活条目往后移一格 如果目前步骤条已经全部完成则无效
+        }
+      },
     }
   }
 </script>

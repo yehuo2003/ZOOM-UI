@@ -89,6 +89,14 @@ export default {
               type: "Function",
               text: "可以动态设置当前时间, 需要传入时间类型数据",
               text2: '用法: 在标签中设置自定义<span>ref</span>属性, 通过<span>this.$refs[自定义属性].load(日期对象)</span> 来动态设置当前日期'
+            },
+            {
+              id: 5,
+              title: "设置禁用状态",
+              name: "setDisabled",
+              type: "Function",
+              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
+              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }
