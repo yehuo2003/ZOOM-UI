@@ -71,7 +71,7 @@
           <zoom-progress :op="proOp"></zoom-progress>
           <zoom-button-group :op="btnOp"></zoom-button-group>
         </div>
-        <zoom-date></zoom-date>
+        <zoom-steps ref="steps" :op="stepsOp" @change="stepsChange"></zoom-steps>
       </zoom-tab-item>
     </zoom-tabs>
     <zoom-button @click="ceshiClick">ceshi </zoom-button>
@@ -82,6 +82,19 @@
   export default {
     data() {
       return {
+        stepsOp: {
+          active: 7,	// 要激活的下标, 和index绑定
+          disabled: false,  // 是否禁止点击 默认false
+          data:  [	// 类型为advanced时候,可自定义count和type,type属性有'done','doing'
+            {index: 5, count: 4, type: 'success', name: 'Basic Info.'},
+            {index: 6, count: 6, type: 'warning', name: 'Vics tab.'},
+            {index: 7, count: 8, type: 'danger', name: 'not done.'},
+            {index: 8, count: 2, type: 'info', name: 'not done2'}
+          ],
+          onClick: val => {	//	鼠标点击事件返回的结果
+            console.log('click', val);
+          }
+        },
         btnOp: {
           disabled: false,
           resetTime: 5000,
@@ -166,14 +179,19 @@
       }
     },
     methods: {
+      stepsChange(val) {
+      // 监听数据变化, 返回index值
+        console.log('stepsChange', val);
+      },
       ceshiClick() {
-        let data = [
-            {progress: 35, status: 'danger'},
-            {progress: 38, status: 'info'},
-            {progress: 50, status: 'primary'},
-            {progress: 100, status: 'warning'},
-          ]
-        this.$refs['group'].load(data);
+        this.$refs['steps'].setDisabled();
+        // let data = [
+        //     {progress: 35, status: 'danger'},
+        //     {progress: 38, status: 'info'},
+        //     {progress: 50, status: 'primary'},
+        //     {progress: 100, status: 'warning'},
+        //   ]
+        // this.$refs['group'].load(data);
         // if (this.curTab > 1) {
         //   this.curTab = 0;
         // } else {

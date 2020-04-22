@@ -10,6 +10,15 @@
 // }
 
 module.exports = {
+  pwa: {
+    iconPaths: {
+      favicon32: './favicon.ico',
+      favicon16: './favicon.ico',
+      appleTouchIcon: './favicon.ico',
+      maskIcon: './favicon.ico',
+      msTileImage: './favicon.ico'
+    }
+  },
   // 基本路径
   // publicPath: './', //  原先2.x是baseurl  现在publicPath代替
   // outputDir: 'dist',

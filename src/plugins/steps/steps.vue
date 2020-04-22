@@ -91,7 +91,9 @@ export default {
   },
   data() {
     return {
-      list: []
+      list: [],
+      setDisable: false,  //  设置的禁用状态
+      isdisabled: false,
     };
   },
   created() {
@@ -105,9 +107,12 @@ export default {
      */
     load(data) {
       let arr = [];
+      if (this.op && this.op.disabled) {
+        this.isdisabled = this.disabled;
+      }
       if (data && data.length) {
         arr = this.$zoom.clone(data);
-      } else if (this.op.data && this.op.data.length) {
+      } else if (this.op && this.op.data && this.op.data.length) {
         arr = this.$zoom.clone(this.op.data);
       } else {
         return;
@@ -164,7 +169,7 @@ export default {
      * @description 根据点击的索引判断, 点击条目的前面按钮状态都变成成功, 点击的条目变成进行中, 后面的为未完成
      */
     handleClick(e) {
-      if (this.op.disabled) {
+      if (this.isdisabled) {
         return;
       }
       let arr = this.$zoom.clone(this.list);
@@ -247,11 +252,35 @@ export default {
       this.list = arr;
     },
     /**
+     * @function 取消
+     * @description 把所有选中状态全部取消
+     * 循环列表, 把所有状态都设置为空
+     */
+    clear() {
+      let list = this.$zoom.clone(this.list);
+      list.forEach(item => {
+        item.status = '';
+      })
+      this.list = list;
+    },
+    /**
+     * @function 全部完成
+     * @description 把所有条目设置为完成状态
+     * 循环列表, 把所有状态都设置为done
+     */
+    doneAll() {
+      let list = this.$zoom.clone(this.list);
+      list.forEach(item => {
+        item.status = 'done';
+      })
+      this.list = list;
+    },
+    /**
      * @function advancedClick点击事件
      * @description 只将用户点击的条目激活
      */
     advancedClick(e) {
-      if (this.op.disabled) {
+      if (this.isdisabled) {
         return;
       }
       this.list.forEach(item => {
@@ -261,6 +290,17 @@ export default {
           item.status = "";
         }
       });
+      if (this.op.onClick) {
+        this.op.onClick(e);
+      }
+      this.$emit("change", e.index);
+    },
+    /**
+     * 动态设置禁用属性 传true禁用 false解除
+     */
+    setDisabled(status) {
+      this.setDisable = status;
+      this.isdisabled = status;
     },
     // 状态格式化
     setStatus(val) {
