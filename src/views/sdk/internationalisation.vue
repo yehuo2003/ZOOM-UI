@@ -6,6 +6,8 @@
       用户可以根据自己需要，添加自己需要的国际化语言或者国际化文件，并且可以在项目内自由切换国际化语言
     </div>
     <h3>获取当前国际化</h3>
+    <span>{{$zoom.$t("test.iter2")}}</span>
+    <span>{{$zoom.$t("test.iter")}}</span>
     <p>通过调用<span>this.$zoom.getLanguage()</span>, 返回当前所有国际化信息</p>
     <custom-code :html="getLanguage"></custom-code>
     <h3>设置/修改国际化</h3>
@@ -53,16 +55,10 @@ export default {
       use:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;
+              &lt;span&gt;{{'file.upload_error', { errCount: 5 })}}&lt;/span&gt;   // 上传失败5个文件！
+              &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;   // 请输入关键词
             &lt;/div&gt;
-          &lt;/template&gt;
-          &lt;script&gt;
-            export default {
-              created() {
-                console.log(this.$zoom.$t("search.msg"), 'this.$zoom.$t("search.msg")');
-              }
-            }
-          &lt;/script&gt;`,
+          &lt;/template&gt;`
     };
   }
 };

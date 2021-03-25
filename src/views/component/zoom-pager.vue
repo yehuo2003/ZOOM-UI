@@ -119,6 +119,7 @@ export default {
         },
         skip: (val, pageVal) => {
           console.log('当前页是',val);	//点击跳转触发获取当前页
+          console.log('分页数据是', pageVal); //  分页的数据
         }
       },
       miniOp: {
@@ -179,6 +180,7 @@ export default {
                     },
                     skip: (val, pageVal) =&gt; {
                       console.log('当前页是',val);	//点击跳转触发获取当前页
+                      console.log('分页数据是', pageVal); //  分页的数据
                     }
                   }
                 }

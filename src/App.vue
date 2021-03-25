@@ -4,21 +4,27 @@
       <header slot="header">
         <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
-          <zoom-search v-model="searchVal" @search="search"></zoom-search>
+          <zoom-search v-model="searchVal" :op="searchOp" @search="search"></zoom-search>
           <zoom-internationalisation></zoom-internationalisation>
         </div>
       </header>
       <router-view slot="main"/>
     </zoom-layout>
+    <div class="my-mragin-bottom my-mragin-top my-color my-font-size"></div>
   </div>
 </template>
 
 <script>
+import zh from './locale/zh_cn'
+import en from './locale/es_en'
 export default {
   data() {
     return {
       searchVal: '',
       list: [],
+      searchOp: {
+        placeHolder: '搜索组件',
+      },
       titleOp: {  //  顶部导航栏
         data: [
           {title: '首页', url: '#/'},
@@ -31,6 +37,14 @@ export default {
     }
   },
   created () {
+    let lang = {
+      locale: 'zh',
+      detail: {
+          zh: Object.assign(this.$zoom.getLanguage().detail.zh, zh),
+          en: Object.assign(this.$zoom.getLanguage().detail.en, en)
+      }
+    }
+    this.$zoom.setLanguage(lang);
     let list = [];
     this.$store.state.componetList.forEach(item => {
       list.push(item);
@@ -195,5 +209,27 @@ export default {
       display: none;
     }
   }
+}
+.my-back-color {
+  background-color: gray;
+}
+.my-font-size {
+  font-size: 14px;
+  color: #333;
+}
+.my-mragin-right {
+  margin-right: 10px;
+}
+.my-mragin-left {
+  margin-left: 10px;
+}
+.my-mragin-top {
+  margin-top: 10px;
+}
+.my-mragin-bottom {
+  margin-bottom: 10px;
+}
+.my-color {
+  color: red;
 }
 </style>
