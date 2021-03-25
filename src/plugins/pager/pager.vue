@@ -25,9 +25,9 @@
     <span
       v-show="index != 5"
       v-if="index != 7"
-      v-for="(page, index) of  showPage"
+      v-for="(page, index) of showPage"
       :key="index"
-      :class="{ 'active':(changeStart + page - 1) === currentPage}"
+      :class="{ 'active':(changeStart + page - 1) === currentPage, 'omission': index === 6 && showPage >= 10}"
       @click="changeShow(changeStart + page - 1, index)"
       class="page"
     >{{index === 6 && showPage >= 10 ? '...' : (changeStart + page - 1)}}</span>
@@ -232,6 +232,9 @@ export default {
       this.$emit("input", curPage);
     },
     changeShow(page, index) {
+      if (index === 6) {
+        return
+      }
       this.currentPage = page;
       this.$emit("input", page);
     },
@@ -351,6 +354,13 @@ export default {
   color: #409eff;
   border: 1px solid #409eff;
   cursor: default;
+}
+.zoom-pager span.page.omission {
+  border: 0;
+  cursor: auto;
+}
+.zoom-pager span.page.omission:hover {
+  color: #666;
 }
 
 .zoom-pager span.zoom-prev,

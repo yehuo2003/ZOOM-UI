@@ -1,98 +1,62 @@
 # zoom-ui
 
-## Usage example
+## 环境准备
+
+### Node.js
+
+**安装zoom-ui前首先确保您的环境安装了Node.js，建议8.0以上版本**
+**如果未安装可以到官网 https://nodejs.org 进行下载安装**
+
+查看Node.js版本可以通过Win + R 打开cmd命令行，输入命令查看Node.js版本：
 
 ```js
 
-npm install zoom-ui-1.0 --save
+node -v
 
 ```
 
-main.js
+或者
 
 ```js
-import zoomUI from 'zoom-ui-1.0';
+node --version
+```
+
+## 组件安装
+
+### 在要安装的 Vue 项目根目录下运行
+**使用npm安装**
+通过Win + R 打开cmd命令行，输入命令:
+
+```js
+npm install zoom-design --save
+```
+**使用yarn安装**
+```js
+yarn add zoom-design
+```
+## 引入组件
+**完整引入**
+在main.js文件中全局注册，方法如下：
+```js
+import zoomUI from 'zoom-design';
+import 'zoom-design/lib/zoom-design.css';
+
 Vue.use(zoomUI);
-
-import '../node_modules/zoom-ui-1.0/lib/zoom-ui-1.0.css'
 ```
+
+## 组件使用
+
+全局导入后，可以直接通过标签使用，方法如下：
 
 *.vue
 
 ```html
 <template>
   <div class="hello">
-    <zoom-row>
-      <zoom-col span="4">
-        <zoom-card>
-          <zoom-header>
-            按钮组件
-          </zoom-header>
-          <zoom-container>
-            <zoom-button :op="btnOp">按钮</zoom-button>
-          </zoom-container>
-        </zoom-card>
-      </zoom-col>
-      <zoom-col span="4">
-        <zoom-card>
-          <zoom-header>
-            上传头像
-          </zoom-header>
-          <zoom-container>
-            <zoom-upload></zoom-upload>
-          </zoom-container>
-        </zoom-card>
-      </zoom-col>
-      <zoom-col span="4">
-        <zoom-card>
-          <zoom-header>
-            随机验证码
-          </zoom-header>
-          <zoom-container>
-            <zoom-testing></zoom-testing>
-          </zoom-container>
-        </zoom-card>
-      </zoom-col>
-    </zoom-row>
-    <zoom-msg ref="msg"></zoom-msg>
+    <zoom-button>测试按钮</zoom-button>
+    输入框: <zoom-input></zoom-input>
   </div>
 </template>
 
-<script>
-import Vue from 'vue';
-
-export default Vue.extend({
-  name: 'HelloWorld',
-  props: {
-    msg: String,
-  },
-  data() {
-    return {
-      btnOp: {
-        onClick:() => {
-          this.$refs['msg'].msgPlugin('test demo',2000);
-        }
-      }
-    }
-  },
-});
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
-
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-## License
-
-[MIT](https://opensource.org/licenses/MIT)
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+以上

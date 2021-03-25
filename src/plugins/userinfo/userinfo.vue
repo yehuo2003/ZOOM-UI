@@ -73,6 +73,7 @@ export default {
   padding: 5px;
   height: auto;
   border: 1px solid #d9d9d9;
+  cursor: pointer;
   display: none;
 }
 .zoom-user-info .user-info-title .icon-up,

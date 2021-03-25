@@ -1,4 +1,4 @@
-import { isKorean } from "../common/common.js";
+// import { isKorean } from "../common/common.js";
 export default {
   props: {
     id: String,
@@ -75,6 +75,10 @@ export default {
     handleChild(e) {
       this.$emit(e);
     },
+    isKorean(text) {
+      const reg = /([(\uAC00-\uD7AF)|(\u3130-\u318F)])+/gi;
+      return reg.test(text);
+    },
     /**
      * 当用户按tab键切换的时候 触发验证功能
      */
@@ -111,7 +115,7 @@ export default {
         const text = event.target.value;
         const lastCharacter = text[text.length - 1] || "";
         //isOnComposition用来判断是否在输入拼音的过程中
-        this.isOnComposition = !isKorean(lastCharacter);
+        this.isOnComposition = !this.isKorean(lastCharacter);
         if (this.isOnComposition && event.type === "compositionstart") {
           //  输入框中输入的值赋给valueBeforeComposition
           this.valueBeforeComposition = text;
