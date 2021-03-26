@@ -18,8 +18,10 @@
                 <zoom-button>自定义button</zoom-button>
               </div>
             </zoom-dialog-box>
-            <zoom-input></zoom-input>
-            <zoom-pager :op="pagerOp"></zoom-pager>
+            <zoom-button @click="alertBtn">弹出框厕所</zoom-button>
+            <zoom-date></zoom-date>
+            <span v-color="'red'">1111111</span>
+            <!-- {{$zoom.$t('captcha.refresh')}} -->
             <!-- <nav class="navtab">
               <ul>
                 <li class="navtab-item active">
@@ -76,25 +78,6 @@ export default {
     return {
       name: '222',
       curTab: 0, // 当前激活的tab索引
-      pagerOp: {
-        pageSizes: [5, 10, 20],	// 可选择每页展示数量
-        mode: 'Number',	// 展示模式 mini为简单版, Number为完全版 默认Number
-        pageVal: {
-          total: 100,	// 总条数
-          curPage: 3,	// 展示的当前页
-          pageSize: 10	// 每页要展示多少条数据
-        },
-        pageSizeSkip: (val, pageVal) => {
-          this.pageSize = val;	// 每页大小的下拉框数据发生改变事件
-        },
-        beforeSkip: (val, pageVal) => {
-          console.log('要跳转到',val);	//跳转前事件
-        },
-        skip: (val, pageVal) => {
-          console.log('当前页是',val);	//点击跳转触发获取当前页
-          console.log('分页数据是', pageVal); //  分页的数据
-        }
-      },
       interOp: {
         title: 'china',
         // url: 'http://www.baidu.com',
@@ -191,6 +174,12 @@ export default {
     }
   },
   methods: {
+    alertBtn() {
+      this.$zoom.loading.show({color: 'red', full: true});
+      setTimeout(() => {
+        this.$zoom.loading.hide();
+      }, 2000);
+    },
     updateName() {
       this.name = '6666';
       console.log(this.name, 'nmame');

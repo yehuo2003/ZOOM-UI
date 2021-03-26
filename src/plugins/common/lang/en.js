@@ -66,9 +66,9 @@ export default {   //  英文
   'col.err': 'Attribute to the {num} parsing error, please pass in a positive integer between 1 and 12!',
 
   // date
-  'date.year': ' year ',
-  'date.month': ' month ',
-  'date.day': ' day ',
+  'date.year': ' Y ',
+  'date.month': ' M ',
+  'date.day': ' D ',
   'date.week': ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'],
   'date.type': 'Please check whether the entry is an effective time format!',
 
