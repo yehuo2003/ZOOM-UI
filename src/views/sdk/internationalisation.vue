@@ -28,7 +28,7 @@ export default {
           /**
            * return {
            *   locale: "zh",
-           *   detail: {  //  当前所有语言详情
+           *   i18n: {  //  当前所有语言详情
            *     en: {'xxx': 'xxx'}, // 英文
            *     zh: {'xx': 'xxx'}  //  中文
            *     ...
@@ -38,7 +38,7 @@ export default {
       setLanguage:
         `let lang = {
             locale: 'en',	//	要修改的语言
-            detail: { //  要设置/修改的国际化
+            i18n: { //  要设置/修改的国际化
                 zh: {
                   'set.success': '设置成功',
                   'set.failed': '设置失败'
@@ -51,7 +51,7 @@ export default {
             ...
           }
           this.$zoom.setLanguage(lang);
-          //  return {locale: "en", detail: {en: {'xxx': 'xxx'}, zh: {'xx': 'xxx'}, ... }};  //  返回设置完的最新国际化`,
+          //  return {locale: "en", i18n: {en: {'xxx': 'xxx'}, zh: {'xx': 'xxx'}, ... }};  //  返回设置完的最新国际化`,
       use:
         `&lt;template&gt;
             &lt;div&gt;

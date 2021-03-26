@@ -31,7 +31,7 @@ export default {
           {title: '环境搭建', url: '#/develop/'},
           {title: '组件', url: '#/component/'},
           {title: '软件开发包', url: '#/SDK'},
-          // {title: '更多'}
+          {title: '更多', url: 'https://github.com/yehuo2003', target: 'blank'}
         ]
       },
     }
@@ -40,8 +40,8 @@ export default {
     let lang = {
       locale: 'zh',
       detail: {
-          zh: Object.assign(this.$zoom.getLanguage().detail.zh, zh),
-          en: Object.assign(this.$zoom.getLanguage().detail.en, en)
+          zh: Object.assign(this.$zoom.getLanguage().i18n.zh, zh),
+          en: Object.assign(this.$zoom.getLanguage().i18n.en, en)
       }
     }
     this.$zoom.setLanguage(lang);

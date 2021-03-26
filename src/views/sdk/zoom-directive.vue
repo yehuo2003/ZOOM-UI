@@ -11,6 +11,9 @@
     <h3>v-drag</h3>
     <p>自由拖拽指令, 可以在任意标签上使用, 但是该元素必须要设置属性<span>position: absolute;</span>或<span>position: relative;</span>或<span>position: fixed;</span>,使用前确保该属性已脱离文档流</p>
     <custom-code :html="drag"></custom-code>
+    <h3>v-color</h3>
+    <p>自由颜色指令, 可以在任意标签上使用, 绑定自己需要的色号或颜色<span>v-color="color"</span></p>
+    <custom-code :html="color"></custom-code>
     <h3>v-lazyload</h3>
     <p>图片懒加载, 只能对图片标签使用, 取代<span>src</span>属性, 引用后, 图片将自动开启懒加载功能</p>
     <custom-code :html="lazyload"></custom-code>
@@ -25,6 +28,7 @@ export default {
     return {
       focus: '&lt;input v-focus type="text"&gt;',
       drag: '&lt;div v-drag style="position: relative;"&gt;自由拖拽&lt;/div&gt;',
+      color: `&lt;span v-color="'red'"&gt;自定义颜色&lt;/span&gt;`,
       lazyload: '&lt;img v-lazyload="src"&gt;',
       tip: `&lt;span v-tip="'提示文字内容'"&gt;一段文字&lt;/span&gt;`
     };
