@@ -19,8 +19,7 @@
               </div>
             </zoom-dialog-box>
             <zoom-button @click="alertBtn">弹出框厕所</zoom-button>
-            <zoom-date></zoom-date>
-            <span v-color="'red'">1111111</span>
+            <zoom-search v-model="searchMsg"></zoom-search>
             <!-- {{$zoom.$t('captcha.refresh')}} -->
             <!-- <nav class="navtab">
               <ul>
@@ -76,6 +75,7 @@
 export default {
   data() {
     return {
+      searchMsg: '',
       name: '222',
       curTab: 0, // 当前激活的tab索引
       interOp: {
@@ -175,10 +175,11 @@ export default {
   },
   methods: {
     alertBtn() {
-      this.$zoom.loading.show({color: 'red', full: true});
-      setTimeout(() => {
-        this.$zoom.loading.hide();
-      }, 2000);
+      console.log(this.searchMsg, 'searchMsg===');
+      // this.$zoom.loading.show({color: 'red', full: true});
+      // setTimeout(() => {
+      //   this.$zoom.loading.hide();
+      // }, 2000);
     },
     updateName() {
       this.name = '6666';

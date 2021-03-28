@@ -26,10 +26,10 @@ export default {
   },
   data() {
     return {
-      title: "中文zh",
+      title: "中文",
       list: [
-        { value: "zh", text: "中文zh" },
-        { value: "en", text: "英文en" },
+        { value: "zh", text: "中文" },
+        { value: "en", text: "English" },
         { value: "ja", text: "日文ja" }
       ]
     };
@@ -52,6 +52,7 @@ export default {
         let lang = {
           locale: item.value //	要修改的语言
         };
+        localStorage.language = item.value;
         this.$zoom.setLanguage(lang);
         setTimeout(() => {
           this.title = item.text;
