@@ -30,7 +30,7 @@ export default {
       list: [
         { value: "zh", text: "中文" },
         { value: "en", text: "English" },
-        { value: "ja", text: "日文ja" }
+        { value: "ja", text: "日本語" }
       ]
     };
   },
@@ -52,7 +52,6 @@ export default {
         let lang = {
           locale: item.value //	要修改的语言
         };
-        localStorage.language = item.value;
         this.$zoom.setLanguage(lang);
         setTimeout(() => {
           this.title = item.text;
@@ -61,7 +60,7 @@ export default {
           } else {
             window.location.reload();
           }
-        }, 500);
+        }, 800);
       })
       .catch(() => {
         //点取消

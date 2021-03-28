@@ -175,10 +175,10 @@ const install = Vue => {
     Vue.prototype.$zoom = {
         /**
          * @function 获取当前语言
-         * @deprecated 先根据url判断, 如果没有就取 localStorage.language, 如果没有设置则默认显示中文
+         * @deprecated 先根据url判断, 如果没有就取 cookie.language, 如果没有设置则默认显示中文
          */
         getLanguage() {
-            let lang = localStorage.getItem('language') || 'zh';
+            let lang = this.$zoom.cookie.get("language") || 'zh';
             return { locale: lang, i18n: this.LanguageInfo };
         },
         /**
@@ -189,7 +189,7 @@ const install = Vue => {
          */
         setLanguage(lang) {
             if (lang.locale) {
-                localStorage.setItem('language', lang.locale);
+                this.$zoom.cookie.set("language", lang.locale);
                 // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
                 if (lang.i18n && Object.prototype.toString.call(lang.i18n) === '[object Object]') {
                     for (let key in lang.i18n) {
@@ -208,7 +208,7 @@ const install = Vue => {
          */
         $t(val, parameter) {
             if (val && val.length && val.length > 0) {
-                const language = localStorage.getItem('language') || this.getLanguage().locale;
+                const language = this.$zoom.cookie.get("language") || this.getLanguage().locale;
                 if (!val && !language) {
                     return;
                 }
