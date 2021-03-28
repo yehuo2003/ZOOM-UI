@@ -20,6 +20,7 @@
             </zoom-dialog-box>
             <zoom-button @click="alertBtn">弹出框厕所</zoom-button>
             <zoom-search v-model="searchMsg"></zoom-search>
+            <zoom-internationalisation></zoom-internationalisation>
             <!-- {{$zoom.$t('captcha.refresh')}} -->
             <!-- <nav class="navtab">
               <ul>
