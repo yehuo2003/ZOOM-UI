@@ -14,18 +14,18 @@
     </div>
     <zoom-panel title="学习交流" :show="true">
       <p>
-        博客：<zoom-link url="https://blog.csdn.net/yehuo2003" type="primary">https://blog.csdn.net/yehuo2003</zoom-link><br>
+        博客：<zoom-link target="_blank" url="https://blog.csdn.net/yehuo2003" type="primary">https://blog.csdn.net/yehuo2003</zoom-link><br>
       </p>
       <p>
-        Github：<zoom-link url="https://github.com/yehuo2003" type="primary">https://github.com/yehuo2003</zoom-link><br>
+        Github：<zoom-link target="_blank" url="https://github.com/yehuo2003" type="primary">https://github.com/yehuo2003</zoom-link><br>
       </p>
       <p>
-        Gitee：<zoom-link url="https://gitee.com/yehuo2003" type="primary">https://gitee.com/yehuo2003</zoom-link><br>
+        Gitee：<zoom-link target="_blank" url="https://gitee.com/yehuo2003" type="primary">https://gitee.com/yehuo2003</zoom-link><br>
       </p>
     </zoom-panel>
     <zoom-panel title="联系方式" :show="true">
       <p>微信：<span>yehuo2003</span></p>
-      <p>邮箱：<zoom-link url="mailto:yehuo2103@163.com" type="primary">yehuo2103@163.com</zoom-link></p>
+      <p>邮箱：<zoom-link target="_blank" url="mailto:yehuo2103@163.com" type="primary">yehuo2103@163.com</zoom-link></p>
       <p><zoom-link target="_blank" url="http://wpa.qq.com/msgrd?v=3&amp;uin=9208608&amp;site=qq&amp;menu=yes" type="primary">QQ联系</zoom-link></p>
     </zoom-panel>
     <!-- <zoom-panel title="赞助作者" :show="true">
@@ -41,6 +41,9 @@ export default {
   data () {
     return {
     }
+  },
+  created () {
+    console.log(this.$zoom.$t('test.iter'), 'test.iter===========');
   }
 }
 </script>

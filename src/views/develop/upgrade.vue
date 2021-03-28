@@ -2,7 +2,6 @@
   <div class="install-develop">
     <h2>查看版本</h2>
     <p>在项目根目录下，通过<span>Win + R</span> 打开cmd命令行，输入命令: </p>
-    <p>在main.js文件中全局注册，方法如下：</p>
     <custom-code :html="quire"></custom-code>
     <h2>版本升级</h2>
     <p>命令如下: </p>
