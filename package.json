@@ -7,10 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.18.1",
-    "element-ui": "^2.13.1",
+    "examples": "^0.1.0",
     "highlight.js": "^9.18.1",
-    "qrcode": "^1.4.4",
+    "scss": "^0.2.4",
+    "scss-loader": "0.0.1",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "vue": "^2.6.10",
     "vue-clipboard2": "^0.3.1",
