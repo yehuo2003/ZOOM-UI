@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import zh from './locale/zh_cn'
-import en from './locale/es_en'
+import zh from './locale/zh_CN'
+import en from './locale/en_US'
 export default {
   data() {
     return {
@@ -31,7 +31,7 @@ export default {
           {title: '环境搭建', url: '#/develop/'},
           {title: '组件', url: '#/component/'},
           {title: '软件开发包', url: '#/SDK'},
-          {title: '更多', url: 'https://github.com/yehuo2003', target: 'blank'}
+          {title: '更多', url: '#/more'}
         ]
       },
     }
@@ -75,27 +75,16 @@ export default {
   },
   methods: {
     search() {
+      if (!this.searchVal) return
       let value = this.searchVal.toLowerCase();
-      let url = '';
-      for (let i = 0; i <= this.list.length; i ++) {
-        if (this.list[i] && this.list[i].title) {
-          let title = this.list[i].title.toLowerCase();
-          if (title.indexOf(value) > -1) {
-            url = this.list[i].url
-          }
-        } else {
-          continue;
-        }
-      }
-      if (url && url.indexOf('#') > -1) {
-        this.searchVal = '';
-        this.$router.push(url.split('#')[1]);
+      let res = this.list.find(item => item.title.toLowerCase().indexOf(value) > -1 )
+      if (res && res.url && res.url.indexOf('#') > -1) {
+        this.$router.push(res.url.split('#')[1]);
       }
     }
   }
 };
 </script>
-
 <style lang="scss">
 #app {
   color: #303113;

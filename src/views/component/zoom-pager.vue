@@ -17,7 +17,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <h2>迷你版</h2>
-    <p>可对<span>title</span>绑定自定义html片段</p>
+    <p>显示迷你版分页组件</p>
     <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-pager :op="miniOp"></zoom-pager>
