@@ -51,7 +51,7 @@
         :class="showDown ? 'icon-up' : 'icon-down'"
       ></a>
     </div>
-    <div v-show="false" class="zoom-selector">
+    <!-- <div v-show="false" class="zoom-selector">
       <div class="show-warpper" @click="close"></div>
       <div class="selector-content">
         <ul class="zoom-poplist">
@@ -63,13 +63,12 @@
             @click="itemClick(item)"
             class="list-item"
           >
-            <!-- 多选功能开启时启动复选框 -->
             <zoom-checkbox v-show="isChecked" :ref="item.value" :op="checkOp">{{item.text}}</zoom-checkbox>
             {{isChecked ? '' : item.text}}
           </li>
         </ul>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -152,27 +151,27 @@ export default {
       this.options.data = this.defaultList;
     }
   },
-  watch: {
-    value(val, oldValue) {
-      if (!val) {
-        return
-      }
-      /**
-       * 如果是多选的话, 并且用户绑定了v-model, 这里进行逻辑转换
-       */
-      if (val && this.list) {
-        let str = ''
-        this.list.forEach((item, index) => {
-          if (item.value === val[index]) {
-            str += item.text + ';';
-          }
-        })
-        this.setCurrentValue(str);
-      } else {
-        this.setCurrentValue(val);
-      }
-    }
-  },
+  // watch: {
+  //   value(val, oldValue) {
+  //     if (!val) {
+  //       return
+  //     }
+  //     /**
+  //      * 如果是多选的话, 并且用户绑定了v-model, 这里进行逻辑转换
+  //      */
+  //     if (val && this.list) {
+  //       let str = ''
+  //       this.list.forEach((item, index) => {
+  //         if (item.value === val[index]) {
+  //           str += item.text + ';';
+  //         }
+  //       })
+  //       this.setCurrentValue(str);
+  //     } else {
+  //       this.setCurrentValue(val);
+  //     }
+  //   },
+  // },
   beforeDestroy() {
     if (this.tipInstance) {
       this.tipInstance.destroy();
@@ -328,7 +327,8 @@ export default {
           this.options.data.forEach(item => {
             if (item.checked) {
               // 清空复选框
-              this.$refs[item.value][0].list[0].checked = item.checked = false;
+              // this.$refs[item.value][0].list[0].checked = item.checked = false;
+              item.checked = false;
             }
           });
         }

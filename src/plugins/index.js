@@ -133,7 +133,6 @@ const install = Vue => {
                 }
                 for (var i = 0; i < elem.length; i ++) {
                     const nodeName = elem[i];
-                    console.log(nodeName.tagName, 'nodeName.tagName===');
                     if (nodeName.tagName === 'INPUT') {
                         nodeName.focus();
                         break;
@@ -182,7 +181,6 @@ const install = Vue => {
             if (this.cookie.get("language") && this.cookie.get("language").locale) {
                 lang = this.cookie.get("language").locale;
             }
-            console.log('当前语言', lang);
             return { locale: lang, i18n: this.LanguageInfo };
         },
         /**

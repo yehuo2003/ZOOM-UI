@@ -79,6 +79,7 @@ export default {   //  英文
 //   zoom-input
   'input.msg': '{type} attribute parsing failure, only support the "text" and "password"！',
   'input.min': 'The minimum length is {min} characters!',
+  "input.on/off": "All/Cancel",
 
 //   zoom-logout
   'logout': 'Logout',

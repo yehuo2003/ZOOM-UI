@@ -79,6 +79,7 @@ export default {  //  中文
 //   zoom-input
   "input.msg": "{type}属性解析失败, 仅支持 'text'，'password'！",
   "input.min": "最小长度为 {min} 个字符！",
+  "input.on/off": "全选/取消",
 
 //   zoom-logout
   "logout": "注销",
