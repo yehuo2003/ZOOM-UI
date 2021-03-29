@@ -38,7 +38,7 @@ export default {
   },
   created () {
     let lang = {
-      locale: 'zh',
+      locale: this.$zoom.getLanguage().locale,
       detail: {
           zh: Object.assign(this.$zoom.getLanguage().i18n.zh, zh),
           en: Object.assign(this.$zoom.getLanguage().i18n.en, en)

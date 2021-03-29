@@ -28,6 +28,10 @@
       <p>邮箱：<zoom-link target="_blank" url="mailto:yehuo2103@163.com" type="primary">yehuo2103@163.com</zoom-link></p>
       <p><zoom-link target="_blank" url="http://wpa.qq.com/msgrd?v=3&amp;uin=9208608&amp;site=qq&amp;menu=yes" type="primary">QQ联系</zoom-link></p>
     </zoom-panel>
+    <zoom-panel title="更新日志" :show="true">
+      <h3>2021.03.30---版本：1.1.7</h3>
+      <p>zoom-dropdown下拉框新增全选/取消功能,并修复了下拉框复选状态时候的部分BUG</p>
+    </zoom-panel>
     <!-- <zoom-panel title="赞助作者" :show="true">
       <div class="sponsored">
         <p><span>微信收款码：</span><br><img :src="require('./component/static/wx.png')" alt="微信收款码" title="微信收款码"></p>

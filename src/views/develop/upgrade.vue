@@ -4,7 +4,7 @@
     <p>在项目根目录下，通过<span>Win + R</span> 打开cmd命令行，输入命令: </p>
     <custom-code :html="quire"></custom-code>
     <h2>版本升级</h2>
-    <p>命令如下: </p>
+    <p>使用npm更新命令如下: </p>
     <custom-code :html="promote"></custom-code>
     <p>使用 Yarn 更新: </p>
     <custom-code :html="yarnPromote"></custom-code>

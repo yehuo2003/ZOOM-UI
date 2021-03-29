@@ -33,14 +33,14 @@
           <zoom-form-item inline="true" :require="true" label="名字">
             <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
           </zoom-form-item>
-          <zoom-form-item inline="true" label="密码">
-            <zoom-input :op="passwordOp"></zoom-input>
+          <zoom-form-item :require="true" inline="true" label="密码">
+            <zoom-input :op="passwordOp" placeholder="请输入密码"></zoom-input>
           </zoom-form-item>
           <zoom-form-item label="下拉框">
             <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
           </zoom-form-item>
-          <zoom-form-item :require="true" label="搜索">
-            <zoom-search :op="inputOp"></zoom-search>
+          <zoom-form-item label="搜索">
+            <zoom-search></zoom-search>
           </zoom-form-item>
           <zoom-form-item :require="true" label="部门">
             <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
@@ -155,7 +155,15 @@ export default {
         }
       },
       passwordOp: {
-        type: 'password'
+        errMsg: '密码长度必须大于6位',
+        type: 'password',
+        testing: val => {
+          if (val && val.length > 6) {
+            return true
+          } else {
+            return false
+          }
+        }
       },
       dropdownOp: {
         data: [
@@ -174,14 +182,14 @@ export default {
                 &lt;zoom-form-item inline="true" :require="true" label="名字"&gt;
                   &lt;zoom-input :op="inputOp" placeholder="请输入名字"&gt;&lt;/zoom-input&gt;
                 &lt;/zoom-form-item&gt;
-                &lt;zoom-form-item inline="true" label="密码"&gt;
-                  &lt;zoom-input :op="passwordOp"&gt;&lt;/zoom-input&gt;
+                &lt;zoom-form-item :require="true" inline="true" label="密码"&gt;
+                  &lt;zoom-input :op="passwordOp" placeholder="请输入密码"&gt;&lt;/zoom-input&gt;
                 &lt;/zoom-form-item&gt;
                 &lt;zoom-form-item label="下拉框"&gt;
                   &lt;zoom-dropdown :op="dropdownOp"&gt;&lt;/zoom-dropdown&gt;
                 &lt;/zoom-form-item&gt;
-                &lt;zoom-form-item :require="true" label="搜索"&gt;
-                  &lt;zoom-search :op="inputOp"&gt;&lt;/zoom-search&gt;
+                &lt;zoom-form-item label="搜索"&gt;
+                  &lt;zoom-search&gt;&lt;/zoom-search&gt;
                 &lt;/zoom-form-item&gt;
                 &lt;zoom-form-item :require="true" label="部门"&gt;
                   &lt;zoom-input :op="inputOp" placeholder="请输入部门"&gt;&lt;/zoom-input&gt;
@@ -228,7 +236,15 @@ export default {
                     }
                   },
                   passwordOp: {
-                    type: 'password'
+                    type: 'password',
+                    errMsg: '密码长度必须大于6位',
+                    testing: val =&gt; {
+                      if (val && val.length > 6) {
+                        return true
+                      } else {
+                        return false
+                      }
+                    }
                   },
                   dropdownOp: {
                     data: [
