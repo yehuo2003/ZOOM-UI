@@ -1,3 +1,11 @@
+<!--
+ * @Description:更多
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2021-03-28 17:09:59
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2021-04-03 14:22:17
+-->
 <template>
   <div class="more">
     <h1>说明</h1>
@@ -31,6 +39,10 @@
     <zoom-panel title="更新日志" :show="true">
       <h3>2021.03.30---版本：1.1.7</h3>
       <p>zoom-dropdown下拉框新增全选/取消功能,并修复了下拉框复选状态时候的部分BUG</p>
+      <h3>2021.03.30---版本：1.1.8</h3>
+      <p>新增自定义指令 v-longPress</p>
+      <p>新增自定义指令 v-waterMarker</p>
+      <p>修复zoom-dropdown下拉框新增全选/取消的BUG</p>
     </zoom-panel>
     <!-- <zoom-panel title="赞助作者" :show="true">
       <div class="sponsored">

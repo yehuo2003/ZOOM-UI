@@ -72,6 +72,7 @@ export default {
       }
     })
     this.list = list.flat(Infinity);
+    this.$zoom.copy("http://yehuo2003.gitee.io/zoom-ui-direction")
   },
   methods: {
     search() {

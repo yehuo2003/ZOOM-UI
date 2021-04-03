@@ -61,10 +61,10 @@ export default {
             {
               id: 6,
               title: "深拷贝",
-              name: "copy-clone",
+              name: "deep-clone",
               type: "Function",
               text: "可用于对复杂对象、数组、多维数组、数组对象等等进行深拷贝操作",
-              text2: '用法: 调用方法: <span>this.$zoom.clone("拷贝对象")</span>, 具体用法参考: <a href="#/SDK/copy-clone">深拷贝</a>'
+              text2: '用法: 调用方法: <span>this.$zoom.clone("拷贝对象")</span>, 具体用法参考: <a href="#/SDK/deep-clone">深拷贝</a>'
             },
             {
               id: 7,

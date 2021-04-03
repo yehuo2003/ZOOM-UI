@@ -93,7 +93,7 @@ export default new Vuex.Store({
       {title: '内置方法', children: [   //  方法
         {title: '日期格式化', url: '#/SDK/date-format'}, //  日期格式化
         {title: 'cookie操作', url: '#/SDK/cookie-operation'}, //  cookie操作
-        {title: '深拷贝', url: '#/SDK/copy-clone'}, //  深拷贝
+        {title: '深拷贝', url: '#/SDK/deep-clone'}, //  深拷贝
         {title: '随机数/颜色', url: '#/SDK/random'}, //  随机数
       ]},
       {title: '组件使用', url: '#/component'},  //  跳转组件
