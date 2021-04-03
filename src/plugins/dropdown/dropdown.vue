@@ -243,6 +243,10 @@ export default {
         this.$emit("input", e.value);
         this.showDown = false;
       } else {
+        if (e === 'all') {
+          this.list = [];
+          return
+        }
         let list = this.$zoom.clone(this.list);
         let str = ""; //  展示的数据
         let lst = []; //  返回给父组件的

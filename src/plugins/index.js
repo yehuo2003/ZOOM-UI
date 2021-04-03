@@ -1,4 +1,12 @@
-// import Vue from 'vue'
+/*
+ * @Description: ZOOM-UI 入口文件
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2020-04-02 19:04:06
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2021-04-03 11:35:31
+ */
+
 import '../assets/fontIcon/iconfont.css'
 import './common/dom.js'
 
@@ -131,7 +139,7 @@ const install = Vue => {
                 if (el.className.indexOf('zoom-search') > -1) {
                     elem = el.children[0].children;
                 }
-                for (var i = 0; i < elem.length; i ++) {
+                for (var i = 0; i < elem.length; i++) {
                     const nodeName = elem[i];
                     if (nodeName.tagName === 'INPUT') {
                         nodeName.focus();
@@ -156,12 +164,13 @@ const install = Vue => {
     Vue.directive('drag', {
         inserted: function (el) {
             el.onmousedown = function (e) {
-                let disx = e.pageX - el.offsetLeft;
-                let disy = e.pageY - el.offsetTop;
+                let offsetX = e.pageX - el.offsetLeft;
+                let offsetY = e.pageY - el.offsetTop;
 
                 document.onmousemove = function (e) {
-                    el.style.left = e.pageX - disx + 'px';
-                    el.style.top = e.pageY - disy + 'px';
+                    el.style.left = e.pageX - offsetX + 'px';
+                    el.style.top = e.pageY - offsetY + 'px';
+                    el.style.cursor = 'grab';
                 }
 
                 document.onmouseup = function () {
@@ -170,28 +179,143 @@ const install = Vue => {
             }
         }
     })
+    /**
+     * @description: 长按指令
+     * @param {*}   v-longPress:[time] || v-longPress:2000
+     * @return {*}
+     */
+    Vue.directive('longPress', {
+        bind(el, binding) {
+            if (typeof binding.value !== 'function') {
+                throw 'callback must be a function'
+            }
+            let time = 2000;
+            if (binding.arg) {
+                time = binding.arg
+            }
+            // 定义变量
+            let pressTimer = null
+            // 创建计时器（ time秒后执行函数 ）
+            let start = (e) => {
+                if (e.type === 'click' && e.button !== 0) {
+                    return
+                }
+                if (pressTimer === null) {
+                    pressTimer = setTimeout(() => {
+                        handler()
+                    }, time)
+                }
+            }
+            // 取消计时器
+            let cancel = (e) => {
+                if (pressTimer !== null) {
+                    clearTimeout(pressTimer)
+                    pressTimer = null
+                }
+            }
+            // 运行函数
+            const handler = (e) => {
+                binding.value(e)
+            }
+            // 添加事件监听器
+            el.addEventListener('mousedown', start)
+            el.addEventListener('touchstart', start)
+            // 取消计时器
+            el.addEventListener('click', cancel)
+            el.addEventListener('mouseout', cancel)
+            el.addEventListener('touchend', cancel)
+            el.addEventListener('touchcancel', cancel)
+        },
+        // 当传进来的值更新的时候触发
+        componentUpdated(el, { value }) {
+            el.$value = value
+        },
+        // 指令与元素解绑的时候，移除事件绑定
+        unbind(el) {
+            el.removeEventListener('click', el.handler)
+        },
+    })
+    /**
+     * @function: 自定义水印
+     * @description: v-waterMarker="{text:'zoom-UI版权所有',textColor:'#ff4d4f', font: '10px Microsoft YaHei'}"
+     * @param {String}   text 文字内容
+     * @param {String}   textColor 字体颜色 默认 rgba(100, 100, 100, 0.5)
+     * @param {String}   font 文字样式 默认 italic bold 16px Microsoft YaHei
+     * @return {*}
+     */
+    Vue.directive('waterMarker', {
+        bind(el, binding) {
+            let addWaterMarker = (str, parentNode, font, textColor) => {
+                // 水印文字，父元素，字体，文字颜色
+                var can = document.createElement('canvas')
+                parentNode.appendChild(can)
+                can.width = 200
+                can.height = 150
+                can.style.display = 'none'
+                var cans = can.getContext('2d')
+                cans.rotate((-20 * Math.PI) / 180)
+                cans.font = font || 'italic bold 16px Microsoft YaHei'
+                cans.fillStyle = textColor || 'rgba(100, 100, 100, 0.5)'
+                cans.textAlign = 'left'
+                cans.textBaseline = 'Middle'
+                cans.fillText(str, can.width / 10, can.height / 2)
+                parentNode.style.backgroundImage = 'url(' + can.toDataURL('image/png') + ')'
+            }
+            addWaterMarker(binding.value.text, el, binding.value.font, binding.value.textColor)
+        }
+    })
     // 自定义方法
     Vue.prototype.$zoom = {
         /**
-         * @function 获取当前语言
-         * @deprecated 先根据url判断, 如果没有就取 cookie.language, 如果没有设置则默认显示中文
+         * @function: 复制功能
+         * @description: 如果没有传入值, 则返回空, 否则返回复制内容 this.$zoom.copy(msg)
+         * @param {*} value
+         * @return {*}  value
+         */
+        copy(value) {
+            if (!value) {
+                return
+            }
+            // 动态创建 textarea 标签
+            const textarea = document.createElement('textarea')
+            // 将该 textarea 设为 readonly 防止 iOS 下自动唤起键盘，同时将 textarea 移出可视区域
+            textarea.readOnly = 'readonly'
+            textarea.style.position = 'absolute'
+            textarea.style.left = '-9999px'
+            // 将要 copy 的值赋给 textarea 标签的 value 属性
+            textarea.value = value
+            // 将 textarea 插入到 body 中
+            document.body.appendChild(textarea)
+            // 选中值并复制
+            textarea.select()
+            const result = document.execCommand('Copy');
+            if (result) {
+                return textarea.value;
+            }
+            document.body.removeChild(textarea)
+        },
+        /**
+         * @function: 获取当前语言
+         * @description: 先根据url判断, 如果没有就取 cookie.language, 如果没有设置则默认显示中文
+         * @param {*}
+         * @return {*}
          */
         getLanguage() {
             let lang = 'zh';
-            if (this.cookie.get("language") && this.cookie.get("language").locale) {
-                lang = this.cookie.get("language").locale;
+            if (this.cookie.getChild("language", 'locale')) {
+                lang = this.cookie.getChild("language", 'locale');
             }
             return { locale: lang, i18n: this.LanguageInfo };
         },
         /**
-         * @function 设置国际化语言传入对象
-         * @param {lang.locale} lang // 'zh' 'en'
-         * @param {lang.i18n} Object // {zh: {'xx': 'xx'}, en: {'xx': 'xx'}}
-         * @type String
+         * @function: 设置国际化语言
+         * @description: 传入对象, 返回当前语言
+         * @param {object} lang {locale: 'zh', i18n: {zh: {'xx': 'xx'}, en: {'xx': 'xx'}}
+         * @return {*}  this.getLanguage()
          */
         setLanguage(lang) {
             if (lang.locale) {
-                this.cookie.set("language", {locale: lang.locale});
+                this.cookie.set("language", { locale: lang.locale });
                 // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
                 if (lang.i18n && Object.prototype.toString.call(lang.i18n) === '[object Object]') {
                     for (let key in lang.i18n) {
@@ -204,13 +328,15 @@ const install = Vue => {
         // 国际化对象 不推荐用户直接调用
         LanguageInfo: lang,
         /**
-         * @function展示当前国际化
-         * @param {val:String} val $zoom.$t('xxx')
-         * @param {parameter: String} val $zoom.$t('xxx', {count1: 'xx', count2: 'xx'})
+         * @function: 展示当前国际化
+         * @description: this.$zoom.$t(String)
+         * @param {string} val
+         * @param {object} parameter $zoom.$t('xxx', {count1: 'xx', count2: 'xx'})
+         * @return {*}
          */
         $t(val, parameter) {
             if (val && val.length && val.length > 0) {
-                const language = this.cookie.get("language").locale || this.getLanguage().locale;
+                const language = this.cookie.getChild("language", 'locale') || this.getLanguage().locale;
                 if (!val && !language) {
                     return;
                 }
@@ -227,14 +353,11 @@ const install = Vue => {
             }
         },
         /**
-         *
-         * @param {"YYYY-mm-dd HH:MM"} fmt
-         * @param {new Date()} date
-         * @author linzhuming
-         * @time 2020年1月11日23:01:58
-         * 日期格式化
-         * eg let date = new Date()
-         * dateFormat("YYYY-mm-dd HH:MM", date)
+         * @function: 日期格式化
+         * @description: dateFormat("YYYY-mm-dd HH:MM", date)
+         * @param {String} fmt
+         * @param {date} date
+         * @return {date}
          */
         dateFormat(fmt, date) {
             date = new Date(date);
@@ -257,10 +380,11 @@ const install = Vue => {
             return fmt;
         },
         /**
-         * @param {object, Array} obj
-         * @author linzhuming
+         * @function: 深拷贝
+         * @description: 深拷贝方法, 递归方式对数组和对象进行深拷贝
          * @time 2019年11月11日21:18:38
-         * 深拷贝方法, 递归方式对数组和对象进行深拷贝
+         * @param {object, Array} obj || Arr
+         * @return {*}
          */
         clone(obj) {
             let clonedObj;
@@ -278,35 +402,31 @@ const install = Vue => {
             return clonedObj;
         },
         /**
-         * @param {string} id
-         * @author linzhuming
-         * @time 2018年
-         * 根据id获取dom元素 并返回当前对象
+         * @function: Dom操作 id
+         * @description: 根据id获取dom元素 并返回当前对象
+         * @param {String} id
+         * @return {*}
          */
         $id(id) {
             return document.getElementById(id);
         },
         /**
-         *
-         * @param {number} min
-         * @param {number} max
-         * @author linzhuming
-         * @time 2018年
-         * 随机数
-         * 输入最小数和最大数, 获取其中的随机数
+         * @function: 随机数
+         * @description: 输入最小数和最大数, 获取其中的随机数
+         * @param {Number} min
+         * @param {Number} max
+         * @return {*}
          */
         $rn(min, max) {
             let n = Math.random() * (max - min) + min;
             return Math.floor(n)
         },
         /**
-         *
-         * @param {number} min
-         * @param {number} max
-         * @author linzhuming
-         * @time 2018年
-         * 随机颜色
-         * 输入最小数和最大数, 获取其中的颜色值, 不输入默认min为0, max为255
+         * @function: 随机颜色
+         * @description: 输入最小数和最大数, 获取其中的颜色值, 不输入默认min为0, max为255
+         * @param {Number} min
+         * @param {Number} max
+         * @return {*}
          */
         $rc(min, max) {
             if (!min || min < 0) {
@@ -330,15 +450,17 @@ const install = Vue => {
          *  delChild    删除某条cookie下的某个属性      eg : this.$zoom.cookie.delChild("info", "name");
          */
         cookie: {
-            /** 设置一条完整的cookie
-            *  @param name : 表示cookie的名称，必填
-            *  @param subCookies : 表示cookie的值，为一个对象，必填
-            *  @param expires : 表示cookie的过期时间，可以不填
-            *  @param domain : 表示cookie的域名，可以不填
-            *  @param path : 表示cookie的路径，可以不填
-            *  @param secure : 表示cookie的安全标志，可以不填
-            *   eg : this.$zoom.cookie.set("info", { name : "zoom", age : 23});
-            **/
+            /**
+             * @function: 设置一条完整的cookie
+             * @description: this.$zoom.cookie.set("info", { name : "zoom", age : 23});
+             * @param {String} name  表示cookie的名称，必填
+             * @param {Object} subCookies  表示cookie的值，为一个对象，必填
+             * @param {String} expires   表示cookie的过期时间，可以不填
+             * @param {String} domain  表示cookie的域名，可以不填
+             * @param {String} path  表示cookie的路径，可以不填
+             * @param {String} secure 表示cookie的安全标志，可以不填
+             * @return {*}
+             */
             set(name, subCookies, expires, domain, path, secure) {
                 if (!name) {
                     throw Error('zoom-ui SyntaxError: cookie名称和值为必填属性! ')
@@ -367,16 +489,18 @@ const install = Vue => {
                 }
                 document.cookie = cookieText;
             },
-            /** 设置一条子cookie
-            *  @param name : 表示cookie的名称，必填
-            *  @param subName : 表示子cookie的名称，必填
-            *  @param value : 表示子cookie的值，必填
-            *  @param expires : 表示cookie的过期时间，可以不填
-            *  @param domain : 表示cookie的域名，可以不填
-            *  @param path : 表示cookie的路径，可以不填
-            *  @param secure : 表示cookie的安全标志，可以不填
-            *   eg : this.$zoom.cookie.setChild("info", "sex", "boy");
-            **/
+            /**
+             * @function: 设置一条子cookie
+             * @description: this.$zoom.cookie.setChild("info", "sex", "boy");
+             * @param {String} name  表示cookie的名称，必填
+             * @param {String} subName  表示子cookie的名称，必填
+             * @param {String} value  表示子cookie的值，必填
+             * @param {String} expires   表示cookie的过期时间，可以不填
+             * @param {String} domain  表示cookie的域名，可以不填
+             * @param {String} path  表示cookie的路径，可以不填
+             * @param {String} secure 表示cookie的安全标志，可以不填
+             * @return {*}
+             */
             setChild(name, subName, value, expires, domain, path, secure) {
                 if (!name || !subName || !value) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称以及cookie子属性的值为必填属性! ')
@@ -385,12 +509,12 @@ const install = Vue => {
                 cookies[subName] = value;
                 this.set(name, cookies, expires, domain, path, secure);
             },
-            /** 读取一条完整cookie
-             *  如果没传参数则默认读取所有cookie
-            *  @param name : 表示cookie的名称，不填默认获取所有cookie
-            *   return : 一个cookie对象
-            *   eg : this.$zoom.cookie.get("info");
-            **/
+            /**
+             * @function: 读取一条完整cookie
+             * @description: 如果没传参数则默认读取所有cookie this.$zoom.cookie.get("info");
+             * @param {*} name 表示cookie的名称，不填默认获取所有cookie
+             * @return {Object}
+             */
             get(name) {
                 if (!name) {
                     return document.cookie;
@@ -415,12 +539,13 @@ const install = Vue => {
                 }
                 return null;
             },
-            /** 获取一条子cookie的值
-            *  @param name : 表示cookie的名称，必填
-            *  @param subName : 表示子cookie的名称
-            *   return : 一个子cookie的值
-            *   eg : this.$zoom.cookie.getChild("info", "name");
-            **/
+            /**
+             * @function: 获取一条子cookie的值
+             * @description: this.$zoom.cookie.getChild("info", "name");
+             * @param {String} name  表示cookie的名称，必填
+             * @param {String} subName   表示子cookie的名称，必填
+             * @return {String}  一个子cookie的值
+             */
             getChild(name, subName) {
                 if (!name || !subName) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称为必填属性! ')
@@ -432,27 +557,31 @@ const install = Vue => {
                     return null;
                 }
             },
-            /** 删除一条完整cookie
-            *  @param name : 表示cookie的名称，必填
-            *  @param domain : 表示cookie的域名，可以不填
-            *  @param path : 表示cookie的路径，可以不填
-            *  @param secure : 表示cookie的安全标志，可以不填
-            *   eg : this.$zoom.cookie.del("info");
-            **/
+            /**
+             * @function: 删除一条完整cookie
+             * @description: this.$zoom.cookie.del("info");
+             * @param {String} name  表示cookie的名称，必填
+             * @param {String} domain  表示cookie的域名，可以不填
+             * @param {String} path  表示cookie的路径，可以不填
+             * @param {String} secure 表示cookie的安全标志，可以不填
+             * @return {*}
+             */
             del(name, domain, path, secure) {
                 if (!name) {
                     throw Error('zoom-ui SyntaxError: cookie名称为必填属性! ')
                 }
                 this.set(name, "", new Date(0).toGMTString(), domain, path, secure);
             },
-            /** 删除一条子cookie
-            *  @param name : 表示cookie的名称，必填
-            *  @param subName : 表示子cookie的名称，必填
-            *  @param domain : 表示cookie的域名，可以不填
-            *  @param path : 表示cookie的路径，可以不填
-            *  @param secure : 表示cookie的安全标志，可以不填
-            *   eg : this.$zoom.cookie.delChild("info", "name");
-            **/
+            /**
+             * @function: 删除一条子cookie
+             * @description:
+             * @param {String} name  表示cookie的名称，必填
+             * @param {String} subName   表示子cookie的名称，必填
+             * @param {String} domain  表示cookie的域名，可以不填
+             * @param {String} path  表示cookie的路径，可以不填
+             * @param {String} secure 表示cookie的安全标志，可以不填
+             * @return {*}
+             */
             delChild(name, subName, domain, path, secure) {
                 if (!name || !subName) {
                     throw Error('zoom-ui SyntaxError: cookie名称和cookie子属性名称为必填属性! ')
@@ -464,7 +593,10 @@ const install = Vue => {
                 }
             },
             /**
-             * 清除当前所有cookie
+             * @function: 清除当前所有cookie
+             * @description: this.$zoom.cookie.clear();
+             * @param {*}
+             * @return {*}
              */
             clear() {
                 let keys = document.cookie.match(/[^ =;]+(?==)/g)
@@ -609,7 +741,7 @@ const install = Vue => {
                             // 1、创建构造器，定义loading模板
                             let LoadingTip = Vue.extend(config.default)
                             // 2、创建实例，挂载到文档以后的地方 data 颜色
-                            let tpl = new LoadingTip({data}).$mount().$el
+                            let tpl = new LoadingTip({ data }).$mount().$el
                             // 3、把创建的实例添加到body中
                             document.body.appendChild(tpl)
                             Loading.installed = true

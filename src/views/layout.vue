@@ -19,10 +19,15 @@
               </div>
             </zoom-dialog-box>
             <zoom-button @click="alertBtn">弹出框厕所</zoom-button>
+            <zoom-button  v-longPress:[time]="longpress">长按</zoom-button>
+            <!-- <div style="width: 1000px;height: 1000px;" v-waterMarker="{text:'zoom-UI版权所有', font: '10px Microsoft JhengHei'}">
+              的发发达阿发发
+            </div> -->
             <zoom-dropdown v-model="searchMsg" :op="dropdownOp2"></zoom-dropdown>
             {{$zoom.$t('captcha.refresh')}}
             <zoom-button @click="visibility = true">弹框测试</zoom-button>
             <zoom-button @click="confimClick">confim测试</zoom-button>
+            <div v-drag style="position: relative;">自由拖拽</div>
           </div>
         </zoom-layout>
       </div>
@@ -36,6 +41,8 @@
 export default {
   data() {
     return {
+      time: 5000,
+      copyText: 'a copy directives',
       searchMsg: '',
       name: '222',
       curTab: 0, // 当前激活的tab索引
@@ -147,12 +154,12 @@ export default {
       visibility: false,
     }
   },
-  created () {
-    console.log(this.$zoom.cookie.get('language'), 'language');
-  },
   methods: {
+    longpress(val) {
+      console.log(11111111111, val);
+    },
     alertBtn() {
-      console.log(this.searchMsg, 'searchMsg===');
+      console.log(this.$zoom.getLanguage(), 'getLanguage()==');
       // this.$zoom.loading.show({color: 'red', full: true});
       // setTimeout(() => {
       //   this.$zoom.loading.hide();
