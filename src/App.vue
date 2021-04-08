@@ -27,11 +27,11 @@ export default {
       },
       titleOp: {  //  顶部导航栏
         data: [
-          {title: '首页', url: '#/'},
-          {title: '环境搭建', url: '#/develop/'},
-          {title: '组件', url: '#/component/'},
-          {title: '软件开发包', url: '#/SDK'},
-          {title: '更多', url: '#/more'}
+          {title: '首页', url: '/'},
+          {title: '环境搭建', url: '/develop/'},
+          {title: '组件', url: '/component/'},
+          {title: '软件开发包', url: '/SDK'},
+          {title: '更多', url: '/more'}
         ]
       },
     }
@@ -72,7 +72,7 @@ export default {
       }
     })
     this.list = list.flat(Infinity);
-    this.$zoom.copy("http://yehuo2003.gitee.io/zoom-ui-direction")
+    this.$zoom.copy("http://yehuo2003.gitee.io/zoom-ui-direction");
   },
   methods: {
     search() {

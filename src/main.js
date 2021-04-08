@@ -1,3 +1,11 @@
+/*
+ * @Description:入口配置文件
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2020-03-21 22:51:24
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2021-04-04 10:22:11
+ */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -7,15 +15,16 @@ import 'zoom-design/lib/zoom-design.css'
 import Hljs from 'highlight.js'
 import customCode from "./components/customCode";
 import attribute from "./components/attribute";
+import VueClipboard from 'vue-clipboard2'
 import 'highlight.js/styles/atom-one-dark.css'	//	yes
 //import 'highlight.js/styles/github.css'
 //import 'highlight.js/styles/darkula.css'		//	橙色标签
 //import 'highlight.js/styles/atelier-seaside-dark.css'	//	清晰
 
+// 引入zoom-ui
 Vue.use(zoomUI);
 
 // 注册复制组件
-import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard)
 
 // 全局注册Highlight v-highlight
