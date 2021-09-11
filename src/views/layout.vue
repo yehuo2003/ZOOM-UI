@@ -24,10 +24,14 @@
               的发发达阿发发
             </div> -->
             <zoom-dropdown v-model="searchMsg" :op="dropdownOp2"></zoom-dropdown>
-            {{$zoom.$t('captcha.refresh')}}
+            {{searchMsg}}
+            <zoom-button shape="circle" type="primary">-sdadadad</zoom-button>
+            <zoom-button shape="circle">+</zoom-button>
+            <!-- {{$zoom.$t('captcha.refresh')}}
             <zoom-button @click="visibility = true">弹框测试</zoom-button>
             <zoom-button @click="confimClick">confim测试</zoom-button>
-            <div v-drag style="position: relative;">自由拖拽</div>
+            <div v-drag style="position: relative;">自由拖拽</div> -->
+            <zoom-numeric></zoom-numeric>
           </div>
         </zoom-layout>
       </div>

@@ -59,7 +59,7 @@ export default {
     return {
       // disabled: false,
       options: {
-        max: 999999,
+        max: 99999999999999999999999999,
         // width: null,
         // disabled: false,
         // readonly: false,
@@ -174,9 +174,9 @@ export default {
     subtraction() {
       if (this.testing()) {
         let num = 1;
-        if (this.op && this.op.space) {
+        if (this.op && this.op.space && !isNaN(this.op.space)) {
           num = this.op.space;
-        }
+        }this.op.space
         let value = Number(this.currentValue) - num;
         if (this.op && !isNaN(this.op.min) && value < this.op.min) {
           value = this.op.min;
@@ -230,6 +230,7 @@ export default {
 }
 .zoom-numeric input[type="number"] {
   -moz-appearance: textfield;
+  padding: 0 30px;
 }
 .zoom-numeric input {
   /* padding: 40px; */
