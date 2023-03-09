@@ -4,14 +4,17 @@
  * @Autor: linzhuming
  * @Date: 2020-04-12 11:40:54
  * @LastEditors: linzhuming
- * @LastEditTime: 2021-04-03 13:42:18
+ * @LastEditTime: 2023-02-25 19:02:22
 -->
 <template>
   <div class="zoom-selector">
     <div class="selector-content">
       <ul class="zoom-poplist">
         <!-- 多选功能时开启 -->
-        <li v-if="isChecked" class="list-item"><zoom-checkbox v-model="isSelect" ref="select" :op="checkOp2" @click="checkboxClick"></zoom-checkbox></li>
+        <li v-if="isChecked" class="list-item">
+          <zoom-checkbox v-model="isSelect" ref="select" :op="checkOp2" @click="checkboxClick">
+          </zoom-checkbox>
+        </li>
         <li
           v-for="(item,index) of options.data"
           :key="index"

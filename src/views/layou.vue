@@ -1,42 +1,56 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2020-03-22 00:14:20
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-03-09 22:45:11
+-->
 <template>
   <div class="test-layou">
-    <zoom-button @click="test">普通按钮</zoom-button>
-    <zoom-button :op="btnOp" type="primary">正常按钮</zoom-button>
-    <zoom-button reset-time="6000" shape="round" type="warning">警告按钮</zoom-button>
-    <zoom-button reset-time="0" shape="circle" type="success">成功按钮</zoom-button>
-    <zoom-button type="info">信息按钮</zoom-button>
-    <zoom-button type="danger">危险按钮</zoom-button>
-    <zoom-row flex="true" justify="space-around" align="middle">
-      <zoom-col span="3" offset="1">
-        <div class="item">
-          <zoom-switch open="开启" close="关闭"></zoom-switch>
-        </div>
-      </zoom-col>
-      <zoom-col span="3">
-        <div class="item">第二个</div>
-      </zoom-col>
-      <zoom-col span="3" offset="2">
-        <div class="item">第三个</div>
-      </zoom-col>
-    </zoom-row>
-    <zoom-row>
-      <zoom-col>
-        <zoom-text-popup rows="10" :op="textpop"></zoom-text-popup>
-      </zoom-col>
-    </zoom-row>
+    <zoom-select v-model="curText" multiple style="width: 270px;">
+      <zoom-option
+        v-for="item in options"
+        :key="item.value"
+        :text="item.label"
+        :value="item.value"
+        :disabled="item.disabled"
+      >
+      </zoom-option>
+    </zoom-select>
+    {{value}}
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      curText: '选项1,选项2,选项3',
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶',
+        disabled: true
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面炒鸡长长长长长长长长长长长长长长长长长长',
+        disabled: true
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
       textpop: {
         resize: true
       },
       btnOp: {
         type: 'primary',
         shape: 'round',
-        // resetTime: 5000,
         onClick: () => {
           this.$zoom.popup({
             title:'1111',
