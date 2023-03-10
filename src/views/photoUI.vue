@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2020-03-22 00:14:20
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-03-10 22:18:31
+-->
 <template>
 	<div>
 		<zoom-form>
@@ -20,7 +28,7 @@
 				<zoom-input></zoom-input>
 			</zoom-form-item>
 			<zoom-form-item label="验证码">
-				<!-- <zoom-captcha :op="testOp"></zoom-captcha> -->
+				<zoom-captcha :op="testOp"></zoom-captcha>
 			</zoom-form-item>
 		</zoom-form>
 		<zoom-row>
@@ -44,7 +52,7 @@ export default {
     return {
 			num: 0,
 			testOp: {
-				// show: true,
+				show: true,
 				onSuccess: () => {
 					console.log('验证成功父组件接收');
 				},

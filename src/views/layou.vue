@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-09 22:45:11
+ * @LastEditTime: 2023-03-10 22:14:04
 -->
 <template>
   <div class="test-layou">
@@ -68,6 +68,9 @@ export default {
 };
 </script>
 <style>
+.test-layou {
+  /* height: 1000px; */
+}
 .test-layou button {
   margin: 10px 5px;
 }

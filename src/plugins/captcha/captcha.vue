@@ -69,7 +69,8 @@ export default {
       sliderMaskDom: null,
       el: null,
       img: null,
-      trail: null
+      trail: null,
+      errorCount: 0 // 失败次数
     };
   },
   mounted() {
@@ -90,6 +91,9 @@ export default {
         }
       }, 1000);
     });
+  },
+  beforeDestroy() {
+    this.bindEvents(true);
   },
   methods: {
     init() {
@@ -122,9 +126,8 @@ export default {
         content: this.$zoom.$t('captcha.testing_error') // 验证失败, 请重试！
       });
     },
-    bindEvents() {
+    bindEvents(removeListener) {
       this.el.onselectstart = () => false;
-
       let originX,
         originY,
         trail = [],
@@ -187,14 +190,13 @@ export default {
           }, 1000);
         }
       };
-      this.sliderDom.addEventListener("mousedown", handleDragStart);
-      this.sliderDom.addEventListener("touchstart", handleDragStart);
-      this.blockDom.addEventListener("mousedown", handleDragStart);
-      this.blockDom.addEventListener("touchstart", handleDragStart);
-      document.addEventListener("mousemove", handleDragMove);
-      document.addEventListener("touchmove", handleDragMove);
-      document.addEventListener("mouseup", handleDragEnd);
-      document.addEventListener("touchend", handleDragEnd);
+      let eventList = 'addEventListener';
+      if (removeListener) {
+        eventList = 'removeEventListener';
+      }
+      ['mousedown', 'touchstart', 'mousedown', 'touchstart'].forEach(i => this.sliderDom[eventList](i, handleDragStart));
+      ['mousemove', 'touchmove'].forEach(i => document[eventList](i, handleDragMove));
+      ['mouseup', 'touchend'].forEach(i => document[eventList](i, handleDragEnd));
     },
     verify() {
       const sum = function(x, y) {
@@ -319,7 +321,18 @@ export default {
       img.crossOrigin = "Anonymous";
       img.onload = onload;
       img.onerror = () => {
-        img.setSrc(this.getRandomImgSrc());
+        this.errorCount += 1
+        this.setDisabled(true);
+        console.error('image loading error');
+        // 如果连续五次加载失败,就终止运行
+        if (this.errorCount === 5) {
+          this.bindEvents(true);
+          return
+        }
+        setTimeout(() => {
+          img.setSrc(this.getRandomImgSrc());
+          this.setDisabled(false);
+        }, 1000);
       };
 
       img.setSrc = src => {
@@ -351,7 +364,7 @@ export default {
         src = this.op.RandomSrc();
       } else {
         src =
-          "https://picsum.photos/300/150/?image=" +
+          "https://picsum.photos/300/150/?image=11111111111" +
           this.getRandomNumberByRange(0, 1084);
       }
       return src;

@@ -8,7 +8,7 @@
       @mouseenter="showTip"
       @mouseleave="hiddenTip(true)"
     >
-      <div v-show="placement" class="zoom-tip-arrows" :class="placement" :style="arrowBox"></div>
+      <div v-if="!hiddenArrows" v-show="placement" class="zoom-tip-arrows" :class="placement" :style="arrowBox"></div>
       <span v-if="title" class="zoom-tip-title">{{ title }}</span>
       <p v-if="content" class="zoom-tip-content" :style="contentHeight">{{ content }}</p>
       <component
@@ -33,7 +33,7 @@ import {
   computeCoordinateBaseEdge
 } from "./util.js";
 
-// passive support check
+/* eslint-disable */
 let supportsPassive = false;
 document.addEventListener("passive-check", () => {}, {
   get passive() {
@@ -42,6 +42,7 @@ document.addEventListener("passive-check", () => {}, {
     };
   }
 });
+/* eslint-enable */
 export default {
   name: "zoom-tip",
   props: {
@@ -128,6 +129,11 @@ export default {
     theme: {
       type: String,
       default: "general"
+    },
+
+    hiddenArrows: {
+      type: Boolean,
+      default: false
     },
 
     // 自定义 class 的类名

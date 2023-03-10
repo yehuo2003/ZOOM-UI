@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-04-12 11:40:54
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-02 00:27:25
+ * @LastEditTime: 2023-03-10 21:57:17
 -->
 <template>
   <div class="zoom-selector">
@@ -47,13 +47,21 @@ export default {
   },
   data() {
     return {
-      isSelect: false,
       checkOp2: {
         //  如果配置了多选
         Bool: true,
-        data: [{ text: "全选/取消", value: false }],
+        data: [{ text: "全选/取消", value: false }]
       },
     };
+  },
+  mounted () {
+    if (this.isChecked) {
+      this.options.forEach(item => {
+        if (item.checked) {
+          this.$refs[item.value][0].list[0].checked = true;
+        }
+      })
+    }
   },
   methods: {
     setCheckOp(disabled) {
@@ -70,29 +78,33 @@ export default {
             if (!item.disabled) {
               this.$refs[item.value][0].list[0].checked = true;
             }
-          })
+          });
+          this.$emit('input', 'all');
         } else {
           this.options.forEach(item => {
             if (!item.disabled) {
               this.$refs[item.value][0].list[0].checked = false;
             }
-          })
+          });
+          this.$emit('input', 'cancel');
         }
-      })
-      this.$emit("input", "all");
+      });
     },
     itemClick(e) {
       if (e.disabled) {
-        return
+        return;
       }
       this.$nextTick(() => {
-        let Bool = this.options.find(item => {
-          if (!item.disabled) {
-            return this.$refs[item.value][0].list[0].checked === !this.$refs[e.value][0].list[0].checked;
+        if (this.isChecked) {
+          let Bool = this.options.find(item => {
+            if (!item.disabled) {
+              return this.$refs[item.value][0].list[0].checked === !this.$refs[e.value][0].list[0].checked;
+            }
+          });
+          if (!Bool) {
+            this.$refs["select"].list[0].checked = !this.$refs["select"].list[0].checked;
           }
-        })
-        if (!Bool) {
-          this.$refs["select"].list[0].checked = !this.$refs["select"].list[0].checked;
+          e.checked = !e.checked;
         }
         this.$emit("input", e);
       })

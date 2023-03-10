@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-09 22:41:36
+ * @LastEditTime: 2023-03-10 22:15:59
 -->
 <template>
   <div
@@ -24,7 +24,7 @@
         :key="index"
         class="zoom-tag zoom-tag--info zoom-tag--small"
       >
-        <span class="zoom-select_tags-text">{{ item }}</span>
+        <span class="zoom-select__tags-text">{{ item }}</span>
         <span
           @click.stop="removeItem(item)"
           class="zoom-icon icon-close-plus"
@@ -34,7 +34,7 @@
         v-show="collapseTags && currentValue.length > 1"
         class="zoom-tag zoom-tag--info zoom-tag--small"
       >
-        <span class="zoom-select_tags-text"> + {{ currentValue }} </span>
+        <span class="zoom-select__tags-text"> + {{ currentValue.length - 1 }} </span>
       </span>
     </div>
     <div @click="showTip(showDown)" class="zoom-input zoom-input-suffix">
@@ -48,7 +48,7 @@
         ref="downVal"
       />
       <span class="zoom-input__suffix">
-        <span class="zoom-input_suffix-inner">
+        <span class="zoom-input__suffix-inner">
           <a
             :class="showDown ? 'icon-up' : 'icon-down'"
             href="javascript:void(0);"
@@ -149,7 +149,7 @@ export default {
       });
       // 判断是否要取消全选按钮
       let count = 0;
-      for (var i = 1; i <= tipList.length; i++) {
+      for (let i = 1; i < tipList.length; i++) {
         const element = tipList[i].$el.__vue__.list[0];
         count++;
         if (element.checked) {
@@ -171,11 +171,14 @@ export default {
           isChecked: this.multiple,
         },
         duration: -1,
-        placements: ["bottom", "top", "right", "left"],
+        hiddenArrows: true,
+        placements: ["bottom", "top", "bottom", "left"],
         customClass: "zoom-custom-content zoom-dropdown",
         customListeners: {
           input: (val) => {
-            this.itemClick(val);
+            this.$nextTick(() => {
+              this.itemClick(val);
+            })
           },
         },
         target: this.$refs["downVal"], //	目标元素
@@ -196,7 +199,7 @@ export default {
       // 判断是否多选
       if (!this.multiple) {
         // 单选状态
-        if (!this.disabled) {
+        if (e.disabled) {
           return;
         }
         this.currentValue = e.text;
@@ -221,7 +224,6 @@ export default {
             lst.push(item.value);
             showList.push(item.text);
           });
-          return;
         } else if (e === "cancel") {
           list = [];
           showList = [];
@@ -259,7 +261,7 @@ export default {
     hideDown() {
       this.tipInstance.hiddenTip(true);
       setTimeout(() => {
-        this.tipInstance.visible = false;
+        this.showDown = this.tipInstance.visible = false;
       }, 300);
       setTimeout(() => {
         if (!this.showDown) {
@@ -382,7 +384,7 @@ export default {
   transform: rotate(180deg);
   cursor: pointer;
 }
-.zoom-svg {
+.zoom-select__multiple .icon-close-plus {
   width: 1em;
   height: 1em;
   vertical-align: middle;
@@ -405,7 +407,7 @@ export default {
   border: 1px solid #d9d9d9;
   border-radius: 2px;
   background-color: #fff;
-  box-shadow: 0 0 4px rgba(0, 0, 0 / 30%);
+  box-shadow: 0 0 4px rgb(0 0 0 / 30%);
   margin-top: 2px;
   box-sizing: border-box;
 }
@@ -443,7 +445,7 @@ export default {
   color: #999;
   cursor: not-allowed;
 }
-.zoom-select-tags {
+.zoom-select__tags {
   position: absolute;
   line-height: normal;
   white-space: normal;
@@ -481,7 +483,7 @@ export default {
   text-overflow: ellipsis;
   overflow: hidden;
   display: -ms-inline-flexbox;
-  display: inline-flexbox;
+  display: inline-flex;
   -ms-flex-pack: start;
   justify-content: flex-start;
   -ms-flex-align: center;
@@ -498,18 +500,13 @@ export default {
   border: 1px solid rgba(24, 144, 255, 0.15);
   background-color: rgba(24, 144, 255, 0.06);
 }
-.zoom-select__tags-text {
-  width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  min-width: 180px;
-}
 .zoom-tag.zoom-tag--small {
   height: 20px;
   line-height: 18px;
 }
-
+.zoom-selector .selector-content .is-disabled,
+.zoom-selector .select-active,
+.zoom-selector .zoom-poplist .is-disabled:hover,
 .zoom-selector .selector-content .is-disabled .zoom-checkbox .checkbox-item {
   color: #999;
   cursor: not-allowed;
@@ -522,10 +519,9 @@ export default {
   .is-disabled
   .zoom-checkbox
   .checkbox-item
-  .zoom-icon:hover {
+  i.zoom-icon:hover {
   color: #d9d9d9;
 }
-
 .zoom-select .zoom-select-mask {
   background: rgba(0, 0, 0, 0.5);
   position: fixed;
@@ -553,6 +549,13 @@ export default {
   background: #ccc;
   opacity: 1;
   transition: opacity 0.34s ease-out;
+}
+.zoom-select__tags-text {
+  width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 180px;
 }
 .zoom-select__multiple .zoom-input > .zoom-input__inner {
   color: #fff;
