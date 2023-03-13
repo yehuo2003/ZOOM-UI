@@ -387,9 +387,6 @@ export default {
     },
     //  添加文件
     addFileClick() {
-      if (this.filelist.length) {
-        console.log(this.filelist[0].length, '=this.filelist.length');
-      }
       if (this.filelist & this.filelist.length && this.limit && this.filelist.length > this.limit) {
         this.$zoom.alert({
           title: "提示",

@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-10 22:18:31
+ * @LastEditTime: 2023-03-13 22:11:02
 -->
 <template>
 	<div>
@@ -13,7 +13,7 @@
 				<zoom-input></zoom-input>
 			</zoom-form-item>
 			<zoom-form-item label="年龄">
-				<zoom-input></zoom-input>
+				<zoom-numeric :op="inputOp"></zoom-numeric>
 			</zoom-form-item>
 			<zoom-form-item label="班级">
 				<zoom-input></zoom-input>

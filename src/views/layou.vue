@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-10 22:14:04
+ * @LastEditTime: 2023-03-13 22:36:06
 -->
 <template>
   <div class="test-layou">
@@ -32,14 +32,14 @@ export default {
       }, {
         value: '选项2',
         label: '双皮奶',
-        disabled: true
+        // disabled: true
       }, {
         value: '选项3',
         label: '蚵仔煎'
       }, {
         value: '选项4',
         label: '龙须面炒鸡长长长长长长长长长长长长长长长长长长',
-        disabled: true
+        // disabled: true
       }, {
         value: '选项5',
         label: '北京烤鸭'

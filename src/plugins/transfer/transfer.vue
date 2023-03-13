@@ -161,7 +161,6 @@ export default {
         }
       })
       this.$refs["addGrid"].load(arr);
-      console.log(arr, 'arr');
     },
     // 动态加载数据
     load(data) {

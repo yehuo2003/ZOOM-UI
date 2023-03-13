@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-10 22:15:59
+ * @LastEditTime: 2023-03-13 22:44:33
 -->
 <template>
   <div
@@ -14,15 +14,15 @@
   >
     <div
       v-if="multiple"
-      v-inputresize="DomResize"
       @click="showTip(showDown)"
+      ref="tags"
       class="zoom-select__tags"
     >
       <span
         v-show="(collapseTags && index === 0) || !collapseTags"
         v-for="(item, index) of currentValue"
         :key="index"
-        class="zoom-tag zoom-tag--info zoom-tag--small"
+        class="zoom-tag zoom-tag--info"
       >
         <span class="zoom-select__tags-text">{{ item }}</span>
         <span
@@ -32,12 +32,14 @@
       </span>
       <span
         v-show="collapseTags && currentValue.length > 1"
-        class="zoom-tag zoom-tag--info zoom-tag--small"
+        class="zoom-tag zoom-tag--info"
       >
-        <span class="zoom-select__tags-text"> + {{ currentValue.length - 1 }} </span>
+        <span class="zoom-select__tags-text">
+          + {{ currentValue.length - 1 }}
+        </span>
       </span>
     </div>
-    <div @click="showTip(showDown)" class="zoom-input zoom-input-suffix">
+    <div @click="showTip(showDown)" class="zoom-input">
       <input
         :value="currentValue"
         type="text"
@@ -48,13 +50,11 @@
         ref="downVal"
       />
       <span class="zoom-input__suffix">
-        <span class="zoom-input__suffix-inner">
-          <a
-            :class="showDown ? 'icon-up' : 'icon-down'"
-            href="javascript:void(0);"
-            class="zoom-icon zoom-svg zoom-svg-size zoom-select__caret is-reverse"
-          ></a>
-        </span>
+        <a
+          :class="showDown ? 'icon-up' : 'icon-down'"
+          href="javascript:void(0);"
+          class="zoom-icon zoom-select__caret"
+        ></a>
       </span>
     </div>
     <div
@@ -92,44 +92,15 @@ export default {
       list: [],
     };
   },
-  directives: {
-    inputresize: {
-      bind(el, binding) {
-        let height = "";
-        function isReize() {
-          const style = document.defaultView.getComputedStyle(el);
-          if (height !== style.height) {
-            binding.value({ height: style.height });
-            height = style.height;
-          }
-        }
-        el.__vueSetInterval__ = setInterval(isReize, 300);
-      },
-      unbind(el) {
-        console.log(el, "解绑");
-        clearInterval(el.__vueSetInterval__);
-      },
-    },
-  },
   created() {
     this.loadData();
   },
+  mounted() {
+    this.calculatedHeight();
+  },
   methods: {
-    DomResize(data) {
-      let inputHeight = this.$refs["downVal"].style.height;
-      if (data.height === "0px") {
-        inputHeight = "";
-      } else if (data.height !== inputHeight) {
-        inputHeight = data.height;
-      } else {
-        return;
-      }
-      this.$refs["downVal"].style.height = inputHeight;
-      if (this.tipInstance) {
-        this.tipInstance.updateTip();
-      }
-    },
     removeItem(item) {
+      this.calculatedHeight();
       this.currentValue = this.currentValue.filter((i) => i !== item);
       this.options = this.options.map((i) => {
         if (i.text === item) {
@@ -178,7 +149,7 @@ export default {
           input: (val) => {
             this.$nextTick(() => {
               this.itemClick(val);
-            })
+            });
           },
         },
         target: this.$refs["downVal"], //	目标元素
@@ -255,8 +226,8 @@ export default {
         if (typeof e !== "string") {
           e.checked = !e.checked;
         }
+        this.calculatedHeight();
       }
-      this.$refs["downVal"].value = this.currentValue;
     },
     hideDown() {
       this.tipInstance.hiddenTip(true);
@@ -298,7 +269,22 @@ export default {
         this.currentValue = obj ? obj.text : "";
         this.options = data;
       }
-      this.options = data;
+    },
+    calculatedHeight() {
+      if (!this.multiple) {
+        return;
+      }
+      setTimeout(() => {
+        let tags = this.$refs["tags"].clientHeight;
+        if (tags) {
+          this.$refs["downVal"].style.height = `${tags}px`;
+        } else {
+          this.$refs["downVal"].style.height = "24px";
+        }
+        if (this.tipInstance) {
+          this.tipInstance.updateTip();
+        }
+      }, 100);
     },
   },
   beforeDestroy() {
@@ -309,28 +295,21 @@ export default {
 };
 </script>
 <style>
-[class*="zoom-"],
-[class*="zoom-"] ::after,
-[class*="zoom-"] ::before {
-  box-sizing: border-box;
-}
 .zoom-select {
   display: inline-block;
   position: relative;
   width: 100%;
   outline: 0;
 }
-.zoom-input {
+.zoom-select .zoom-input {
   position: relative;
   font-size: 12px;
   display: inline-table;
   width: 100%;
 }
-.zoom-input-suffix .zoom-input__inner {
+.zoom-select .zoom-input__inner {
   padding-right: 30px;
   padding-left: 8px;
-}
-.zoom-input__inner {
   width: 100%;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
@@ -339,7 +318,6 @@ export default {
   font-size: inherit;
   height: 30px;
   line-height: 30px;
-  padding: 0 8px;
   outline: 0;
   display: inline-block;
   box-sizing: border-box;
@@ -348,11 +326,6 @@ export default {
 }
 .zoom-input__suffix {
   right: 8px;
-  transition: all 0.3s;
-  pointer-events: none;
-}
-.zoom-input__prefix,
-.zoom-input__suffix {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -363,8 +336,6 @@ export default {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-}
-.zoom-input__suffix-inner {
   pointer-events: all;
   font-size: 14px;
   display: -ms-flexbox;
@@ -374,10 +345,8 @@ export default {
   -ms-flex-align: center;
   align-items: center;
 }
-.zoom-select .zoom-input .zoom-select__caret.is-reverse {
-  transform: rotate(0);
-}
 .zoom-select .zoom-input .zoom-select__caret {
+  transform: rotate(0);
   fill: #1890ff;
   font-size: 14px;
   transition: transform 0.3s;
@@ -418,33 +387,6 @@ export default {
   padding-bottom: 6px;
   text-align: left;
 }
-.zoom-select-dropdown .zoom-select-dropdown__item {
-  white-space: nowrap;
-  box-sizing: border-box;
-  padding: 0 8px;
-}
-.zoom-select-dropdown__item {
-  position: relative;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #333;
-  font-size: 12px;
-  height: 30px;
-  line-height: 30px;
-  cursor: pointer;
-}
-.zoom-select-dropdown__item.selected {
-  background-color: #f5f5f5;
-}
-.zoom-select-dropdown__item.hover,
-.zoom-select-dropdown__item:hover {
-  background-color: #e6f7ff;
-}
-.zoom-select-dropdown__item.is-disabled {
-  color: #999;
-  cursor: not-allowed;
-}
 .zoom-select__tags {
   position: absolute;
   line-height: normal;
@@ -467,18 +409,24 @@ export default {
   border-color: transparent;
   margin: 2px 0 2px 4px;
   background-color: #f0f2f5;
-}
-.zoom-select .zoom-tag,
-.zoom-tag {
   white-space: nowrap;
   box-sizing: border-box;
+  height: 22px;
+  line-height: 20px;
+  padding: 0 8px;
+  font-size: 12px;
+  border-radius: 2px;
+  display: inline-block;
+  color: #1890ff;
+  border: 1px solid rgba(24, 144, 255, 0.15);
+  background-color: rgba(24, 144, 255, 0.06);
+  height: 20px;
+  line-height: 18px;
 }
-.zoom-tag.zoom-tag--info {
+.zoom-select__tags .zoom-tag.zoom-tag--info {
   color: #333;
   border-color: rgba(51, 51, 51, 0.15);
   background-color: rgba(51, 51, 51, 0.06);
-}
-.zoom-select__tags .zoom-tag.zoom-tag--info {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -489,23 +437,7 @@ export default {
   -ms-flex-align: center;
   align-items: center;
 }
-.zoom-tag {
-  height: 22px;
-  line-height: 20px;
-  padding: 0 8px;
-  font-size: 12px;
-  border-radius: 2px;
-  display: inline-block;
-  color: #1890ff;
-  border: 1px solid rgba(24, 144, 255, 0.15);
-  background-color: rgba(24, 144, 255, 0.06);
-}
-.zoom-tag.zoom-tag--small {
-  height: 20px;
-  line-height: 18px;
-}
 .zoom-selector .selector-content .is-disabled,
-.zoom-selector .select-active,
 .zoom-selector .zoom-poplist .is-disabled:hover,
 .zoom-selector .selector-content .is-disabled .zoom-checkbox .checkbox-item {
   color: #999;
