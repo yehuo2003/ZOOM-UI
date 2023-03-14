@@ -239,7 +239,7 @@ export default {
   -webkit-transition: border 0.3s;
   transition: border 0.3s;
   outline: 0;
-  resize: vertical;
+  resize: both;
 }
 .zoom-textarea {
   position: relative;

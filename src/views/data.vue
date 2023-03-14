@@ -1,7 +1,7 @@
 <template>
   <div>
     <zoom-notice></zoom-notice>
-    <zoom-grid ref="grid" :op="gridOp"></zoom-grid>
+    <zoom-grid ref="grid" :op="gridOp" @editChange="handlerEdit"></zoom-grid>
     <zoom-pager ref="page" :op="pageOp"></zoom-pager>
     <zoom-slider :min=0 :max=500 v-model="per"></zoom-slider>
     <!-- <zoom-slider :op="sliderOp" v-model="per"></zoom-slider> -->
@@ -26,39 +26,38 @@ export default {
       },
       per: 0,
       list: [
-          {name: '林主明', age: 27, gender: '男', city: '深圳', phone: 13666990716},
-          {name: '张三丰', age: 130, gender: '男', city: '武当', phone: 13876935716},
-          {name: '乔峰', age: 30, gender: '男', city: '丐帮', phone: 13356956816},
-          {name: '杨幂', age: 28, gender: '女', city: '北京', phone: 13956998886},
-          {name: '迪丽热巴', age: 25, gender: '女', city: '新疆', phone: 18766944416},
-          {name: '易烊千玺', age: 18, gender: '男', city: '千禧', phone: 15966350784},
-          {name: '陆逊', age: 86, gender: '男', city: '吴国', phone: 13886696796},
-          {name: '诸葛亮', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
-          {name: '司马懿', age: 86, gender: '男', city: '魏国', phone: 13746995936},
-          {name: '郭德纲', age: 27, gender: '男', city: '德云社', phone: 13666990716},
-          {name: '曹云金', age: 130, gender: '男', city: '海清', phone: 13876935716},
-          {name: '蔡依林', age: 30, gender: '女', city: '台湾', phone: 13356956816},
-          {name: '林诗音', age: 28, gender: '女', city: '北京', phone: 13956998886},
-          {name: '楚留香', age: 25, gender: '男', city: '新疆', phone: 18766944416},
-          {name: '陆小凤', age: 18, gender: '男', city: '千禧', phone: 15966350784},
-          {name: '叶问', age: 86, gender: '男', city: '吴国', phone: 13886696796},
-          {name: '李小龙', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
-          {name: '八神庵', age: 27, gender: '男', city: '深圳', phone: 13666990716},
-          {name: '草薙京', age: 130, gender: '男', city: '武当', phone: 13876935716},
-          {name: '不知火舞', age: 30, gender: '男', city: '丐帮', phone: 13356956816},
-          {name: '纲手', age: 28, gender: '女', city: '北京', phone: 13956998886},
-          {name: '漩涡鸣人', age: 25, gender: '女', city: '新疆', phone: 18766944416},
-          {name: '六道佩恩', age: 18, gender: '男', city: '千禧', phone: 15966350784},
-          {name: '宇智波佐助', age: 86, gender: '男', city: '吴国', phone: 13886696796},
-          {name: '火影', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
+          {name: '大声道', age: 27, gender: '男', city: '深圳', phone: 13666990716},
+          {name: '石佛寺', age: 130, gender: '男', city: '武当', phone: 13876935716},
+          {name: '规范化的', age: 30, gender: '男', city: '丐帮', phone: 13356956816},
+          {name: '和的规范化', age: 28, gender: '女', city: '北京', phone: 13956998886},
+          {name: '兔兔呀', age: 25, gender: '女', city: '新疆', phone: 18766944416},
+          {name: '大大', age: 18, gender: '男', city: '千禧', phone: 15966350784},
+          {name: '请问', age: 86, gender: '男', city: '吴国', phone: 13886696796},
+          {name: '和几个减肥', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
+          {name: '广东佛山个', age: 86, gender: '男', city: '魏国', phone: 13746995936},
+          {name: '热天', age: 27, gender: '男', city: '德云社', phone: 13666990716},
+          {name: '评级哦', age: 130, gender: '男', city: '海清', phone: 13876935716},
+          {name: '徐晓晨', age: 30, gender: '女', city: '台湾', phone: 13356956816},
+          {name: '上大学', age: 28, gender: '女', city: '北京', phone: 13956998886},
+          {name: '电风扇', age: 25, gender: '男', city: '新疆', phone: 18766944416},
+          {name: '拿灰姑娘', age: 18, gender: '男', city: '千禧', phone: 15966350784},
+          {name: '浩如烟海', age: 86, gender: '男', city: '吴国', phone: 13886696796},
+          {name: '个梵蒂冈', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
+          {name: '就欧冠', age: 27, gender: '男', city: '深圳', phone: 13666990716},
+          {name: '佛挡杀佛', age: 130, gender: '男', city: '武当', phone: 13876935716},
+          {name: '大顺德区', age: 30, gender: '男', city: '丐帮', phone: 13356956816},
+          {name: '而无法', age: 28, gender: '女', city: '北京', phone: 13956998886},
+          {name: '体育菊花哥', age: 25, gender: '女', city: '新疆', phone: 18766944416},
+          {name: '破啤酒', age: 18, gender: '男', city: '千禧', phone: 15966350784},
+          {name: '范德萨发', age: 86, gender: '男', city: '吴国', phone: 13886696796},
+          {name: '多渠道', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
           {name: '妖精的尾巴', age: 86, gender: '男', city: '魏国', phone: 13746995936},
           {name: '露西', age: 27, gender: '男', city: '德云社', phone: 13666990716},
-          {name: '苍井空', age: 130, gender: '男', city: '海清', phone: 13876935716},
-          {name: '波多野结衣', age: 30, gender: '女', city: '台湾', phone: 13356956816},
-          {name: '三上悠亚', age: 28, gender: '女', city: '北京', phone: 13956998886},
-          {name: '冲田杏梨', age: 25, gender: '男', city: '新疆', phone: 18766944416},
-          {name: '周艺', age: 18, gender: '男', city: '千禧', phone: 15966350784},
-          {name: '李平丹', age: 86, gender: '男', city: '吴国', phone: 13886696796},
+          {name: '的方法但是', age: 130, gender: '男', city: '海清', phone: 13876935716},
+          {name: '迁安镇', age: 30, gender: '女', city: '台湾', phone: 13356956816},
+          {name: '大的范德萨', age: 28, gender: '女', city: '北京', phone: 13956998886},
+          {name: '防守打法', age: 25, gender: '男', city: '新疆', phone: 18766944416},
+          {name: '大是非法的', age: 86, gender: '男', city: '吴国', phone: 13886696796},
           {name: '豹哥', age: 53, gender: '男', city: '蜀国', phone: 15966590766},
           {name: '豹姐', age: 86, gender: '男', city: '魏国', phone: 13746995936}
       ],
@@ -85,7 +84,8 @@ export default {
         },
       },
       gridOp: {
-        hideIndex: true,
+        hideIndex: false,
+        editMode: true,
         tip: true,
         title: [
           // {fieId: 'Index', header: '.No'},
@@ -102,7 +102,7 @@ export default {
             ]
           },
           {fieId: 'age',tip: false, header: '年龄'},
-          {fieId: 'name',tip: false, header: '姓名'},
+          {fieId: 'name',tip: false, header: '姓名', editable: true},
           {fieId: 'gender', header: '性别'},
           {fieId: 'city',tip: true, header: '地址'},
           {fieId: 'phone',tip: true, header: '联系方式'}
@@ -115,6 +115,9 @@ export default {
     this.loadData();
   },
   methods: {
+    handlerEdit(oldVal, newVal) {
+      console.log(oldVal, newVal, '父组件');
+    },
     test() {
       console.log(this.per);
     },

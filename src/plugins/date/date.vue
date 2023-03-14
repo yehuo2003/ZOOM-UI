@@ -358,11 +358,11 @@ export default {
         let year = this.years[0];
         this.years = [];
         if (n === -1) {
-          for (var i = year - 10; i < year; i++) {
+          for (let i = year - 10; i < year; i++) {
             this.years.push(i);
           }
         } else {
-          for (var i = year + 10; i < year + 20; i++) {
+          for (let i = year + 10; i < year + 20; i++) {
             this.years.push(i);
           }
         }
@@ -381,7 +381,7 @@ export default {
     },
 
     pick(day) {
-      if (!!day.flag) {
+      if (day.flag) {
         // 当页日历上可能还会显示部分上个月或者下个月的部分天数，根据标识来做判断
         // 并对月份作出相应的处理
         if (parseInt(day.text) > 15) {

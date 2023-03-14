@@ -51,41 +51,43 @@
                 class="grid-row"
               >
               <!-- 如果是名字是按钮就不显示, 或者 当用户设置了隐藏索引时, 隐藏名字为 indexId 的 -->
+              <!-- v-show=" (name !== 'onClick') || ((serial && name !== 'indexId') || !serial) " -->
                 <td
-                  v-if="(serial && name !== 'indexId') || !serial"
-                  v-show=" name !== 'onClick' "
+                  v-show="showRow(name)"
                   @click="itemClick($event, i, item, name)"
                   v-for="(i, name, index) of item"
                   :key="index"
                   :fieId="name"
                   :zoom-tip="tips ? i === item.btns ? 'btns' : i : false"
                   class="grid-item"
+                  :contenteditable="op && op.editMode && isEdit(i, item, name)"
+                  @blur="handlerEdit(i, $event.currentTarget)"
                 >
-                    {{i === item.btns ? '' : name === 'checked' ? '' : i}}
-                    <!-- 如果是复选框, 就加载 -->
-                    <span
-                      v-if="name === 'checked'"
-                      @click.stop="itemClick($event, i, item, name)"
-                      class="zoom-checkbox grid-input"
+                  <!-- {{i === item.btns ? '' : name === 'checked' ? '' : i}} -->
+                  {{ showName(i, item, name) }}
+                  <!-- 如果是复选框, 就加载 -->
+                  <span
+                    v-if="name === 'checked'"
+                    @click.stop="itemClick($event, i, item, name)"
+                    class="zoom-checkbox grid-input"
+                  >
+                    <label class="checkbox-item">
+                      <i
+                        class="zoom-icon"
+                        :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"
+                      ></i>
+                    </label>
+                  </span>
+                  <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
+                  <span v-if="i === item.btns" class="grid-input">
+                    <a
+                      v-for="(j, jIndex) of item.btns"
+                      :key="jIndex"
+                      v-tip.right="j.title"
+                      @click.stop="iconClick(j, item)"
                     >
-                      <label class="checkbox-item">
-                        <i
-                          class="zoom-icon"
-                          :class="item.checked ? 'icon-checkbox-fill' : 'icon-checkbox'"
-                        ></i>
-                      </label>
-                    </span>
-                    <!-- 如果是按钮组, 就不展示文本信息, 而是渲染按钮 -->
-                    <span v-if="i === item.btns" class="grid-input">
-                      <a
-                        v-for="(j, jIndex) of item.btns"
-                        :key="jIndex"
-                        v-tip.right="j.title"
-                        @click.stop="iconClick(j, item)"
-                      >
-                        <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
-                      </a>
-                    </span>
+                      <span :class="j.css.icon ? 'zoom-icon ' + j.css.icon : j.css"></span>
+                    </a>
                   </span>
                 </td>
               </tr>
@@ -113,6 +115,11 @@ export default {
       },
       hideIndex: {
         // 是否隐藏序列号
+        type: Boolean,
+        default: false
+      },
+      editMode: {
+        // 是否开启编辑模式
         type: Boolean,
         default: false
       },
@@ -161,6 +168,41 @@ export default {
       bodyData: []
     };
   },
+  computed: {
+    showRow() {
+      // (name !== 'onClick') || ((serial && name !== 'indexId') || !serial)
+      return function(name) {
+        if (name === 'indexId' && this.serial) {
+          return false
+        } else if (name === 'onClick') {
+          return false
+        } else {
+          return true
+        }
+      }
+    },
+    isEdit() {
+      // i === item.btns ? false : name === 'checked' ? false : true
+      return function(i, item, name) {
+        if (name === 'indexId') {
+          return false
+        } else {
+          let isEditable = this.titleData.find(o => o.fieId === name && o.editable);
+          if (!isEditable) {
+            return false
+          } else {
+            return i === item.btns ? false : name === 'checked' ? false : true
+          }
+        }
+      }
+    },
+    showName() {
+      // {{i === item.btns ? '' : name === 'checked' ? '' : i}}
+      return function(i, item, name) {
+        return i === item.btns ? '' : name === 'checked' ? '' : i
+      }
+    },
+  },
   mounted() {
     if (this.op && this.op.beforeLoad) {
       this.op.beforeLoad();
@@ -195,6 +237,12 @@ export default {
     }
   },
   methods: {
+    handlerEdit(name, event) {
+      if (String(name) !== event.innerText && event.className.indexOf('zoom-edit') === -1) {
+        event.className += ' zoom-edit';
+        this.$emit('editChange', String(name), event.innerText);
+      }
+    },
     setWidth() {
       let data = this.titleData;
       if (this.op.tip) {
@@ -265,6 +313,7 @@ export default {
             minWidth: item.width,
             sort: item.sort,
             css: item.css,
+            editable: item.editable,
             tip: item.tip
           });
           // 给每列内容加fieId
@@ -729,5 +778,18 @@ tbody {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+.zoom-edit {
+  position: relative;
+}
+.zoom-edit::after {
+  content: ' ';
+  position: absolute;
+  right: 0;
+  display: inline;
+  border-top: 5px solid #52c41a;
+  border-right: 5px solid #52c41a;
+  border-left: 5px solid rgba(0, 0, 0, 0);
+  border-bottom: 5px solid rgba(0, 0, 0, 0);
 }
 </style>

@@ -468,7 +468,6 @@ export default {
         } else {
           return true;
         }
-        this.size = size;
       }
     },
     //  methods内一共4个方法，添加文件、移除文件、提交、检测（上传之前的检验）

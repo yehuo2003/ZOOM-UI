@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-13 22:36:06
+ * @LastEditTime: 2023-03-14 21:37:13
 -->
 <template>
   <div class="test-layou">
@@ -25,6 +25,7 @@
 export default {
   data() {
     return {
+      color: '#1890ff',
       curText: '选项1,选项2,选项3',
       options: [{
         value: '选项1',

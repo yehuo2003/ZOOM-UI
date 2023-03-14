@@ -165,9 +165,7 @@ export default {
       let curTarget = target;
 
       let arr = typeof andSelf === "undefined" ? [curTarget] : [];
-      let result = [];
-
-      while(true) {
+      while(arr.length === 0) {
         if ((typeof parent !== 'undefined' && curTarget == parent)||
           typeof parent === 'undefined' && curTarget.nodeType === 9) {
           arr.push(curTarget);

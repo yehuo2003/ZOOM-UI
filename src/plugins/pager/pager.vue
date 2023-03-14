@@ -23,8 +23,7 @@
     </span>
 
     <span
-      v-show="index != 5"
-      v-if="index != 7"
+      v-show="index != 5 || index != 7"
       v-for="(page, index) of showPage"
       :key="index"
       :class="{ 'active':(changeStart + page - 1) === currentPage, 'omission': index === 6 && showPage >= 10}"
@@ -150,18 +149,19 @@ export default {
   computed: {
     changeStart() {
       //分页逻辑
-      this.posPage = Math.floor(this.showPage / 2) + 1;
+      let start = this.start;
       if (this.pages <= this.showPage) {
-        return (this.start = 1);
+        start = 1;
       } else {
         if (this.currentPage <= this.posPage) {
-          return (this.start = 1);
+          start = 1;
         } else if (this.pages - this.currentPage <= this.posPage) {
-          return (this.start = this.pages - this.showPage + 1);
+          start = this.pages - this.showPage + 1;
         } else {
-          return (this.start = this.currentPage - this.posPage + 1);
+          start = this.currentPage - this.posPage + 1;
         }
       }
+      return start
     }
   },
   methods: {
