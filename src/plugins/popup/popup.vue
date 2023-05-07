@@ -4,7 +4,7 @@
       <div class="popup-modal-box">
         <div class="popup-modal-header">
           <span class="modal-title">{{title}}</span>
-          <i @click="close" class="zoom-icon icon-close"></i>
+          <i @click="close" class="zoom-icon icon-close-plus"></i>
         </div>
         <div class="popup-modal-body">
           <div class="popup-status">
@@ -170,7 +170,7 @@ export default {
   white-space: normal;
   word-break: break-word;
 }
-.zoom-popup .popup-modal-header .icon-close,
+.zoom-popup .popup-modal-header .icon-close-plus,
 .zoom-popup .popup-modal-body .popup-status .zoom-icon {
   width: 1em;
   height: 1em;
@@ -191,7 +191,7 @@ export default {
   position: relative;
   -webkit-box-direction: normal;
 }
-.zoom-popup .popup-modal-header .icon-close {
+.zoom-popup .popup-modal-header .icon-close-plus {
   font-size: 18px;
   position: absolute;
   right: 14px;

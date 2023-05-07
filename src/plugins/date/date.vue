@@ -233,9 +233,9 @@ export default {
       this.select.month = date.getMonth() + 1;
       this.select.date = date.getDate();
       this.select.day = date.getDay();
-      this.select.hours = date.getHours();
-      this.select.minutes = date.getMinutes();
-      this.select.seconds = date.getSeconds();
+      // this.select.hours = date.getHours();
+      // this.select.minutes = date.getMinutes();
+      // this.select.seconds = date.getSeconds();
 
       this.currentMonthFirstDay = new Date(
         this.select.year,
@@ -442,9 +442,9 @@ export default {
         year: this.select.year,
         month: this.select.month,
         date: this.select.date,
-        hours: this.select.hours,
-        minutes: this.select.minutes,
-        seconds: this.select.seconds
+        // hours: this.select.hours,
+        // minutes: this.select.minutes,
+        // seconds: this.select.seconds
       };
       this.dateTime = this.formatDate(this.current);
       this.$emit("input", this.dateTime);

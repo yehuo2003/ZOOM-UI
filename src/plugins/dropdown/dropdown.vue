@@ -42,7 +42,7 @@
         v-if="!options.hideClose"
         @click="reset"
         href="javascript:void(0);"
-        class="zoom-icon icon-close icon-default"
+        class="zoom-icon icon-close-plus icon-default"
       ></a>
       <a
         @click="showTip(showDown)"
@@ -429,13 +429,13 @@ export default {
   color: #bfbfbf;
   cursor: no-drop;
 }
-.zoom-input:hover .input-btn .icon-default.icon-close {
+.zoom-input:hover .input-btn .icon-default.icon-close-plus {
   display: block;
 }
-.disabled.zoom-input:hover .input-btn .icon-default.icon-close {
+.disabled.zoom-input:hover .input-btn .icon-default.icon-close-plus {
   display: none;
 }
-.zoom-input .input-btn .icon-default.icon-close {
+.zoom-input .input-btn .icon-default.icon-close-plus {
   display: none;
   font-size: 20px;
   color: #b9b9b9;

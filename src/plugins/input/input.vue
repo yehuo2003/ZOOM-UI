@@ -37,7 +37,7 @@
       style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
     ></span>
     <div class="input-btn">
-      <a v-if="!options.hideClose" @click="reset" href="javascript:void(0);" class="zoom-icon icon-close icon-default"></a>
+      <a v-if="!options.hideClose" @click="reset" href="javascript:void(0);" class="zoom-icon icon-close-plus icon-default"></a>
       <a
         v-if="options.IconStyle"
         :class="options.IconStyle"
@@ -95,10 +95,10 @@ export default {
   width: 20px;
   line-height: 35px;
 }
-.zoom-input:not(.disabled):hover .input-btn .icon-default.icon-close {
+.zoom-input:not(.disabled):hover .input-btn .icon-default.icon-close-plus {
   display: block;
 }
-.zoom-input .input-btn .icon-default.icon-close {
+.zoom-input .input-btn .icon-default.icon-close-plus {
   display: none;
   font-size: 20px;
   color: #b9b9b9;

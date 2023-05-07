@@ -30,6 +30,10 @@ export default {
         },
         this.label
       );
+    let isLabel = true;
+    if (labels.children && labels.children[0].text) {
+      isLabel = false
+    }
     const slot = this.$slots.default;
     return h(
       "div",
@@ -40,7 +44,7 @@ export default {
           this.require ? "is-require" : ""
         ]
       },
-      [labels, slot]
+      [isLabel ? labels : null, slot]
     );
   }
 };

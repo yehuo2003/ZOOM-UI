@@ -91,7 +91,7 @@ export default {
   },
   data() {
     return {
-      Width: "210px",
+      Width: null,
       treeList: []
     };
   },
@@ -126,7 +126,7 @@ export default {
   },
   methods: {
     // 展开下拉树事件
-    showTree(item, index, tier) {
+    async showTree(item, index, tier) {
       let value = JSON.parse(JSON.stringify(item));
       delete value.load;
       if (item.load) {
@@ -137,13 +137,24 @@ export default {
       }
       // 判断是否开启手风琴模式   只有一级菜单才有作用
       if (this.op.accordion && tier) {
-        this.treeList.forEach(elem => {
-          elem.show = false;
-        });
+        // this.treeList.forEach(elem => {
+        //   elem.show = false;
+        // });
+        await this.closeHeightLight(this.treeList);
         item.show = true;
       } else {
         item.show = !item.show;
       }
+    },
+    closeHeightLight(list) {
+      list.forEach(item => {
+        if (item.show) {
+          item.show = false;
+        }
+        if (item.children) {
+          return this.closeHeightLight(item.children);
+        }
+      })
     },
     // 点击节点事件
     handleClick(item, index) {
@@ -257,9 +268,9 @@ export default {
   width: 100%;
   background: #fff;
   font-size: 12px;
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: 0; */
 }
 @-webkit-keyframes tree-menu {
   from {
