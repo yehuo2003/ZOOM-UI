@@ -105,7 +105,7 @@ export default {
           {fieId: 'name',tip: false, header: '姓名', editable: true},
           {fieId: 'gender', header: '性别'},
           {fieId: 'city',tip: true, header: '地址'},
-          {fieId: 'phone',tip: true, header: '联系方式'}
+          {fieId: 'phone',tip: true, header: '联系方式', editable: true}
         ],
         data: []
       }

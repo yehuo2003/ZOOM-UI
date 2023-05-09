@@ -9,29 +9,21 @@
         <zoom-layout>
           <zoom-tree-menu :op="navOp" slot="aside"></zoom-tree-menu>
           <div slot="main">
-            <zoom-dialog-box :show="visibility" @close="handleClose">
-              <!-- <h1 slot="header">
-                自定义头部
-              </h1> -->
-              <h1>弹框测试</h1>
-              <div slot="footer">
-                <zoom-button>自定义button</zoom-button>
-              </div>
-            </zoom-dialog-box>
-            <zoom-button @click="alertBtn">弹出框厕所</zoom-button>
-            <zoom-button  v-longPress:[time]="longpress">长按</zoom-button>
-            <!-- <div style="width: 1000px;height: 1000px;" v-waterMarker="{text:'zoom-UI版权所有', font: '10px Microsoft JhengHei'}">
-              的发发达阿发发
-            </div> -->
-            <zoom-dropdown v-model="searchMsg" :op="dropdownOp2"></zoom-dropdown>
-            {{searchMsg}}
-            <zoom-button shape="circle" type="primary">-sdadadad</zoom-button>
-            <zoom-button shape="circle">+</zoom-button>
-            <!-- {{$zoom.$t('captcha.refresh')}}
-            <zoom-button @click="visibility = true">弹框测试</zoom-button>
-            <zoom-button @click="confimClick">confim测试</zoom-button>
-            <div v-drag style="position: relative;">自由拖拽</div> -->
-            <zoom-numeric></zoom-numeric>
+            <zoom-form @submit.prevent="false">
+              <zoom-form-item>
+                <zoom-input placeholder="请输入"></zoom-input>
+              </zoom-form-item>
+              <zoom-form-item>
+                <span slot="label">sssss</span>
+                <zoom-date></zoom-date>
+              </zoom-form-item>
+              <zoom-form-item inline="true">
+                <zoom-search style="width: 120px;"></zoom-search>
+              </zoom-form-item>
+              <zoom-form-item inline="true">
+                <zoom-numeric style="width: 120px;"></zoom-numeric>
+              </zoom-form-item>
+            </zoom-form>
           </div>
         </zoom-layout>
       </div>
@@ -45,24 +37,6 @@
 export default {
   data() {
     return {
-      time: 5000,
-      copyText: 'a copy directives',
-      searchMsg: '',
-      name: '222',
-      curTab: 0, // 当前激活的tab索引
-      dropdownOp2: {
-        isChecked: true,
-        disabled: false,
-        placeHolder: '--请选择--',
-        readonly: true,
-        hideClose: false,
-        data: [
-          {value: '1', text: '北京'},
-          {value: '2', text: '上海'},
-          {value: '3', text: '广州'},
-          {value: '4', text: '深圳'}
-        ],
-      },
       interOp: {
         title: 'china',
         // url: 'http://www.baidu.com',
@@ -155,42 +129,9 @@ export default {
           ]}
         ]
       },
-      visibility: false,
     }
   },
   methods: {
-    longpress(val) {
-      console.log(11111111111, val);
-    },
-    alertBtn() {
-      console.log(this.$zoom.getLanguage(), 'getLanguage()==');
-      // this.$zoom.loading.show({color: 'red', full: true});
-      // setTimeout(() => {
-      //   this.$zoom.loading.hide();
-      // }, 2000);
-    },
-    updateName() {
-      this.name = '6666';
-      console.log(this.name, 'nmame');
-    },
-    tabChange(index) {
-      this.curTab = index
-    },
-    confimClick() {
-      this.$zoom.confim('是否登录?',{
-        yesBtnText:'登录',
-      }).then(() => {
-        console.log('登录');
-          //点登录
-      }).catch(() => {
-          console.log('取消');
-          //点取消
-      });
-    },
-    handleClose(val) {
-      console.log(this.$zoom.confim, '=this.$zoom.confim');
-      this.visibility = false;
-    }
   }
 };
 </script>
