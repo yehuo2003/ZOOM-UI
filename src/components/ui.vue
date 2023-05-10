@@ -165,7 +165,7 @@ export default {
     h3 {
       margin: 10px 0;
     }
-    p {
+    p:not(.no-text) {
       font-size: 16px;
       color: #5e6d82;
       line-height: 1.7em;

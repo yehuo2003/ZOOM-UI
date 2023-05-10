@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    <zoom-layout>
-      <header slot="header">
+    <zoom-layout ref="layout">
+      <header v-if="isHeader" slot="header">
         <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
           <zoom-search v-model="searchVal" :op="searchOp" @search="search"></zoom-search>
           <zoom-internationalisation></zoom-internationalisation>
         </div>
       </header>
-      <router-view slot="main"/>
+      <router-view @showHeader="showHeader" ref="main" slot="main"/>
     </zoom-layout>
     <div class="my-mragin-bottom my-mragin-top my-color my-font-size"></div>
   </div>
@@ -20,6 +20,7 @@ import en from './locale/en_US'
 export default {
   data() {
     return {
+      isHeader: true,
       searchVal: '',
       list: [],
       searchOp: {
@@ -75,6 +76,17 @@ export default {
     this.$zoom.copy("http://yehuo2003.gitee.io/zoom-ui-direction");
   },
   methods: {
+    showHeader(bool) {
+      this.isHeader = bool;
+      if (bool) {
+        this.$refs['layout'].load();
+        this.$refs['layout'].mainStyle += ' top: 60px;'
+        console.log(this.$refs['layout'].mainStyle, 'sssssssss加载');
+      } else {
+        console.log(this.$refs['layout'].mainStyle, 'sssssssss销毁');
+        this.$refs['layout'].mainStyle = '';
+      }
+    },
     search() {
       if (!this.searchVal) return
       let value = this.searchVal.toLowerCase();
@@ -129,6 +141,8 @@ export default {
     }
   }
 }
+
+
 @media (min-width:300px) and (max-width:500px) {
   #app {
     font-size: 10px !important;
@@ -138,7 +152,22 @@ export default {
     .zoom-showcase {
       display: none;
     }
-    .zoom-home>.midden {
+
+    .zoom-mobile {
+      align-items: center;
+      background-color: #111;
+      display: flex;
+      font-family: "Roboto", sans-serif;
+      justify-content: center;
+      min-height: 100vw;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    .zoom-mobile>.midden {
       display: block;
       img {
         width: 200px;
@@ -200,6 +229,7 @@ export default {
     }
   }
 }
+
 .my-back-color {
   background-color: gray;
 }

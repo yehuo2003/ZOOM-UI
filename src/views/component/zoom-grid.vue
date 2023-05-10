@@ -38,6 +38,19 @@
         <custom-code :html="gridCheck"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
+    <h3>表格的编辑功能</h3>
+    <p>需要使用表格编辑功能，需要先配置editMode属性<br>
+      然后在需要编辑的列中设置属性<span>editable: true</span>可启用编辑功能<br>
+      如果需要监听编辑的数据变化可在标签中绑定<span>editChange</span>方法
+    </p>
+    <zoom-tabs class="data-drop" :value="editTab" @change="editChangeBle">
+      <zoom-tab-item :index="0" label="效果">
+        <zoom-grid :op="gridOp4" @editChange="handlerEdit"></zoom-grid>
+      </zoom-tab-item>
+      <zoom-tab-item :index="1" label="代码">
+        <custom-code :html="gridEdit"></custom-code>
+      </zoom-tab-item>
+    </zoom-tabs>
     <div class="tip">
       zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
       组件暂不支持页面渲染后再改变属性，v-model除外。如果需要页面加载完毕后再加载表格数据, 请使用组件内置的load方法。
@@ -228,8 +241,8 @@ export default {
               },
             ]
           },
-          {fieId: 'age',tip: false, header: '年龄'},
           {fieId: 'name',tip: false, header: '姓名'},
+          {fieId: 'age',tip: false, header: '年龄'},
           {fieId: 'gender', header: '性别'},
           {fieId: 'city',tip: true, header: '地址'},
           {fieId: 'phone',tip: true, header: '联系方式'}
@@ -245,15 +258,32 @@ export default {
         //   this.load();
         // },
       },
+      gridOp4: {
+        hideIndex: false,
+        editMode: true,
+        title: [
+          {fieId: 'name', header: '姓名', editable: true},
+          {fieId: 'age', header: '年龄'},
+          {fieId: 'gender', header: '性别'},
+          {fieId: 'city', header: '地址', editable: true},
+          {fieId: 'phone', header: '联系方式', editable: true}
+        ],
+        data: [ // 表格内容数据 键名需要和表头配置的对应
+          {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
+          {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
+          {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
+          {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
+        ]
+      },
       gridOp3: {
         hideIndex: true,
         isChecked: true,
         title: [
-          {fieId: 'age',tip: false, header: '年龄'},
-          {fieId: 'name',tip: false, header: '姓名'},
+          {fieId: 'name', tip: false, header: '姓名'},
+          {fieId: 'age', tip: false, header: '年龄'},
           {fieId: 'gender', header: '性别'},
-          {fieId: 'city',tip: true, header: '地址'},
-          {fieId: 'phone',tip: true, header: '联系方式'}
+          {fieId: 'city', tip: true, header: '地址'},
+          {fieId: 'phone', tip: true, header: '联系方式'}
         ],
         data: [ // 表格内容数据 键名需要和表头配置的对应
           {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
@@ -281,25 +311,62 @@ export default {
       opTab: 0,
       checkTab: 0,
       curTab: 0,
-      gridCheck:
+      editTab: 0,
+      gridEdit:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;zoom-grid :op="gridOp3"&gt;&lt;/zoom-grid&gt;
+              &lt;zoom-grid :op="gridOp" @editChange="handlerEdit"&gt;&lt;/zoom-grid&gt;
             &lt;/div&gt;
           &lt;/template&gt;
           &lt;script&gt;
             export default {
               data() {
                 return {
-                  gridOp3: {
+                  gridOp: {
+                    hideIndex: true,
+                    editMode: true,
+                    title: [
+                      {fieId: 'name', header: '姓名', editable: true},
+                      {fieId: 'age', header: '年龄'},
+                      {fieId: 'gender', header: '性别'},
+                      {fieId: 'city', header: '地址', editable: true},
+                      {fieId: 'phone', header: '联系方式', editable: true}
+                    ],
+                    data: [ // 表格内容数据 键名需要和表头配置的对应
+                      {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
+                      {name: '李四', age: 130, gender: '男', city: '上海', phone: 123456789},
+                      {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
+                      {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
+                    ]
+                  }
+                }
+              },
+              methods: {
+                handlerEdit(oldVal, newVal) {
+                  console.log('表格旧值: ' + oldVal, '表格新值: ' + newVal);
+                },
+              }
+            }
+          &lt;/script&gt;`,
+      gridCheck:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-grid :op="gridOp"&gt;&lt;/zoom-grid&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  gridOp: {
                     hideIndex: true,
                     isChecked: true,
                     title: [
-                      {fieId: 'age',tip: false, header: '年龄'},
-                      {fieId: 'name',tip: false, header: '姓名'},
+                      {fieId: 'name', header: '姓名'},
+                      {fieId: 'age', header: '年龄'},
                       {fieId: 'gender', header: '性别'},
-                      {fieId: 'city',tip: true, header: '地址'},
-                      {fieId: 'phone',tip: true, header: '联系方式'}
+                      {fieId: 'city', header: '地址'},
+                      {fieId: 'phone', header: '联系方式'}
                     ],
                     data: [ // 表格内容数据 键名需要和表头配置的对应
                       {name: '张三', age: 27, gender: '男', city: '北京', phone: 123456789},
@@ -316,7 +383,7 @@ export default {
         `&lt;template&gt;
             &lt;div&gt;
               &lt;zoom-button @click="loadData"&gt;手动加载数据&lt;/zoom-button&gt;
-              &lt;zoom-grid ref="grid" :op="gridOp2"&gt;&lt;/zoom-grid&gt;
+              &lt;zoom-grid ref="grid" :op="gridOp"&gt;&lt;/zoom-grid&gt;
             &lt;/div&gt;
           &lt;/template&gt;
           &lt;script&gt;
@@ -329,7 +396,7 @@ export default {
                     {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
                     {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
                   ],
-                  gridOp2: {
+                  gridOp: {
                     title: [
                       {fieId: 'age',tip: false, header: '年龄'},
                       {fieId: 'name',tip: false, header: '姓名'},
@@ -399,8 +466,8 @@ export default {
                           },
                         ]
                       },
-                      {fieId: 'age',tip: false, header: '年龄'},
                       {fieId: 'name',tip: false, header: '姓名'},
+                      {fieId: 'age',tip: false, header: '年龄'},
                       {fieId: 'gender', header: '性别'},
                       {fieId: 'city',tip: true, header: '地址'},
                       {fieId: 'phone',tip: true, header: '联系方式'}
@@ -430,11 +497,17 @@ export default {
         this.$zoom.loading.hide();
       }, 2000);
     },
+    handlerEdit(oldVal, newVal) {
+      console.log('表格旧值: ' + oldVal, '表格新值: ' + newVal);
+    },
     opChange(index) {
       this.opTab = index
     },
     checkChange(index) {
       this.checkTab = index
+    },
+    editChangeBle(index) {
+      this.editTab = index
     },
     tabChange(index) {
       this.curTab = index
