@@ -1,6 +1,7 @@
 <template>
-  <div @click.stop="bindEvent" ref="zoom-date" class="zoom-date">
+  <div @click.stop="bindEvent" class="zoom-date">
     <div
+      ref="zoom-date"
       @click.stop="disabled ? null : show = !show"
       :class="disabled ? 'zoom-date-disabled' : '' "
       class="zoom-input"

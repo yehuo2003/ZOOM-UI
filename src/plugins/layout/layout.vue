@@ -1,19 +1,20 @@
 <template>
   <div class="zoom-layout">
     <!-- 头部 -->
-    <header v-if="$slots.header" ref="header" :style="headerStyle" class="zoom-header">
+    <header v-if="$slots.header" ref="header" :style="{height: headerHeightAttr}" class="zoom-header">
       <slot name="header"></slot>
     </header>
     <!-- 底部 -->
-    <footer v-if="$slots.footer" ref="footer" :style="footerStyle" class="zoom-footer">
+    <footer v-if="$slots.footer" ref="footer" :style="{left: asideWidthAttr}" class="zoom-footer">
       <slot name="footer"></slot>
     </footer>
     <!-- 左侧单栏 -->
-    <aside v-if="$slots.aside" ref="aside" :style="asideStyle" class="zoom-aside">
+    <aside v-if="$slots.aside" ref="aside" :style="{width: asideWidthAttr}" class="zoom-aside">
       <slot name="aside"></slot>
+      <i v-if="toggleAside" @click="showAsideBtn" class="aside-icon">|||</i>
     </aside>
     <!-- 主程序 -->
-    <main v-if="$slots.main" ref="main" :style="mainStyle" class="zoom-main">
+    <main v-if="$slots.main" ref="main" :style="{left: asideWidthAttr, bottom: footerHeightAttr, top: headerHeightAttr}" class="zoom-main">
       <slot name="main"></slot>
     </main>
   </div>
@@ -22,29 +23,33 @@
 export default {
   name: 'zoom-layout',
   props: {
+    toggleAside: {  //  默认false, 是否显示 隐藏侧边栏按钮
+      type: [Boolean, String],
+      default: false
+    },
     stopTop: {  //  默认false, 每次页面改变会返回顶部, 为true禁止
       type: Boolean,
       default: false
     },
     headerHeight: { //  头部高
       type: [Number, String],
-      default: 60
+      default: 0
     },
     footerHeight: { //  底部高
       type: [Number, String],
-      default: 60
+      default: 0
     },
     asideWidth: { //  左侧宽
       type: [Number, String],
-      default: 200
+      default: 0
     }
   },
   data() {
     return {
-      headerStyle: '',  //  头部style 默认高60px
-      footerStyle: '',  //  尾部style 默认高60px
-      asideStyle: '',  //  左侧单栏style 默认宽200px
-      mainStyle: 'bottom: 0;',  //  主程序style
+      asideWidthAttr: 0,
+      headerHeightAttr: 0,
+      footerHeightAttr: 0,
+      showAside: true
     }
   },
   created() {
@@ -58,38 +63,27 @@ export default {
     }
   },
   methods: {
+    showAsideBtn() {
+      if (this.showAside) {
+        this.asideWidthAttr = '12px';
+      } else {
+        this.asideWidthAttr = `${this.asideWidth}px`;
+      }
+      this.showAside = !this.showAside;
+    },
     // 让main和aside返回顶部
     goTop() {
       document.documentElement.scrollTop = 0;
-      if ( this.$slots.aside && this.$refs['aside']) {
-        this.$refs['aside'].scrollTop = 0;
-      }
-      if (this.$slots.main && this.$refs['main']) {
-        this.$refs['main'].scrollTop = 0;
-      }
-      if (this.$slots.header && this.$refs['header']) {
-        this.$refs['header'].scrollTop = 0;
-      }
-      if (this.$slots.footer && this.$refs['footer']) {
-        this.$refs['footer'].scrollTop = 0;
-      }
+      ['aside', 'main', 'header', 'footer'].forEach(item => {
+        if (this.$slots[item] && this.$refs[item]) {
+          this.$refs[item].scrollTop = 0;
+        }
+      })
     },
     load() {
-      this.headerStyle = `height: ${this.headerHeight}px;`
-      this.footerStyle = `height: ${this.footerHeight}px;`
-      this.asideStyle = `width: ${this.asideWidth}px;`
-
-      if (this.$slots.footer) {
-        this.mainStyle += `bottom: ${this.footerHeight}px;`
-      }
-      if (this.$slots.header) {
-        this.asideStyle += `top: ${this.headerHeight}px;`
-        this.mainStyle += `top: ${this.headerHeight}px;`
-      }
-      if (this.$slots.aside) {
-        this.mainStyle += `left: ${this.asideWidth}px;`
-        this.footerStyle += `left: ${this.asideWidth}px;`
-      }
+      this.headerHeightAttr = `${this.headerHeight}px`;
+      this.asideWidthAttr = `${this.asideWidth}px`;
+      this.footerHeightAttr = `${this.footerHeight}px`;
     }
   }
 };
@@ -107,11 +101,24 @@ export default {
   right: 0;
   margin: 0;
 }
+.zoom-layout>.zoom-aside>.aside-icon {
+  position: absolute;
+  right: 1px;
+  top: 50%;
+  cursor: pointer;
+  transition: color .3s, transform .3s;
+}
+.zoom-layout>.zoom-aside>.aside-icon:hover {
+  color: #1890ff;
+  transform: scale(1.2);
+}
 .zoom-layout>.zoom-aside {
   overflow: auto;
+  transition: width .5s;
 }
 .zoom-layout>.zoom-main {
   overflow: auto;
+  transition: left .5s;
 }
 .zoom-layout>.zoom-aside::-webkit-scrollbar,
 .zoom-layout>.zoom-main::-webkit-scrollbar {

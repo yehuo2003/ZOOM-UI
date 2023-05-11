@@ -96,7 +96,8 @@ export default {
   position: absolute;
 }
 .crosswise-notice .notice-marquee {
-  line-height: 22px;
+  /* line-height: 22px; */
+  line-height: inherit;
   margin: 0 20px;
   position: relative;
   width: 100%;

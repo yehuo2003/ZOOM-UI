@@ -41,7 +41,7 @@ export default {
   props: {
     width: {
       type: [Number, String],
-      default: '150px'
+      default: '270px'
     },
     op: {
       // placeHolder: [String],

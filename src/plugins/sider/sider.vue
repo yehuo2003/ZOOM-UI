@@ -162,6 +162,5 @@ export default {
 }
 .zoom-slider .slider-block:hover {
   transform: scale(1.1);
-  opacity: 0.6;
 }
 </style>

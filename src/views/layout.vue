@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <zoom-layout>
-      <div slot="header" style="disaplay: flex;">
+      <div slot="header" style="disaplay: flex;" headerHeight="60">
         <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
         <zoom-internationalisation :op="interOp"></zoom-internationalisation>
       </div>
       <div slot="main">
-        <zoom-layout>
+        <zoom-layout asideWidth="200" headerHeight="60" toggleAside="true">
           <zoom-tree-menu :op="navOp" slot="aside"></zoom-tree-menu>
           <div slot="main">
             <zoom-form @submit.prevent="false">
@@ -18,10 +18,13 @@
                 <zoom-date></zoom-date>
               </zoom-form-item>
               <zoom-form-item inline="true">
-                <zoom-search style="width: 120px;"></zoom-search>
+                <zoom-search style="width: 130px;"></zoom-search>
               </zoom-form-item>
               <zoom-form-item inline="true">
-                <zoom-numeric style="width: 120px;"></zoom-numeric>
+                <zoom-numeric style="width: 130px;"></zoom-numeric>
+              </zoom-form-item>
+              <zoom-form-item>
+                <zoom-text-popup></zoom-text-popup>
               </zoom-form-item>
             </zoom-form>
           </div>
