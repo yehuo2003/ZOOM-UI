@@ -1,5 +1,5 @@
 <template>
-  <div :class="options.disabled ? 'disabled' : ''" class="zoom-search zoom-input">
+  <div :class="{ disabled: options.disabled, mini: options.mini }" class="zoom-search zoom-input">
     <div :class="[ focus ? 'focus' : '', error ? 'error' : ''] " class="select-line">
       <div v-if="list.length > 0" class="search-place">
         <span class="search-text">{{obj.text}}</span>
@@ -39,7 +39,7 @@
         v-tip.error.right.multiple.click="errMsg"
         style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
       ></span>
-      <div @click="handleSearch" class="input-btn">
+      <div @click="handleSearch" class="input-btn serach-btn">
         <a class="zoom-icon icon-search"></a>
       </div>
     </div>
@@ -193,15 +193,31 @@ export default {
      * 向父组件传递search事件, 可获取参数 input 框value值, 当前查找的obj
      */
     handleSearch() {
+      if (this.options.disabled) {
+        return
+      }
       this.$emit("search", this.currentValue, this.obj);
       if (this.op && this.op.onClick) {
-        this.op.onClick();
+        this.op.onClick(this.currentValue, this.obj);
       }
     }
   }
 };
 </script>
 <style>
+.zoom-search.mini {
+  width: 40px;
+  transition: width 1s;
+}
+.zoom-search.zoom-input.mini.disabled .select-line input.zoom-input-search {
+  display: none;
+}
+.zoom-search.zoom-input.mini .select-line .input-btn.serach-btn {
+  border-radius: 25px;
+}
+.zoom-search.mini:not(.disabled):hover {
+  width: 270px;
+}
 /* 弹出菜单 */
 .zoom-search-select .select-body .search-popup li:hover {
   background: #e6f7ff;
@@ -228,7 +244,7 @@ export default {
 .zoom-search .zoom-search-select {
   display: none;
   position: absolute;
-  top: 32px;
+  top: 30px;
   left: 0;
   border: 1px solid #d9d9d9;
   overflow: hidden;
@@ -256,22 +272,26 @@ export default {
 .zoom-search.zoom-input:not(.disabled) .select-line .input-btn:hover a {
   font-weight: bold;
 }
-.zoom-search.zoom-input .select-line .input-btn {
+.zoom-search.zoom-input .select-line .input-btn.serach-btn {
   width: 30px;
   height: 30px;
   display: table-cell;
   position: relative;
   vertical-align: middle;
   right: 0;
+  top: 0;
+}
+.zoom-search.disabled .input-btn a,
+.zoom-search.disabled .input-btn span {
+  cursor: not-allowed;
 }
 .zoom-search.zoom-input .input-btn a,
 .zoom-search.zoom-input .input-btn span {
   text-decoration: none;
   cursor: pointer;
   display: block;
-  float: left;
   color: #1890ff;
-  font-size: 14px;
+  font-size: 16px;
   width: 30px;
   line-height: 30px;
 }
@@ -312,6 +332,19 @@ export default {
   position: relative;
   vertical-align: middle;
   right: 0;
+  top: 0;
+}
+.zoom-search.zoom-input.disabled .select-line {
+  background: #f5f5f5;
+}
+.zoom-search.disabled .select-line .zoom-input-search {
+  border-radius: 25px 0 0 25px;
+}
+.zoom-search.disabled .select-line .search-place {
+  border-radius: 25px 0 0 25px;
+}
+.zoom-search.disabled .select-line .input-btn {
+  border-radius: 0 25px 25px 0;
 }
 .zoom-search.zoom-input .select-line {
   display: inline-table;
@@ -320,6 +353,7 @@ export default {
   border: 1px solid #d9d9d9;
   background: #fff;
   transition: 0.5s;
+  border-radius: 25px;
 }
 .zoom-search.zoom-input .select-line.error {
   border: 1px solid red;

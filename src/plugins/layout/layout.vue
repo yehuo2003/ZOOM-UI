@@ -5,11 +5,11 @@
       <slot name="header"></slot>
     </header>
     <!-- 底部 -->
-    <footer v-if="$slots.footer" ref="footer" :style="{left: asideWidthAttr}" class="zoom-footer">
+    <footer v-if="$slots.footer" ref="footer" :style="{left: asideWidthAttr, height: footerHeightAttr}" class="zoom-footer">
       <slot name="footer"></slot>
     </footer>
     <!-- 左侧单栏 -->
-    <aside v-if="$slots.aside" ref="aside" :style="{width: asideWidthAttr}" class="zoom-aside">
+    <aside v-if="$slots.aside" ref="aside" :style="{width: asideWidthAttr, top: headerHeightAttr}" class="zoom-aside">
       <slot name="aside"></slot>
       <i v-if="toggleAside" @click="showAsideBtn" class="aside-icon">|||</i>
     </aside>
@@ -105,6 +105,7 @@ export default {
   position: absolute;
   right: 1px;
   top: 50%;
+  font-weight: bold;
   cursor: pointer;
   transition: color .3s, transform .3s;
 }

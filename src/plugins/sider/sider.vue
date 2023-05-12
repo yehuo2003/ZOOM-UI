@@ -76,6 +76,11 @@ export default {
       return false;
     };
   },
+  destroyed() {
+    this.slider = null;
+    this.thunk.onmousedown = null
+    this.thunk = null;
+  },
   computed: {
     // 设置一个百分比，提供计算slider进度宽度和trunk的left值
     // 对应公式为  当前值-最小值/最大值-最小值 = slider进度width / slider总width

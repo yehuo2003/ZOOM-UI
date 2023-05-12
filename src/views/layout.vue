@@ -11,7 +11,10 @@
           <div slot="main">
             <zoom-form @submit.prevent="false">
               <zoom-form-item>
-                <zoom-input placeholder="请输入"></zoom-input>
+                <zoom-search :op="searchOp"></zoom-search>
+              </zoom-form-item>
+              <zoom-form-item>
+                <zoom-input></zoom-input>
               </zoom-form-item>
               <zoom-form-item>
                 <span slot="label">sssss</span>
@@ -40,6 +43,20 @@
 export default {
   data() {
     return {
+      searchOp: {
+        // disabled: true,
+        // mini: true,
+        placeHolder: '搜索框已禁用',
+        hideClose: false,
+        data: [
+          {value: '1', text: '所有'},
+          {value: '2', text: '找人'},
+          {value: '3', text: '文章'}
+        ],
+        onClick: (val, key) => {
+          console.log(val, key);
+        },
+      },
       interOp: {
         title: 'china',
         // url: 'http://www.baidu.com',
@@ -223,5 +240,8 @@ export default {
 }
 .container .zoom-footer {
   background: #ff4d4f;
+}
+.zoom-layout>.zoom-main {
+  padding: 20px;
 }
 </style>

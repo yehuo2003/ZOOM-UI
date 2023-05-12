@@ -197,6 +197,10 @@ export default {
     }
   },
 
+  destroyed() {
+    this.$refs["zoom-date"] = null
+  },
+
   methods: {
     reset() {
       this.load();

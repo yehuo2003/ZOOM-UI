@@ -70,6 +70,7 @@ ol {
 }
 .zoom-breadcrumb > li a {
   padding: 4px;
+  color: #191919;
 }
 .zoom-breadcrumb > li.breadcrumb-active a {
   font-weight: 700;
