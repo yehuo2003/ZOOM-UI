@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <zoom-layout ref="layout">
-      <header v-if="isHeader" slot="header">
-        <zoom-nav-menu slot="header" :op="titleOp"></zoom-nav-menu>
+    <zoom-layout :headerHeight="isHeader ? 50 : 0" ref="layout">
+      <header v-show="isHeader" slot="header">
+        <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
           <zoom-search v-model="searchVal" :op="searchOp" @search="search"></zoom-search>
           <zoom-internationalisation></zoom-internationalisation>
@@ -10,7 +10,6 @@
       </header>
       <router-view @showHeader="showHeader" ref="main" slot="main"/>
     </zoom-layout>
-    <div class="my-mragin-bottom my-mragin-top my-color my-font-size"></div>
   </div>
 </template>
 
@@ -25,6 +24,7 @@ export default {
       list: [],
       searchOp: {
         placeHolder: '搜索组件',
+        mini: true
       },
       titleOp: {  //  顶部导航栏
         data: [
@@ -78,13 +78,10 @@ export default {
   methods: {
     showHeader(bool) {
       this.isHeader = bool;
-      if (bool) {
-        this.$refs['layout'].load();
-        this.$refs['layout'].mainStyle += ' top: 60px;'
-        console.log(this.$refs['layout'].mainStyle, 'sssssssss加载');
+      if (!bool) {
+        this.$refs['layout'].headerHeightAttr = 0;
       } else {
-        console.log(this.$refs['layout'].mainStyle, 'sssssssss销毁');
-        this.$refs['layout'].mainStyle = '';
+        this.$refs['layout'].headerHeightAttr = '60px';
       }
     },
     search() {

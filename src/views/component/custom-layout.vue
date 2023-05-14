@@ -14,7 +14,7 @@
     <h3>经典布局</h3>
     <zoom-tabs class="basic" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-layout style="height: 300px;">
+        <zoom-layout headerHeight="60" asideWidth="200" style="height: 300px;">
           <div slot="header">header</div>
           <div slot="aside">aside</div>
           <div slot="main">main</div>
@@ -27,7 +27,7 @@
     <h2>简单布局</h2>
     <zoom-tabs class="basic" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-layout style="height: 300px;">
+        <zoom-layout asideWidth="200" style="height: 300px;">
           <div slot="aside">aside</div>
           <div slot="main">main</div>
         </zoom-layout>
@@ -39,7 +39,7 @@
     <h2>圣杯布局</h2>
     <zoom-tabs class="basic" :value="flexTab" @change="flexChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-layout style="height: 300px;">
+        <zoom-layout headerHeight="60"  footerHeight="60" style="height: 300px;">
           <div slot="header">header</div>
           <div slot="main">main</div>
           <div slot="footer">footer</div>
@@ -52,7 +52,7 @@
     <h2>时尚布局</h2>
     <zoom-tabs class="basic" :value="orderTab" @change="orderChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-layout style="height: 300px;">
+        <zoom-layout headerHeight="60" asideWidth="200" footerHeight="60" style="height: 300px;">
           <div slot="header">header</div>
           <div slot="aside">aside</div>
           <div slot="main">main</div>
@@ -66,9 +66,9 @@
     <h2>嵌套用法</h2>
     <zoom-tabs class="basic" :value="offsetTab" @change="offsetChange">
       <zoom-tab-item :index="0" label="效果">
-        <zoom-layout style="height: 300px;">
+        <zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;">
           <div slot="header">header</div>
-          <zoom-layout slot="main">
+          <zoom-layout asideWidth="200" slot="main">
             <div slot="aside">aside</div>
             <div slot="main">main</div>
           </zoom-layout>
@@ -80,7 +80,7 @@
       </zoom-tab-item>
     </zoom-tabs>
     <div class="tip">
-      Layout布局的头部和尾部默认高度为 <span>60px</span>, 侧边栏宽度默认为 <span>200px</span>, 可以通过 layout 标签上的
+      Layout布局的头部和尾部默认高度为 <span>0</span>, 侧边栏宽度默认为 <span>200px</span>, 可以通过 layout 标签上的
       <span>headerHeight</span>、
       <span>footerHeight</span>、
       <span>asideWidth</span>，
@@ -104,7 +104,7 @@ export default {
               title: "头部高度",
               name: "headerHeight",
               type: "Number",
-              text: "默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
+              text: "默认为 <span>0</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
               text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>headerHeight=60</span>'
             },
             {
@@ -112,7 +112,7 @@ export default {
               title: "尾部高度",
               name: "footerHeight",
               type: "Number",
-              text: "默认为 <span>60px</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
+              text: "默认为 <span>0</span> 可通过<span>zoom-layout</span> 标签上设置属性来自定义头部高度",
               text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>footerHeight=60</span>'
             },
             {
@@ -130,6 +130,14 @@ export default {
               type: "Boolean",
               text: "默认为 <span>false</span>, 每次页面改变会返回顶部, 为<span>true</span>禁止",
               text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>stopTop=true</span>'
+            },
+            {
+              id: 5,
+              title: "侧边栏收缩按钮",
+              name: "toggleAside",
+              type: "Boolean",
+              text: "默认为 <span>false</span>, 配置后在侧边栏显示收缩按钮, 点击收缩按钮可收缩侧边栏,再次点击则展开",
+              text2: '用法: 在<span>zoom-layout</span> 标签上, 绑定属性 <span>toggleAside</span>'
             }
           ]
         },
@@ -154,34 +162,34 @@ export default {
       orderTab: 0,
       offsetTab: 0,
       offsetrHtml:
-        `&lt;zoom-layout style="height: 300px;"&gt;
+        `&lt;zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;"&gt;
             &lt;div slot="header"&gt;header&lt;/div&gt;
-            &lt;zoom-layout slot="main"&gt;
+            &lt;zoom-layout asideWidth="200" slot="main"&gt;
               &lt;div slot="aside"&gt;aside&lt;/div&gt;
               &lt;div slot="main"&gt;main&lt;/div&gt;
             &lt;/zoom-layout&gt;
             &lt;div slot="footer"&gt;footer&lt;/div&gt;
           &lt;/zoom-layout&gt;`,
       orderHtml:
-        `&lt;zoom-layout style="height: 300px;"&gt;
+        `&lt;zoom-layout headerHeight="60" asideWidth="200" footerHeight="60" style="height: 300px;"&gt;
             &lt;div slot="header"&gt;header&lt;/div&gt;
             &lt;div slot="aside"&gt;aside&lt;/div&gt;
             &lt;div slot="main"&gt;main&lt;/div&gt;
             &lt;div slot="footer"&gt;footer&lt;/div&gt;
           &lt;/zoom-layout&gt;`,
       flexHtml:
-        `&lt;zoom-layout style="height: 300px;"&gt;
+        `&lt;zoom-layout headerHeight="60"  footerHeight="60" style="height: 300px;"&gt;
             &lt;div slot="header"&gt;header&lt;/div&gt;
             &lt;div slot="main"&gt;main&lt;/div&gt;
             &lt;div slot="footer"&gt;footer&lt;/div&gt;
           &lt;/zoom-layout&gt;`,
       adaption:
-        `&lt;zoom-layout style="height: 300px;">
+        `&lt;zoom-layout asideWidth="200" style="height: 300px;">
             &lt;div slot="aside">aside&lt;/div>
             &lt;div slot="main">main&lt;/div>
           &lt;/zoom-layout&gt;`,
       basiclayout:
-        `&lt;zoom-layout style="height: 300px;"&gt;
+        `&lt;zoom-layout headerHeight="60" asideWidth="200" style="height: 300px;"&gt;
             &lt;div slot="header"&gt;header&lt;/div&gt;
             &lt;div slot="aside"&gt;aside&lt;/div&gt;
             &lt;div slot="main"&gt;main&lt;/div&gt;

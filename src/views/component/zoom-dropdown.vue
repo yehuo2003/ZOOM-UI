@@ -1,39 +1,29 @@
 <template>
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-dropdown></zoom-dropdown>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dropdownCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        下拉单选：<zoom-dropdown :op="dropdownOp"></zoom-dropdown><br>
-        下拉多选：<zoom-dropdown :op="dropdownOp2"></zoom-dropdown>
-        <br>
-        下拉禁用：<zoom-dropdown :op="dropdownOp3"></zoom-dropdown>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dropdownCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>动态设置数据</h3>
-    <p>有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发</p>
-    <zoom-tabs class="data-drop" :value="loadTab" @change="loadChange">
-      <zoom-tab-item :index="0" label="效果">
-        默认无数据：<zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown><br>
-        <zoom-button @click="handleClick">点击加载数据</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dropdownLoad"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="basic" :code="dropdownCode">
+      <zoom-dropdown></zoom-dropdown>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template cls="data-drop" :code="dropdownCustom">
+      <template slot="header">
+        <h3>设置属性</h3>
+        <p>zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
+      </template>
+      下拉单选：<zoom-dropdown :op="dropdownOp"></zoom-dropdown><br>
+      下拉多选：<zoom-dropdown :op="dropdownOp2"></zoom-dropdown>
+      <br>
+      下拉禁用：<zoom-dropdown :op="dropdownOp3"></zoom-dropdown>
+    </tab-template>
+    <!-- 动态设置数据 -->
+    <tab-template cls="data-drop" :code="dropdownLoad">
+      <template slot="header">
+        <h3>动态设置数据</h3>
+        <p>有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发</p>
+      </template>
+      默认无数据：<zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown><br>
+      <zoom-button @click="handleClick">点击加载数据</zoom-button>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -208,9 +198,6 @@ export default {
           {value: '4', text: '深圳'}
         ],
       },
-      opTab: 0,
-      curTab: 0,
-      loadTab: 0,
       dropdownLoad:
         `&lt;template&gt;
             &lt;div&gt;
@@ -303,15 +290,6 @@ export default {
         {value: '4', text: '深圳'}
       ];
       this.$refs['dropdown'].load(data);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
-    },
-    loadChange(index) {
-      this.loadTab = index
     }
   }
 }

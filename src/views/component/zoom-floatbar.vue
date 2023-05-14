@@ -103,8 +103,8 @@ export default {
         position: 'right',	// 默认right 可选参数 left, right
         data: [	//	如果未设置data 则默认显示自定义内容
           {text: '购物车', icon: 'icon-shopping-cart', onClick: val => {console.log(val);}},
-          {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
-          {text: '导航', icon: 'icon-nav'}
+          {text: '电话', icon: 'icon-phone'},
+          {text: '首页', icon: 'icon-nav', url: '/', target: 'blank'}
         ]
       },
       floatBarOp: {
@@ -147,8 +147,8 @@ export default {
                     position: 'right',	// 默认right 可选参数 left, right
                     data: [	//	如果未设置data 则默认显示自定义内容
                       {text: '购物车', icon: 'icon-shopping-cart', onClick: val =&gt; {console.log(val);}},
-                      {text: '电话', icon: 'icon-phone', url: '/', target: 'blank'},
-                      {text: '导航', icon: 'icon-nav'}
+                      {text: '电话', icon: 'icon-phone'},
+                      {text: '首页', icon: 'icon-nav', url: '/', target: 'blank'}
                     ]
                   }
                 }

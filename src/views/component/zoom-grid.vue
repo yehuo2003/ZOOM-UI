@@ -261,11 +261,12 @@ export default {
       gridOp4: {
         hideIndex: false,
         editMode: true,
+        tip: true,
         title: [
           {fieId: 'name', header: '姓名', editable: true},
           {fieId: 'age', header: '年龄'},
           {fieId: 'gender', header: '性别'},
-          {fieId: 'city', header: '地址', editable: true},
+          {fieId: 'city', header: '地址', editable: true, tip: true},
           {fieId: 'phone', header: '联系方式', editable: true}
         ],
         data: [ // 表格内容数据 键名需要和表头配置的对应
@@ -278,11 +279,12 @@ export default {
       gridOp3: {
         hideIndex: true,
         isChecked: true,
+        tip: true,
         title: [
           {fieId: 'name', tip: false, header: '姓名'},
           {fieId: 'age', tip: false, header: '年龄'},
           {fieId: 'gender', header: '性别'},
-          {fieId: 'city', tip: true, header: '地址'},
+          {fieId: 'city', tip: true, header: '地址', tip: true},
           {fieId: 'phone', tip: true, header: '联系方式'}
         ],
         data: [ // 表格内容数据 键名需要和表头配置的对应
@@ -325,11 +327,12 @@ export default {
                   gridOp: {
                     hideIndex: true,
                     editMode: true,
+                    tip: true,
                     title: [
                       {fieId: 'name', header: '姓名', editable: true},
                       {fieId: 'age', header: '年龄'},
                       {fieId: 'gender', header: '性别'},
-                      {fieId: 'city', header: '地址', editable: true},
+                      {fieId: 'city', header: '地址', editable: true, tip: true},
                       {fieId: 'phone', header: '联系方式', editable: true}
                     ],
                     data: [ // 表格内容数据 键名需要和表头配置的对应
@@ -361,11 +364,12 @@ export default {
                   gridOp: {
                     hideIndex: true,
                     isChecked: true,
+                    tip: true,
                     title: [
                       {fieId: 'name', header: '姓名'},
                       {fieId: 'age', header: '年龄'},
                       {fieId: 'gender', header: '性别'},
-                      {fieId: 'city', header: '地址'},
+                      {fieId: 'city', header: '地址', tip: true},
                       {fieId: 'phone', header: '联系方式'}
                     ],
                     data: [ // 表格内容数据 键名需要和表头配置的对应

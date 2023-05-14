@@ -124,7 +124,7 @@ export default {
         data: [
           {
             id: 1,
-            url: "#/home",
+            url: "/",
             target: "blank",
             title: "首页"
           },
@@ -216,7 +216,7 @@ export default {
                     data: [
                       {
                         id: 1,
-                        url: "#/home",
+                        url: "/",
                         target: "blank",
                         title: "首页"
                       },

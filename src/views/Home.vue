@@ -195,6 +195,7 @@ export default {
   },
   destroyed() {
     this.$emit('showHeader', true);
+    this.$off('showHeader');
   }
 };
 </script>

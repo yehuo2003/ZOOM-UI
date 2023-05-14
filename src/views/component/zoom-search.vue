@@ -96,7 +96,15 @@ export default {
               type: "String",
               text: "默认<span>270px</span>, 可自定义组件的宽度",
               text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
-            }
+            },
+            {
+              id: 10,
+              title: "迷你搜索框",
+              name: "mini",
+              type: "Boolean",
+              text: "默认<span>false</span>, 可配置组件为迷你搜索框",
+              text2: '用法: 配置op对象, 设置 <span>mini: true</span>'
+            },
           ]
         },
         {

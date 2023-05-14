@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2021-04-03 14:22:17
+ * @LastEditTime: 2023-05-11 23:18:03
 -->
 <template>
   <div class="more">
@@ -57,9 +57,6 @@ export default {
   data () {
     return {
     }
-  },
-  created () {
-    console.log(this.$zoom.$t('test.iter'), 'test.iter===========');
   }
 }
 </script>

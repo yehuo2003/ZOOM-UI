@@ -1,14 +1,14 @@
 <template>
-  <zoom-layout asideWidth="220" class="home-layout">
+  <zoom-layout asideWidth="220" toggleAside footerHeight="35" class="home-layout">
     <zoom-tree-menu slot="aside" style="font-size: 14px;" :op="navOp"></zoom-tree-menu>
     <!-- 主体部分 -->
-      <zoom-layout slot="main">
+      <zoom-layout headerHeight="50" slot="main">
         <h1 class="component-header" slot="header">
           {{nowTitle}}
         </h1>
         <router-view ref="main" slot="main"></router-view>
       </zoom-layout>
-    <div slot="footer">
+    <div class="component-footer" slot="footer">
       <p @click="toClick(leftUrl)" v-show="leftTitle" style="float: left;">
         <span class="zoom-icon icon-left"></span>
         {{leftTitle}}
@@ -125,8 +125,12 @@ export default {
 <style lang="scss">
 .home-layout {
   .component-header {
+    line-height: 50px;
     padding: 0 20px;
     color: #333;
+  }
+  .component-footer {
+    line-height: 35px;
   }
   .zoom-footer {
     padding: 0 20px;
@@ -144,7 +148,6 @@ export default {
   }
   .zoom-main {
     padding: 0 20px;
-    margin-bottom: 20px;
     .content-active {
       border: 1px solid #d9d9d9;
     }
