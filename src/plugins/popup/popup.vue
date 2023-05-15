@@ -182,6 +182,7 @@ export default {
   font-size: 16px;
   transform: scale(1.5);
   padding: 0 10px 0 2px;
+  margin: auto;
 }
 .zoom-popup .popup-modal-body {
   display: -webkit-box;

@@ -11,7 +11,14 @@
     <!-- 左侧单栏 -->
     <aside v-if="$slots.aside" ref="aside" :style="{width: asideWidthAttr, top: headerHeightAttr}" class="zoom-aside">
       <slot name="aside"></slot>
-      <i v-if="toggleAside" @click="showAsideBtn" class="aside-icon">|||</i>
+      <i v-if="toggleAside" @click="showAsideBtn" class="aside-icon">
+        <!-- ||| -->
+        <span>
+          <i>●</i>
+          <i>●</i>
+          <i>●</i>
+        </span>
+      </i>
     </aside>
     <!-- 主程序 -->
     <main v-if="$slots.main" ref="main" :style="{left: asideWidthAttr, bottom: footerHeightAttr, top: headerHeightAttr}" class="zoom-main">
@@ -56,11 +63,20 @@ export default {
     this.load();
   },
   watch: {
-    '$route.path': function(newVal, oldVal) {
+    '$route.path': function(newVal) {
       if (this.$slots && !this.stopTop && newVal) {
         this.goTop();
       }
-    }
+    },
+    headerHeight(newVal) {
+      this.headerHeightAttr = `${newVal}px`;
+    },
+    asideWidth(newVal) {
+      this.asideWidthAttr = `${newVal}px`;
+    },
+    footerHeight(newVal) {
+      this.footerHeightAttr = `${newVal}px`;
+    },
   },
   methods: {
     showAsideBtn() {
@@ -103,15 +119,26 @@ export default {
 }
 .zoom-layout>.zoom-aside>.aside-icon {
   position: absolute;
-  right: 1px;
-  top: 50%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid rgba(0,0,0,0);
+  border-right: 1px solid rgba(0,0,0,0);
+  color: #999;
   font-weight: bold;
   cursor: pointer;
-  transition: color .3s, transform .3s;
+  transition: color .3s, border-color .3s;
+}
+.zoom-layout>.zoom-aside>.aside-icon>span,
+.zoom-layout>.zoom-aside>.aside-icon>span>i {
+  display: block;
 }
 .zoom-layout>.zoom-aside>.aside-icon:hover {
   color: #1890ff;
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
+  border-color: #ccc;
 }
 .zoom-layout>.zoom-aside {
   overflow: auto;

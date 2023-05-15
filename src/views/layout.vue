@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <zoom-layout>
-      <div slot="header" style="disaplay: flex;" headerHeight="60">
+    <zoom-layout :headerHeight="isHead ? 60 : 0">
+      <div slot="header">
         <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
         <zoom-internationalisation :op="interOp"></zoom-internationalisation>
       </div>
@@ -9,6 +9,7 @@
         <zoom-layout asideWidth="200" headerHeight="60" toggleAside="true">
           <zoom-tree-menu :op="navOp" slot="aside"></zoom-tree-menu>
           <div slot="main">
+            <zoom-button @click="changeHead">改变高度</zoom-button>
             <zoom-form @submit.prevent="false">
               <zoom-form-item>
                 <zoom-search :op="searchOp"></zoom-search>
@@ -43,6 +44,7 @@
 export default {
   data() {
     return {
+      isHead: true,
       searchOp: {
         // disabled: true,
         // mini: true,
@@ -152,6 +154,10 @@ export default {
     }
   },
   methods: {
+    changeHead() {
+      console.log(111111)
+      this.isHead = !this.isHead;
+    }
   }
 };
 </script>

@@ -20,7 +20,7 @@
               <span>{{item.name}}</span>
               <i @click="removeConfirmation(index)" class="zoom-icon icon-close-plus"></i>
             </a>
-            <zoom-progress v-if="!notUpload" :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+            <zoom-progress v-if="!notUpload" :status="item.status" :progress="testprogress && testprogress[index] && testprogress[index].progress"></zoom-progress>
             <span
               v-show=" item.status === 'success' || item.status === 'error' "
               :class=" item.status === 'success' ? 'icon-success-fill' : 'icon-close-fill' "
@@ -93,7 +93,7 @@
               ></i>
             </div>
             <div v-if="!closeProgress" class="file-status">
-              <zoom-progress :status="item.status" :progress="testprogress[index].progress"></zoom-progress>
+              <zoom-progress :status="item.status" :progress="testprogress && testprogress[index] && testprogress[index].progress"></zoom-progress>
             </div>
           </li>
         </ul>
@@ -153,7 +153,7 @@
                           <!-- 上传进度 -->
                           <zoom-progress
                             :status="item.status"
-                            :progress="testprogress[index].progress"
+                            :progress="testprogress && testprogress[index] && testprogress[index].progress"
                           ></zoom-progress>
                         </span>
                       </td>
@@ -336,7 +336,7 @@ export default {
         if (data.length < 1) {
           return; // 检测是否有文件拖拽到页面
         }
-        if (this.filelist && this.limit && (this.filelist[0].length + 1) > this.limit) {
+        if (this.filelist && this.filelist.length && this.limit && (this.filelist[0].length + 1) > this.limit) {
           this.$zoom.alert({
             title: "提示",
             // 已超出上传文件最大数量
