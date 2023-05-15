@@ -38,14 +38,6 @@ export default {
             },
             {
               id: 2,
-              title: "表格数据",
-              name: "data",
-              type: "Array",
-              text: "表格内容数据 键名需要和表头配置的对应, 需要在页面渲染前配置, 如果页面渲染完成后再配置则无效",
-              text2: '用法: 配置op属性, 设置<span>data: []</span>'
-            },
-            {
-              id: 2,
               title: "获取选中数据",
               name: "data",
               type: "Array",

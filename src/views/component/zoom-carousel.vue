@@ -77,8 +77,8 @@ export default {
         height: 19, // 轮播图高度 默认是19
         images: [		// 配置轮播的图片, 传数组,数组里面对象,src是图片路径,title是图片标题, url是要跳转的链接,跳转方式为打开新页面
           {src: require('./static/1.jpg'), title: '大山', url: ''},
-          {src: require('./static/2.jpg'), title: '城堡', url: ''},
-          {src: require('./static/3.jpg'), title: '峡谷', url: ''},
+          {src: require('./static/2.jpg'), title: '山水', url: ''},
+          {src: require('./static/3.jpg'), title: '大海', url: ''},
           {src: require('./static/4.jpg'), title: '瀑布', url: ''},
         ]
       },
@@ -99,8 +99,8 @@ export default {
                     height: 19, // 轮播图高度 默认是19
                     images: [		// 配置轮播的图片, 传数组,数组里面对象,src是图片路径,title是图片标题, url是要跳转的链接,跳转方式为打开新页面
                       {src: require('./static/1.jpg'), title: '大山', url: ''},
-                      {src: require('./static/2.jpg'), title: '城堡', url: ''},
-                      {src: require('./static/3.jpg'), title: '峡谷', url: ''},
+                      {src: require('./static/2.jpg'), title: '山水', url: ''},
+                      {src: require('./static/3.jpg'), title: '大海', url: ''},
                       {src: require('./static/4.jpg'), title: '瀑布', url: ''},
                     ]
                   }

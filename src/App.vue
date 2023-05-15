@@ -73,16 +73,10 @@ export default {
       }
     })
     this.list = list.flat(Infinity);
-    this.$zoom.copy("http://yehuo2003.gitee.io/zoom-ui-direction");
   },
   methods: {
     showHeader(bool) {
       this.isHeader = bool;
-      if (!bool) {
-        this.$refs['layout'].headerHeightAttr = 0;
-      } else {
-        this.$refs['layout'].headerHeightAttr = '60px';
-      }
     },
     search() {
       if (!this.searchVal) return
