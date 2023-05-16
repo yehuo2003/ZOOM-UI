@@ -1,42 +1,35 @@
 <template>
   <div class="custom-zoom-breadcrumb">
     <!-- 普通 -->
-    <h2>基本用法</h2>
-    <p>可以对条目自定义自定义点击事件, 在条目上绑定<span>onClick</span>回调函数</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-breadcrumb :op="op"></zoom-breadcrumb>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="breadcrumbCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>自定义分隔符</h2>
-    <p>
-      通过
-      <span>flag</span>属性修改面包屑导航中间的分隔符
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-breadcrumb :op="breadcrumbOp"></zoom-breadcrumb>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="breadcrumbFlag"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>自定义样式</h2>
-    <p>
-      通过
-      <span>css</span>属性来添加自定义class
-    </p>
-    <zoom-tabs class="basic" :value="sizeTab" @change="sizeChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-breadcrumb :op="breadcrumbOp2"></zoom-breadcrumb>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="breadcrumbCss"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="breadcrumbCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <p>可以对条目自定义自定义点击事件, 在条目上绑定<span>onClick</span>回调函数</p>
+      </template>
+      <zoom-breadcrumb :op="op"></zoom-breadcrumb>
+    </tab-template>
+    <!-- 自定义分隔符 -->
+    <tab-template :code="breadcrumbFlag">
+      <template slot="header">
+        <h2>自定义分隔符</h2>
+        <p>
+          通过
+          <span>flag</span>属性修改面包屑导航中间的分隔符
+        </p>
+      </template>
+      <zoom-breadcrumb :op="breadcrumbOp"></zoom-breadcrumb>
+    </tab-template>
+    <!-- 自定义样式 -->
+    <tab-template :code="breadcrumbCss">
+      <template slot="header">
+        <h2>自定义样式</h2>
+        <p>
+          通过
+          <span>css</span>属性来添加自定义class
+        </p>
+      </template>
+      <zoom-breadcrumb :op="breadcrumbOp2"></zoom-breadcrumb>
+    </tab-template>
     <div class="tip">
       zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
       组件暂不支持页面渲染后再改变属性，v-model除外。
@@ -151,9 +144,6 @@ export default {
           {id: 3, title: '面包屑导航'}
         ]
       },
-      curTab: 0,
-      reseTab: 0,
-      sizeTab: 0,
       breadcrumbCss:
         `&lt;template&gt;
             &lt;div&gt;
@@ -233,17 +223,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>

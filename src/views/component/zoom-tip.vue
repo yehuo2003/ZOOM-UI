@@ -1,44 +1,38 @@
 <template>
   <div class="custom-zoom-tip">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
-      zoom-ui提供了强大的tip组件, 部分算法来源于网络, 不需要标签引用, 只需要在要调用的标签上写 v-tip="tip内容" 即可<br>
+      zoom-ui提供了强大的tip组件, 不需要标签引用, 只需要在要调用的标签上写 v-tip="tip内容" 即可<br>
       zoom-tip提供了五种不同的主题, 用户可自由切换, 另外有上下左右四种方向, 可供用户选择优先显示的方向<br>
       用户可以选择点击触发或者鼠标经过触发, 默认为鼠标经过触发<br>
       另外还内置了过渡效果, 可以选择开启/关闭
     </div>
-    <h2>基础使用</h2>
-    <h3>使用<span>v-tip</span>指令可以实现</h3>
-    <p>查看<span>zoom-tip</span>效果</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <span v-tip="'tip内容展示'">鼠标经过</span><br>
-        <span v-tip.click="'tip内容展示'">点击我</span><br>
-        <span v-tip.tranfrom="'tip内容展示'">带过渡效果</span>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tipCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化操作</h2>
-    <p>查看不同主题下的tip提示</p>
-    <p>如果设置了方向, 则优先会显示指定方向</p>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <div class="custom-tip">
-          <p v-tip.primary.bottom="'tip提示内容'">tip 主题 primary</p>
-          <p v-tip.success.right="'tip提示内容'">tip 主题 success</p>
-          <p v-tip.warning.top="'tip提示内容'">tip 主题 warning</p>
-          <p v-tip.danger.right="'tip提示内容'">tip 主题 danger</p>
-          <p v-tip.info.left="'tip提示内容'">tip 主题 info</p>
-          <p v-tip.left="'tip提示内容'">tip 主题 正常</p>
-        </div>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tipCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="tipCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+        <h3>使用<span>v-tip</span>指令可以实现</h3>
+        <p>查看<span>zoom-tip</span>效果</p>
+      </template>
+      <span v-tip="'tip内容展示'">鼠标经过</span><br>
+      <span v-tip.click="'tip内容展示'">点击我</span><br>
+      <span v-tip.tranfrom="'tip内容展示'">带过渡效果</span>
+    </tab-template>
+    <!-- 个性化操作 -->
+    <tab-template :code="tipCustom">
+      <template slot="header">
+        <h2>个性化操作</h2>
+        <p>查看不同主题下的tip提示</p>
+        <p>如果设置了方向, 则优先会显示指定方向</p>
+      </template>
+      <div class="custom-tip">
+        <p v-tip.primary.bottom="'tip提示内容'">tip 主题 primary</p>
+        <p v-tip.success.right="'tip提示内容'">tip 主题 success</p>
+        <p v-tip.warning.top="'tip提示内容'">tip 主题 warning</p>
+        <p v-tip.danger.right="'tip提示内容'">tip 主题 danger</p>
+        <p v-tip.info.left="'tip提示内容'">tip 主题 info</p>
+        <p v-tip.left="'tip提示内容'">tip 主题 正常</p>
+      </div>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -94,8 +88,6 @@ export default {
           ]
         }
       ],
-      opTab: 0,
-      curTab: 0,
       tipCustom:
         `&lt;div class="custom-tip"&gt;
             &lt;p v-tip.primary.bottom="'tip提示内容'"&gt;tip 主题 primary&lt;/p&gt;
@@ -109,14 +101,6 @@ export default {
         `&lt;span v-tip="'tip内容展示'"&gt;鼠标经过&lt;/span&gt;&lt;br&gt;
           &lt;span v-tip.click="'tip内容展示'"&gt;点击我&lt;/span&gt;&lt;br&gt;
           &lt;span v-tip.tranfrom="'tip内容展示'"&gt;带过渡效果&lt;/span&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

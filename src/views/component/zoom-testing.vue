@@ -3,29 +3,21 @@
     <!-- 普通 -->
     <div class="tip">
       验证码组件默认生成4位数随机验证码,随机范围0~9a~Z, <br>
-      使用canvas绘制, 有5条干扰线和50个干扰点, 可自定义随机数范围和id
+      使用canvas绘制, 可自定义随机数范围和id
     </div>
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-testing></zoom-testing>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="testingCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>可自定义随机数范围, 也可以通过
-      <span>pool</span>属性来定义验证码内容为汉字
-    </p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-testing :op="testingOp"></zoom-testing>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="testingCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="testingCode">
+      <zoom-testing></zoom-testing>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template cls="data-drop" :code="testingCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>可自定义随机数范围, 也可以通过
+          <span>pool</span>属性来定义验证码内容为汉字
+        </p>
+      </template>
+      <zoom-testing :op="testingOp"></zoom-testing>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -84,8 +76,6 @@ export default {
         pool: '这是一段随机文本验证码将在这段文本内进行取',	// 自定义随机范围
         hideText: true	// 隐藏提示切换的文字信息, 为true时,可点击图片重新随机生成
       },
-      opTab: 0,
-      curTab: 0,
       testingCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -106,14 +96,6 @@ export default {
             }
           &lt;/script&gt;`,
       testingCode: `&lt;zoom-testing&gt;&lt;/zoom-testing&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

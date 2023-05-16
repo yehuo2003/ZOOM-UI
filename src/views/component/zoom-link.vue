@@ -1,34 +1,33 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-17 00:19:54
+-->
 <template>
   <div class="custom-zoom-link">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的文字链接组件, 以a标签形式存在, 有不同的主题可供选择<br>
       可以自定义组件内容、类型、跳转链接和下划线以及是否禁用
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-link>普通文字链接</zoom-link>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="linkCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-link>普通文字链接</zoom-link><br>
-        <zoom-link type="primary">primary 文字链接</zoom-link><br>
-        <zoom-link type="success">success 文字链接</zoom-link><br>
-        <zoom-link type="info">info 文字链接</zoom-link><br>
-        <zoom-link type="danger">danger 文字链接</zoom-link><br>
-        <zoom-link type="warning">warning 文字链接</zoom-link><br>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="linkCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="linkCode">
+      <zoom-link>普通文字链接</zoom-link>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="linkCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+      </template>
+      <zoom-link>普通文字链接</zoom-link><br>
+      <zoom-link type="primary">primary 文字链接</zoom-link><br>
+      <zoom-link type="success">success 文字链接</zoom-link><br>
+      <zoom-link type="info">info 文字链接</zoom-link><br>
+      <zoom-link type="danger">danger 文字链接</zoom-link><br>
+      <zoom-link type="warning">warning 文字链接</zoom-link><br>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -84,8 +83,6 @@ export default {
         }, //  点击事件
         text: '注销登录'  //  文字内容, 默认为注销
       },
-      opTab: 0,
-      curTab: 0,
       linkCustom:
         `&lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;&lt;br&gt;
           &lt;zoom-link type="primary"&gt;primary 文字链接&lt;/zoom-link&gt;&lt;br&gt;
@@ -94,20 +91,6 @@ export default {
           &lt;zoom-link type="danger"&gt;danger 文字链接&lt;/zoom-link&gt;&lt;br&gt;
           &lt;zoom-link type="warning"&gt;warning 文字链接&lt;/zoom-link&gt;&lt;br&gt;`,
       linkCode: `&lt;zoom-link&gt;普通文字链接&lt;/zoom-link&gt;`
-    }
-  },
-  methods: {
-    link2Num() {
-      console.log('滑块2当前值是' + this.num2);
-    },
-    link1Num() {
-      console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

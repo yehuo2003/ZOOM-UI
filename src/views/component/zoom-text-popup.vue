@@ -1,28 +1,20 @@
 <template>
   <div class="custom-zoom-text-popup">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-text-popup></zoom-text-popup>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="popupCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的弹出编辑组件，可以用v-model绑定数据，默认展示的是输入框，点击编辑状态成文本域，方便用户输入。可以绑定op对象，并设置常用属性</p>
-    <p>禁用状态下，无法拖动和编辑</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-text-popup rows="10" :op="textPopupOp"></zoom-text-popup><br>
-        禁用文本域：<br>
-        <zoom-text-popup :op="textPopupOp2"></zoom-text-popup>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="popupCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="popupCode">
+      <zoom-text-popup></zoom-text-popup>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template :code="popupCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的弹出编辑组件，可以用v-model绑定数据，默认展示的是输入框，点击编辑状态成文本域，方便用户输入。可以绑定op对象，并设置常用属性</p>
+        <p>禁用状态下，无法拖动和编辑</p>
+      </template>
+      <zoom-text-popup rows="10" :op="textPopupOp"></zoom-text-popup><br>
+      禁用文本域：<br>
+      <zoom-text-popup :op="textPopupOp2"></zoom-text-popup>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -103,8 +95,6 @@ export default {
         disabled: false,			// 是否禁用默认false
         readonly: false		//是否禁止输入
       },
-      opTab: 0,
-      curTab: 0,
       popupCustom: `&lt;template&gt;
             &lt;div&gt;
               &lt;zoom-text-popup :op="textPopupOp"&gt;&lt;/zoom-text-popup&gt;&lt;br&gt;
@@ -130,14 +120,6 @@ export default {
             }
           &lt;/script&gt;`,
       popupCode: `&lt;zoom-text-popup&gt;&lt;/zoom-text-popup&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

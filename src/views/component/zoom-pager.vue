@@ -7,25 +7,20 @@
       需要对分页组件配置op对象, 并配置相应信息<br>
       分页组件还提供了多个点击事件, 来方便开发者使用
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-pager :op="pagerOp"></zoom-pager>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="pagerCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>迷你版</h2>
-    <p>显示迷你版分页组件</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-pager :op="miniOp"></zoom-pager>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="pagerCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="pagerCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+      </template>
+      <zoom-pager :op="pagerOp"></zoom-pager>
+    </tab-template>
+    <!-- 迷你版 -->
+    <tab-template cls="data-drop" :code="pagerCustom">
+      <template slot="header">
+        <h2>迷你版</h2>
+        <p>显示迷你版分页组件</p>
+      </template>
+      <zoom-pager :op="miniOp"></zoom-pager>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -130,8 +125,6 @@ export default {
           pageSize: 20	// 每页要展示多少条数据
         }
       },
-      opTab: 0,
-      curTab: 0,
       pagerCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -195,12 +188,6 @@ export default {
     },
     pager1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

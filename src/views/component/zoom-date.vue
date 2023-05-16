@@ -1,29 +1,21 @@
 <template>
   <div class="custom-zoom-date">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-date></zoom-date>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dateCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的日期选择组件，组件可以用v-model绑定,默认显示当前时间, 点击输入框,弹出日期选择框,
-      点击年份, 可选择前后六年时间,点击月份 可在1~12月份之间选择,也可以点击左右箭头切换。可以绑定op对象，并设置常用属性</p>
-    <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-date :op="dateOp"></zoom-date><br>
-        禁用日期选择：<br>
-        <zoom-date :op="dateOp2"></zoom-date>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dateCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="dateCode">
+      <zoom-date></zoom-date>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template cls="data-drop" :code="dateCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的日期选择组件，组件可以用v-model绑定,默认显示当前时间, 点击输入框,弹出日期选择框,
+          点击年份, 可选择前后六年时间,点击月份 可在1~12月份之间选择,也可以点击左右箭头切换。可以绑定op对象，并设置常用属性</p>
+        <p>禁用状态下，无法拖动文本域</p>
+      </template>
+      <zoom-date :op="dateOp"></zoom-date><br>
+      禁用日期选择：<br>
+      <zoom-date :op="dateOp2"></zoom-date>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -118,8 +110,6 @@ export default {
           console.log('选择日期框日期后执行的事件', day);
         }
       },
-      opTab: 0,
-      curTab: 0,
       dateCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -154,14 +144,6 @@ export default {
             }
           &lt;/script&gt;`,
       dateCode: `&lt;zoom-date&gt;&lt;/zoom-date&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

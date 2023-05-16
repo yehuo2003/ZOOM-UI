@@ -1,31 +1,23 @@
 <template>
   <div class="custom-zoom-slider">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-slider></zoom-slider>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="sliderCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的滑块组件，可以用v-model绑定数值，滑块显示内容为百分比0~100%, 数据可绑定<span>:min</span>最小值和<span>:max</span>最大值</p>
-    <p>比如<span>:min="0"</span>，<span>:max="500"</span>，那么进度条10%的时候,值就是50，以此类推</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-slider v-model="num1"></zoom-slider>
-        <zoom-button @click="slider1Num">滑块1的值</zoom-button>
-        <br>
-        滑块2：<br>
-        <zoom-slider v-model="num2" min="50" max="150"></zoom-slider>
-        <zoom-button @click="slider2Num">滑块2的值</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="sliderCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="sliderCode">
+      <zoom-slider></zoom-slider>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template :code="sliderCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的滑块组件，可以用v-model绑定数值，滑块显示内容为百分比0~100%, 数据可绑定<span>:min</span>最小值和<span>:max</span>最大值</p>
+        <p>比如<span>:min="0"</span>，<span>:max="500"</span>，那么进度条10%的时候,值就是50，以此类推</p>
+      </template>
+      <zoom-slider v-model="num1"></zoom-slider>
+      <zoom-button @click="slider1Num">滑块1的值</zoom-button>
+      <br>
+      滑块2：<br>
+      <zoom-slider v-model="num2" min="50" max="150"></zoom-slider>
+      <zoom-button @click="slider2Num">滑块2的值</zoom-button>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -67,8 +59,6 @@ export default {
       ],
       num1: 0,
       num2: 100,
-      opTab: 0,
-      curTab: 0,
       sliderCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -108,12 +98,6 @@ export default {
     },
     slider1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

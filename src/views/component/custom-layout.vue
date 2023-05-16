@@ -1,92 +1,80 @@
 <template>
   <div class="custom-zoom-layout">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <div class="tip">
-      layout本身没有默认宽高, 跟随父元素宽高, layout布局提供四个<span>slot插槽</span>, 有
-      <span>slot="header"</span>、
-      <span>slot="aside"</span>、
-      <span>slot="main"</span>、
-      <span>slot="footer"</span>，
-      开发者可以自由布局定义, 还可以嵌套使用<br>
-      组件默认每次路由变化后, 会自动将滚动条返回顶部, 可手动关闭该功能
-    </div>
-    <h3>经典布局</h3>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-layout headerHeight="60" asideWidth="200" style="height: 300px;">
-          <div slot="header">header</div>
+    <tab-template :code="basiclayout">
+      <template slot="header">
+        <h2>使用方法</h2>
+        <div class="tip">
+          layout本身没有默认宽高, 跟随父元素宽高, layout布局提供四个<span>slot插槽</span>, 有
+          <span>slot="header"</span>、
+          <span>slot="aside"</span>、
+          <span>slot="main"</span>、
+          <span>slot="footer"</span>，
+          开发者可以自由布局定义, 还可以嵌套使用<br>
+          组件默认每次路由变化后, 会自动将滚动条返回顶部, 可手动关闭该功能
+        </div>
+        <h3>经典布局</h3>
+      </template>
+      <zoom-layout headerHeight="60" asideWidth="200" style="height: 300px;">
+        <div slot="header">header</div>
+        <div slot="aside">aside</div>
+        <div slot="main">main</div>
+      </zoom-layout>
+    </tab-template>
+    <!-- 简单布局 -->
+    <tab-template :code="adaption">
+      <template slot="header">
+        <h2>简单布局</h2>
+      </template>
+      <zoom-layout asideWidth="200" style="height: 300px;">
+        <div slot="aside">aside</div>
+        <div slot="main">main</div>
+      </zoom-layout>
+    </tab-template>
+    <!-- 圣杯布局 -->
+    <tab-template :code="flexHtml">
+      <template slot="header">
+        <h2>圣杯布局</h2>
+      </template>
+      <zoom-layout headerHeight="60"  footerHeight="60" style="height: 300px;">
+        <div slot="header">header</div>
+        <div slot="main">main</div>
+        <div slot="footer">footer</div>
+      </zoom-layout>
+    </tab-template>
+    <!-- 时尚布局 -->
+    <tab-template :code="orderHtml">
+      <template slot="header">
+        <h2>时尚布局</h2>
+      </template>
+      <zoom-layout headerHeight="60" asideWidth="200" footerHeight="60" style="height: 300px;">
+        <div slot="header">header</div>
+        <div slot="aside">aside</div>
+        <div slot="main">main</div>
+        <div slot="footer">footer</div>
+      </zoom-layout>
+    </tab-template>
+    <!-- 嵌套用法 -->
+    <tab-template :code="offsetrHtml">
+      <template slot="header">
+        <h2>嵌套用法</h2>
+        <div class="tip">
+          Layout布局的头部和尾部默认高度为 <span>0</span>, 侧边栏宽度默认为 <span>0</span>, 可以通过 layout 标签上的
+          <span>headerHeight</span>、
+          <span>footerHeight</span>、
+          <span>asideWidth</span>，
+          来修改，主体部分将会自动计算
+        </div>
+      </template>
+      <zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;">
+        <div slot="header">header</div>
+        <zoom-layout asideWidth="200" slot="main">
           <div slot="aside">aside</div>
           <div slot="main">main</div>
         </zoom-layout>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="basiclayout"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>简单布局</h2>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-layout asideWidth="200" style="height: 300px;">
-          <div slot="aside">aside</div>
-          <div slot="main">main</div>
-        </zoom-layout>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="adaption"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>圣杯布局</h2>
-    <zoom-tabs class="basic" :value="flexTab" @change="flexChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-layout headerHeight="60"  footerHeight="60" style="height: 300px;">
-          <div slot="header">header</div>
-          <div slot="main">main</div>
-          <div slot="footer">footer</div>
-        </zoom-layout>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="flexHtml"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>时尚布局</h2>
-    <zoom-tabs class="basic" :value="orderTab" @change="orderChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-layout headerHeight="60" asideWidth="200" footerHeight="60" style="height: 300px;">
-          <div slot="header">header</div>
-          <div slot="aside">aside</div>
-          <div slot="main">main</div>
-          <div slot="footer">footer</div>
-        </zoom-layout>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="orderHtml"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>嵌套用法</h2>
-    <zoom-tabs class="basic" :value="offsetTab" @change="offsetChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;">
-          <div slot="header">header</div>
-          <zoom-layout asideWidth="200" slot="main">
-            <div slot="aside">aside</div>
-            <div slot="main">main</div>
-          </zoom-layout>
-          <div slot="footer">footer</div>
-        </zoom-layout>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="offsetrHtml"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <div class="tip">
-      Layout布局的头部和尾部默认高度为 <span>0</span>, 侧边栏宽度默认为 <span>200px</span>, 可以通过 layout 标签上的
-      <span>headerHeight</span>、
-      <span>footerHeight</span>、
-      <span>asideWidth</span>，
-      来修改，主体部分将会自动计算
-    </div>
-    <h2>属性</h2>
+        <div slot="footer">footer</div>
+      </zoom-layout>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -156,11 +144,6 @@ export default {
           ]
         }
       ],
-      opTab: 0,
-      curTab: 0,
-      flexTab: 0,
-      orderTab: 0,
-      offsetTab: 0,
       offsetrHtml:
         `&lt;zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;"&gt;
             &lt;div slot="header"&gt;header&lt;/div&gt;
@@ -194,23 +177,6 @@ export default {
             &lt;div slot="aside"&gt;aside&lt;/div&gt;
             &lt;div slot="main"&gt;main&lt;/div&gt;
           &lt;/zoom-layout&gt;`
-    }
-  },
-  methods: {
-    offsetChange(index) {
-      this.offsetTab = index
-    },
-    orderChange(index) {
-      this.orderTab = index
-    },
-    flexChange(index) {
-      this.flexTab = index
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

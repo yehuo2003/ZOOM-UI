@@ -1,78 +1,68 @@
 <template>
   <div class="custom-zoom-color">
     <!-- 普通 -->
-    <h2>色彩类型</h2>
-    <h3>对于色彩类型一共有五种</h3>
-    <p>分别为
-      <span>primary</span>、
-      <span>success</span>、
-      <span>warning</span>、
-      <span>danger</span>、
-      <span>info</span>
-      如背景色请加class
-      <span>bg-primary</span>
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-row>
-          <zoom-col span="2" class="zoom-custom-color bg-primary">bg-primary</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-success">bg-success</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-warning">bg-warning</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-danger">bg-danger</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-info">bg-info</zoom-col>
-        </zoom-row>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="color"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>不同情况下的色彩</h2>
-    <p>对<span>hover</span>、<span>active</span>状态，分别有不同的颜色呈现，以<span>primary</span>色彩示例</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-row>
-          <zoom-col span="2" class="zoom-custom-color bg-primary">bg-primary</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-primary-hover">bg-primary-hover</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-primary-active">bg-primary-active</zoom-col>
-        </zoom-row>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="color2"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>添加伪类效果</h2>
-    <p>尝试着鼠标经过和点击</p>
-    <p>想在背景色基础上增加伪类效果, 可在原有基础上增加<span>class="hover"</span>、<span>class="active"</span></p>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-row>
-          <zoom-col span="2" class="zoom-custom-color bg-primary hover active">bg-primary</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-success hover active">bg-success</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-warning hover active">bg-warning</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-danger hover active">bg-danger</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-info hover active">bg-info</zoom-col>
-        </zoom-row>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="color3"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <!-- 大小 -->
-    <h2>暗色调</h2>
-    <p>常用的几种暗色调如下</p>
-    <zoom-tabs class="basic" :value="sizeTab" @change="sizeChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-row>
-          <zoom-col span="2" class="zoom-custom-color bg-navigation">bg-navigation</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-info-darker">bg-info-darker</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-info-dark">bg-info-dark</zoom-col>
-          <zoom-col span="2" class="zoom-custom-color bg-info">bg-info</zoom-col>
-        </zoom-row>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="color4"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="color">
+      <template slot="header">
+        <h2>色彩类型</h2>
+        <h3>对于色彩类型一共有五种</h3>
+        <p>分别为
+          <span>primary</span>、
+          <span>success</span>、
+          <span>warning</span>、
+          <span>danger</span>、
+          <span>info</span>
+          如背景色请加class
+          <span>bg-primary</span>
+        </p>
+      </template>
+      <zoom-row>
+        <zoom-col span="2" class="zoom-custom-color bg-primary">bg-primary</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-success">bg-success</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-warning">bg-warning</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-danger">bg-danger</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-info">bg-info</zoom-col>
+      </zoom-row>
+    </tab-template>
+    <!-- 不同情况下的色彩 -->
+    <tab-template :code="color2">
+      <template slot="header">
+        <h2>不同情况下的色彩</h2>
+        <p>对<span>hover</span>、<span>active</span>状态，分别有不同的颜色呈现，以<span>primary</span>色彩示例</p>
+      </template>
+      <zoom-row>
+        <zoom-col span="2" class="zoom-custom-color bg-primary">bg-primary</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-primary-hover">bg-primary-hover</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-primary-active">bg-primary-active</zoom-col>
+      </zoom-row>
+    </tab-template>
+    <!-- 添加伪类效果 -->
+    <tab-template :code="color3">
+      <template slot="header">
+        <h2>添加伪类效果</h2>
+        <p>尝试着鼠标经过和点击</p>
+        <p>想在背景色基础上增加伪类效果, 可在原有基础上增加<span>class="hover"</span>、<span>class="active"</span></p>
+      </template>
+      <zoom-row>
+        <zoom-col span="2" class="zoom-custom-color bg-primary hover active">bg-primary</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-success hover active">bg-success</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-warning hover active">bg-warning</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-danger hover active">bg-danger</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-info hover active">bg-info</zoom-col>
+      </zoom-row>
+    </tab-template>
+    <!-- 暗色调 -->
+    <tab-template :code="color4">
+      <template slot="header">
+        <h2>暗色调</h2>
+        <p>常用的几种暗色调如下</p>
+      </template>
+      <zoom-row>
+        <zoom-col span="2" class="zoom-custom-color bg-navigation">bg-navigation</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-info-darker">bg-info-darker</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-info-dark">bg-info-dark</zoom-col>
+        <zoom-col span="2" class="zoom-custom-color bg-info">bg-info</zoom-col>
+      </zoom-row>
+    </tab-template>
   </div>
 </template>
 
@@ -80,10 +70,6 @@
 export default {
   data() {
     return {
-      curTab: 0,
-      reseTab: 0,
-      opTab: 0,
-      sizeTab: 0,
       color:
         `&lt;zoom-row&gt;
             &lt;zoom-col span="2" class="zoom-custom-color bg-primary"&gt;bg-primary&lt;/zoom-col&gt;
@@ -113,20 +99,6 @@ export default {
             &lt;zoom-col span="2" class="zoom-custom-color bg-info-dark"&gt;bg-info-dark&lt;/zoom-col&gt;
             &lt;zoom-col span="2" class="zoom-custom-color bg-info"&gt;bg-info&lt;/zoom-col&gt;
           &lt;/zoom-row&gt;`
-    }
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index
-    },
-    reseChange(index) {
-      this.reseTab = index
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    sizeChange(index) {
-      this.sizeTab = index
     }
   }
 };

@@ -1,28 +1,20 @@
 <template>
   <div class="custom-zoom-input">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-input></zoom-input>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="ipt"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的input输入框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        姓名：<zoom-input :op="inputOp"></zoom-input><br>
-        密码：<zoom-input :op="inputOp2"></zoom-input><br>
-        禁用：<zoom-input :op="inputOp3"></zoom-input><br>
-        禁止输入：<zoom-input v-model="value" :op="inputOp4"></zoom-input>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opIpt"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="ipt">
+      <zoom-input></zoom-input>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template :code="opIpt">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的input输入框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
+      </template>
+      姓名：<zoom-input :op="inputOp"></zoom-input><br>
+      密码：<zoom-input :op="inputOp2"></zoom-input><br>
+      禁用：<zoom-input :op="inputOp3"></zoom-input><br>
+      禁止输入：<zoom-input v-model="value" :op="inputOp4"></zoom-input>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -187,8 +179,6 @@ export default {
           }
         }
       },
-      opTab: 0,
-      curTab: 0,
       opIpt:
         `&lt;template&gt;
             &lt;div&gt;
@@ -245,14 +235,6 @@ export default {
             }
           &lt;/script&gt;`,
       ipt: `&lt;zoom-input&gt;&lt;/zoom-input&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

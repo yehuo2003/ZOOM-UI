@@ -1,37 +1,28 @@
 <template>
   <div class="custom-zoom-userinfo">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的user-info组件, 方便用户进行多用户切换<br>
       并且可以配置图片作为用户头像
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-userinfo></zoom-userinfo>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="userinfoCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <p>可对用户信息组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-userinfo  ref="user" :op="userinfoOp">
-          <ul>
-            <li @click="usetTest(1)">1号用户</li>
-            <li @click="usetTest(2)">2号用户</li>
-            <li @click="usetTest(3)">3号用户</li>
-            <li @click="usetTest(4)">4号用户</li>
-          </ul>
-        </zoom-userinfo>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="userinfoCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="userinfoCode">
+      <zoom-userinfo></zoom-userinfo>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="userinfoCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+        <p>可对用户信息组件配置<span>op</span>对象进行个性化设置</p>
+      </template>
+      <zoom-userinfo  ref="user" :op="userinfoOp">
+        <ul>
+          <li @click="usetTest(1)">1号用户</li>
+          <li @click="usetTest(2)">2号用户</li>
+          <li @click="usetTest(3)">3号用户</li>
+          <li @click="usetTest(4)">4号用户</li>
+        </ul>
+      </zoom-userinfo>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -76,8 +67,6 @@ export default {
 				icon: 'icon-user',
         img: require('./static/1.jpg')
       },
-      opTab: 0,
-      curTab: 0,
       userinfoCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -114,12 +103,6 @@ export default {
         img: require(`./static/${num}.jpg`)
       }
       this.$refs['user'].load(data);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

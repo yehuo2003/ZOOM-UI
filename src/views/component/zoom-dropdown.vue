@@ -1,7 +1,7 @@
 <template>
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
-    <tab-template cls="basic" :code="dropdownCode">
+    <tab-template :code="dropdownCode">
       <zoom-dropdown></zoom-dropdown>
     </tab-template>
     <!-- 设置属性 -->

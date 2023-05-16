@@ -1,32 +1,26 @@
 <template>
   <div class="custom-zoom-internationalisation">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的国际化组件, 目前已封装了三种国际化, 分别为中文zh、英文en以及日文ja<br>
       封装的国际化仅限于zoom-ui组件部分, 需要配置更多的国际化可前往 <router-link to="/SDK/internationalisation">国际化</router-link> 查看 <br>
       用户还可以动态配置, 自己需要的语言供组件切换
     </div>
-    <h2>基础使用</h2>
-    <p>点击切换对应国际化后会刷新页面</p>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-internationalisation></zoom-internationalisation>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="internationalisationCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <p>可对国际化组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="internationalisationCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="internationalisationCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+        <p>点击切换对应国际化后会刷新页面</p>
+      </template>
+      <zoom-internationalisation></zoom-internationalisation>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="internationalisationCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+        <p>可对国际化组件配置<span>op</span>对象进行个性化设置</p>
+      </template>
+      <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -88,8 +82,6 @@ export default {
           {value: 'en', text: 'English'}
         ]
       },
-      opTab: 0,
-      curTab: 0,
       internationalisationCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -121,12 +113,6 @@ export default {
     },
     internationalisation1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

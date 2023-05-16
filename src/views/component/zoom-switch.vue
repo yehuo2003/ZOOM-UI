@@ -1,32 +1,24 @@
 <template>
   <div class="custom-zoom-switch">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-switch open="开启" close="关闭"></zoom-switch>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="switchCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>标签属性</h3>
-    <div class="tip">
-      配置组件的属性有两种方式，一种是示例中的op对象，另一种是直接将属性配置在组件标签上，如下所示：
-      注意：两种方式不能混用，当使用op对象配置属性后，组件其它标签将被忽略(v-model)除外，而且目前还不支持在组件渲染完成后再修改标签属性的值，
-      即zoom-ui对标签属性没有做双向绑定(v-model)除外。
-    </div>
-    <p>禁用状态下，开启或关闭开关</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-switch :op="switchOp"></zoom-switch>
-        禁用开关:
-        <zoom-switch :op="switchOp2"></zoom-switch>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="switchCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="switchCode">
+      <zoom-switch open="开启" close="关闭"></zoom-switch>
+    </tab-template>
+    <!-- 标签属性 -->
+    <tab-template cls="data-drop" :code="switchCustom">
+      <template slot="header">
+        <h2>标签属性</h2>
+        <div class="tip">
+          配置组件的属性有两种方式，一种是示例中的op对象，另一种是直接将属性配置在组件标签上，如下所示：
+          注意：两种方式不能混用，当使用op对象配置属性后，组件其它标签将被忽略(v-model)除外，而且目前还不支持在组件渲染完成后再修改标签属性的值，
+          即zoom-ui对标签属性没有做双向绑定(v-model)除外。
+        </div>
+        <p>禁用状态下，开启或关闭开关</p>
+      </template>
+      <zoom-switch :op="switchOp"></zoom-switch>
+      禁用开关:
+      <zoom-switch :op="switchOp2"></zoom-switch>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -117,8 +109,6 @@ export default {
           console.log('点击后触发', val);
         }
       },
-      opTab: 0,
-      curTab: 0,
       switchCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -151,14 +141,6 @@ export default {
             }
           &lt;/script&gt;`,
       switchCode: `&lt;zoom-switch open="开启" close="关闭"&gt;&lt;/zoom-switch&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

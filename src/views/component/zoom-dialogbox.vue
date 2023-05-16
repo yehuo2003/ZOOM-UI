@@ -1,26 +1,23 @@
 <template>
   <div class="custom-zoom-dialog-box">
-    <!-- 普通 -->
-    <h2>基本用法</h2>
-    <p>可以在组件标签中自定义内容</p>
-    <zoom-dialog-box title="对话框标题" :show="visibility" @close="visibility=false">
-      自定义内容,可任意html片段
-      <div slot="footer">
-        <zoom-button @click="visibility=false">关闭</zoom-button>
-      </div>
-    </zoom-dialog-box>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="handleClick">显示对话框</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="dialogCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
     <div class="tip">
       卡片组件默认为块级元素, 宽度为100%
       可以设置边框和边框阴影
     </div>
+    <!-- 普通 -->
+    <tab-template :code="dialogCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <p>可以在对话框组件标签中自定义内容</p>
+      </template>
+      <zoom-button @click="handleClick">显示对话框</zoom-button>
+      <zoom-dialog-box title="对话框标题" :show="visibility" @close="visibility=false">
+        自定义内容,可任意html片段
+        <div slot="footer">
+          <zoom-button @click="visibility=false">关闭</zoom-button>
+        </div>
+      </zoom-dialog-box>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -81,7 +78,6 @@ export default {
           ]
         }
       ],
-      curTab: 0,
       visibility: false,
       dialogCode:
         `&lt;template&gt;
@@ -114,9 +110,6 @@ export default {
   methods: {
     handleClick() {
       this.visibility = true;
-    },
-    tabChange(index) {
-      this.curTab = index;
     }
   }
 };

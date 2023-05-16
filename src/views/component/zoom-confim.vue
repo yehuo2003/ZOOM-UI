@@ -1,36 +1,30 @@
 <template>
   <div class="custom-zoom-confim">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <div class="tip">
-      zoom-ui提供的弹出确认框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
-      通过this.$zoom.confim调用, 使用方法和Popup弹出框有所不同<br>
-      可以通过回车键触发确认按钮事件, Esc按键触发取消事件
-    </div>
-    <h2>基础使用</h2>
-    <p>confim确认框是以Promise形式调用, 返回两个回调<span>.then()</span>接受确认按钮事件, <span>.catch()</span>接受取消按钮事件</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="confimClick">确认登录框</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="confimCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化操作</h2>
-    <p>可对<span>confim</span>确认框传入对象来配置不同属性来实现个性化</p>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="styleClick('primary')" type="primary">重点确认框</zoom-button>
-        <zoom-button @click="styleClick('success')" type="success">成功确认框</zoom-button>
-        <zoom-button @click="styleClick('warning')" type="warning">警告确认框</zoom-button>
-        <zoom-button @click="styleClick('danger')" type="danger">危险确认框</zoom-button>
-        <zoom-button @click="styleClick('info')" type="info">普通确认框</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="confimCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="confimCode">
+      <template slot="header">
+        <div class="tip">
+          zoom-ui提供的Confim确认框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
+          通过this.$zoom.confim调用, 使用方法和Popup弹出框有所不同<br>
+          可以通过回车键触发确认按钮事件, Esc按键触发取消事件
+        </div>
+        <h2>基础使用</h2>
+        <p>confim确认框是以Promise形式调用, 返回两个回调<span>.then()</span>接受确认按钮事件, <span>.catch()</span>接受取消按钮事件</p>
+      </template>
+      <zoom-button @click="confimClick">确认登录框</zoom-button>
+    </tab-template>
+    <!-- 个性化操作 -->
+    <tab-template :code="confimCustom">
+      <template slot="header">
+        <h2>个性化操作</h2>
+        <p>可对<span>confim</span>确认框传入对象来配置不同属性来实现个性化</p>
+      </template>
+      <zoom-button @click="styleClick('primary')" type="primary">重点确认框</zoom-button>
+      <zoom-button @click="styleClick('success')" type="success">成功确认框</zoom-button>
+      <zoom-button @click="styleClick('warning')" type="warning">警告确认框</zoom-button>
+      <zoom-button @click="styleClick('danger')" type="danger">危险确认框</zoom-button>
+      <zoom-button @click="styleClick('info')" type="info">普通确认框</zoom-button>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -108,8 +102,6 @@ export default {
           ]
         }
       ],
-      opTab: 0,
-      curTab: 0,
       confimCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -192,12 +184,6 @@ export default {
           console.log('取消');
           //点取消
       });
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

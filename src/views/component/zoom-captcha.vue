@@ -1,20 +1,18 @@
 <template>
   <div class="custom-zoom-captcha">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的滑块验证码，使用canvas绘制，默认隐藏图片，鼠标经过时候显示。可以绑定op对象，并设置常用属性</p>
-    <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-captcha :op="captchaOp"></zoom-captcha>
-        禁用状态
-        <zoom-captcha :op="captchaOp2"></zoom-captcha>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="captchaCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="captchaCustom">
+      <template slot="header">
+        <h2>使用方法</h2>
+        <div class="tip">
+          zoom-ui提供的滑块验证码，使用canvas绘制，默认隐藏图片，鼠标经过时候显示。可以绑定op对象，并设置常用属性
+        </div>
+        <p>禁用状态下，无法拖动文本域</p>
+      </template>
+      <zoom-captcha :op="captchaOp"></zoom-captcha>
+      禁用状态
+      <zoom-captcha :op="captchaOp2"></zoom-captcha>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -93,7 +91,6 @@ export default {
           console.log('验证失败');
         }
       },
-      opTab: 0,
       captchaCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -126,11 +123,6 @@ export default {
               }
             }
           &lt;/script&gt;`,
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
     }
   }
 }

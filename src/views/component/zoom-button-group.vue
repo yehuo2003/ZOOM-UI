@@ -1,20 +1,17 @@
 <template>
   <div class="custom-zoom-button">
     <!-- 普通 -->
-    <div class="tip">
-      按钮群组即为按钮的集合, 组件包含按钮组件的功能<br>
-      可以绑定多个按钮为数据
-    </div>
-    <h2>基本用法</h2>
-    <p>基础按钮的用法</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button-group :op="btnOp"></zoom-button-group>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="btn">
+      <template slot="header">
+        <div class="tip">
+          按钮群组即为按钮的集合, 组件包含按钮组件的功能<br>
+          可以绑定多个按钮为数据
+        </div>
+        <h2>基本用法</h2>
+        <p>基础按钮的用法</p>
+      </template>
+      <zoom-button-group :op="btnOp"></zoom-button-group>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -116,7 +113,6 @@ export default {
           console.log(index, 'index');
         }
       },
-      curTab: 0,
       btn:
         `&lt;template&gt;
             &lt;div&gt;
@@ -147,11 +143,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    }
   }
 };
 </script>

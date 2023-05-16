@@ -4,10 +4,10 @@
  * @Autor: linzhuming
  * @Date: 2023-05-10 22:37:55
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-14 22:51:44
+ * @LastEditTime: 2023-05-16 20:41:29
 -->
 <template>
-  <div :class="cls">
+  <div :class=" cls ? cls : 'basic' ">
     <slot name="header">
       <h2>使用方法</h2>
     </slot>

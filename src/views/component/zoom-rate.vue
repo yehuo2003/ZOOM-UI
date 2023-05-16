@@ -1,30 +1,21 @@
 <template>
   <div class="custom-zoom-rate">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的评分组件, 目前有两种模式, 星星图标和表情图标, 默认展示星星图标<br>
       用户可以用v-model绑定组件, 动态获取用户选中的评分数量
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-rate></zoom-rate>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="rateCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-rate :op="rateOp"></zoom-rate>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="rateCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="rateCode">
+      <zoom-rate></zoom-rate>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="rateCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+        <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
+      </template>
+      <zoom-rate :op="rateOp"></zoom-rate>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -77,8 +68,6 @@ export default {
         disabled: false,  //  是否禁用
         data: ['很差', '差', '一般', '好', '很好'],
       },
-      opTab: 0,
-      curTab: 0,
       rateCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -107,12 +96,6 @@ export default {
     },
     rate1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

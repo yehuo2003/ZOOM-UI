@@ -1,27 +1,20 @@
 <template>
   <div class="custom-zoom-numeric">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-numeric></zoom-numeric>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="numericCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的数字组件，可以用v-model绑定数据, 但是只能绑定Number类型数据，并且进行加或减
-      可以绑定op对象，并设置常用属性</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-numeric :op="numericOp"></zoom-numeric>
-        禁用数字框：<zoom-numeric v-model="num" :op="numericOp2"></zoom-numeric>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="numericCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="numericCode">
+      <zoom-numeric></zoom-numeric>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template :code="numericCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的数字框组件，可以用v-model绑定数据, 但是只能绑定Number类型数据，并且进行加或减
+          可以绑定op对象，并设置常用属性
+        </p>
+      </template>
+      <zoom-numeric :op="numericOp"></zoom-numeric>
+      禁用数字框：<zoom-numeric v-model="num" :op="numericOp2"></zoom-numeric>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -134,8 +127,6 @@ export default {
           }
         },
       },
-      opTab: 0,
-      curTab: 0,
       numericCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -171,14 +162,6 @@ export default {
             }
           &lt;/script&gt;`,
       numericCode: `&lt;zoom-numeric&gt;&lt;/zoom-numeric&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

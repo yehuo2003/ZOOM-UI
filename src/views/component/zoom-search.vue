@@ -1,26 +1,29 @@
 <template>
   <div class="custom-zoom-search">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-search></zoom-search>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="searchCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的search下拉框组件，可以绑定op对象，并设置常用属性。组件自带搜索功能，但是需要绑定对应的点击事件</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-search :op="searchOp"></zoom-search>
-        禁用搜索框：<zoom-search :op="searchOp2"></zoom-search>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="searchCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="searchCode">
+      <zoom-search></zoom-search>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template cls="data-drop" :code="searchCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的search下拉框组件，可以绑定op对象，并设置常用属性。组件自带搜索功能，但是需要绑定对应的点击事件</p>
+      </template>
+      <zoom-search :op="searchOp"></zoom-search>
+      禁用搜索框：<zoom-search :op="searchOp2"></zoom-search>
+    </tab-template>
+    <!-- 迷你 -->
+    <tab-template cls="data-drop" :code="searchMini">
+      <template slot="header">
+        <h2>迷你下拉框</h2>
+        <p>通过配置op对象中的属性，
+        设置<span>mini: true</span>即可生效
+        </p>
+      </template>
+      <zoom-search :op="miniOp2"></zoom-search><br>
+      <zoom-search :op="miniOp"></zoom-search>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -138,6 +141,17 @@ export default {
           ]
         }
       ],
+      miniOp: {
+        mini: true
+      },
+      miniOp2: {
+        mini: true,
+        data: [
+          {value: '1', text: '所有'},
+          {value: '2', text: '找人'},
+          {value: '3', text: '文章'}
+        ],
+      },
       searchOp2: {
         disabled: true,
         placeHolder: '搜索框已禁用',
@@ -171,6 +185,32 @@ export default {
       },
       opTab: 0,
       curTab: 0,
+      searchMini:
+        `&lt;template&gt;
+            &lt;div&gt;
+              &lt;zoom-search :op="searchOp"&gt;&lt;/zoom-search&gt;
+              &lt;zoom-search :op="searchOp2"&gt;&lt;/zoom-search&gt;
+            &lt;/div&gt;
+          &lt;/template&gt;
+          &lt;script&gt;
+            export default {
+              data() {
+                return {
+                  searchOp: {
+                    mini: true,
+                    data: [
+                      {value: '1', text: '所有'},
+                      {value: '2', text: '找人'},
+                      {value: '3', text: '文章'}
+                    ],
+                  },
+                  searchOp2: {
+                    mini: true
+                  },
+                }
+              }
+            }
+          &lt;/script&gt;`,
       searchCustom:
         `&lt;template&gt;
             &lt;div&gt;

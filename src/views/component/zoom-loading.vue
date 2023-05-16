@@ -1,27 +1,23 @@
 <template>
   <div class="custom-zoom-loading">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <div class="loading">
-      zoom-ui提供的弹出确认框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
+    <div class="tip">
+      zoom-ui提供的loading加载已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
       通过this.$zoom.loading调用, 可以自定义loading的主题, 和是否显示全屏遮罩层
     </div>
-    <h2>使用方法</h2>
-    <p>使用<span>this.$zoom.loading.show()</span>方法可以开启loading</p>
-    <p>使用<span>this.$zoom.loading.hide()</span>方法可以关闭loading</p>
-    <p>
-      还可以通过 <span>color</span> 改变loading的颜色<br>
-      <span>full</span>属性可以设置全屏遮罩层
-    </p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="openLoading">默认loading</zoom-button> <span>3秒后消失</span><br>
-        <zoom-button @click="customLoading">红色loading</zoom-button> <span>5秒后消失</span>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="loadingCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="loadingCode">
+      <template slot="header">
+        <h2>使用方法</h2>
+        <p>使用<span>this.$zoom.loading.show()</span>方法可以开启loading</p>
+        <p>使用<span>this.$zoom.loading.hide()</span>方法可以关闭loading</p>
+        <p>
+          还可以通过 <span>color</span> 改变loading的颜色<br>
+          <span>full</span>属性可以设置全屏遮罩层
+        </p>
+      </template>
+      <zoom-button @click="openLoading">默认loading</zoom-button> <span>3秒后消失</span><br>
+      <zoom-button @click="customLoading">红色loading</zoom-button> <span>5秒后消失</span>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -75,8 +71,6 @@ export default {
           ]
         },
       ],
-      opTab: 0,
-      curTab: 0,
       loadingCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -116,12 +110,6 @@ export default {
       setTimeout(() => {
         this.$zoom.loading.hide();
       }, 3000);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

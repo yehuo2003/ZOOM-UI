@@ -1,25 +1,18 @@
 <template>
   <div class="custom-zoom-color-picker">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的取色器组件, 取色器选择由js算法模拟, 部分算法来源于网络, zoom-ui进行二次封装并且优化<br>
       组件可以自定义初始颜色, 可以自由取色并监听颜色变化 <br>
       也可以隐藏组件或禁用组件
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-color-picker :defaultColor="color" @onChange="colorChange"></zoom-color-picker>
-        {{color}}
-        <br>
-        <zoom-color-picker :disabled="true"></zoom-color-picker>
-        禁用
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="colorPickerCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="colorPickerCode">
+      <zoom-color-picker :defaultColor="color" @onChange="colorChange"></zoom-color-picker>
+      {{color}}
+      <br>
+      <zoom-color-picker :disabled="true"></zoom-color-picker>
+      禁用
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -82,8 +75,6 @@ export default {
         }
       ],
       color: '#1890ff',
-      opTab: 0,
-      curTab: 0,
       colorPickerCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -115,12 +106,6 @@ export default {
     colorChange(color) {
       this.color = color;
       console.log(color, 'color');
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

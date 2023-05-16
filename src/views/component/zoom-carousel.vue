@@ -1,20 +1,17 @@
 <template>
   <div class="custom-zoom-carousel">
     <!-- 普通 -->
-    <div class="tip">
-      轮播图可以自定义高度和宽度，高度默认19，宽度默认28，可自行修改。<br>
-      当鼠标进入轮播图时，展示左右箭头，点击可切换上一张或下一张。<br>
-      图片下方还提供了图片标题，和提示灯，鼠标经过提示灯也可以切换图片。
-    </div>
-    <h2>用法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-carousel :op="op"></zoom-carousel>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="carouselCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="carouselCode">
+      <template slot="header">
+        <div class="tip">
+          轮播图可以自定义高度和宽度，高度默认19，宽度默认28，可自行修改。<br>
+          当鼠标进入轮播图时，展示左右箭头，点击可切换上一张或下一张。<br>
+          图片下方还提供了图片标题，和提示灯，鼠标经过提示灯也可以切换图片。
+        </div>
+        <h2>用法</h2>
+      </template>
+      <zoom-carousel :op="op"></zoom-carousel>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -82,7 +79,6 @@ export default {
           {src: require('./static/4.jpg'), title: '瀑布', url: ''},
         ]
       },
-      curTab: 0,
       carouselCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -109,11 +105,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    }
   }
 };
 </script>

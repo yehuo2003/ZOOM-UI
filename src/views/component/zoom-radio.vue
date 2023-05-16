@@ -1,31 +1,23 @@
 <template>
   <div class="custom-zoom-radio">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-radio :op="op"></zoom-radio>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="radioCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>标签属性</h3>
-    <div class="tip">
-      单选框组件需要绑定自定义<span>op</span>对象, <span>op</span>对象中定义<span>name</span>, 和<span>data</span>, 并且可以通过v-model绑定数据
-    </div>
-    <p>禁用状态下，开启或关闭开关</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-radio v-model="age" :op="radioOp"></zoom-radio>
-        <zoom-button @click="radioClick">当前选中的值</zoom-button><br>
-        禁用单选框:<br>
-        <zoom-radio :op="radioOp2"></zoom-radio>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="radioCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="radioCode">
+      <zoom-radio :op="op"></zoom-radio>
+    </tab-template>
+    <!-- 标签属性 -->
+    <tab-template cls="data-drop" :code="radioCustom">
+      <template slot="header">
+        <h2>标签属性</h2>
+        <div class="tip">
+          单选框组件需要绑定自定义<span>op</span>对象, <span>op</span>对象中定义<span>name</span>, 和<span>data</span>, 并且可以通过v-model绑定数据
+        </div>
+        <p>禁用状态下，开启或关闭开关</p>
+      </template>
+      <zoom-radio v-model="age" :op="radioOp"></zoom-radio>
+      <zoom-button @click="radioClick">当前选中的值</zoom-button><br>
+      禁用单选框:<br>
+      <zoom-radio :op="radioOp2"></zoom-radio>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -123,8 +115,6 @@ export default {
           {text: '保密', value: 'secrecy', checked: true}
         ]
       },
-      opTab: 0,
-      curTab: 0,
       radioCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -194,12 +184,6 @@ export default {
   methods: {
     radioClick() {
       console.log('当前值是', this.age);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

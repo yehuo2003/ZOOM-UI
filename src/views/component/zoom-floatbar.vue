@@ -1,35 +1,30 @@
 <template>
   <div class="custom-zoom-floatbar">
-    <!-- 普通 -->
-    <h2>基本用法</h2>
-    <h3>请看屏幕右边</h3>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-floatbar :op="op"></zoom-floatbar>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="floatbarCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>自定义模式</h2>
-    <p>
-      如果op属性里未配置data属性, 则启用自定义模式
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-floatbar :op="floatBarOp">
-          <a>自定义内容</a>
-          <p>点击按钮</p>
-          <p>解除固定</p>
-        </zoom-floatbar>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="floatbarCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
     <div class="tip">
       浮动框组件为固定定位, 可设置在屏幕左边或者屏幕右边, 当内容为自定义时候 有锁的按钮,点击则固定在屏幕上 再次点击隐藏鼠标经过出现。配置data数据和浮动块导航用法相同，可参考浮动块导航组件的数据绑定。
     </div>
+    <!-- 普通 -->
+    <tab-template :code="floatbarCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <h3>请看屏幕右边</h3>
+      </template>
+      <zoom-floatbar :op="op"></zoom-floatbar>
+    </tab-template>
+    <!-- 自定义模式 -->
+    <tab-template :code="floatbarCustom">
+      <template slot="header">
+        <h2>自定义模式</h2>
+        <p>
+          如果op属性里未配置data属性, 则启用自定义模式
+        </p>
+      </template>
+      <zoom-floatbar :op="floatBarOp">
+        <a>自定义内容</a>
+        <p>点击按钮</p>
+        <p>解除固定</p>
+      </zoom-floatbar>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -110,8 +105,6 @@ export default {
       floatBarOp: {
         position: 'left',
       },
-      curTab: 0,
-      reseTab: 0,
       floatbarCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -156,17 +149,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>

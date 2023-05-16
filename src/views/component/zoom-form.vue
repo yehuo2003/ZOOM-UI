@@ -1,72 +1,67 @@
 <template>
   <div class="custom-zoom-form">
     <!-- 普通 -->
-    <div class="tip">
-      zoom-ui的form表单组件提供了强大的表单功能，在表单中每个条目默认为块级元素，也可以更改为行内元素，此外表单还提供了一键验证功能，用于自定义验证表单中所有zoom-ui的表单组件，
-      此外还有一键重置功能，用于重置表单中所有zoom-ui的表单元素组件。
-    </div>
-    <h2>使用方法</h2>
-    <p>如果表单中只有一个按钮, 默认可以用回车键提交 或者点击会触发默认事件, 如果不想要的话就在zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-form @submit.prevent="false" label-width="100px">
-          <zoom-form-item label="姓名">
-            <zoom-input></zoom-input>
-          </zoom-form-item>
-          <zoom-form-item label="地址">
-            <zoom-input></zoom-input>
-          </zoom-form-item>
-        </zoom-form>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="formCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>高级用法</h2>
-    <p><span>label-width</span>为label的宽度, 可以自定义</p>
-    <p>在<span>zoom-form</span>标签上加 <span>:inline="true"</span> 可以将条目变为行内元素</p>
-    <p>在<span>zoom-form-item</span>标签上加 <span>:require="true"</span> 则为必填项, 可配合<span>valid</span>函数做校验</p>
-    <p>zoom-ui提供的<span>reset</span>函数可以重置表单内所有表单组件</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-form ref="form" label-width="120px">
-          <zoom-form-item inline="true" :require="true" label="名字">
-            <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
-          </zoom-form-item>
-          <zoom-form-item :require="true" inline="true" label="密码">
-            <zoom-input :op="passwordOp" placeholder="请输入密码"></zoom-input>
-          </zoom-form-item>
-          <zoom-form-item label="下拉框">
-            <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
-          </zoom-form-item>
-          <zoom-form-item label="搜索">
-            <zoom-search></zoom-search>
-          </zoom-form-item>
-          <zoom-form-item :require="true" label="部门">
-            <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
-          </zoom-form-item>
-          <zoom-form-item label="计数器">
-            <zoom-numeric :op="inputOp"></zoom-numeric>
-          </zoom-form-item>
-          <zoom-form-item label="复选框">
-            <zoom-checkbox :op="checkOp"></zoom-checkbox>
-          </zoom-form-item>
-          <zoom-form-item label="单选框">
-            <zoom-radio :op="checkOp"></zoom-radio>
-          </zoom-form-item>
-          <zoom-form-item :require="true" label="长框">
-            <zoom-textarea :op="inputOp"></zoom-textarea>
-          </zoom-form-item>
-          <zoom-form-item style="text-align: center">
-            <span @click="testingClick" class="zoom-btn primary">验证表单</span>
-            <span @click="resetClick" class="zoom-btn">重置表单</span>
-          </zoom-form-item>
-        </zoom-form>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="formCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template cls="data-drop" :code="formCode">
+      <template slot="header">
+        <div class="tip">
+          zoom-ui的form表单组件提供了强大的表单功能，在表单中每个条目默认为块级元素，也可以更改为行内元素，此外表单还提供了一键验证功能，用于自定义验证表单中所有zoom-ui的表单组件，
+          此外还有一键重置功能，用于重置表单中所有zoom-ui的表单元素组件。
+        </div>
+        <h2>使用方法</h2>
+        <p>如果表单中只有一个按钮, 默认可以用回车键提交 或者点击会触发默认事件, 如果不想要的话就在zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
+      </template>
+      <zoom-form @submit.prevent="false" label-width="100px">
+        <zoom-form-item label="姓名">
+          <zoom-input></zoom-input>
+        </zoom-form-item>
+        <zoom-form-item label="地址">
+          <zoom-input></zoom-input>
+        </zoom-form-item>
+      </zoom-form>
+    </tab-template>
+    <!-- 高级用法 -->
+    <tab-template cls="data-drop" :code="formCustom">
+      <template slot="header">
+        <h2>高级用法</h2>
+        <p><span>label-width</span>为label的宽度, 可以自定义</p>
+        <p>在<span>zoom-form</span>标签上加 <span>:inline="true"</span> 可以将条目变为行内元素</p>
+        <p>在<span>zoom-form-item</span>标签上加 <span>:require="true"</span> 则为必填项, 可配合<span>valid</span>函数做校验</p>
+        <p>zoom-ui提供的<span>reset</span>函数可以重置表单内所有表单组件</p>
+      </template>
+      <zoom-form ref="form" label-width="120px">
+        <zoom-form-item inline="true" :require="true" label="名字">
+          <zoom-input :op="inputOp" placeholder="请输入名字"></zoom-input>
+        </zoom-form-item>
+        <zoom-form-item :require="true" inline="true" label="密码">
+          <zoom-input :op="passwordOp" placeholder="请输入密码"></zoom-input>
+        </zoom-form-item>
+        <zoom-form-item label="下拉框">
+          <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
+        </zoom-form-item>
+        <zoom-form-item label="搜索">
+          <zoom-search></zoom-search>
+        </zoom-form-item>
+        <zoom-form-item :require="true" label="部门">
+          <zoom-input :op="inputOp" placeholder="请输入部门"></zoom-input>
+        </zoom-form-item>
+        <zoom-form-item label="计数器">
+          <zoom-numeric :op="inputOp"></zoom-numeric>
+        </zoom-form-item>
+        <zoom-form-item label="复选框">
+          <zoom-checkbox :op="checkOp"></zoom-checkbox>
+        </zoom-form-item>
+        <zoom-form-item label="单选框">
+          <zoom-radio :op="checkOp"></zoom-radio>
+        </zoom-form-item>
+        <zoom-form-item :require="true" label="长框">
+          <zoom-textarea :op="inputOp"></zoom-textarea>
+        </zoom-form-item>
+        <zoom-form-item style="text-align: center">
+          <span @click="testingClick" class="zoom-btn primary">验证表单</span>
+          <span @click="resetClick" class="zoom-btn">重置表单</span>
+        </zoom-form-item>
+      </zoom-form>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -173,8 +168,6 @@ export default {
           {text: '广州', value: 4}
         ]
       },
-      opTab: 0,
-      curTab: 0,
       formCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -283,12 +276,6 @@ export default {
     },
     resetClick() {
       this.$refs['form'].reset()
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

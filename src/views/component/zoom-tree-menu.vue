@@ -1,30 +1,21 @@
 <template>
   <div class="custom-zoom-tree-menu">
     <!-- 普通 -->
-    <h2>基本用法</h2>
-    <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-tree-menu :op="op"></zoom-tree-menu>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="treeCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>手风琴模式</h2>
-    <p>通过op对象配置, 手风琴模式下 默认展开一级菜单, 并且只针对有二级菜单的有效</p>
-    <p>
-      通过设置
-      <span>hideTree</span>属性来隐藏左边迷你导航菜单
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-tree-menu :op="threeMenuOp"></zoom-tree-menu>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="treeCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="treeCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
+      </template>
+      <zoom-tree-menu :op="op"></zoom-tree-menu>
+    </tab-template>
+    <!-- 手风琴模式 -->
+    <tab-template :code="treeCustom">
+      <template slot="header">
+        <h2>手风琴模式</h2>
+        <p>通过op对象配置, 手风琴模式下 默认展开一级菜单, 并且只针对有二级菜单的有效</p>
+      </template>
+      <zoom-tree-menu :op="threeMenuOp"></zoom-tree-menu>
+    </tab-template>
     <div class="tip">
       title为标题, url为要跳转的地址, 如果加target: 'blank',则会在新窗口打开, 如果需要创建二级菜单可以在对象里追加children数组,内部写法与父级相同,可再配置三级菜单 菜单最多支持三级, 每个条目可自定义点击事件,添加onClick, 有两个参数 val是当前行数据, index当前下标. 如果配置了children数组, 可以添加事件load函数, 可以在点击展开的时候,动态获取服务数据(需要后台服务的支持)
     </div>
@@ -168,8 +159,6 @@ export default {
           ]}
         ]
       },
-      curTab: 0,
-      reseTab: 0,
       treeCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -236,17 +225,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>

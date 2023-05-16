@@ -8,49 +8,40 @@
       组件默认索引值在第一列, 也可以自己设定隐藏索引值<br>
       如果有按钮的话, 则加载在索引值的后面,  即第二列
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-grid :op="gridOp"></zoom-grid>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="gridCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>手动加载数据</h2>
-    <p>请点击 <span>手动加载数据</span> 按钮试试</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button @click="loadData">手动加载数据</zoom-button>
-        <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="gridLoad"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>带复选功能的表格</h3>
-    <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
-    <zoom-tabs class="data-drop" :value="checkTab" @change="checkChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-grid :op="gridOp3"></zoom-grid>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="gridCheck"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>表格的编辑功能</h3>
-    <p>需要使用表格编辑功能，需要先配置editMode属性<br>
-      然后在需要编辑的列中设置属性<span>editable: true</span>可启用编辑功能<br>
-      如果需要监听编辑的数据变化可在标签中绑定<span>editChange</span>方法
-    </p>
-    <zoom-tabs class="data-drop" :value="editTab" @change="editChangeBle">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-grid :op="gridOp4" @editChange="handlerEdit"></zoom-grid>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="gridEdit"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="gridCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+      </template>
+      <zoom-grid :op="gridOp"></zoom-grid>
+    </tab-template>
+    <!-- 手动加载数据 -->
+    <tab-template cls="data-drop" :code="gridLoad">
+      <template slot="header">
+        <h2>手动加载数据</h2>
+        <p>请点击 <span>手动加载数据</span> 按钮试试</p>
+      </template>
+      <zoom-button @click="loadData">手动加载数据</zoom-button>
+      <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
+    </tab-template>
+    <!-- 带复选功能的表格 -->
+    <tab-template cls="data-drop" :code="gridCheck">
+      <template slot="header">
+        <h3>带复选功能的表格</h3>
+        <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
+      </template>
+      <zoom-grid :op="gridOp3"></zoom-grid>
+    </tab-template>
+    <!-- 表格的编辑功能 -->
+    <tab-template cls="data-drop" :code="gridEdit">
+      <template slot="header">
+        <h3>表格的编辑功能</h3>
+        <p>需要使用表格编辑功能，需要先配置editMode属性<br>
+          然后在需要编辑的列中设置属性<span>editable: true</span>可启用编辑功能<br>
+          如果需要监听编辑的数据变化可在标签中绑定<span>editChange</span>方法
+        </p>
+      </template>
+      <zoom-grid :op="gridOp4" @editChange="handlerEdit"></zoom-grid>
+    </tab-template>
     <div class="tip">
       zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
       组件暂不支持页面渲染后再改变属性，v-model除外。如果需要页面加载完毕后再加载表格数据, 请使用组件内置的load方法。
@@ -310,10 +301,6 @@ export default {
         {name: '赵六', age: 28, gender: '女', city: '广州', phone: 123456789},
         {name: '王五', age: 30, gender: '男', city: '深圳', phone: 123456789}
       ],
-      opTab: 0,
-      checkTab: 0,
-      curTab: 0,
-      editTab: 0,
       gridEdit:
         `&lt;template&gt;
             &lt;div&gt;
@@ -503,18 +490,6 @@ export default {
     },
     handlerEdit(oldVal, newVal) {
       console.log('表格旧值: ' + oldVal, '表格新值: ' + newVal);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    checkChange(index) {
-      this.checkTab = index
-    },
-    editChangeBle(index) {
-      this.editTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

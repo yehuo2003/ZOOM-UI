@@ -1,36 +1,31 @@
 <template>
   <div class="custom-zoom-panel">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <p>可通过<span>title</span>来自定义标题, <span>show</span>属性控制默认隐藏或显示</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-panel title="折叠面板">
-          内容
-          <p>默认隐藏</p>
-        </zoom-panel>
-        <zoom-panel title="折叠面板2" :show="true">
-          内容
-          <p>默认显示</p>
-        </zoom-panel>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="panelCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>自定义title标签</h2>
-    <p>可对<span>title</span>绑定自定义html片段</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-panel :title="panelTitle">
-          内容
-          <p>自定义title标签</p>
-        </zoom-panel>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="panelCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="panelCode">
+      <template slot="header">
+        <h2>使用方法</h2>
+        <p>可通过<span>title</span>来自定义标题, <span>show</span>属性控制默认隐藏或显示</p>
+      </template>
+      <zoom-panel title="折叠面板">
+        内容
+        <p>默认隐藏</p>
+      </zoom-panel>
+      <zoom-panel title="折叠面板2" :show="true">
+        内容
+        <p>默认显示</p>
+      </zoom-panel>
+    </tab-template>
+    <!-- 自定义title标签 -->
+    <tab-template :code="panelCustom">
+      <template slot="header">
+        <h2>自定义title标签</h2>
+        <p>可对<span>title</span>绑定自定义html片段</p>
+      </template>
+      <zoom-panel :title="panelTitle">
+        内容
+        <p>自定义title标签</p>
+      </zoom-panel>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -63,8 +58,6 @@ export default {
         },
       ],
       panelTitle: '<h1>自定义头部</h1>',
-      opTab: 0,
-      curTab: 0,
       panelCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -92,14 +85,6 @@ export default {
             内容
             &lt;p&gt;默认显示&lt;/p&gt;
           &lt;/zoom-panel&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

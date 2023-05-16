@@ -1,30 +1,21 @@
 <template>
   <div class="custom-zoom-tag">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的标签组件, 有多种类型可供选择, 点击可以选中标签<br>
       可配置动态删除或新增标签
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-tag :op="op"></zoom-tag>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tagCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <p>可以在<span>op</span>对象进行个性化设置, 进行动态新增或删除标签</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-tag :op="tagOp"></zoom-tag>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tagCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="tagCode">
+      <zoom-tag :op="op"></zoom-tag>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="tagCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+        <p>可以在<span>op</span>对象进行个性化设置, 进行动态新增或删除标签</p>
+      </template>
+      <zoom-tag :op="tagOp"></zoom-tag>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -146,8 +137,6 @@ export default {
           {title: 'PHP', type: 'info'}
         ]
       },
-      opTab: 0,
-      curTab: 0,
       tagCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -204,12 +193,6 @@ export default {
     },
     tag1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

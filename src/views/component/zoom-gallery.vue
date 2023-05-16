@@ -1,22 +1,26 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-17 00:33:06
+-->
 <template>
   <div class="custom-zoom-gallery">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的画廊幻灯片组件, 有大小图切换功能<br>
       可以用键盘左右按键控制上一张或者下一张<br>
       还可以开启放大镜功能
     </div>
-    <h2>基础使用</h2>
-    <p>可以按键盘左键或者右键切换上下张</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-gallery :op="op"></zoom-gallery>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="galleryCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="galleryCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+        <p>可以按键盘左键或者右键切换上下张</p>
+      </template>
+      <zoom-gallery :op="op"></zoom-gallery>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -57,7 +61,6 @@ export default {
           require('./static/4.jpg')
         ]
       },
-      curTab: 0,
       galleryCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -81,11 +84,6 @@ export default {
               }
             }
           &lt;/script&gt;`
-    }
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

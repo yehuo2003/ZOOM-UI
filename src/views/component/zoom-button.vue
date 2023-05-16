@@ -1,89 +1,77 @@
 <template>
   <div class="custom-zoom-button">
     <!-- 普通 -->
-    <h2>基本用法</h2>
-    <p>基础按钮的用法</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button
-          v-for="item of btnList"
-          :key=" 1 + item.id"
-          :type="item.type"
-        >{{item.text + '按钮'}}</zoom-button>
-        <br />
-        <zoom-button
-          v-for="item of btnList"
-          :key=" 10 + item.id"
-          :type="item.type"
-          shape="plain"
-        >{{item.text + '平角'}}</zoom-button>
-        <br />
-        <zoom-button
-          v-for="item of btnList"
-          :key=" 20 + item.id"
-          :type="item.type"
-          shape="round"
-        >{{item.text + '圆角'}}</zoom-button>
-        <br />
-        <zoom-button
-          v-for="item of btnList"
-          :key=" 30 + item.id"
-          :type="item.type"
-          shape="circle"
-        >圆形</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="btn"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="btn">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <p>基础按钮的用法</p>
+      </template>
+      <zoom-button
+        v-for="item of btnList"
+        :key=" 1 + item.id"
+        :type="item.type"
+      >{{item.text + '按钮'}}</zoom-button>
+      <br />
+      <zoom-button
+        v-for="item of btnList"
+        :key=" 10 + item.id"
+        :type="item.type"
+        shape="plain"
+      >{{item.text + '平角'}}</zoom-button>
+      <br />
+      <zoom-button
+        v-for="item of btnList"
+        :key=" 20 + item.id"
+        :type="item.type"
+        shape="round"
+      >{{item.text + '圆角'}}</zoom-button>
+      <br />
+      <zoom-button
+        v-for="item of btnList"
+        :key=" 30 + item.id"
+        :type="item.type"
+        shape="circle"
+      >圆形</zoom-button>
+    </tab-template>
     <!-- 禁用间隔 -->
-    <h2>禁用/防抖</h2>
-    <p>
-      通过
-      <span>disabled</span>属性设置按钮为禁用状态
-    </p>
-    <p>
-      通过
-      <span>reset-time</span>属性设置按钮防抖时间, 单位为毫秒, 默认 <span>1000</span> 毫秒
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button>正常按钮</zoom-button>
-        <zoom-button reset-time="5000">禁用5秒</zoom-button>
-        <zoom-button reset-time="0">禁用0秒</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="resetBtn"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="resetBtn">
+      <template slot="header">
+        <h2>禁用/防抖</h2>
+        <p>
+          通过
+          <span>disabled</span>属性设置按钮为禁用状态
+        </p>
+        <p>
+          通过
+          <span>reset-time</span>属性设置按钮防抖时间, 单位为毫秒, 默认 <span>1000</span> 毫秒
+        </p>
+      </template>
+      <zoom-button>正常按钮</zoom-button>
+      <zoom-button reset-time="5000">禁用5秒</zoom-button>
+      <zoom-button reset-time="0">禁用0秒</zoom-button>
+    </tab-template>
     <!-- 大小 -->
-    <h2>按钮大小</h2>
-    <p>可指定按钮大小, 属性: size</p>
-    <zoom-tabs class="basic" :value="sizeTab" @change="sizeChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button type="primary" size="mini">迷你</zoom-button>
-        <zoom-button type="success" size="small">小按钮</zoom-button>
-        <zoom-button>普通按钮</zoom-button>
-        <zoom-button type="danger" size="medium">中等按钮</zoom-button>
-        <zoom-button type="info" size="large">大按钮</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="sizeBtn"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="sizeBtn">
+      <template slot="header">
+        <h2>按钮大小</h2>
+        <p>可指定按钮大小, 属性: size</p>
+      </template>
+      <zoom-button type="primary" size="mini">迷你</zoom-button>
+      <zoom-button type="success" size="small">小按钮</zoom-button>
+      <zoom-button>普通按钮</zoom-button>
+      <zoom-button type="danger" size="medium">中等按钮</zoom-button>
+      <zoom-button type="info" size="large">大按钮</zoom-button>
+    </tab-template>
     <!-- op -->
-    <h2>自定义配置属性</h2>
-    <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如按钮类型和按钮禁用等。当配置了op属性后，标签内的属性将会被覆盖失效</p>
-    <zoom-tabs class="basic" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-button :op="op">按钮1</zoom-button>
-        <br />
-        <zoom-button :op="op2">按钮2</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="opBtn"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="opBtn">
+      <template slot="header">
+        <h2>自定义配置属性</h2>
+        <p>对于属性较多的组件，zoom-ui提供了自定义配置面板，使用需绑定对象op，op里可自定义属性，如按钮类型和按钮禁用等。当配置了op属性后，标签内的属性将会被覆盖失效</p>
+      </template>
+      <zoom-button :op="op">按钮1</zoom-button>
+      <br />
+      <zoom-button :op="op2">按钮2</zoom-button>
+    </tab-template>
     <div class="tip">
       zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
       组件暂不支持页面渲染后再改变属性，v-model除外。
@@ -189,10 +177,6 @@ export default {
         { id: 5, text: "危险", type: "danger" },
         { id: 6, text: "信息", type: "info" }
       ],
-      curTab: 0,
-      reseTab: 0,
-      opTab: 0,
-      sizeTab: 0,
       sizeBtn: `
         &lt;zoom-button type="primary" size="mini"&gt;迷你&lt;/zoom-button&gt;
         &lt;zoom-button type="success" size="small"&gt;小按钮&lt;/zoom-button&gt;
@@ -261,20 +245,6 @@ export default {
         &lt;zoom-button shape="circle" type="danger"&gt;圆形&lt;/zoom-button&gt;
         &lt;zoom-button shape="circle" type="info"&gt;圆形&lt;/zoom-button&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    opChange(index) {
-      this.opTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>

@@ -1,39 +1,42 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-16 21:44:20
+-->
 <template>
   <div class="custom-zoom-card">
-    <!-- 普通 -->
-    <h2>基本用法</h2>
-    <p>可以在组件标签中自定义内容</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-card>
-          <h1>自定义内容</h1>
-        </zoom-card>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="cardCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>边框阴影</h2>
-    <p>
-      通过组件标签设置属性
-      <span>border="true"</span>开启边框,
-      <span>hover-shadow="true"</span>鼠标经过时阴影显示
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-card border="true" hover-shadow="true">
-          <h1>自定义内容</h1>
-          <h3>边框阴影</h3>
-        </zoom-card>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="cardBorder"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
     <div class="tip">
       卡片组件默认为块级元素, 宽度为100%
       可以设置边框和边框阴影
     </div>
+    <!-- 普通 -->
+    <tab-template :code="cardCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <p>可以在卡片组件标签中自定义内容</p>
+      </template>
+      <zoom-card>
+        <h1>自定义内容</h1>
+      </zoom-card>
+    </tab-template>
+    <!-- 边框阴影 -->
+    <tab-template :code="cardBorder">
+      <template slot="header">
+        <h2>边框阴影</h2>
+        <p>
+          通过组件标签设置属性
+          <span>border="true"</span>开启边框,
+          <span>hover-shadow="true"</span>鼠标经过时阴影显示
+        </p>
+      </template>
+      <zoom-card border="true" hover-shadow="true">
+        <h1>自定义内容</h1>
+        <h3>边框阴影</h3>
+      </zoom-card>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -70,8 +73,6 @@ export default {
           ]
         }
       ],
-      curTab: 0,
-      reseTab: 0,
       cardBorder:
         `&lt;zoom-card border="true" hover-shadow="true"&gt;
             &lt;h1&gt;自定义内容&lt;/h1&gt;
@@ -82,17 +83,6 @@ export default {
             &lt;h1&gt;自定义内容&lt;/h1&gt;
           &lt;/zoom-card&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>

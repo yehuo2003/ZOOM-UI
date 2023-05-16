@@ -1,21 +1,14 @@
 <template>
   <div class="custom-zoom-transfer">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的穿梭框组件, 主要是以表格形式渲染<br>
       组件可以配置自定义数据, 并且实现全选/取消<br>
       此外组件还自带了搜索功能, 方便用户快速检索数据
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-transfer :op="transferOp"></zoom-transfer>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="transferCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="transferCode">
+      <zoom-transfer :op="transferOp"></zoom-transfer>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -79,7 +72,6 @@ export default {
           {name: 'h公司', area: '华北区', province: '河北省', city: '石家庄'}
         ]
       },
-      curTab: 0,
       transferCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -112,11 +104,6 @@ export default {
               }
             }
           &lt;/script&gt;`
-    }
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

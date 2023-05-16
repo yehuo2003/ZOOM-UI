@@ -1,31 +1,22 @@
 <template>
   <div class="custom-zoom-notice">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       文字滚动可以设置横向滚动或者纵向滚动, 默认为横向滚动<br>
       横向滚动时候, 可以设置自定义icon图标, 默认为喇叭<br>
       滚动时候当鼠标经过可以暂停滚动, 可关闭此效果
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-notice>这是一段滚动文字内容</zoom-notice>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="noticeCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>设置纵向滚动</h2>
-    <p>可以通过组件的<span>vertical</span>属性修改组件为纵向滚动条</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-notice :op="noticeOp">这是一段滚动文字内容</zoom-notice>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="noticeCodeCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="noticeCode">
+      <zoom-notice>这是一段滚动文字内容</zoom-notice>
+    </tab-template>
+    <!-- 设置纵向滚动 -->
+    <tab-template cls="data-drop" :code="noticeCodeCustom">
+      <template slot="header">
+        <h2>设置纵向滚动</h2>
+        <p>可以通过组件的<span>vertical</span>属性修改组件为纵向滚动条</p>
+      </template>
+
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -80,8 +71,6 @@ export default {
         vertical: true,  //  是否垂直滚动, 默认false
         time: 5000  //  滚动的时间
       },
-      opTab: 0,
-      curTab: 0,
       noticeCodeCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -112,12 +101,6 @@ export default {
     },
     notice1Num() {
       console.log('滑块1当前值是' + this.num1);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

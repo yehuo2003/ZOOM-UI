@@ -1,70 +1,61 @@
 <template>
   <div class="custom-zoom-tabs">
     <!-- 普通 -->
-    <h2>基本用法</h2>
-    <div class="tip">
-      zoom-tabs组件, 需要配合zoom-tab-item组件一起使用<br>
-      可以配置自定义的标签页title和内容<br>
-      默认横排显示, 可以切换竖排显示, 靠左或者靠右显示
-    </div>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-
-        <zoom-tabs :value="curTab2" @change="tabChange2">
-          <zoom-tab-item :index="0" :label="'Tab1'">
-            <div>
-              Tab1的内容
-            </div>
-          </zoom-tab-item>
-          <zoom-tab-item :index="1" :label="'Tab2'">
-            <h5 slot="label">
-              我是tab2
-              <i class="zoom-icon icon-close-plus"></i>
-            </h5>
-            <div>Tab2的内容</div>
-          </zoom-tab-item>
-          <zoom-tab-item :index="2" :label="'Tab3'">
-            <div>Tab3的内容</div>
-          </zoom-tab-item>
-        </zoom-tabs>
-
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tabsCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>竖排显示</h2>
-    <p>
-      如果想要竖排显示, 可以在组件标签设置
-      <span>position="left"</span>,
-      <span>right</span>就是靠右
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-
-        <zoom-tabs position="left" :value="curTab2" @change="tabChange2">
-          <zoom-tab-item :index="0" :label="'Tab1'">
-            <div>
-              Tab1的内容
-            </div>
-          </zoom-tab-item>
-          <zoom-tab-item :index="1" :label="'Tab2'">
-            <h5 slot="label">
-              我是tab2
-              <i class="zoom-icon icon-close-plus"></i>
-            </h5>
-            <div>Tab2的内容</div>
-          </zoom-tab-item>
-          <zoom-tab-item :index="2" :label="'Tab3'">
-            <div>Tab3的内容</div>
-          </zoom-tab-item>
-        </zoom-tabs>
-
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="tabsCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="tabsCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <div class="tip">
+          zoom-tabs组件, 需要配合zoom-tab-item组件一起使用<br>
+          可以配置自定义的标签页title和内容<br>
+          默认横排显示, 可以切换竖排显示, 靠左或者靠右显示
+        </div>
+      </template>
+      <zoom-tabs :value="curTab2" @change="tabChange2">
+        <zoom-tab-item :index="0" :label="'Tab1'">
+          <div>
+            Tab1的内容
+          </div>
+        </zoom-tab-item>
+        <zoom-tab-item :index="1" :label="'Tab2'">
+          <h5 slot="label">
+            我是tab2
+            <i class="zoom-icon icon-close-plus"></i>
+          </h5>
+          <div>Tab2的内容</div>
+        </zoom-tab-item>
+        <zoom-tab-item :index="2" :label="'Tab3'">
+          <div>Tab3的内容</div>
+        </zoom-tab-item>
+      </zoom-tabs>
+    </tab-template>
+    <!-- 竖排显示 -->
+    <tab-template :code="tabsCustom">
+      <template slot="header">
+        <h2>竖排显示</h2>
+        <p>
+          如果想要竖排显示, 可以在组件标签设置
+          <span>position="left"</span>,
+          <span>right</span>就是靠右
+        </p>
+      </template>
+      <zoom-tabs position="left" :value="sizeTab" @change="sizeChange">
+        <zoom-tab-item :index="0" :label="'Tab1'">
+          <div>
+            Tab1的内容
+          </div>
+        </zoom-tab-item>
+        <zoom-tab-item :index="1" :label="'Tab2'">
+          <h5 slot="label">
+            我是tab2
+            <i class="zoom-icon icon-close-plus"></i>
+          </h5>
+          <div>Tab2的内容</div>
+        </zoom-tab-item>
+        <zoom-tab-item :index="2" :label="'Tab3'">
+          <div>Tab3的内容</div>
+        </zoom-tab-item>
+      </zoom-tabs>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -135,9 +126,8 @@ export default {
           ]
         }
       ],
-      curTab: 0,
       curTab2: 0,
-      reseTab: 0,
+      sizeTab: 0,
       tabsCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -213,14 +203,8 @@ export default {
     };
   },
   methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
     tabChange2(index) {
       this.curTab2 = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
     },
     sizeChange(index) {
       this.sizeTab = index;

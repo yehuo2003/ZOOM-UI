@@ -1,21 +1,15 @@
 <template>
   <div class="custom-zoom-file-upload">
-    <!-- 普通 -->
     <div class="tip">
       zoom-ui提供了强大的文件上传组件，组件分为三种模式，一种是列表模式，一种缩略图模式，用户可以自由切换，还有一种自定义模式，
       默认是用列表模式上传方式是采用原生ajax，分为两套，一套xhr一套fetch，默认使用xhr，带有进度条功能，上传成功进度条变为绿色，失败变红色，
       如果用户设置closeProgress为true关闭了进度条，则采用fetchSubmit上传。
       此外还提供了单文件上传和多文件上传，还可以自定义单个文件上传的大小和类型
     </div>
-    <h2>使用方法</h2>
-    <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-file-upload :op="fileOp"></zoom-file-upload>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="fileCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <!-- 普通 -->
+    <tab-template cls="data-drop" :code="fileCode">
+      <zoom-file-upload :op="fileOp"></zoom-file-upload>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -215,7 +209,6 @@ export default {
           return true
         }
       },
-      curTab: 0,
       fileCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -264,11 +257,6 @@ export default {
               }
             }
           &lt;/script&gt;`
-    }
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

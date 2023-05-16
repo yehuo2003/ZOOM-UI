@@ -161,7 +161,7 @@ export default {
       color: #5e6d82;
     }
     h2 {
-      margin: 40px 0 20px 0;
+      margin: 30px 0 10px 0;
       padding-bottom: .3rem;
       border-bottom: 1px solid #eaecef;
     }

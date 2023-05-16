@@ -1,33 +1,24 @@
 <template>
   <div class="custom-zoom-photo">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的放大镜功能, 用户可以上传一张小图一张大图, 也可以只上传一张图片用来显示<br>
       可以设置图片展示区域在内部还是在外部<br>
       还可以自定义放大倍数, 和放大镜样式和宽度
     </div>
-    <h2>基础使用</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <div style="width: 500px;">
-          <zoom-photo :op="op"></zoom-photo>
-        </div>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="photoCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>内部显示放大镜</h2>
-    <p>通过op对象里的属性<span>outShow</span>来决定放大镜在内部还是外部</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-photo :op="photoOp"></zoom-photo>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="photoCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="photoCode">
+      <div style="width: 500px;">
+        <zoom-photo :op="op"></zoom-photo>
+      </div>
+    </tab-template>
+    <!-- 内部显示放大镜 -->
+    <tab-template :code="photoCustom">
+      <template slot="header">
+        <h2>内部显示放大镜</h2>
+        <p>通过op对象里的属性<span>outShow</span>来决定放大镜在内部还是外部</p>
+      </template>
+      <zoom-photo :op="photoOp"></zoom-photo>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -137,12 +128,10 @@ export default {
       photoOp: {
         outShow: false,
         lazyload: true,
-        url: require('./static/2.jpg'),
+        url: require('./static/1.jpg'),
         scale: 4,
         width: 300,
       },
-      opTab: 0,
-      curTab: 0,
       photoCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -156,7 +145,7 @@ export default {
                   photoOp: {
                     outShow: false,
                     lazyload: true,
-                    url: require('./static/2.jpg'),
+                    url: require('./static/1.jpg'),
                     scale: 4,
                     width: 300,
                   }
@@ -198,12 +187,6 @@ export default {
         img: require(`./static/${num}.jpg`)
       }
       this.$refs['user'].load(data);
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

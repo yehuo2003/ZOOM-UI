@@ -1,28 +1,20 @@
 <template>
   <div class="custom-zoom-textarea">
     <!-- 普通 -->
-    <h2>使用方法</h2>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-textarea></zoom-textarea>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="textareaCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>设置属性</h3>
-    <p>zoom-ui提供的文本域组件，可以用v-model绑定数据，并且可以看到已经输入字节/最大字节。默认宽度为父元素100%，高度用户可自由拖动。可以绑定op对象，并设置常用属性</p>
-    <p>禁用状态下，无法拖动文本域</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-textarea :op="textareaOp"></zoom-textarea><br>
-        禁用文本域：<br>
-        <zoom-textarea :op="textareaOp2"></zoom-textarea>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="textareaCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="textareaCode">
+      <zoom-textarea></zoom-textarea>
+    </tab-template>
+    <!-- 设置属性 -->
+    <tab-template :code="textareaCustom">
+      <template slot="header">
+        <h2>设置属性</h2>
+        <p>zoom-ui提供的文本域组件，可以用v-model绑定数据，并且可以看到已经输入字节/最大字节。默认宽度为父元素100%，高度用户可自由拖动。可以绑定op对象，并设置常用属性</p>
+        <p>禁用状态下，无法拖动文本域</p>
+      </template>
+      <zoom-textarea :op="textareaOp"></zoom-textarea><br>
+      禁用文本域：<br>
+      <zoom-textarea :op="textareaOp2"></zoom-textarea>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -133,8 +125,6 @@ export default {
           }
         },
       },
-      opTab: 0,
-      curTab: 0,
       textareaCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -169,14 +159,6 @@ export default {
             }
           &lt;/script&gt;`,
       textareaCode: `&lt;zoom-textarea&gt;&lt;/zoom-textarea&gt;`
-    }
-  },
-  methods: {
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

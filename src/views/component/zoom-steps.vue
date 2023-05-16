@@ -5,50 +5,41 @@
       zoom-ui提供了三种形态的步骤条, 有横条和竖条还有时间线步骤条 <br>
       可以根据修改type来更换步骤条属性
     </div>
-    <h2>使用方法</h2>
-    <h3>默认步骤条</h3>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-steps :op="stepsOp" @change="stepsChange"></zoom-steps>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="stepCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>时间线步骤条</h3>
-    <p>通过修改标签上绑定的<span>type</span>属性为<span>timeLine</span>可以设置为时间线步骤条</p>
-    <p>设置了时间线步骤条后, 需要在op的<span>data</span>属性里绑定<span>time</span>属性, 格式为时间格式</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-steps type="timeLine" :op="stepsOp2" @change="stepsChange"></zoom-steps>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="timeLineCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>advanced模式步骤条</h3>
-    <p>通过修改标签上绑定的<span>type</span>属性为<span>advanced</span>可以设置为时间线步骤条</p>
-    <p>设置了时间线步骤条后, 可以在op的<span>data</span>属性里绑定<span>count</span>属性, 格式为<span>Number</span>类型</p>
-    <zoom-tabs class="data-drop" :value="advancedTab" @change="advancedChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-steps type="advanced" :op="stepsOp3" @change="stepsChange"></zoom-steps>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="advancedCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h3>主动调用上一步/下一步</h3>
-    <p>如果设置了属性<span>disabled</span>后将会无法点击, 这时候可以通过绑定<span>ref</span>属性并调用<span>next()</span>或<span>prev()</span>方法来切换步骤</p>
-    <zoom-tabs class="data-drop" :value="customTab" @change="customChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-steps :op="stepsOp4" ref="steps"></zoom-steps>
-        <zoom-button @click="handleClick('prev')">上一步</zoom-button>
-        <zoom-button @click="handleClick('next')" type="primary">下一步</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="customCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="stepCode">
+      <template slot="header">
+        <h2>使用方法</h2>
+        <h3>默认步骤条</h3>
+      </template>
+      <zoom-steps :op="stepsOp" @change="stepsChange"></zoom-steps>
+    </tab-template>
+    <!-- 时间线步骤条 -->
+    <tab-template cls="data-drop" :code="timeLineCode">
+      <template slot="header">
+        <h3>时间线步骤条</h3>
+        <p>通过修改标签上绑定的<span>type</span>属性为<span>timeLine</span>可以设置为时间线步骤条</p>
+        <p>设置了时间线步骤条后, 需要在op的<span>data</span>属性里绑定<span>time</span>属性, 格式为时间格式</p>
+      </template>
+      <zoom-steps type="timeLine" :op="stepsOp2" @change="stepsChange"></zoom-steps>
+    </tab-template>
+    <!-- advanced模式步骤条 -->
+    <tab-template cls="data-drop" :code="advancedCode">
+      <template slot="header">
+        <h3>advanced模式步骤条</h3>
+        <p>通过修改标签上绑定的<span>type</span>属性为<span>advanced</span>可以设置为时间线步骤条</p>
+        <p>设置了时间线步骤条后, 可以在op的<span>data</span>属性里绑定<span>count</span>属性, 格式为<span>Number</span>类型</p>
+      </template>
+      <zoom-steps type="advanced" :op="stepsOp3" @change="stepsChange"></zoom-steps>
+    </tab-template>
+    <!-- 主动调用上一步/下一步 -->
+    <tab-template cls="data-drop" :code="customCode">
+      <template slot="header">
+        <h3>主动调用上一步/下一步</h3>
+        <p>如果设置了属性<span>disabled</span>后将会无法点击, 这时候可以通过绑定<span>ref</span>属性并调用<span>next()</span>或<span>prev()</span>方法来切换步骤</p>
+      </template>
+      <zoom-steps :op="stepsOp4" ref="steps"></zoom-steps>
+      <zoom-button @click="handleClick('prev')">上一步</zoom-button>
+      <zoom-button @click="handleClick('next')" type="primary">下一步</zoom-button>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -255,10 +246,6 @@ export default {
           console.log('click', val);
         }
       },
-      opTab: 0,
-      curTab: 0,
-      advancedTab: 0,
-      customTab: 0,
       customCode:
         `&lt;template&gt;
             &lt;div&gt;
@@ -408,18 +395,6 @@ export default {
     stepsChange(val) {
     //  监听数据变化, 返回index值
       console.log('stepsChange', val);
-    },
-    customChange(index) {
-      this.customTab = index
-    },
-    advancedChange(index) {
-      this.advancedTab = index
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

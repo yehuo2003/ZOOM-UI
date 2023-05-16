@@ -1,49 +1,41 @@
 <template>
   <div class="custom-zoom-progress">
     <!-- 普通 -->
-    <h2>使用方法</h2>
     <div class="tip">
       zoom-ui提供的进度条组件, 取值范围 0% ~ 100%, 初始值为 0, 可自定义<br>
       进度条提供了五种状态, 可供用户自定义 <br>
       还可以自定义数值放在内部或外部
     </div>
-    <h2>基础使用</h2>
-    <p>通过参数<span>progress</span>可以动态绑定进度条的状态</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-progress :progress="progressNumber"></zoom-progress>
-        <zoom-progress :op="progressOp"></zoom-progress>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="progressCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>自定义状态</h2>
-    <p>通过参数<span>status</span>可以动态绑定进度条的状态</p>
-    <zoom-tabs class="basic" :value="statusTab" @change="statusChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-progress :progress="progressNumber"></zoom-progress><br>
-        <zoom-progress :progress="progressNumber" status="danger"></zoom-progress><br>
-        <zoom-progress :progress="progressNumber" status="warning"></zoom-progress><br>
-        <zoom-progress :progress="progressNumber" status="info"></zoom-progress><br>
-        <zoom-progress :progress="progressNumber" status="success"></zoom-progress>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="iptStatus"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>个性化设置</h2>
-    <p>进度条的值和状态均为动态绑定</p>
-    <p>点击下面按钮查看效果</p>
-    <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-progress :progress="progressVal" :status="status"></zoom-progress>
-        <zoom-button reset-time="5200" @click="addProgress">点我试试</zoom-button>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="progressCustom"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="progressCode">
+      <template slot="header">
+        <h2>基础使用</h2>
+        <p>通过参数<span>progress</span>可以动态绑定进度条的状态</p>
+      </template>
+      <zoom-progress :progress="progressNumber"></zoom-progress>
+      <zoom-progress :op="progressOp"></zoom-progress>
+    </tab-template>
+    <!-- 自定义状态 -->
+    <tab-template :code="iptStatus">
+      <template slot="header">
+        <h2>自定义状态</h2>
+        <p>通过参数<span>status</span>可以动态绑定进度条的状态</p>
+      </template>
+      <zoom-progress :progress="progressNumber"></zoom-progress><br>
+      <zoom-progress :progress="progressNumber" status="danger"></zoom-progress><br>
+      <zoom-progress :progress="progressNumber" status="warning"></zoom-progress><br>
+      <zoom-progress :progress="progressNumber" status="info"></zoom-progress><br>
+      <zoom-progress :progress="progressNumber" status="success"></zoom-progress>
+    </tab-template>
+    <!-- 个性化设置 -->
+    <tab-template cls="data-drop" :code="progressCustom">
+      <template slot="header">
+        <h2>个性化设置</h2>
+        <p>进度条的值和状态均为动态绑定</p>
+        <p>点击下面按钮查看效果</p>
+      </template>
+      <zoom-progress :progress="progressVal" :status="status"></zoom-progress>
+      <zoom-button reset-time="5200" @click="addProgress">点我试试</zoom-button>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -99,9 +91,6 @@ export default {
         progress: 30,   //  进度条的值
         inside: true  //  是否显示外部, 设置false显示在内部
       },
-      opTab: 0,
-      curTab: 0,
-      statusTab: 0,
       progressCustom:
         `&lt;template&gt;
             &lt;div&gt;
@@ -199,15 +188,6 @@ export default {
           clearInterval(progressTime);
         }
       }, 50);
-    },
-    statusChange(index) {
-      this.statusTab = index
-    },
-    opChange(index) {
-      this.opTab = index
-    },
-    tabChange(index) {
-      this.curTab = index
     }
   }
 }

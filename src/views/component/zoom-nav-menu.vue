@@ -1,31 +1,26 @@
 <template>
   <div class="custom-zoom-nav-menu">
     <!-- 普通 -->
-    <h2>基本用法</h2>
-    <h3>基础按钮的用法</h3>
-    <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
-    <zoom-tabs class="basic" :value="curTab" @change="tabChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-nav-menu :op="op"></zoom-nav-menu>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="menuCode"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
-    <h2>隐藏迷你菜单</h2>
-    <p>通过op对象配置, 左边按钮为迷你菜单 鼠标经过时候显示</p>
-    <p>
-      通过设置
-      <span>hideTree</span>属性来隐藏左边迷你导航菜单
-    </p>
-    <zoom-tabs class="basic" :value="reseTab" @change="reseChange">
-      <zoom-tab-item :index="0" label="效果">
-        <zoom-nav-menu :op="navMenuOp"></zoom-nav-menu>
-      </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
-        <custom-code :html="hideMenu"></custom-code>
-      </zoom-tab-item>
-    </zoom-tabs>
+    <tab-template :code="menuCode">
+      <template slot="header">
+        <h2>基本用法</h2>
+        <h3>基础菜单的用法</h3>
+        <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
+      </template>
+      <zoom-nav-menu :op="op"></zoom-nav-menu>
+    </tab-template>
+    <!-- 隐藏迷你菜单 -->
+    <tab-template :code="hideMenu">
+      <template slot="header">
+        <h2>隐藏迷你菜单</h2>
+        <p>通过op对象配置, 左边按钮为迷你菜单 鼠标经过时候显示</p>
+        <p>
+          通过op对象配置
+          <span>hideTree: true</span>属性来隐藏左边迷你导航菜单
+        </p>
+      </template>
+      <zoom-nav-menu :op="navMenuOp"></zoom-nav-menu>
+    </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -157,8 +152,6 @@ export default {
           ]}
         ]
       },
-      curTab: 0,
-      reseTab: 0,
       hideMenu:
         `&lt;template&gt;
             &lt;div&gt;
@@ -225,17 +218,6 @@ export default {
             }
           &lt;/script&gt;`
     };
-  },
-  methods: {
-    tabChange(index) {
-      this.curTab = index;
-    },
-    reseChange(index) {
-      this.reseTab = index;
-    },
-    sizeChange(index) {
-      this.sizeTab = index;
-    }
   }
 };
 </script>
