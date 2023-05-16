@@ -57,10 +57,10 @@
                         <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
                       </zoom-form-item>
                       <zoom-form-item inline="true">
-                        <zoom-search style="width: 120px;"></zoom-search>
+                        <zoom-search style="width: 130px;"></zoom-search>
                       </zoom-form-item>
                       <zoom-form-item inline="true">
-                        <zoom-numeric style="width: 120px;"></zoom-numeric>
+                        <zoom-numeric style="width: 130px;"></zoom-numeric>
                       </zoom-form-item>
                       <zoom-form-item>
                         <zoom-rate></zoom-rate>
