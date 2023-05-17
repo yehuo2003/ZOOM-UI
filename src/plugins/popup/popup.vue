@@ -208,7 +208,7 @@ export default {
   flex-shrink: 0;
   font-size: 16px;
   font-weight: 700;
-  padding: 10px 40px 8px 16px;
+  padding: 10px;
   border-bottom: 1px solid #eee;
   background-color: #f8f8f8;
   border-radius: 2px 2px 0 0;

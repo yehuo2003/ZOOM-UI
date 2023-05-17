@@ -4,7 +4,7 @@
       <div class="popup-modal-box">
         <div class="popup-modal-header">
           <span class="modal-title">{{title}}</span>
-          <i @click="handleAction('close')" class="zoom-icon icon-close"></i>
+          <i @click="handleAction('close')" class="zoom-icon icon-close-plus"></i>
         </div>
         <div class="popup-modal-body">
           <div class="popup-status">
