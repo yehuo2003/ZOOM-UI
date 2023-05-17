@@ -112,13 +112,10 @@ export default {
               },
               methods: {
                 setProgress() {
-                  let data = [
-                      {text: '500', progress: 50, status: 'danger'},
-                      {text: '150', progress: 15, status: 'info'},
-                      {text: '300', progress: 30, status: 'primary'},
-                      {text: '600', progress: 60, status: 'warning'},
-                      {text: '750', progress: 75, status: 'success'}
-                  ]
+                  let data = ['danger', 'info', 'primary', 'warning', 'success'].map(item =&gt; {
+                    let randomNumber = this.$zoom.$rn(1, 100);
+                    return {text: randomNumber, progress: randomNumber, status: item}
+                  })
                   this.$refs['group'].load(data);
                 }
               }
@@ -152,13 +149,10 @@ export default {
   },
   methods: {
     setProgress() {
-      let data = [
-          {text: '500', progress: 50, status: 'danger'},
-          {text: '150', progress: 15, status: 'info'},
-          {text: '300', progress: 30, status: 'primary'},
-          {text: '600', progress: 60, status: 'warning'},
-          {text: '750', progress: 75, status: 'success'}
-      ]
+      let data = ['danger', 'info', 'primary', 'warning', 'success'].map(item => {
+        let randomNumber = this.$zoom.$rn(1, 100);
+        return {text: randomNumber, progress: randomNumber, status: item}
+      })
       this.$refs['group'].load(data);
     }
   }

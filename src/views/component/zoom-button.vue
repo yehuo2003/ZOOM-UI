@@ -31,7 +31,9 @@
         :key=" 30 + item.id"
         :type="item.type"
         shape="circle"
-      >圆形</zoom-button>
+      >
+        <span class="zoom-icon icon-praise-fill"></span>
+      </zoom-button>
     </tab-template>
     <!-- 禁用间隔 -->
     <tab-template :code="resetBtn">
@@ -164,7 +166,7 @@ export default {
       op2: {
         type: "warning",
         disabled: true, // 是否禁用 类型 布尔
-        IconStyle: "icon-close", // 启用字体图标,传入icon开头的字体图标class,类型为字符串
+        IconStyle: "icon-wifi", // 启用字体图标,传入icon开头的字体图标class,类型为字符串
         onClick: function() {
           console.log("按钮被点击了");
         } //回调函数 点击时候触发
@@ -204,7 +206,7 @@ export default {
                 op2: {
                   type: 'warning',  // 按钮类型
                   disabled: true,	// 是否禁用 类型 布尔
-                  IconStyle: 'icon-close',		// 启用字体图标,传入icon开头的字体图标class,类型为字符串
+                  IconStyle: 'icon-wifi',		// 启用字体图标,传入icon开头的字体图标class,类型为字符串
                   onClick: () =>; {
                     console.log('禁用状态无法点击')
                 },
@@ -238,12 +240,24 @@ export default {
         &lt;zoom-button shape="round" type="danger"&gt;危险圆角&lt;/zoom-button&gt;
         &lt;zoom-button shape="round" type="info"&gt;信息圆角&lt;/zoom-button&gt;
 
-        &lt;zoom-button shape="circle"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="primary"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="success"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="warning"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="danger"&gt;圆形&lt;/zoom-button&gt;
-        &lt;zoom-button shape="circle" type="info"&gt;圆形&lt;/zoom-button&gt;`
+        &lt;zoom-button shape="circle"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;
+        &lt;zoom-button shape="circle" type="primary"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;
+        &lt;zoom-button shape="circle" type="success"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;
+        &lt;zoom-button shape="circle" type="warning"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;
+        &lt;zoom-button shape="circle" type="danger"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;
+        &lt;zoom-button shape="circle" type="info"&gt;
+          &lt;span class="zoom-icon icon-praise-fill"&gt;&lt;/span&gt;
+        &lt;/zoom-button&gt;`
     };
   }
 };

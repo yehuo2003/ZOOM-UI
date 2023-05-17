@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-10 23:11:55
+ * @LastEditTime: 2023-05-17 21:03:32
 -->
 <template>
   <div class="zoom-home">
@@ -55,6 +55,9 @@
                       </zoom-form-item>
                       <zoom-form-item>
                         <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
+                      </zoom-form-item>
+                      <zoom-form-item>
+                        <zoom-date></zoom-date>
                       </zoom-form-item>
                       <zoom-form-item inline="true">
                         <zoom-search style="width: 130px;"></zoom-search>

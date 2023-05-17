@@ -57,7 +57,7 @@ export default {
           ]
         },
       ],
-      panelTitle: '<h1>自定义头部</h1>',
+      panelTitle: '<p>自定义头部</p>',
       panelCustom:
         `&lt;template&gt;
             &lt;div&gt;
