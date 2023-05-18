@@ -282,7 +282,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-search {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 180px;
       .zoom-search {
         margin: 10px 0;
@@ -290,7 +290,7 @@ export default {
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 100px;
       .zoom-search {
         margin: 10px;

@@ -185,10 +185,10 @@ export default {
       },
       dropdownOp: {
         data: [
-          {value: '1', text: '黄金糕'},
-          {value: '2', text: '双皮奶'},
-          {value: '3', text: '龙须面'},
-          {value: '4', text: '北京烤鸭'}
+          {value: '1', text: '北京'},
+          {value: '2', text: '上海'},
+          {value: '3', text: '广州'},
+          {value: '4', text: '深圳'}
         ],
       },
     }

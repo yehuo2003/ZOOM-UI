@@ -195,7 +195,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-progress {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       p {
         line-height: 1.2;
       }

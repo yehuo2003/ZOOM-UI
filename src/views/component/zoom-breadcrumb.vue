@@ -231,7 +231,7 @@ export default {
   .basic {
     .content-active {
       .zoom-breadcrumb {
-        /deep/ .custom {
+        ::v-deep .custom {
           color: red !important;
         }
       }

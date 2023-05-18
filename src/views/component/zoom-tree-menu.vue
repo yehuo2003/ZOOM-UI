@@ -231,7 +231,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-tree-menu {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 250px;
       overflow: auto;
     }

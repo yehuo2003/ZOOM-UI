@@ -15,7 +15,7 @@
       <zoom-button @click="slider1Num">滑块1的值</zoom-button>
       <br>
       滑块2：<br>
-      <zoom-slider v-model="num2" min="50" max="500"></zoom-slider>
+      <zoom-slider v-model="num2" :min="0" :max="500"></zoom-slider>
       <zoom-button @click="slider2Num">滑块2的值</zoom-button>
     </tab-template>
     <attribute :list="attributeList"></attribute>
@@ -67,7 +67,7 @@ export default {
               &lt;zoom-button @click="slider1Num"&gt;滑块1的值&lt;/zoom-button&gt;
               &lt;br&gt;
               滑块2：&lt;br&gt;
-              &lt;zoom-slider v-model="number2" min="50" max="500"&gt;&lt;/zoom-slider&gt;
+              &lt;zoom-slider v-model="number2" :min="0" :max="500"&gt;&lt;/zoom-slider&gt;
               &lt;zoom-button @click="slider2Num"&gt;滑块2的值&lt;/zoom-button&gt;
             &lt;/div&gt;
           &lt;/template&gt;
@@ -105,7 +105,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-slider {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 180px;
       .zoom-slider {
         margin-top: 40px;
@@ -113,7 +113,7 @@ export default {
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 100px;
       .zoom-slider {
         margin-top: 40px;

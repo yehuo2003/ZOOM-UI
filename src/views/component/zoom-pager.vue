@@ -195,7 +195,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-pager {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 180px;
     }
   }

@@ -1,3 +1,11 @@
+<!--
+ * @Description: SDK
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-18 12:21:29
+-->
 <template>
   <div class="explanation">
     <h2>Software Development Kit</h2>
@@ -40,7 +48,7 @@ export default {
               name: "dom-operation",
               type: "Function",
               text: "zoom-ui内部封装的类似于<span>jQuery</span>的选择器, 操作方法<span>jQuery</span>大致相同, 虽然没有<span>jQuery</span>功能全面, 但是胜在体积小方便操作, 如果需要更复杂的操作可以引入<span>jQuery</span>",
-              text2: '用法: 用过命令: <span>$("元素")</span>或者<span>$Z("元素")</span>可以获取DOM元素, 然后再进行增删改查操作, 具体用法参考: <a href="#/SDK/dom-operation">DOM操作指令</a>'
+              text2: '用法: 使用命令: <span>$("元素")</span>或者<span>$Z("元素")</span>可以获取DOM元素, 然后再进行增删改查操作, 具体用法参考: <a href="#/SDK/dom-operation">DOM操作指令</a>'
             },
             {
               id: 4,

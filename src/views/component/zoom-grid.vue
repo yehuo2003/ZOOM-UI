@@ -24,7 +24,7 @@
       <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
     </tab-template>
     <!-- 带复选功能的表格 -->
-    <tab-template cls="data-drop" :code="gridCheck">
+    <tab-template v-if="showGrid" cls="data-drop" :code="gridCheck">
       <template slot="header">
         <h3>带复选功能的表格</h3>
         <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
@@ -32,7 +32,7 @@
       <zoom-grid :op="gridOp3"></zoom-grid>
     </tab-template>
     <!-- 表格的编辑功能 -->
-    <tab-template cls="data-drop" :code="gridEdit">
+    <tab-template v-if="showGrid" cls="data-drop" :code="gridEdit">
       <template slot="header">
         <h3>表格的编辑功能</h3>
         <p>需要使用表格编辑功能，需要先配置editMode属性<br>
@@ -53,6 +53,7 @@
 export default {
   data() {
     return {
+      showGrid: false,
       attributeList: [
         {
           id: 1,
@@ -476,6 +477,11 @@ export default {
           &lt;/script&gt;`
     }
   },
+  mounted () {
+    setTimeout(() => {
+      this.showGrid = true;
+    }, 1000);
+  },
   methods: {
     loadData() {
       this.$zoom.loading.show();
@@ -493,7 +499,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-grid {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 180px;
     }
   }

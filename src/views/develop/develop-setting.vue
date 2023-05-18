@@ -1,3 +1,11 @@
+<!--
+ * @Description:环境准备
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-18 12:20:20
+-->
 <template>
   <div class="install-develop">
     <h2>Node.js</h2>
@@ -7,20 +15,20 @@
     <custom-code :html="node"></custom-code>
     <p>或者</p>
     <custom-code :html="node2"></custom-code>
-    <h2>Npm</h2>
+    <h2>NPM</h2>
     <h3>安装完了Node.js后，通过<span>Win + R</span> 打开cmd命令行，输入命令查看Npm版本：</h3>
     <h3>推荐版本 6.0 以上</h3>
     <custom-code :html="npm"></custom-code>
-    <h3>如果Npm不是最新版本，可以手动升级</h3>
+    <h3>如果NPM不是最新版本，可以手动升级</h3>
     <p>升级命令:</p>
     <custom-code :html="updateNpm"></custom-code>
     <h3>因为网络环境原因无法升级成功的可以切换为淘宝镜像</h3>
     <p>输入以下命令，切换到淘宝镜像源：</p>
     <custom-code :html="cnpm"></custom-code>
     <h2>全局安装yarn</h2>
-    <p>Yarn 的安装：</p>
+    <p>yarn 的安装：</p>
     <custom-code :html="yarn"></custom-code>
-    <p>Yarn 淘宝源安装：</p>
+    <p>yarn 淘宝源安装：</p>
     <custom-code :html="cyarn"></custom-code>
     <h2>Vue 全局安装</h2>
     <h3>建议安装 2.6 以上版本的 Vue</h3>

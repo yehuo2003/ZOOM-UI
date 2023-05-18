@@ -187,23 +187,23 @@ export default {
     .zoom-layout {
       text-align: center;
       color: #fff;
-      /deep/ .zoom-header {
+      ::v-deep .zoom-header {
         padding: 10px;
         background: #40a9ff;
         border: 3px solid #fff;
       }
-      /deep/ .zoom-aside {
+      ::v-deep .zoom-aside {
         padding: 10px;
         background: #ff4d4f;
         border: 3px solid #fff;
       }
-      /deep/ .zoom-main {
+      ::v-deep .zoom-main {
         padding: 10px;
         background: #ffc53d;
         border: 3px solid #fff;
         margin-bottom: 0;
       }
-      /deep/ .zoom-footer {
+      ::v-deep .zoom-footer {
         padding: 10px;
         background: #73d13d;
         border: 3px solid #fff;

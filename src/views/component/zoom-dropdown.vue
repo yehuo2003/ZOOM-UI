@@ -297,14 +297,14 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-dropdown {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       .zoom-dropdown {
         margin: 10px 0;
       }
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 100px;
       .zoom-dropdown {
         margin: 10px 0;

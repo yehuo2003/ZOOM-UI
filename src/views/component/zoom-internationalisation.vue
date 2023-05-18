@@ -120,7 +120,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-internationalisation {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 120px;
     }
   }

@@ -402,7 +402,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-steps {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 180px;
       .zoom-steps {
         margin-top: 40px;
@@ -410,7 +410,7 @@ export default {
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 100px;
       .zoom-steps {
         margin-top: 40px;

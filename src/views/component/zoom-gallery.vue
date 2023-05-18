@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-17 00:33:06
+ * @LastEditTime: 2023-05-18 12:19:51
 -->
 <template>
   <div class="custom-zoom-gallery">
@@ -15,10 +15,6 @@
       还可以开启放大镜功能
     </div>
     <tab-template :code="galleryCode">
-      <template slot="header">
-        <h2>基础使用</h2>
-        <p>可以按键盘左键或者右键切换上下张</p>
-      </template>
       <zoom-gallery :op="op"></zoom-gallery>
     </tab-template>
     <attribute :list="attributeList"></attribute>

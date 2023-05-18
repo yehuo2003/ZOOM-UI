@@ -166,7 +166,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-textarea {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 180px;
       .zoom-textarea {
         margin: 10px 0;
@@ -174,7 +174,7 @@ export default {
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 100px;
       .zoom-textarea {
         margin: 10px;

@@ -224,7 +224,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-nav-menu {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 250px;
     }
   }

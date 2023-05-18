@@ -89,7 +89,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-card {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       overflow: auto;
     }
   }

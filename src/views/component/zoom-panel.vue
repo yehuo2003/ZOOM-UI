@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-panel {
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       p {
         line-height: 3;
       }

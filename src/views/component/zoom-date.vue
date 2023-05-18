@@ -151,7 +151,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-date {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 280px;
       .zoom-date {
         margin: 10px 0;

@@ -8,7 +8,7 @@
           此外还有一键重置功能，用于重置表单中所有zoom-ui的表单元素组件。
         </div>
         <h2>使用方法</h2>
-        <p>如果表单中只有一个按钮, 默认可以用回车键提交 或者点击会触发默认事件, 如果不想要的话就在zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
+        <p>如果表单中只有一个按钮, 默认可以用回车键提交。或者点击会触发默认事件, 阻止默认事件可通过zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
       </template>
       <zoom-form @submit.prevent="false" label-width="100px">
         <zoom-form-item label="姓名">

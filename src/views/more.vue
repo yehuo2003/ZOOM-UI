@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-17 23:08:49
+ * @LastEditTime: 2023-05-18 12:49:19
 -->
 <template>
   <div class="more">
@@ -46,11 +46,16 @@
       <p>修复zoom-dropdown下拉框新增全选/取消的BUG</p>
       <h3>2021.03---版本：1.1.7</h3>
       <p>zoom-dropdown下拉框新增全选/取消功能,并修复了下拉框复选状态时候的部分BUG</p> -->
-      <div v-for="(item, index) of nodeList" :key="index">
+      <div v-show="showLog ? true : index < 3" v-for="(item, index) of nodeList" :key="index" class="zoom-log">
         <h3>{{ item.title }}</h3>
         <p v-for="(i, j) of item.content" :key="j">
           {{ i.text }}
         </p>
+      </div>
+      <div v-if="!showLog" class="hide-box">
+        <span class="hide-bt">
+          <i @click="logShow" class="zoom-icon icon-down"></i>
+        </span>
       </div>
     </zoom-panel>
     <!-- <zoom-panel title="赞助作者" :show="true">
@@ -65,6 +70,7 @@
 export default {
   data () {
     return {
+      showLog: false,
       nodeList: [
         {
           title: 'May 17, 2023---版本：1.2.9', content: [
@@ -139,14 +145,55 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    logShow() {
+      this.showLog = true;
+    }
   }
 }
 </script>
 <style lang="scss">
 .more {
+  .zoom-panel-content {
+    .zoom-log {
+      margin-bottom: 10px;
+      p {
+        padding: 2px 0;
+      }
+    }
+  }
+  .hide-box {
+    .hide-bt {
+      .zoom-icon.icon-down {
+        cursor: pointer;
+        display: block;
+        text-align: center;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+      }
+      word-wrap: normal;
+      word-break: break-all;
+      width: 100%;
+      padding-top: 78px;
+      background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+      background: linear-gradient(-180deg, rgba(255, 255, 255, 0) 0%, #fff 100%);
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+  }
   text-align: left;
   padding-left: 20px;
   font-size: 16px;
+  position: relative;
   .explan {
     margin-top: 20px;
     li {

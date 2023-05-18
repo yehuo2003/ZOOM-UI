@@ -130,7 +130,7 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-captcha {
   .data-drop {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 180px;
       .zoom-captcha {
         margin: 10px 0;
@@ -138,7 +138,7 @@ export default {
     }
   }
   .basic {
-    /deep/ .zoom-tabs-content.content-active {
+    ::v-deep .zoom-tabs-content.content-active {
       min-height: 300px;
       .captcha-model {
         margin-top: 200px;

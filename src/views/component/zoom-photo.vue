@@ -194,12 +194,12 @@ export default {
 <style lang="scss" scoped>
 .custom-zoom-photo {
   .data-drop {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 150px;
     }
   }
   .basic {
-    /deep/ .content-active {
+    ::v-deep .content-active {
       min-height: 100px;
     }
   }
