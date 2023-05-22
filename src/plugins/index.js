@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-04-02 19:04:06
  * @LastEditors: linzhuming
- * @LastEditTime: 2021-04-03 11:35:31
+ * @LastEditTime: 2023-05-22 23:46:57
  */
 
 import '../assets/fontIcon/iconfont.css'
@@ -267,6 +267,77 @@ const install = Vue => {
     // 自定义方法
     Vue.prototype.$zoom = {
         /**
+         * @function: ajax封装
+         * @description: 如果没有传入值, 则返回空, 否则返回复制内容 this.$zoom.copy(msg)
+         * @param {*} value
+         * @return {*}  Promise
+         */
+        network: {
+            xhr: window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'),
+            onreadystatechange() {
+                return new Promise((resolve, reject) => {
+                    this.onreadystatechange = function() {
+                        if (this.readyState === 4) {
+                            if (this.status >= 200 && this.status < 300) {
+                                resolve(JSON.parse(this.response));
+                            } else {
+                                reject(this.status)
+                            }
+                        }
+                    }
+                })
+            },
+            jsonUrl(params) {
+                if (typeof params === 'string') {
+                    return params;
+                }
+                let res = '';
+                let arr = [];
+                for (const key in params) {
+                    if (Object.hasOwnProperty.call(params, key)) {
+                        const element = params[key];
+                        arr.push(`${key}=${element}`);
+                    }
+                }
+                res = arr.join('&');
+                return res;
+            },
+            headersUrl(obj) {
+                let arr = ['Content-Type', 'application/x-www-form-urlencoded'];
+                if (typeof obj === 'object') {
+                    for (const key in obj) {
+                        if (Object.hasOwnProperty.call(obj, key)) {
+                            const element = obj[key];
+                            arr[0] = key;
+                            arr[1] = element;
+                        }
+                    }
+                }
+                return arr;
+            },
+            post(requestUrl, requestParams, requestHeaders) {
+                const xhr = this.xhr;
+                let headers = ['Content-Type', 'application/x-www-form-urlencoded'];
+                let url = '';
+                let params = '';
+                if (typeof requestUrl === 'object') {
+                    url = requestUrl.url;
+                    params = this.jsonUrl(requestUrl.params);
+                    headers = this.headersUrl(requestUrl.headers);
+                } else if (requestParams) {
+                    url = requestUrl;
+                    params = this.jsonUrl(requestParams);
+                    headers = this.headersUrl(requestHeaders);
+                } else {
+                    throw Error(`zoom-ui SyntaxError: 请求参数有误, 请检查请求参数! `)
+                }
+                xhr.open('post', url, true);
+                xhr.setRequestHeader(headers[0], headers[1]);
+                xhr.send(params);
+                return this.onreadystatechange.call(xhr);
+            },
+        },
+        /**
          * @function: 复制功能
          * @description: 如果没有传入值, 则返回空, 否则返回复制内容 this.$zoom.copy(msg)
          * @param {*} value
@@ -349,6 +420,8 @@ const install = Vue => {
                         }
                     }
                     return value;
+                } else {
+                    return val;
                 }
             }
         },
