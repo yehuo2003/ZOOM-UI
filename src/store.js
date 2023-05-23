@@ -89,6 +89,7 @@ export default new Vuex.Store({
       {title: 'SDK说明', url: '#/SDK/explanation'},  //  说明
       {title: '内置指令', url: '#/SDK/zoom-directive'},  //  zoom-ui内置指令
       {title: '国际化', url: '#/SDK/internationalisation'},  //  国际化
+      {title: '服务请求', url: '#/SDK/network'},  //  服务请求
       {title: 'Dom操作命令', url: '#/SDK/dom-operation'},  //  DOM操作
       {title: '内置方法', children: [   //  方法
         {title: '日期格式化', url: '#/SDK/date-format'}, //  日期格式化

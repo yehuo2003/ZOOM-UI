@@ -17,7 +17,8 @@ import customCode from "./components/customCode";
 import tabTemplate from "./components/tabTemplate";
 import attribute from "./components/attribute";
 import VueClipboard from 'vue-clipboard2'
-import 'highlight.js/styles/atom-one-dark.css'	//	yes
+import 'highlight.js/styles/vs2015.css'	//	yes
+// import 'highlight.js/styles/atom-one-dark.css'	//	yes
 //import 'highlight.js/styles/github.css'
 //import 'highlight.js/styles/darkula.css'		//	橙色标签
 //import 'highlight.js/styles/atelier-seaside-dark.css'	//	清晰

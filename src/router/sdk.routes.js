@@ -14,6 +14,7 @@ export default {
     { path: '/SDK/explanation', component: () => import('../views/sdk/explanation.vue') },  //  说明
     { path: '/SDK/zoom-directive', component: () => import('../views/sdk/zoom-directive.vue') },  //  内置指令
     { path: '/SDK/internationalisation', component: () => import('../views/sdk/internationalisation.vue') },  //  国际化
+    { path: '/SDK/network', component: () => import('../views/sdk/network.vue') },  //  服务请求
     { path: '/SDK/dom-operation', component: () => import('../views/sdk/dom-operation.vue') },  //  DOM操作命令
     { path: '/SDK/date-format', component: () => import('../views/sdk/date-format.vue') },  //  日期格式化
     { path: '/SDK/cookie-operation', component: () => import('../views/sdk/cookie-operation.vue') },  //  cookie操作

@@ -1,3 +1,11 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-22 22:38:51
+-->
 <template>
   <div class="internationalisation">
     <h2>internationalisation</h2>
@@ -16,6 +24,7 @@
     <custom-code :html="setLanguage"></custom-code>
     <h3>使用国际化展示</h3>
     <p>确保国际化名称正常, 可使用<span>$zoom.$t("国际化名称")</span>来展示国际化</p>
+    <p>想要在国际化中使用变量可以在设置时候使用<span>{变量名}</span>定义, 实际使用可参照如下: </p>
     <custom-code :html="use"></custom-code>
   </div>
 </template>
@@ -41,11 +50,13 @@ export default {
             i18n: { //  要设置/修改的国际化
                 zh: {
                   'set.success': '设置成功',
-                  'set.failed': '设置失败'
+                  'set.failed': '设置失败',
+                  "file.upload_error": "上传失败{errCount}个文件！",
                 },
                 en: {
                   'set.success': 'set success',
                   'set.failed': 'set failed',
+                  'file.upload_error': 'Upload failed {errCount} files!',
                 }
             },
             ...
@@ -55,8 +66,8 @@ export default {
       use:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;span&gt;{{'file.upload_error', { errCount: 5 })}}&lt;/span&gt;   // 上传失败5个文件！
-              &lt;span&gt;{{$zoom.$t("search.msg")}}&lt;/span&gt;   // 请输入关键词
+              &lt;span&gt;{{ $zoom.$t('file.upload_error', { errCount: 5 }) }}&lt;/span&gt;   // 上传失败5个文件！
+              &lt;span&gt;{{ $zoom.$t("search.msg") }}&lt;/span&gt;   // 请输入关键词
             &lt;/div&gt;
           &lt;/template&gt;`
     };

@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-18 12:49:19
+ * @LastEditTime: 2023-05-24 00:04:06
 -->
 <template>
   <div class="more">
@@ -72,6 +72,12 @@ export default {
     return {
       showLog: false,
       nodeList: [
+        {
+          title: 'May 24, 2023---版本：1.3.0', content: [
+            {text: '国际化BUG修复'},
+            {text: '新增network服务请求SDK'}
+          ]
+        },
         {
           title: 'May 17, 2023---版本：1.2.9', content: [
             {text: '确认框样式修复'},

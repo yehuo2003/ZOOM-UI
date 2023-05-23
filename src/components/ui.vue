@@ -62,7 +62,7 @@ export default {
           }
         })
       }
-      let list = data.map(item => item.children ? isChildren(item.children).flat(Infinity) : item);
+      let list = data.map(item => item.children ? isChildren(item.children) : item);
       this.list = list.flat(Infinity);
       setTimeout(() => {
         this.loadUrl();
