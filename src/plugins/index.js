@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-04-02 19:04:06
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-22 23:46:57
+ * @LastEditTime: 2023-05-23 22:59:52
  */
 
 import '../assets/fontIcon/iconfont.css'
@@ -268,24 +268,120 @@ const install = Vue => {
     Vue.prototype.$zoom = {
         /**
          * @function: ajax封装
-         * @description: 如果没有传入值, 则返回空, 否则返回复制内容 this.$zoom.copy(msg)
-         * @param {*} value
+         * @description: 服务封装, 可调用get/post/put/delete... 写法: this.$zoom.network.post(url, params).then()
+         * @param {*}
          * @return {*}  Promise
          */
         network: {
             xhr: window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'),
-            onreadystatechange() {
+            /**
+             * @function: 调用服务
+             * @description: timeout为服务时间, 毫秒, 如果超出时间无响应则中断服务
+             * @param {*} timeout
+             * @return {*}  Promise
+             */
+            onreadystatechange(timeout) {
                 return new Promise((resolve, reject) => {
+                    let err = 'zoom-ui Service Error: 请求超时! `';
+                    if (timeout) {
+                        let count = timeout / 1000;
+                        let timer = setInterval(() => {
+                            count --;
+                            if (count <= 0) {
+                                clearInterval(timer);
+                                this.abort(); // 中断请求
+                                throw Error(err);
+                            }
+                        }, 1000);
+                    }
                     this.onreadystatechange = function() {
                         if (this.readyState === 4) {
                             if (this.status >= 200 && this.status < 300) {
+                                if (timer) {
+                                    clearInterval(timer);
+                                }
                                 resolve(JSON.parse(this.response));
                             } else {
-                                reject(this.status)
+                                reject(err)
                             }
                         }
                     }
                 })
+            },
+            /**
+             * @function: post put delete 参数封装
+             * @description: post put delete 参数封装
+             * @param {*} methods 方法 'post', 'put'
+             * @param {*} requestUrl 请求地址,或者是对象,或者是字符串
+             * @param {*} requestParams 请求参数
+             * @param {*} requestHeaders 请求头 对象形式
+             * @return {*} Promise
+             */
+            bodyService(methods, requestUrl, requestParams, requestHeaders) {
+                const xhr = this.xhr;
+                let headers = ['Content-Type', 'application/x-www-form-urlencoded'];
+                let url = '';
+                let params = '';
+                let timeout = 0;
+                if (typeof requestUrl === 'object') {
+                    url = requestUrl.url;
+                    params = this.jsonUrl(requestUrl.params);
+                    headers = this.headersUrl(requestUrl.headers);
+                    timeout = requestUrl.timeout;
+                } else if (requestParams) {
+                    url = requestUrl;
+                    params = this.jsonUrl(requestParams);
+                    headers = this.headersUrl(requestHeaders);
+                } else {
+                    throw Error(`zoom-ui SyntaxError: 请求参数有误, 请检查请求参数! `);
+                }
+                xhr.open(methods, url, true);
+                xhr.setRequestHeader(headers[0], headers[1]);
+                xhr.send(params);
+                return this.onreadystatechange.call(xhr, timeout);
+            },
+            /**
+             * @function: get trace head 服务封装
+             * @description: get trace head方法使用
+             * @param {*} requestUrl 请求地址,或者是对象,或者是字符串
+             * @return {*}  Promise
+             */
+            urlService(methods, requestUrl) {
+                let url = '';
+                let timeout = 0;
+                if (typeof requestUrl === 'object') {
+                    url = requestUrl.url;
+                    timeout = requestUrl.timeout;
+                } else if (typeof requestUrl === 'string') {
+                    url = requestUrl;
+                } else {
+                    throw Error(`zoom-ui SyntaxError: 请求参数有误, 请检查请求参数! `);
+                }
+                const xhr = this.xhr;
+                xhr.open(methods, url);
+                xhr.send();
+                return this.onreadystatechange.call(xhr, timeout);
+            },
+            delete(requestUrl, requestParams, requestHeaders) {
+                return this.bodyService('delete', requestUrl, requestParams, requestHeaders);
+            },
+            put(requestUrl, requestParams, requestHeaders) {
+                return this.bodyService('put', requestUrl, requestParams, requestHeaders);
+            },
+            post(requestUrl, requestParams, requestHeaders) {
+                return this.bodyService('post', requestUrl, requestParams, requestHeaders);
+            },
+            options(requestUrl) {
+                return this.urlService('options', requestUrl);
+            },
+            head(requestUrl) {
+                return this.urlService('head', requestUrl);
+            },
+            trace(requestUrl) {
+                return this.urlService('trace', requestUrl);
+            },
+            get(requestUrl) {
+                return this.urlService('get', requestUrl);
             },
             jsonUrl(params) {
                 if (typeof params === 'string') {
@@ -314,27 +410,6 @@ const install = Vue => {
                     }
                 }
                 return arr;
-            },
-            post(requestUrl, requestParams, requestHeaders) {
-                const xhr = this.xhr;
-                let headers = ['Content-Type', 'application/x-www-form-urlencoded'];
-                let url = '';
-                let params = '';
-                if (typeof requestUrl === 'object') {
-                    url = requestUrl.url;
-                    params = this.jsonUrl(requestUrl.params);
-                    headers = this.headersUrl(requestUrl.headers);
-                } else if (requestParams) {
-                    url = requestUrl;
-                    params = this.jsonUrl(requestParams);
-                    headers = this.headersUrl(requestHeaders);
-                } else {
-                    throw Error(`zoom-ui SyntaxError: 请求参数有误, 请检查请求参数! `)
-                }
-                xhr.open('post', url, true);
-                xhr.setRequestHeader(headers[0], headers[1]);
-                xhr.send(params);
-                return this.onreadystatechange.call(xhr);
             },
         },
         /**

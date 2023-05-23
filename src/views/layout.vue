@@ -155,7 +155,7 @@ export default {
   },
   methods: {
     changeHead() {
-      // let url = 'http://127.0.0.1:8090/dish';
+      let url = 'http://127.0.0.1:8090/dish';
       let params = 's=stest&i=itest2'
       this.$zoom.network.post(url, params).then(res => {
         console.log(res, 'res==');
