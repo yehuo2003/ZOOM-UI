@@ -1,7 +1,7 @@
 <template>
   <div
     class="zoom-carousel"
-    :id="'zoom-carousel'+id"
+    :ref="'zoom-carousel' + id"
     @mouseenter.stop="handleStop"
     @mouseleave.stop="handleGo"
   >
@@ -73,19 +73,16 @@ export default {
   },
   data() {
     return {
-      id: 0,
+      id: this.$zoom.$rn(1, 1000),
       currentIndex: 0,
       timer: "",
       control: false,
       direction: "forward"
     };
   },
-  created() {
-    this.id = Math.random();
-  },
   mounted() {
-    if (this.$zoom.$id("zoom-carousel" + this.id) && this.op) {
-      let style = this.$zoom.$id("zoom-carousel" + this.id).style;
+    if (this.$refs["zoom-carousel" + this.id] && this.op) {
+      let style = this.$refs["zoom-carousel" + this.id].style;
       style.width = this.op.width;
       style.height = this.op.height;
       style.top = this.op.height / 2 - 1;

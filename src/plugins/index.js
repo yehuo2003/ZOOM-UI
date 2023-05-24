@@ -274,6 +274,44 @@ const install = Vue => {
          */
         network: {
             xhr: window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'),
+            jsonUrl(params, headers) {
+                if (!params) {
+                    return
+                }
+                if (typeof params === 'string') {
+                    return params;
+                }
+                let res = '';
+                const headersType = headers.toLocaleLowerCase();
+                if (headersType.includes('x-www-form-urlencoded')) {
+                    let arr = [];
+                    for (const key in params) {
+                        if (Object.hasOwnProperty.call(params, key)) {
+                            const element = params[key];
+                            arr.push(`${key}=${element}`);
+                        }
+                    }
+                    res = arr.join('&');
+                } else if (headersType.includes('json')) {
+                    res = JSON.stringify(params);
+                } else {
+                    res = params;
+                }
+                return res;
+            },
+            headersUrl(obj) {
+                let arr = ['Content-Type', 'application/json'];
+                if (typeof obj === 'object') {
+                    for (const key in obj) {
+                        if (Object.hasOwnProperty.call(obj, key)) {
+                            const element = obj[key];
+                            arr[0] = key;
+                            arr[1] = element;
+                        }
+                    }
+                }
+                return arr;
+            },
             /**
              * @function: 调用服务
              * @description: timeout为服务时间, 毫秒, 如果超出时间无响应则中断服务
@@ -283,9 +321,10 @@ const install = Vue => {
             onreadystatechange(timeout) {
                 return new Promise((resolve, reject) => {
                     let err = 'zoom-ui Service Error: 请求超时! `';
+                    let timer = null;
                     if (timeout) {
                         let count = timeout / 1000;
-                        let timer = setInterval(() => {
+                        timer = setInterval(() => {
                             count --;
                             if (count <= 0) {
                                 clearInterval(timer);
@@ -319,19 +358,23 @@ const install = Vue => {
              */
             bodyService(methods, requestUrl, requestParams, requestHeaders) {
                 const xhr = this.xhr;
-                let headers = ['Content-Type', 'application/x-www-form-urlencoded'];
+                let headers = ['Content-Type', 'application/json'];
                 let url = '';
                 let params = '';
                 let timeout = 0;
                 if (typeof requestUrl === 'object') {
                     url = requestUrl.url;
-                    params = this.jsonUrl(requestUrl.params);
-                    headers = this.headersUrl(requestUrl.headers);
+                    if (requestUrl.headers) {
+                        headers = this.headersUrl(requestUrl.headers);
+                    }
+                    params = this.jsonUrl(requestUrl.params, headers[1]);
                     timeout = requestUrl.timeout;
                 } else if (requestParams) {
                     url = requestUrl;
-                    params = this.jsonUrl(requestParams);
-                    headers = this.headersUrl(requestHeaders);
+                    if (requestHeaders) {
+                        headers = this.headersUrl(requestHeaders);
+                    }
+                    params = this.jsonUrl(requestParams, headers[1]);
                 } else {
                     throw Error(`zoom-ui SyntaxError: 请求参数有误, 请检查请求参数! `);
                 }
@@ -382,35 +425,7 @@ const install = Vue => {
             },
             get(requestUrl) {
                 return this.urlService('get', requestUrl);
-            },
-            jsonUrl(params) {
-                if (typeof params === 'string') {
-                    return params;
-                }
-                let res = '';
-                let arr = [];
-                for (const key in params) {
-                    if (Object.hasOwnProperty.call(params, key)) {
-                        const element = params[key];
-                        arr.push(`${key}=${element}`);
-                    }
-                }
-                res = arr.join('&');
-                return res;
-            },
-            headersUrl(obj) {
-                let arr = ['Content-Type', 'application/x-www-form-urlencoded'];
-                if (typeof obj === 'object') {
-                    for (const key in obj) {
-                        if (Object.hasOwnProperty.call(obj, key)) {
-                            const element = obj[key];
-                            arr[0] = key;
-                            arr[1] = element;
-                        }
-                    }
-                }
-                return arr;
-            },
+            }
         },
         /**
          * @function: 复制功能
@@ -548,15 +563,6 @@ const install = Vue => {
                 clonedObj[key] = this.clone(value);
             })
             return clonedObj;
-        },
-        /**
-         * @function: Dom操作 id
-         * @description: 根据id获取dom元素 并返回当前对象
-         * @param {String} id
-         * @return {*}
-         */
-        $id(id) {
-            return document.getElementById(id);
         },
         /**
          * @function: 随机数

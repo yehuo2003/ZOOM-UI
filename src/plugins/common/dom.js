@@ -1,10 +1,14 @@
 window.$Z = $ = Zoom = (function(window, undefined) {
     //
     function Zoom(dom, selector) {
-        let i, len = dom ? dom.length : 0;
+        let len = dom ? dom.length : 0;
         for (i = 0; i < len; i ++) this[i] = dom[i];
         this.length = len;
         this.selector = selector || '';
+        if (dom && !len) {
+            this[0] = dom;
+            return this[0];
+        }
         return this;
     }
     // dom查看 生成Zoom对象
@@ -15,12 +19,16 @@ window.$Z = $ = Zoom = (function(window, undefined) {
     function select(element, selector) {
         if (typeof selector === 'string') {
             let dom = {};
-            if (selector[0] === '#') {
-                dom = element.getElementById(selector.slice(1));
-            } else if (selector[0] === '.') {
-                dom = element.getElementsByClassName(selector.slice(1));
-            } else {
-                dom = element.querySelectorAll(selector);
+            switch (selector[0]) {
+                case '#':
+                    dom = element.getElementById(selector.slice(1));
+                    break;
+                case '.':
+                    dom = element.getElementsByClassName(selector.slice(1));
+                    break;
+                default:
+                    dom = element.querySelectorAll(selector);
+                    break;
             }
             return dom;
         } else {

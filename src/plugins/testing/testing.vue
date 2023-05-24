@@ -55,7 +55,7 @@ export default {
       }
     },
     $ctx(id, getContext) {
-      var c3 = this.$zoom.$id(id);
+      var c3 = $Z(`#${id}`);
       return c3.getContext(getContext);
     },
     $fill(style, ctx) {

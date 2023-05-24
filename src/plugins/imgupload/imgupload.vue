@@ -1,6 +1,6 @@
 <template>
   <div class="zoom-upload">
-    <zoom-button v-if="!link" :op="btnOp" ref="uploadButton" v-show="!coverPicture">{{text}}</zoom-button>
+    <zoom-button v-if="!link" :op="btnOp" ref="uploadButton" @click="imgClick" v-show="!coverPicture">{{text}}</zoom-button>
     <div v-else class="zoom-custom" v-html="link" @click="imgClick"></div>
     <!-- 删除 -->
     <div v-if="coverPicture" @click="deleteFile" v-tip="$zoom.$t('public.delete')" class="del" v-html="del"></div>
@@ -13,7 +13,7 @@
     </ul>
     <input
       type="file"
-      id="zoom-upload-file"
+      ref="zoom-upload-file"
       v-show="false"
       class="getImgUrl_file"
       @change="uploadImg($event)"
@@ -77,7 +77,7 @@ export default {
     },
     //   上传图片点击事件
     imgClick() {
-      this.$zoom.$id("zoom-upload-file").click();
+      this.$refs['zoom-upload-file'].click();
     },
     // 上传失败
     defeated(msg) {
@@ -112,7 +112,7 @@ export default {
           );
         }
       }
-      let files = this.$zoom.$id("zoom-upload-file").files[0];
+      let files = this.$refs['zoom-upload-file'].files[0];
       let name = files.name;
       let arr = name.split(".");
       let fileSize = 0;
@@ -168,7 +168,7 @@ export default {
     },
     // 删除图片
     deleteFile() {
-      this.$zoom.$id("zoom-upload-file").value = "";
+      this.$refs['zoom-upload-file'].value = "";
       this.coverPicture = this.fileName = "";
       this.showFile = false;
       if (this.op && this.op.deleteEvent) {
