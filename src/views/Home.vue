@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-17 21:03:32
+ * @LastEditTime: 2023-05-25 23:48:57
 -->
 <template>
   <div class="zoom-home">
@@ -396,6 +396,7 @@ export default {
         color: #2c2e30;
       }
       .banner-sub-title {
+        white-space: nowrap;
         line-height: 3.5vw;
         font-size: 3vw;
         margin: 1vw 0 1vw;
@@ -612,26 +613,126 @@ export default {
 }
 
 // @media (min-width:501px) and (max-width:1020px) {
-@media (min-width:501px) and (max-width:1080px) {
+// @media (min-width:501px) and (max-width:1080px) {
+//   #app {
+//     .zoom-home {
+//       .inner {
+//         .sum {
+//           padding-left: 0;
+//           width: 30vw;
+//         }
+//         .mains-content {
+//           .mains-content-left {
+//             .content-inner-top-right {
+//               flex-basis: 25%;
+//               .zoom-tree-menu {
+//                 width: 26vw !important;
+//               }
+//             }
+//           }
+//           .mains-content-right {
+//             display: none;
+//           }
+//         }
+//         display: block;
+//       }
+//     }
+//   }
+// }
+@media (min-width:800px) and (max-width:1080px) {
   #app {
     .zoom-home {
+      .banner {
+        padding-top: 7vw;
+      }
       .inner {
         .sum {
           padding-left: 0;
           width: 30vw;
         }
         .mains-content {
-          .mains-content-left {
-            .content-inner-top-right {
-              flex-basis: 25%;
-              .zoom-tree-menu {
-                width: 26vw !important;
-              }
-            }
+          flex-direction: column;
+          justify-content: space-between;
+          .content-inner-top-left,
+          .content-inner-top-right {
+            padding: 5vw;
+            flex-basis: 42%;
           }
           .mains-content-right {
-            display: none;
+            gap: 1.03vw;
+            padding: 3vw;
+            width: 100%;
+            .item {
+              width: 100vw;
+            }
           }
+        }
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width:799px) {
+  #app {
+    .zoom-home {
+      .banner {
+        .button-docs {
+          height: 5vw;
+          line-height: 5vw;
+        }
+        padding-top: 10vw;
+      }
+      .title-content {
+        .title {
+          font-size: 3vw;
+          line-height: 4vw;
+          height: 4vw;
+          margin-bottom: 2vw;
+        }
+        .sub-title {
+          font-size: 2vw;
+          line-height: 4vw;
+        }
+        text-align: center;
+      }
+      .inner {
+        .sum {
+          background: none;
+          width: fit-content;
+          margin-bottom: 2vw;
+        }
+        .mains-content {
+          .mains-content-left {
+            .content-inner-top {
+              flex-direction: column;
+              gap: 5vw;
+              .content-inner-top-left {
+                flex-basis: 100%;
+                padding: 5vw;
+                margin-bottom: 2vw;
+              }
+              .content-inner-top-right {
+                gap: 1.03vw;
+                justify-content: flex-start;
+                margin-bottom: 1.03vw;
+                padding: 5vw;
+              }
+            }
+            margin-bottom: 2vw;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .mains-content-right {
+            gap: 1.03vw;
+            padding: 3vw;
+            width: 100%;
+            .item {
+              width: 100vw;
+            }
+          }
+          flex-direction: column;
+          gap: 1.03vw;
         }
         display: block;
       }

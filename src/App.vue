@@ -2,7 +2,7 @@
   <div id="app">
     <zoom-layout :headerHeight="isHeader ? 50 : 0" ref="layout">
       <header v-show="isHeader" slot="header">
-        <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
+        <zoom-nav-menu class="zoom-instructions-nav" :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
           <zoom-search v-model="searchVal" :op="searchOp" @search="search"></zoom-search>
           <zoom-internationalisation></zoom-internationalisation>
@@ -134,42 +134,42 @@ export default {
 }
 
 
-@media (min-width:300px) and (max-width:500px) {
+@media (max-width:600px) {
   #app {
-    font-size: 10px !important;
+    font-size: 10px;
     h1 {
-      font-size: 25px !important;
+      font-size: 25px;
     }
     .zoom-showcase {
       display: none;
     }
 
-    .zoom-mobile {
-      align-items: center;
-      background-color: #111;
-      display: flex;
-      font-family: "Roboto", sans-serif;
-      justify-content: center;
-      min-height: 100vw;
-      position: fixed;
-      z-index: 999;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    .zoom-mobile>.midden {
-      display: block;
-      img {
-        width: 200px;
-      }
-      h1 {
-        color: #fff;
-        text-align: center;
-        margin-top: 20px;
-        font-size: 40px !important;
-      }
-    }
+    // .zoom-mobile {
+    //   align-items: center;
+    //   background-color: #111;
+    //   display: flex;
+    //   font-family: "Roboto", sans-serif;
+    //   justify-content: center;
+    //   min-height: 100vw;
+    //   position: fixed;
+    //   z-index: 999;
+    //   top: 0;
+    //   left: 0;
+    //   right: 0;
+    //   bottom: 0;
+    // }
+    // .zoom-mobile>.midden {
+    //   display: block;
+    //   img {
+    //     width: 200px;
+    //   }
+    //   h1 {
+    //     color: #fff;
+    //     text-align: center;
+    //     margin-top: 20px;
+    //     font-size: 40px !important;
+    //   }
+    // }
     .home-layout>.zoom-aside {
       width: 0 !important;
     }
@@ -212,8 +212,16 @@ export default {
         }
       }
     }
-    .zoom-nav ul li.zoom-list {
-      display: none;
+    .zoom-instructions-nav {
+      .tree {
+        .menu-btn {
+          width: 45px;
+          height: 45px;
+        }
+      }
+      .zoom-list {
+        display: none;
+      }
     }
     .header-right {
       display: none;
