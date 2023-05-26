@@ -64,7 +64,6 @@ export default {
 <style lang="scss" scoped>
 .zoom-code {
   position: relative;
-  pointer-events:none;
   &::after {
     content: attr(zoom-label);
     pointer-events: auto;

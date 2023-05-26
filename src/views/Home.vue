@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-25 23:48:57
+ * @LastEditTime: 2023-05-26 22:33:19
 -->
 <template>
   <div class="zoom-home">
@@ -695,6 +695,9 @@ export default {
           line-height: 4vw;
         }
         text-align: center;
+      }
+      .mains-container {
+        width: 90vw;
       }
       .inner {
         .sum {

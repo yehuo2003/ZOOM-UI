@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <zoom-layout :headerHeight="isHeader ? 50 : 0" ref="layout">
+    <zoom-layout class="hidden-scroll" :headerHeight="isHeader ? 50 : 0" ref="layout">
       <header v-show="isHeader" slot="header">
         <zoom-nav-menu class="zoom-instructions-nav" :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
@@ -92,6 +92,13 @@ export default {
 <style lang="scss">
 #app {
   color: #303113;
+  .hidden-scroll>.zoom-main {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   .zoom-header {
@@ -137,9 +144,6 @@ export default {
 @media (max-width:600px) {
   #app {
     font-size: 10px;
-    h1 {
-      font-size: 25px;
-    }
     .zoom-showcase {
       display: none;
     }
@@ -181,6 +185,8 @@ export default {
     .home-layout>.zoom-main>.zoom-layout>.zoom-header {
       height: 35px !important;
       .component-header {
+        line-height: 35px;
+        background: #fff;
         font-size: 20px !important;
         padding: 0 10px;
       }
