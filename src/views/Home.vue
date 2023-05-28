@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-26 22:33:19
+ * @LastEditTime: 2023-05-28 23:16:42
 -->
 <template>
   <div class="zoom-home">
@@ -14,33 +14,33 @@
           <h2 class="banner-title">
             ZOOM UI
           </h2>
-          <h1 class="banner-sub-title">企业级前端UI设计的Vue组件</h1>
+          <h1 class="banner-sub-title">{{ $zoom.$t('企业级前端UI设计的Vue组件') }}</h1>
           <ul class="banner-feature">
-            <li class="!ani#-18s"><p>企业级设计系统，追求极致体验</p></li>
-            <li class="!ani#-12s"><p>多种前端设计方案融合</p></li>
-            <li class="!ani#-6s"><p>开箱即用的Vue组件库</p></li>
-            <li class="!ani#0s"><p>丰富的配套SDK</p></li>
+            <li class="!ani#-18s"><p>{{ $zoom.$t('企业级设计系统，追求极致体验') }}</p></li>
+            <li class="!ani#-12s"><p>{{ $zoom.$t('多种前端设计方案融合') }}</p></li>
+            <li class="!ani#-6s"><p>{{ $zoom.$t('开箱即用的Vue组件库') }}</p></li>
+            <li class="!ani#0s"><p>{{ $zoom.$t('丰富的配套SDK') }}</p></li>
           </ul>
           <h2 class="banner-button">
             <router-link to="/develop/install-develop" class="button-docs">
-              <label v-tip.right="'开始使用组件'">快速上手</label>
+              <label v-tip.right="$zoom.$t('开始使用组件')">{{ $zoom.$t('快速上手') }}</label>
             </router-link>
           </h2>
         </div>
       </div>
       <div class="mains">
         <div class="title-content">
-          <h1 class="title">您需要的组件都有</h1>
+          <h1 class="title">{{ $zoom.$t('您需要的组件都有') }}</h1>
           <h2 class="sub-title">
-            为您的项目设计构建了基础组件，有助于您更快速构建出更好的产品
+            {{ $zoom.$t('为您的项目设计构建了基础组件，有助于您更快速构建出更好的产品') }}
           </h2>
         </div>
         <div class="mains-container">
           <div class="inner">
             <div class="sum">
               <div class="cur-hand">
-                <router-link to="/component/zoom-button" v-tip="'进入组件指南'" class="sum-title">
-                  zoomUI 组件
+                <router-link to="/component/zoom-button" v-tip="$zoom.$t('进入组件指南')" class="sum-title">
+                  zoomUI {{ $zoom.$t('组件') }}
                 </router-link>
                 <p class="sum-num">50+</p>
               </div>
@@ -51,7 +51,7 @@
                   <div class="content-inner-top-left border-show">
                     <zoom-form @submit.prevent="false">
                       <zoom-form-item>
-                        <zoom-input placeholder="请输入"></zoom-input>
+                        <zoom-input :placeholder="$zoom.$t('请输入')"></zoom-input>
                       </zoom-form-item>
                       <zoom-form-item>
                         <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
@@ -72,7 +72,6 @@
                         <zoom-text-popup></zoom-text-popup>
                       </zoom-form-item>
                       <zoom-form-item>
-                        <!-- <zoom-date></zoom-date> -->
                         <zoom-testing></zoom-testing>
                       </zoom-form-item>
                     </zoom-form>
@@ -84,15 +83,15 @@
                 <div class="content-inner-bottom">
                   <!-- <zoom-slider v-model="number2"></zoom-slider> -->
                   <zoom-notice>
-                    <h5>zoomUI提供超多开箱即用的Vue前端组件、强大的SDK功能，让您的开发如虎添翼</h5>
+                    <h5>{{ $zoom.$t('zoomUI提供超多开箱即用的Vue前端组件、强大的SDK功能，让您的开发如虎添翼') }}</h5>
                   </zoom-notice>
                 </div>
               </div>
               <div class="mains-content-right border-show">
                 <div class="item">
-                  <zoom-button>按钮</zoom-button>&nbsp;
-                  <zoom-button type="primary">按钮</zoom-button>&nbsp;
-                  <zoom-button type="success">按钮</zoom-button>
+                  <zoom-button>{{ $zoom.$t('按钮') }}</zoom-button>&nbsp;
+                  <zoom-button type="primary">{{ $zoom.$t('按钮') }}</zoom-button>&nbsp;
+                  <zoom-button type="success">{{ $zoom.$t('按钮') }}</zoom-button>
                 </div>
                 <div class="item">
                   <zoom-checkbox :op="checkboxOp"></zoom-checkbox>
@@ -116,8 +115,8 @@
         <span class="zoom-icon icon-fill"></span>
       </p> -->
       <p>
-        遵循
-        <a href="https://opensource.org/licenses/MIT" target="_blank">MIT 开源协议</a>
+        {{ $zoom.$t('遵循') }}
+        <a href="https://opensource.org/licenses/MIT" target="_blank">MIT {{ $zoom.$t('开源协议') }}</a>
       </p>
       <p>Copyright © 2022-2026 zoom-ui</p>
     </footer>

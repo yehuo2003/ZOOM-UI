@@ -23,16 +23,16 @@ export default {
       searchVal: '',
       list: [],
       searchOp: {
-        placeHolder: '搜索组件',
+        placeHolder: this.$zoom.$t('搜索组件'),
         mini: true
       },
       titleOp: {  //  顶部导航栏
         data: [
-          {title: '首页', url: '#/'},
-          {title: '环境搭建', url: '#/develop/'},
-          {title: '组件', url: '#/component/'},
-          {title: '软件开发包', url: '#/SDK'},
-          {title: '更多', url: '#/more'}
+          {title: this.$zoom.$t('首页'), url: '#/'},
+          {title: this.$zoom.$t('环境搭建'), url: '#/develop/'},
+          {title: this.$zoom.$t('组件'), url: '#/component/'},
+          {title: this.$zoom.$t('软件开发包'), url: '#/SDK'},
+          {title: this.$zoom.$t('更多'), url: '#/more'}
         ]
       },
     }
@@ -46,6 +46,13 @@ export default {
       }
     }
     this.$zoom.setLanguage(lang);
+    this.titleOp.data = [
+      {title: this.$zoom.$t('首页'), url: '#/'},
+      {title: this.$zoom.$t('环境搭建'), url: '#/develop/'},
+      {title: this.$zoom.$t('组件'), url: '#/component/'},
+      {title: this.$zoom.$t('软件开发包'), url: '#/SDK'},
+      {title: this.$zoom.$t('更多'), url: '#/more'}
+    ];
     let list = [];
     this.$store.state.componetList.forEach(item => {
       list.push(item);
@@ -66,6 +73,7 @@ export default {
       })
     }
     list = list.map(item => {
+      item.title = this.$zoom.$t(item.title)
       if (item.children) {
         return isChildren(item.children)
       } else {
