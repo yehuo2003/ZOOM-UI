@@ -31,6 +31,7 @@
         :minlength="options.minLength"
         :id="zoomId"
         type="text"
+        name="search"
         class="zoom-input-search"
       />
       <span

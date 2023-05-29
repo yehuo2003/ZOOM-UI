@@ -228,7 +228,7 @@ export default {
 </script>
 <style>
 .zoom-text-popup {
-  display: inline-block;
+  display: block;
 }
 .zoom-text-popup .zoom-text:not(:disabled):hover,
 .zoom-text-popup .zoom-area-popup:not(:disabled):hover {

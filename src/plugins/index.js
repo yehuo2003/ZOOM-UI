@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-04-02 19:04:06
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-23 22:59:52
+ * @LastEditTime: 2023-05-29 19:54:55
  */
 
 import '../assets/fontIcon/iconfont.css'
@@ -476,6 +476,7 @@ const install = Vue => {
          */
         setLanguage(lang) {
             if (lang.locale) {
+                document.documentElement.lang = lang.locale;
                 this.cookie.set("language", { locale: lang.locale });
                 // 判断是否为对象 如果是就遍历对象,将对应key值的数据存入this.LanguageInfo中
                 if (lang.i18n && Object.prototype.toString.call(lang.i18n) === '[object Object]') {
