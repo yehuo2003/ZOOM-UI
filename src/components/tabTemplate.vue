@@ -4,18 +4,18 @@
  * @Autor: linzhuming
  * @Date: 2023-05-10 22:37:55
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-16 20:41:29
+ * @LastEditTime: 2023-05-29 22:52:05
 -->
 <template>
   <div :class=" cls ? cls : 'basic' ">
     <slot name="header">
-      <h2>使用方法</h2>
+      <h2>{{ $zoom.$t('使用方法') }}</h2>
     </slot>
     <zoom-tabs :value="tabIndex" @change="opChange">
-      <zoom-tab-item :index="0" label="效果">
+      <zoom-tab-item :index="0" :label="$zoom.$t('效果')">
         <slot></slot>
       </zoom-tab-item>
-      <zoom-tab-item :index="1" label="代码">
+      <zoom-tab-item :index="1" :label="$zoom.$t('代码')">
         <custom-code :html="code"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>

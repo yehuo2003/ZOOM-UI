@@ -4,25 +4,26 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-24 00:04:06
+ * @LastEditTime: 2023-05-29 22:20:08
 -->
 <template>
   <div class="more">
-    <h1>说明</h1>
+    <h1>{{ $zoom.$t('说明') }}</h1>
     <div class="explan">
       <ol>
-        <li>zoom-ui组件为本人个人所开发，项目从2019年开始开发，至今仍在更新，并决定于2021年3月28日开源，本人承诺：本网站内组件永久免费开源，以供各位开发者和设计师使用。</li>
+        <li v-for="(item, index) of descriptionList" :key="index">{{ item }}</li>
+        <!-- <li>zoom-ui组件为本人个人所开发，项目从2019年开始开发，至今仍在更新，并决定于2021年3月28日开源，本人承诺：本网站内组件永久免费开源，以供各位开发者和设计师使用。</li>
         <li>如果您在使用zoom-ui组件过程中有遇到BUG或者有不明白的地方，或者您对zoom-ui组件有好的建议或者意见，随时可以与本人联系。</li>
         <li>对于发现的BUG或者存在的问题，本人会积极解决并更新组件。</li>
         <li>根据市场需要，本人将不定期添加新组件或优化现有组件功能，更新内容会在本页说明。</li>
         <li>zoom-ui是一款非常强大的UI组件，页面上所开放的仅为zoom-ui部分组件，主要是一些比较大众化、常用的组件。另有其它业务组件没有公开，
       涉及领域如商城、医疗、物流、金融等等。zoom-ui支持私人或者企业定制化组件，如果有具体的业务需求，可与本人联系，定制符合您需求的组件库或插件。</li>
-        <li>您要是觉得本组件好用的话，可以推荐给身边的人使用。如果想对zoom-ui组件提供支持的话，也可以和我联系，最后感谢您的肯定和支持！</li>
+        <li>您要是觉得本组件好用的话，可以推荐给身边的人使用。如果想对zoom-ui组件提供支持的话，也可以和我联系，最后感谢您的肯定和支持！</li> -->
       </ol>
     </div>
-    <zoom-panel title="学习交流" :show="true">
+    <zoom-panel :title='$zoom.$t("学习交流")' :show="true">
       <p>
-        博客：<zoom-link target="_blank" url="https://blog.csdn.net/yehuo2003" type="primary">https://blog.csdn.net/yehuo2003</zoom-link><br>
+        {{ $zoom.$t('博客') }}：<zoom-link target="_blank" url="https://blog.csdn.net/yehuo2003" type="primary">https://blog.csdn.net/yehuo2003</zoom-link><br>
       </p>
       <p>
         Github：<zoom-link target="_blank" url="https://github.com/yehuo2003" type="primary">https://github.com/yehuo2003</zoom-link><br>
@@ -31,12 +32,12 @@
         Gitee：<zoom-link target="_blank" url="https://gitee.com/yehuo2003" type="primary">https://gitee.com/yehuo2003</zoom-link><br>
       </p>
     </zoom-panel>
-    <zoom-panel title="联系方式" :show="true">
-      <p>微信：<span>yehuo2003</span></p>
-      <p>邮箱：<zoom-link target="_blank" url="mailto:yehuo2103@163.com" type="primary">yehuo2103@163.com</zoom-link></p>
-      <p><zoom-link target="_blank" url="http://wpa.qq.com/msgrd?v=3&amp;uin=9208608&amp;site=qq&amp;menu=yes" type="primary">QQ联系</zoom-link></p>
+    <zoom-panel :title='$zoom.$t("联系方式")' :show="true">
+      <p>{{ $zoom.$t('微信') }}：<span>yehuo2003</span></p>
+      <p>{{ $zoom.$t('邮箱') }}：<zoom-link target="_blank" url="mailto:yehuo2103@163.com" type="primary">yehuo2103@163.com</zoom-link></p>
+      <p><zoom-link target="_blank" url="http://wpa.qq.com/msgrd?v=3&amp;uin=9208608&amp;site=qq&amp;menu=yes" type="primary">QQ</zoom-link></p>
     </zoom-panel>
-    <zoom-panel title="更新日志" :show="true">
+    <zoom-panel :title='$zoom.$t("更新日志")' :show="true">
       <!-- <h3>2021.11---版本：1.1.9</h3>
       <p>修复计数器小数点BUG</p>
       <p>修复下拉框弹出框定位BUG</p>
@@ -71,7 +72,21 @@ export default {
   data () {
     return {
       showLog: false,
+      descriptionList: [
+        this.$zoom.$t('more.description.1'),
+        this.$zoom.$t('more.description.2'),
+        this.$zoom.$t('more.description.3'),
+        this.$zoom.$t('more.description.4'),
+        this.$zoom.$t('more.description.5'),
+        this.$zoom.$t('more.description.6'),
+      ],
       nodeList: [
+        {
+          title: 'May 29, 2023---版本：1.3.2', content: [
+            {text: '国际化BUG修复'},
+            {text: '搜索框新增name属性'}
+          ]
+        },
         {
           title: 'May 24, 2023---版本：1.3.0', content: [
             {text: '国际化BUG修复'},

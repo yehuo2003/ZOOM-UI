@@ -37,7 +37,7 @@ export default {
       },
     }
   },
-  created () {
+  beforeCreate () {
     let lang = {
       locale: this.$zoom.getLanguage().locale,
       detail: {
@@ -46,14 +46,10 @@ export default {
       }
     }
     this.$zoom.setLanguage(lang);
-    this.titleOp.data = [
-      {title: this.$zoom.$t('首页'), url: '#/'},
-      {title: this.$zoom.$t('环境搭建'), url: '#/develop/'},
-      {title: this.$zoom.$t('组件'), url: '#/component/'},
-      {title: this.$zoom.$t('软件开发包'), url: '#/SDK'},
-      {title: this.$zoom.$t('更多'), url: '#/more'}
-    ];
+  },
+  created () {
     let list = [];
+    let self = this.$zoom;
     this.$store.state.componetList.forEach(item => {
       list.push(item);
     })
@@ -65,6 +61,7 @@ export default {
     })
     function isChildren(arr) {
       return arr.map(item => {
+        item.title = self.$t(item.title);
         if (item.children) {
           return isChildren(item.children)
         } else {
@@ -73,7 +70,7 @@ export default {
       })
     }
     list = list.map(item => {
-      item.title = this.$zoom.$t(item.title)
+      item.title = self.$t(item.title);
       if (item.children) {
         return isChildren(item.children)
       } else {

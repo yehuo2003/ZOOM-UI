@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-28 23:16:42
+ * @LastEditTime: 2023-05-29 21:29:03
 -->
 <template>
   <div class="zoom-home">
@@ -150,44 +150,44 @@ export default {
       checkboxOp: {
         name: 'hobby',
         data: [
-          {text: '唱歌', value: 'sing'},
-          {text: '跳舞', value: 'dance'},
-          {text: '音乐', value: 'music'},
-          {text: '运动', value: 'sports', checked: true}
+          {text: this.$zoom.$t('唱歌'), value: 'sing'},
+          {text: this.$zoom.$t('跳舞'), value: 'dance'},
+          {text: this.$zoom.$t('音乐'), value: 'music'},
+          {text: this.$zoom.$t('运动'), value: 'sports', checked: true}
         ]
       },
       menuOp: {
         hideTree: true,
         accordion: true,
         data: [
-          {title: '首页'},
-          {title: '环境搭建', children: [
-            {title: '快速上手'},
-            {title: '组件使用'}
+          {title: this.$zoom.$t('首页')},
+          {title: this.$zoom.$t('环境搭建'), children: [
+            {title: this.$zoom.$t('快速上手')},
+            {title: this.$zoom.$t('组件使用')}
           ]},
-          {title: '表单组件', children: [
-            {title: '按钮组件'},
-            {title: '输入框组件'}
+          {title: this.$zoom.$t('表单组件'), children: [
+            {title: 'Button按钮'},
+            {title: 'Input输入框'}
           ]},
-          {title: '导航组件'},
-          {title: '数据组件'},
-          {title: '业务组件'},
-          {title: '其它组件'},
+          {title: this.$zoom.$t('导航组件')},
+          {title: this.$zoom.$t('数据组件')},
+          {title: this.$zoom.$t('业务组件')},
+          {title: this.$zoom.$t('其它组件')},
         ]
       },
       number2: 60,
       checkOp: {
         data: [
-          {text: '自动续费', value: 1},
-          {text: '按需付费', value: 2, checked: true}
+          {text: this.$zoom.$t('自动续费'), value: 1},
+          {text: this.$zoom.$t('按需付费'), value: 2, checked: true}
         ]
       },
       dropdownOp: {
         data: [
-          {value: '1', text: '北京'},
-          {value: '2', text: '上海'},
-          {value: '3', text: '广州'},
-          {value: '4', text: '深圳'}
+          {value: '1', text: this.$zoom.$t('北京')},
+          {value: '2', text: this.$zoom.$t('上海')},
+          {value: '3', text: this.$zoom.$t('广州')},
+          {value: '4', text: this.$zoom.$t('深圳')}
         ],
       },
     }
@@ -294,13 +294,11 @@ export default {
           .cur-hand {
             .sum-title {
               &:hover {
-                font-size: 1.7vw;
+                transform: scale(1.1);
                 float: left;
-                width: 20vw;
                 color: #505e80;
-                font-weight: bold;
               }
-              transition: font-size .5s, color .5s, font-weight .5s;
+              transition: color .3s, transform .3s;
               font-size: 1.6vw;
               font-weight: 300;
               color: #252b3a;

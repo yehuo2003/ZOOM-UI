@@ -47,9 +47,9 @@ export default new Vuex.Store({
         {title: 'Fileupload文件上传', url: '#/component/zoom-file-upload'},
       ]},
       {title: '数据组件', children: [
-        {title: '分页组件', url: '#/component/zoom-pager'},
-        {title: '表格组件', url: '#/component/zoom-grid'},
-        {title: '穿梭框组件', url: '#/component/zoom-transfer'},
+        {title: 'Pager分页组件', url: '#/component/zoom-pager'},
+        {title: 'Grid表格组件', url: '#/component/zoom-grid'},
+        {title: 'Transfer穿梭框组件', url: '#/component/zoom-transfer'},
       ]},
       {title: '提示组件', children: [
         {title: 'Alert警告', url: '#/component/zoom-alert'},
@@ -64,7 +64,7 @@ export default new Vuex.Store({
         {title: 'i18n国际化组件', url: '#/component/zoom-internationalisation'},
         {title: 'Userinfo用户组件', url: '#/component/zoom-userinfo'}
       ]},
-      {title: '其他组件', children: [
+      {title: '其它组件', children: [
         // {title: 'imgupload图片预览组件', url: '#/component/zoom-imgupload'},
         {title: 'Photo放大镜组件', url: '#/component/zoom-photo'},
         {title: 'Rate评分组件', url: '#/component/zoom-rate'},

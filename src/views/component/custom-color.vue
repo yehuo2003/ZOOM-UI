@@ -3,15 +3,15 @@
     <!-- 普通 -->
     <tab-template :code="color">
       <template slot="header">
-        <h2>色彩类型</h2>
-        <h3>对于色彩类型一共有五种</h3>
-        <p>分别为
+        <h2>{{ $zoom.$t('色彩类型') }}</h2>
+        <h3>{{ $zoom.$t('对于色彩类型一共有五种') }}</h3>
+        <p>{{ $zoom.$t('分别为') }}
           <span>primary</span>、
           <span>success</span>、
           <span>warning</span>、
           <span>danger</span>、
           <span>info</span>
-          如背景色请加class
+          {{ $zoom.$t('如背景色请加class') }}
           <span>bg-primary</span>
         </p>
       </template>
@@ -26,7 +26,7 @@
     <!-- 不同情况下的色彩 -->
     <tab-template :code="color2">
       <template slot="header">
-        <h2>不同情况下的色彩</h2>
+        <h2>{{ $zoom.$t('不同情况下的色彩') }}</h2>
         <p>对<span>hover</span>、<span>active</span>状态，分别有不同的颜色呈现，以<span>primary</span>色彩示例</p>
       </template>
       <zoom-row>
@@ -38,8 +38,8 @@
     <!-- 添加伪类效果 -->
     <tab-template :code="color3">
       <template slot="header">
-        <h2>添加伪类效果</h2>
-        <p>尝试着鼠标经过和点击</p>
+        <h2>{{ $zoom.$t('添加伪类效果') }}</h2>
+        <p>{{ $zoom.$t('尝试着鼠标经过和点击') }}</p>
         <p>想在背景色基础上增加伪类效果, 可在原有基础上增加<span>class="hover"</span>、<span>class="active"</span></p>
       </template>
       <zoom-row>
@@ -53,8 +53,8 @@
     <!-- 暗色调 -->
     <tab-template :code="color4">
       <template slot="header">
-        <h2>暗色调</h2>
-        <p>常用的几种暗色调如下</p>
+        <h2>{{ $zoom.$t('暗色调') }}</h2>
+        <p>{{ $zoom.$t('常用的几种暗色调如下') }}</p>
       </template>
       <zoom-row>
         <zoom-col span="2" class="zoom-custom-color bg-navigation">bg-navigation</zoom-col>
