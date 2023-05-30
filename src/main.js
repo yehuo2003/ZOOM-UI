@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-03-21 22:51:24
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-14 22:51:30
+ * @LastEditTime: 2023-05-30 23:03:16
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -15,6 +15,7 @@ import 'zoom-design/lib/zoom-design.css'
 import Hljs from 'highlight.js'
 import customCode from "./components/customCode";
 import tabTemplate from "./components/tabTemplate";
+import textTemplate from "./components/textTemplate";
 import attribute from "./components/attribute";
 import VueClipboard from 'vue-clipboard2'
 import 'highlight.js/styles/vs2015.css'	//	yes
@@ -41,6 +42,7 @@ Highlight.install = function (Vue, options) {
 }
 Vue.use(Highlight);
 // 自定义代码片段组件
+Vue.component('text-template', textTemplate);
 Vue.component('tab-template', tabTemplate);
 Vue.component('custom-code', customCode);
 Vue.component('attribute', attribute);

@@ -1,8 +1,8 @@
 <template>
   <div class="custom-icon">
     <h2>使用</h2>
-    <p>zoom-ui 提供了自定义icon字体图标，只需在行内标签的<span>class</span>写入指定的类名即可</p>
-    <p>使用方法如下：</p>
+    <text-template code="zoom-ui 提供了自定义icon字体图标，只需在行内标签的 *class* 写入指定的类名即可" />
+    <text-template code="使用方法如下" />
     <custom-code :html="icon"></custom-code>
     <h2>图标汇总</h2>
     <zoom-row class="zoom-icon-list">

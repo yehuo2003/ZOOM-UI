@@ -3,12 +3,12 @@
     <!-- 普通 -->
     <tab-template :code="basicRow">
       <template slot="header">
-        <h2>使用方法</h2>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
         <div class="tip">
           参照bootstrap，通过Row列配置 + Col行配置，实现栅格系统，将屏幕一分为12格，可根据超大屏、大屏、中屏、小屏、超小屏等不同屏幕下，配置屏幕所占比。
           还可以通过flex属性实现flex布局
         </div>
-        <h3>基础用法</h3>
+        <h3>{{ $zoom.$t('基础用法') }}</h3>
       </template>
       <zoom-row>
         <zoom-col span="12">12</zoom-col>
@@ -32,17 +32,9 @@
     <!-- 适配不同屏幕 -->
     <tab-template :code="adaption">
       <template slot="header">
-        <h2>适配不同屏幕</h2>
-        <h3>可以根据不同屏幕, 设置不同分栏大小</h3>
-        <p>
-          可通过col配置的属性
-          超大屏<span>xl</span>、
-          大屏<span>lg</span>、
-          中屏<span>md</span>、
-          小屏<span>sm</span>、
-          超小屏<span>xs</span>
-          来分别设置不同屏幕下分栏效果，值范围<span>1 ~ 12</span>
-        </p>
+        <h2>{{ $zoom.$t('适配不同屏幕') }}</h2>
+        <h3>{{ $zoom.$t('可以根据不同屏幕, 设置不同分栏大小') }}</h3>
+        <text-template code="可通过col配置的属性 超大屏*xl*、 大屏*lg*、 中屏*md*、 小屏*sm*、 超小屏*xs* 来分别设置不同屏幕下分栏效果，值范围*1 ~ 12*" />
       </template>
       <zoom-row>
         <zoom-col xl="3" lg="4" md="6" sm="9" xs="12">不同屏自适应</zoom-col>
@@ -52,8 +44,8 @@
     <!-- Flex布局 -->
     <tab-template :code="flexHtml">
       <template slot="header">
-        <h2>Flex布局</h2>
-        <p>通过设置<span>flex</span>属性为true来启用<span>flex</span>布局, 并通过<span>justify</span>与<span>align</span>属性调整子元素的对齐方式</p>
+        <h2>{{ $zoom.$t('Flex布局') }}</h2>
+        <text-template code="通过设置*flex*属性为true来启用*flex*布局, 并通过*justify*与*align*属性调整子元素的对齐方式" />
       </template>
       <zoom-row flex="true" justify="space-around" align="middle">
         <zoom-col span="3">第一个</zoom-col>
@@ -74,8 +66,8 @@
     <!-- Order排序 -->
     <tab-template :code="orderHtml">
       <template slot="header">
-        <h2>Order排序</h2>
-        <p>在启用<span>flex</span>布局时, 可通过设置<span>Row</span>组件的<span>order</span>属性, 给带<span>Col组件</span>进行排序</p>
+        <h2>{{ $zoom.$t('Order排序') }}</h2>
+        <text-template code="在启用*flex*布局时, 可通过设置*Row*组件的*order*属性, 给*Col*组件进行排序" />
       </template>
       <zoom-row flex="true" justify="space-around" align="middle">
         <zoom-col order="2" span="3">第一个</zoom-col>
@@ -93,8 +85,8 @@
     <!-- Col列偏移 -->
     <tab-template :code="offsetrHtml">
       <template slot="header">
-        <h2>Col列偏移</h2>
-        <p>通过设置<span>Col</span>组件的<span>offset</span>属性来指定分栏偏移的栏数</p>
+        <h2>{{ $zoom.$t('Col列偏移') }}</h2>
+        <text-template code="通过设置*Col*组件的*offset*属性来指定分栏偏移的栏数" />
       </template>
       <zoom-row>
         <zoom-col span="2">第一个</zoom-col>

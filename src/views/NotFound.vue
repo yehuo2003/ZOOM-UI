@@ -21,7 +21,7 @@
             :placeholder="$zoom.$t('您想查找什么?')"
             required
           />
-          <button @keyup.enter.stop="searchClick" @click="searchClick" class="search-btn">
+          <button @keyup.prevent="searchClick" @click.prevent="searchClick" class="search-btn">
             {{ $zoom.$t('搜索') }}
           </button>
         </form>
@@ -156,7 +156,7 @@ export default {
   background-color: #0a7189;
   color: #fff;
   font: 100% "Lato", sans-serif;
-  font-size: 1.8vw;
+  font-size: 1.8rem;
   font-weight: 300;
   position: fixed;
   top: 0;

@@ -27,7 +27,7 @@
     <tab-template :code="color2">
       <template slot="header">
         <h2>{{ $zoom.$t('不同情况下的色彩') }}</h2>
-        <p>对<span>hover</span>、<span>active</span>状态，分别有不同的颜色呈现，以<span>primary</span>色彩示例</p>
+        <text-template code="对 *hover*、*active* 状态，分别有不同的颜色呈现，以 *primary* 色彩示例" />
       </template>
       <zoom-row>
         <zoom-col span="2" class="zoom-custom-color bg-primary">bg-primary</zoom-col>
@@ -40,7 +40,7 @@
       <template slot="header">
         <h2>{{ $zoom.$t('添加伪类效果') }}</h2>
         <p>{{ $zoom.$t('尝试着鼠标经过和点击') }}</p>
-        <p>想在背景色基础上增加伪类效果, 可在原有基础上增加<span>class="hover"</span>、<span>class="active"</span></p>
+        <text-template code="想在背景色基础上增加伪类效果, 可在原有基础上增加 *class='hover'* 、*class='active'*" />
       </template>
       <zoom-row>
         <zoom-col span="2" class="zoom-custom-color bg-primary hover active">bg-primary</zoom-col>

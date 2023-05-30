@@ -3,7 +3,7 @@
     <!-- 普通 -->
     <tab-template :code="basiclayout">
       <template slot="header">
-        <h2>使用方法</h2>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
         <div class="tip">
           layout本身没有默认宽高, 跟随父元素宽高, layout布局提供四个<span>slot插槽</span>, 有
           <span>slot="header"</span>、
@@ -13,7 +13,7 @@
           开发者可以自由布局定义, 还可以嵌套使用<br>
           组件默认每次路由变化后, 会自动将滚动条返回顶部, 可手动关闭该功能
         </div>
-        <h3>经典布局</h3>
+        <h3>{{ $zoom.$t('经典布局') }}</h3>
       </template>
       <zoom-layout headerHeight="60" asideWidth="200" style="height: 300px;">
         <div slot="header">header</div>
@@ -24,7 +24,7 @@
     <!-- 简单布局 -->
     <tab-template :code="adaption">
       <template slot="header">
-        <h2>简单布局</h2>
+        <h2>{{ $zoom.$t('简单布局') }}</h2>
       </template>
       <zoom-layout asideWidth="200" style="height: 300px;">
         <div slot="aside">aside</div>
@@ -34,7 +34,7 @@
     <!-- 圣杯布局 -->
     <tab-template :code="flexHtml">
       <template slot="header">
-        <h2>圣杯布局</h2>
+        <h2>{{ $zoom.$t('圣杯布局') }}</h2>
       </template>
       <zoom-layout headerHeight="60"  footerHeight="60" style="height: 300px;">
         <div slot="header">header</div>
@@ -45,7 +45,7 @@
     <!-- 时尚布局 -->
     <tab-template :code="orderHtml">
       <template slot="header">
-        <h2>时尚布局</h2>
+        <h2>{{ $zoom.$t('时尚布局') }}</h2>
       </template>
       <zoom-layout headerHeight="60" asideWidth="200" footerHeight="60" style="height: 300px;">
         <div slot="header">header</div>
@@ -57,7 +57,7 @@
     <!-- 嵌套用法 -->
     <tab-template :code="offsetrHtml">
       <template slot="header">
-        <h2>嵌套用法</h2>
+        <h2>{{ $zoom.$t('嵌套用法') }}</h2>
         <div class="tip">
           Layout布局的头部和尾部默认高度为 <span>0</span>, 侧边栏宽度默认为 <span>0</span>, 可以通过 layout 标签上的
           <span>headerHeight</span>、

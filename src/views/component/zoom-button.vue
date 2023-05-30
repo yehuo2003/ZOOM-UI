@@ -39,14 +39,8 @@
     <tab-template :code="resetBtn">
       <template slot="header">
         <h2>{{ $zoom.$t('禁用/防抖') }}</h2>
-        <p>
-          通过
-          <span>disabled</span>属性设置按钮为禁用状态
-        </p>
-        <p>
-          通过
-          <span>reset-time</span>属性设置按钮防抖时间, 单位为毫秒, 默认 <span>1000</span> 毫秒
-        </p>
+        <text-template code="通过 *disabled* 属性设置按钮为禁用状态" />
+        <text-template code="通过 *reset-time* 属性设置按钮防抖时间, 单位为毫秒, 默认 *1000* 毫秒" />
       </template>
       <zoom-button>{{ $zoom.$t('普通') + $zoom.$t('按钮') }}</zoom-button>
       <zoom-button reset-time="5000">{{ $zoom.$t('禁用x秒', {x: 5}) }}</zoom-button>
@@ -88,7 +82,7 @@ export default {
       attributeList: [
         {
           id: 1,
-          title: this.$zoom.$t("属性"),
+          title: "属性",
           content: [
             {
               id: 1,
@@ -134,7 +128,7 @@ export default {
         },
         {
           id: 2,
-          title: this.$zoom.$t("方法"),
+          title: "方法",
           content: [
             {
               id: 1,
