@@ -102,11 +102,11 @@
       <h2>{{item.title}}</h2>
       <h3>{{item.title2}}</h3>
       <p>
-        调用方法:
+        {{ $zoom.$t('调用方法:') }}
         <span>{{item.text}}</span>
       </p>
       <p>
-        参数说明: <br>
+        {{ $zoom.$t('参数说明: ') }}<br>
         <span v-for="i of item.content" :key="i.id">{{i.text}}<br></span>
       </p>
       <custom-code :html="item.code"></custom-code>
@@ -118,57 +118,57 @@ export default {
   data() {
     return {
       list: [
-        {id: 1, title: 'set', title2: '设置一条完整的cookie', text: 'this.$zoom.cookie.set(name, subCookies, expires, domain, path, secure)',
+        {id: 1, title: 'set', title2: this.$zoom.$t('设置一条完整的cookie'), text: 'this.$zoom.cookie.set(name, subCookies, expires, domain, path, secure)',
           code: `this.$zoom.cookie.set("info", { name : "zoom", age : 23});`, content: [
-          {id: 1, text: 'name : 表示cookie的名称，必填'},
-          {id: 2, text: 'subCookies : 表示cookie的值，必填'},
-          {id: 3, text: 'expires : 表示cookie的过期时间，可以不填'},
-          {id: 4, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 5, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 6, text: 'secure : 表示cookie的安全标志，可以不填'}
+          {id: 1, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 2, text: this.$zoom.$t('subCookies : 表示cookie的值，必填')},
+          {id: 3, text: this.$zoom.$t('expires : 表示cookie的过期时间，可以不填')},
+          {id: 4, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 5, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 6, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')}
         ]},
-        {id: 2, title: 'setChild', title2: '设置一条子cookie', text: 'this.$zoom.cookie.setChild(name, subName, value, expires, domain, path, secure)',
+        {id: 2, title: 'setChild', title2: this.$zoom.$t('设置一条子cookie'), text: 'this.$zoom.cookie.setChild(name, subName, value, expires, domain, path, secure)',
           code: `this.$zoom.cookie.setChild("info", "sex", "boy");`, content: [
-          {id: 1, text: 'value : 表示子cookie的值，必填'},
-          {id: 2, text: 'name : 表示cookie的名称，必填'},
-          {id: 3, text: 'subName : 表示子cookie的名称，必填'},
-          {id: 4, text: 'expires : 表示cookie的过期时间，可以不填'},
-          {id: 5, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 6, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 7, text: 'secure : 表示cookie的安全标志，可以不填'}
+          {id: 1, text: this.$zoom.$t('value : 表示子cookie的值，必填')},
+          {id: 2, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 3, text: this.$zoom.$t('subName : 表示子cookie的名称，必填')},
+          {id: 4, text: this.$zoom.$t('expires : 表示cookie的过期时间，可以不填')},
+          {id: 5, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 6, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 7, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')}
         ]},
-        {id: 3, title: 'get', title2: '读取一条完整cookie, 如果没传参数则默认读取所有cookie', text: 'this.$zoom.cookie.get(name)',
+        {id: 3, title: 'get', title2: this.$zoom.$t('读取一条完整cookie, 如果没传参数则默认读取所有cookie'), text: 'this.$zoom.cookie.get(name)',
           code: `this.$zoom.cookie.get("info");`, content: [
-          {id: 1, text: 'name : 表示cookie的名称，必填'},
-          {id: 2, text: 'subCookies : 表示cookie的值，必填'},
-          {id: 3, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 4, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 5, text: 'secure : 表示cookie的安全标志，可以不填'}
+          {id: 1, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 2, text: this.$zoom.$t('subCookies : 表示cookie的值，必填')},
+          {id: 3, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 4, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 5, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')}
         ]},
-        {id: 5, title: 'getChild', title2: '读取一条子cookie的值', text: 'this.$zoom.cookie.getChild(name, subName)',
+        {id: 5, title: 'getChild', title2: this.$zoom.$t('读取一条子cookie的值'), text: 'this.$zoom.cookie.getChild(name, subName)',
           code: `this.$zoom.cookie.getChild("info", "name");`, content: [
-          {id: 1, text: 'name : 表示cookie的名称，必填'},
-          {id: 2, text: 'subCookies : 表示cookie的值，必填'},
-          {id: 3, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 4, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 5, text: 'secure : 表示cookie的安全标志，可以不填'}
+          {id: 1, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 2, text: this.$zoom.$t('subCookies : 表示cookie的值，必填')},
+          {id: 3, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 4, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 5, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')}
         ]},
-        {id: 6, title: 'del', title2: '删除一条完整cookie', text: 'this.$zoom.cookie.del(name, domain, path, secure)',
+        {id: 6, title: 'del', title2: this.$zoom.$t('删除一条完整cookie'), text: 'this.$zoom.cookie.del(name, domain, path, secure)',
           code: `this.$zoom.cookie.del("info");`, content: [
-          {id: 1, text: 'name : 表示cookie的名称，必填'},
-          {id: 3, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 4, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 5, text: 'secure : 表示cookie的安全标志，可以不填'}
+          {id: 1, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 3, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 4, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 5, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')}
         ]},
-        {id: 7, title: 'delChild', title2: '删除一条子cookie', text: 'this.$zoom.cookie.delChild(name, subName, domain, path, secure)',
+        {id: 7, title: 'delChild', title2: this.$zoom.$t('删除一条子cookie'), text: 'this.$zoom.cookie.delChild(name, subName, domain, path, secure)',
           code: `this.$zoom.cookie.delChild("info", "name");`, content: [
-          {id: 1, text: 'name : 表示cookie的名称，必填'},
-          {id: 2, text: 'subCookies : 表示cookie的值，必填'},
-          {id: 3, text: 'domain : 表示cookie的域名，可以不填'},
-          {id: 4, text: 'path : 表示cookie的路径，可以不填'},
-          {id: 5, text: 'secure : 表示cookie的安全标志，可以不填'},
+          {id: 1, text: this.$zoom.$t('name : 表示cookie的名称，必填')},
+          {id: 2, text: this.$zoom.$t('subCookies : 表示cookie的值，必填')},
+          {id: 3, text: this.$zoom.$t('domain : 表示cookie的域名，可以不填')},
+          {id: 4, text: this.$zoom.$t('path : 表示cookie的路径，可以不填')},
+          {id: 5, text: this.$zoom.$t('secure : 表示cookie的安全标志，可以不填')},
         ]},
-        {id: 8, title: 'clear', title2: '清除当前所有cookie', text: 'this.$zoom.cookie.clear()',
+        {id: 8, title: 'clear', title2: this.$zoom.$t('清除当前所有cookie'), text: 'this.$zoom.cookie.clear()',
           code: `this.$zoom.cookie.clear();`, content: []},
       ],
       set: `this.$zoom.cookie.set("info", { name : "zoom", age : 23});`,

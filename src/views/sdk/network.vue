@@ -4,28 +4,25 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-25 23:41:56
+ * @LastEditTime: 2023-05-31 23:12:36
 -->
 <template>
   <div class="network">
-    <h2>Network网络类</h2>
+    <h2>{{ $zoom.$t('Network网络类') }}</h2>
     <div class="tip">
-      zoom-ui内部封装的Network网络类, 是基于原生ajax进行封装,
-      用法和axios基本相同, 只支持异步请求。
-      用户可以不必再引用第三方插件,
-      而是可以直接通过zoom-ui内置的服务请求方法进行服务调用。
+      <text-template code="zoom-ui内部封装的Network网络类, 是基于原生ajax进行封装, 用法和axios基本相同, 只支持异步请求。 用户可以不必再引用第三方插件, 而是可以直接通过zoom-ui内置的服务请求方法进行服务调用。" />
     </div>
-    <h3>调用示例</h3>
-    <p>可使用方法有: get/post/put/delete等</p>
-    <p>通过调用<span>this.$zoom.network.xx().then()</span>, 返回一个Promise对象</p>
-    <span>get方法演示</span>
+    <h3>{{ $zoom.$t('调用示例') }}</h3>
+    <text-template code="可使用方法有: get/post/put/delete等" />
+    <text-template code="通过调用 *this.$zoom.network.xx().then()* , 返回一个Promise对象" />
+    <span>{{ $zoom.$t('get方法演示') }}</span>
     <custom-code :html="getNetWork"></custom-code>
-    <h3>post方法演示</h3>
-    <p>如果调用方法为post/put/delete等, 可以传入请求主体<span>params</span>, 可以以对象形式传参, 也可以依次传参</p>
-    <p>依次传参的参数为: url、params、headers</p>
+    <h3>{{ $zoom.$t('post方法演示') }}</h3>
+    <text-template code="如果调用方法为post/put/delete等, 可以传入请求主体 *params* , 可以以对象形式传参, 也可以依次传参" />
+    <text-template code="依次传参的参数为: url、params、headers" />
     <custom-code :html="postNetWork"></custom-code>
-    <h3>设置更多信息</h3>
-    <p>如果要配置服务请求时间, 必须要以对象形式, 配置参数<span>timeout</span>, 单位为毫秒, 当请求时间超过timeout则会终止服务请求。</p>
+    <h3>{{ $zoom.$t('设置更多信息') }}</h3>
+    <text-template code="如果要配置服务请求时间, 必须要以对象形式, 配置参数 *timeout*, 单位为毫秒, 当请求时间超过timeout则会终止服务请求。" />
     <custom-code :html="timeoutNetWork"></custom-code>
     <attribute :list="attributeList"></attribute>
   </div>

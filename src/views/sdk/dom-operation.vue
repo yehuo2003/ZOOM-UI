@@ -6,11 +6,11 @@
       操作方法和jQuery大致相同, 功能方面较为简单, 够满足用户一般操作, 可以进行链式调用<br>
       如果需要进行更多复杂的操作, 建议引入jQuery组件
     </div>
-    <h3>查找DOM元素</h3>
-    <p>直接通过<span>$("元素")</span>来获取要查找的DOM元素, 可在mounted声明周期内使用</p>
+    <h3>{{ $zoom.$t('查找DOM元素') }}</h3>
+    <text-template code="直接通过*$('元素')*来获取要查找的DOM元素, 可在mounted声明周期内使用" />
     <custom-code :html="select"></custom-code>
-    <h3>链式操作</h3>
-    <p>请看以下例子</p>
+    <h3>{{ $zoom.$t('链式操作') }}</h3>
+    <p>{{ $zoom.$t('请看以下例子') }}</p>
     <custom-code :html="chain"></custom-code>
     <attribute :list="attributeList"></attribute>
   </div>

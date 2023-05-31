@@ -1,11 +1,19 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-05-31 23:30:04
+-->
 <template>
   <div class="date-format">
-    <h2>dateformat</h2>
+    <h2>dateFormat</h2>
     <div class="tip">
-      zoom-ui封装的日期时间格式化组件, 用户可以自定义要格式化的时间格式
+      <text-template code="zoom-ui封装的日期时间格式化组件, 用户可以自定义要格式化的时间格式" />
     </div>
-    <h3>使用方法</h3>
-    <p>通过<span>this.$zoom.dateformat("自定义格式化", 时间对象)</span>方法调用</p>
+    <h3>{{ $zoom.$t('使用方法') }}</h3>
+    <text-template code="通过 *this.$zoom.dateformat('自定义格式化', 时间对象)* 方法调用" />
     <custom-code :html="format"></custom-code>
   </div>
 </template>

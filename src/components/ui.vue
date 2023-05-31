@@ -152,6 +152,11 @@ export default {
       border: 1px solid #d9d9d9;
     }
     .tip {
+      p {
+        line-height: inherit;
+        margin-bottom: 0;
+        font-size: 14px;
+      }
       padding: 8px 16px;
       background: #ecf8ff;
       border-radius: 4px;

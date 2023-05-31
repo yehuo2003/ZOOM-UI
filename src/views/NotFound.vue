@@ -3,7 +3,7 @@
     <section class="center">
       <article>
         <h1 class="header">404</h1>
-        <p class="error">ERROR</p>
+        <p class="error">{{ $zoom.$t('您访问的页面不存在!') }}</p>
       </article>
       <article>
         <img src="./component/static/logo.png" alt="ZOOM-UI" />
@@ -72,7 +72,7 @@ export default {
   },
 };
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .zoom-not-found {
   li {
     .to-link {
@@ -108,18 +108,23 @@ export default {
   .search-btn {
     border: 0;
     border-radius: 7px;
-    padding: 0 17px;
-    background: #e74c3c;
-    width: 99px;
-    border-bottom: 5px solid #c0392b;
-    color: #fff;
+    // padding: 0 17px;
+    background: #f5222d;
+    width: 10vh;
+    border-bottom: 5px solid #f5222d;
+    color: #eee;
     height: 65px;
-    font-size: 1.5rem;
+    font-size: 2.5vh;
     cursor: pointer;
-  }
-
-  .search-btn:active {
-    border-bottom: 0px solid #c0392b;
+    transition: color .5s, border-color .5s;
+    &:hover {
+      background: #ff4d4f;
+      border-color: #ff4d4f;
+    }
+    &:active {
+      background: #ff4d4f;
+      border-color: #ff4d4f;
+    }
   }
 
   .srchFld {
@@ -127,11 +132,11 @@ export default {
     border-radius: 7px;
     padding: 0 17px;
     max-width: 404px;
-    width: 40%;
+    width: 40vw;
     border-bottom: 5px solid #bdc3c7;
     height: 60px;
     color: #7f8c8d;
-    font-size: 19px;
+    font-size: 2.5vh;
   }
 
   .srchFld:focus {
@@ -140,29 +145,25 @@ export default {
 
   /* 404 Styling */
   .header {
-    font-size: 13rem;
+    font-size: 20vh;
     font-weight: 700;
-    margin: 2% 0 2% 0;
+    // margin: 2% 0 2% 0;
     text-shadow: 0px 3px 0px #7f8c8d;
   }
 
   /* Error Styling */
   .error {
-    margin: -70px 0 2% 0;
-    font-size: 7.4rem;
+    margin: auto;
+    font-size: 8vh;
     text-shadow: 0px 3px 0px #7f8c8d;
     font-weight: 100;
   }
   background-color: #0a7189;
   color: #fff;
   font: 100% "Lato", sans-serif;
-  font-size: 1.8rem;
-  font-weight: 300;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  font-size: 3vh;
+  height: 100vh;
+  width: 100vw;
 }
 </style>
 

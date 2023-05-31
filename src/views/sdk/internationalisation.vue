@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-22 22:38:51
+ * @LastEditTime: 2023-05-31 23:20:46
 -->
 <template>
   <div class="internationalisation">
@@ -13,18 +13,16 @@
       zoom-ui内部封装的国际化组件, 目前zoom-ui已经引入了三种语言国际化，分别是：简体中文（zh）、英文（en）、日文（ja）<br>
       用户可以根据自己需要，添加自己需要的国际化语言或者国际化文件，并且可以在项目内自由切换国际化语言
     </div>
-    <h3>获取当前国际化</h3>
-    <span>{{$zoom.$t("test.iter2")}}</span>
-    <span>{{$zoom.$t("test.iter")}}</span>
-    <p>通过调用<span>this.$zoom.getLanguage()</span>, 返回当前所有国际化信息</p>
+    <h3>{{ $zoom.$t('获取当前国际化') }}</h3>
+    <text-template code="通过调用*this.$zoom.getLanguage()*, 返回当前所有国际化信息" />
     <custom-code :html="getLanguage"></custom-code>
-    <h3>设置/修改国际化</h3>
-    <p>通过调用<span>this.$zoom.setLanguage(lang)</span>, 可以设置/修改国际化, 并返回当前最新所有国际化信息</p>
-    <p>因为个别浏览器以及缓存原因, 如果切换了国际化后未立马生效请刷新浏览器</p>
+    <h3>{{ $zoom.$t('设置/修改国际化') }}</h3>
+    <text-template code="通过调用*this.$zoom.setLanguage(lang)*, 可以设置/修改国际化, 并返回当前最新所有国际化信息" />
+    <text-template code="因为个别浏览器以及缓存原因, 如果切换了国际化后未立马生效请刷新浏览器" />
     <custom-code :html="setLanguage"></custom-code>
-    <h3>使用国际化展示</h3>
-    <p>确保国际化名称正常, 可使用<span>$zoom.$t("国际化名称")</span>来展示国际化</p>
-    <p>想要在国际化中使用变量可以在设置时候使用<span>{变量名}</span>定义, 实际使用可参照如下: </p>
+    <h3>{{ $zoom.$t('使用国际化展示') }}</h3>
+    <text-template code="确保国际化名称正常, 可使用*$zoom.$t('国际化名称')*来展示国际化" />
+    <text-template code="想要在国际化中使用变量可以在设置时候使用*{变量名}*定义, 实际使用可参照如下:" />
     <custom-code :html="use"></custom-code>
   </div>
 </template>

@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-29 22:20:08
+ * @LastEditTime: 2023-05-31 22:34:57
 -->
 <template>
   <div class="more">
@@ -81,6 +81,12 @@ export default {
         this.$zoom.$t('more.description.6'),
       ],
       nodeList: [
+        {
+          title: 'May 31, 2023---版本：1.3.3', content: [
+            {text: '解决about:blank报错问题'},
+            {text: '搜索框BUG修复'}
+          ]
+        },
         {
           title: 'May 29, 2023---版本：1.3.2', content: [
             {text: '国际化BUG修复'},

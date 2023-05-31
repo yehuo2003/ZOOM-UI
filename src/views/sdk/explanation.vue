@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-18 12:21:29
+ * @LastEditTime: 2023-05-31 22:57:12
 -->
 <template>
   <div class="explanation">
@@ -13,7 +13,7 @@
       Software Development Kit软件开发包是zoom-ui基于vue和原生js，封装的一套函数库，其中包含一些常用的方法以及指令，已经集成到zoom-ui中，用户无需额外引入，即可直接调用。<br>
       用户也可以根据自己的习惯，对于该方法再次进行封装。在使用过程中请根据手册遵守zoom-ui的SDK使用规范，这样可以帮助大家更好的进行开发。
     </div>
-    <h2>SDK方法一览</h2>
+    <h2>{{ $zoom.$t('SDK方法一览') }}</h2>
     <attribute :list="attributeList"></attribute>
   </div>
 </template>
@@ -76,10 +76,10 @@ export default {
             },
             {
               id: 7,
-              title: "随机数/颜色",
+              title: "随机数/随机颜色",
               name: "random",
               type: "Function",
-              text: "获得一个自定义范围内的随机数/颜色",
+              text: "获得一个自定义范围内的随机数/随机颜色",
               text2: '用法: 调用方法: <span>this.$zoom.$rn("随机数范围")</span>, 随机颜色: <span>this.$zoom.$rc("随机颜色范围")</span>, 具体用法参考: <a href="#/SDK/random">随机数/颜色</a>'
             }
           ]
