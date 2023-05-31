@@ -128,7 +128,6 @@ body {
   color: #333;
   background-color: #fff;
   font-size: 15px;
-  background-image: url(about:blank);
   background-attachment: fixed;
   overflow-x: hidden;
   box-sizing: border-box;

@@ -306,6 +306,10 @@ export default {
   font-size: 12px;
   line-height: 30px;
   background: 0 0;
+  border-radius: 25px 0 0 25px;
+}
+.zoom-search.zoom-input .search-place + input.zoom-input-search {
+  border-radius: 0;
 }
 .zoom-search.zoom-input .select-line .search-place .search-outer a {
   color: #c4c4c4;
