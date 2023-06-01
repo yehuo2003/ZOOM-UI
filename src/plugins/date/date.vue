@@ -2,7 +2,7 @@
   <div @click.stop="bindEvent" class="zoom-date">
     <div
       ref="zoom-date"
-      @click.stop="disabled ? null : show = !show"
+      @click.stop="disabled ? null : showDown()"
       :class="disabled ? 'zoom-date-disabled' : '' "
       class="zoom-input"
     >
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div v-if="show" :class="{positionTop}" class="zoom-date-wrap">
+    <div v-show="show" ref="date-modal" class="zoom-date-wrap">
       <div class="zoom-date-header">
         <span
           v-if="!selectMonth"
@@ -65,29 +65,33 @@
           </tbody>
         </table>
 
-        <div v-if="selectYear" class="agm-date-picker-year-panel zoom-date-picker">
-          <div class="panel-list">
-            <div v-for="(y, index) of years" :key="'year_' + index" class="panel-item">
-              <div
-                :class="{active: y === select.year}"
-                class="panel-item-inner"
-                @click.stop="pickYear(y)"
-              >{{ y + $zoom.$t('date.year') }}</div>  <!-- 年 -->
+        <keep-alive>
+          <div v-if="selectYear" class="agm-date-picker-year-panel zoom-date-picker">
+            <div class="panel-list">
+              <div v-for="(y, index) of years" :key="'year_' + index" class="panel-item">
+                <div
+                  :class="{active: y === select.year}"
+                  class="panel-item-inner"
+                  @click.stop="pickYear(y)"
+                >{{ y + $zoom.$t('date.year') }}</div>  <!-- 年 -->
+              </div>
             </div>
           </div>
-        </div>
+        </keep-alive>
 
-        <div v-if="selectMonth" class="agm-date-picker-month-panel zoom-date-picker">
-          <div class="panel-list">
-            <div v-for="item of 12" :key="'month_' + item" class="panel-item">
-              <div
-                :class="{active: item === select.month}"
-                @click.stop="pickMonth(item)"
-                class="panel-item-inner"
-              >{{ item + $zoom.$t('date.month') }}</div>  <!-- 月 -->
+        <keep-alive>
+          <div v-if="selectMonth" class="agm-date-picker-month-panel zoom-date-picker">
+            <div class="panel-list">
+              <div v-for="item of 12" :key="'month_' + item" class="panel-item">
+                <div
+                  :class="{active: item === select.month}"
+                  @click.stop="pickMonth(item)"
+                  class="panel-item-inner"
+                >{{ item + $zoom.$t('date.month') }}</div>  <!-- 月 -->
+              </div>
             </div>
           </div>
-        </div>
+        </keep-alive>
       </div>
     </div>
   </div>
@@ -122,7 +126,6 @@ export default {
       show: false, // 控制日历面板的显示与隐藏
       selectYear: false, // 控制年份的面板的显示和隐藏
       selectMonth: false, // 控制月份的面板的显示和隐藏
-      positionTop: false, // 控制面板显示方向
       current: "", // 已选择的日期时间。yyyy-MM-dd
       select: {
         // 已选择的日期对象
@@ -165,13 +168,8 @@ export default {
           this.setYear(year);
         });
       }
-    },
-
-    show(newVal) {
-      if (newVal) {
-        this.checkOffsetBottom();
-      }
     }
+
   },
 
   created() {
@@ -195,13 +193,39 @@ export default {
     if (this.op && this.op.onRender) {
       this.op.onRender(this.select, this.dateTime);
     }
-  },
-
-  destroyed() {
-    this.$refs["zoom-date"] = null
+    this.$nextTick(() => {
+      document.body.appendChild(this.$refs['date-modal']);
+    })
   },
 
   methods: {
+    /**
+     * 计算并打开弹窗
+     */
+    showDown() {
+      if (this.show) {
+        this.show = false;
+        return;
+      }
+      // 获取目标元素的位置信息
+      const targetElement = this.$refs['zoom-date'];
+      const targetRect = targetElement.getBoundingClientRect();
+      // 获取需要定位的元素
+      const elementToPosition = this.$refs['date-modal'];
+      // 计算元素距离浏览器底部的距离
+      const distanceToBottom = document.documentElement.clientHeight - targetRect.bottom;
+      // 设置需要定位的元素的位置信息
+      elementToPosition.style.position = 'absolute';
+      elementToPosition.style.left = `${targetRect.left}px`;
+      if (distanceToBottom > 200) {
+        elementToPosition.style.top = `${targetRect.bottom + 10}px`;
+      } else {
+        elementToPosition.style.top = `${targetRect.bottom - elementToPosition.offsetHeight - 210}px`;
+      }
+      this.$nextTick(() => {
+        this.show = true;
+      })
+    },
     reset() {
       this.load();
     },
@@ -459,26 +483,6 @@ export default {
           `${this.$zoom.$t('err.zoom_ui_type')}: ${this.$zoom.$t('date.type')}`
         );
       }
-    },
-
-    checkOffsetBottom() {
-      let scrollTop =
-        (document.documentElement && document.documentElement.scrollTop) ||
-        document.body.scrollTop;
-
-      let clientHeight =
-        (document.documentElement && document.documentElement.clientHeight) ||
-        document.body.clientHeight;
-
-      let offsetBottom =
-        clientHeight -
-        (this.$refs["zoom-date"].offsetTop -
-          scrollTop +
-          this.$refs["zoom-date"].offsetHeight);
-
-      offsetBottom < 250
-        ? (this.positionTop = true)
-        : (this.positionTop = false);
     }
   }
 };
@@ -490,7 +494,7 @@ export default {
   height: 36px;
   color: #515e6e;
 }
-.zoom-date .zoom-date-wrap {
+.zoom-date-wrap {
   width: 270px;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
@@ -502,17 +506,14 @@ export default {
   margin: 5px 0;
   background: #fff;
 }
-.zoom-date .zoom-date-wrap.positionTop {
-  top: -250px;
-}
-.zoom-date .zoom-date-wrap .zoom-date-header {
+.zoom-date-wrap .zoom-date-header {
   padding: 0 10px;
   font-size: 14px;
   text-align: center;
   line-height: 36px;
   border-bottom: 1px solid #e8eaec;
 }
-.zoom-date .zoom-date-wrap .zoom-date-header .zoom-date-header-btn {
+.zoom-date-wrap .zoom-date-header .zoom-date-header-btn {
   cursor: pointer;
   -webkit-transition: color 0.2s ease-in-out;
   transition: color 0.2s ease-in-out;
@@ -521,37 +522,37 @@ export default {
   -ms-user-select: none;
   user-select: none;
 }
-.zoom-date .zoom-date-wrap .zoom-date-header .zoom-date-header-btn:hover {
+.zoom-date-wrap .zoom-date-header .zoom-date-header-btn:hover {
   color: #008afe;
 }
-.zoom-date .zoom-date-wrap .zoom-date-header .zoom-date-header-btn-pre {
+.zoom-date-wrap .zoom-date-header .zoom-date-header-btn-pre {
   float: left;
   padding-right: 5px;
   font-size: 22px;
   -webkit-transform: scale(0.5, 1);
   transform: scale(0.5, 1);
 }
-.zoom-date .zoom-date-wrap .zoom-date-header .zoom-date-header-btn-next {
+.zoom-date-wrap .zoom-date-header .zoom-date-header-btn-next {
   padding-left: 5px;
   float: right;
   font-size: 22px;
   -webkit-transform: scale(0.5, 1);
   transform: scale(0.5, 1);
 }
-.zoom-date .zoom-date-wrap .zoom-date-content {
+.zoom-date-wrap .zoom-date-content {
   position: relative;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table {
+.zoom-date-wrap .zoom-date-content table {
   width: 100%;
   border-collapse: collapse;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table thead {
+.zoom-date-wrap .zoom-date-content table thead {
   line-height: 30px;
   font-size: 12px;
   color: #333;
   font-weight: bold;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td {
+.zoom-date-wrap .zoom-date-content table tbody tr td {
   line-height: 20px;
   font-size: 12px;
   text-align: center;
@@ -560,18 +561,18 @@ export default {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td:hover {
+.zoom-date-wrap .zoom-date-content table tbody tr td:hover {
   background: #eee;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td.active,
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td.active:hover {
+.zoom-date-wrap .zoom-date-content table tbody tr td.active,
+.zoom-date-wrap .zoom-date-content table tbody tr td.active:hover {
   color: #fff;
   background: #1890ff;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content table tbody tr td.flag {
+.zoom-date-wrap .zoom-date-content table tbody tr td.flag {
   color: #aaa;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content .zoom-date-picker {
+.zoom-date-wrap .zoom-date-content .zoom-date-picker {
   border: 1px solid #e8eaec;
   border-top: 0;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
@@ -580,13 +581,29 @@ export default {
   position: absolute;
   background: #fff;
   font-size: 14px;
-  width: 60px;
+  width: 70px;
+  height: 150px;
+  overflow: auto;
   top: 0;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content .agm-date-picker-year-panel {
+.zoom-date-picker::-webkit-scrollbar {
+  width: 4px;
+}
+.zoom-date-picker::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.2;
+}
+.zoom-date-picker::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+}
+.zoom-date-wrap .zoom-date-content .agm-date-picker-year-panel {
   left: 30%;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content .agm-date-picker-month-panel {
+.zoom-date-wrap .zoom-date-content .agm-date-picker-month-panel {
   right: 25%;
 }
 .zoom-date
@@ -599,10 +616,14 @@ export default {
 .zoom-date {
   display: inline-block;
 }
-.zoom-date .zoom-date-wrap .zoom-date-content .zoom-date-picker .panel-item {
+.zoom-date-wrap .zoom-date-content .zoom-date-picker .panel-item {
   line-height: 25px;
   cursor: pointer;
   padding: 0 5px;
+  transition: background .3s;
+}
+.zoom-date-wrap .zoom-date-content .zoom-date-picker .panel-item:hover {
+  background: #eee;
 }
 .zoom-date .zoom-date-disabled .icon-calendar {
   cursor: no-drop;

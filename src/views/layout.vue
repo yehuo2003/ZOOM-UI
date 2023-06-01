@@ -17,10 +17,6 @@
               <zoom-form-item>
                 <zoom-input></zoom-input>
               </zoom-form-item>
-              <zoom-form-item>
-                <span slot="label">sssss</span>
-                <zoom-date></zoom-date>
-              </zoom-form-item>
               <zoom-form-item inline="true">
                 <zoom-search style="width: 130px;"></zoom-search>
               </zoom-form-item>
@@ -29,6 +25,10 @@
               </zoom-form-item>
               <zoom-form-item>
                 <zoom-text-popup></zoom-text-popup>
+              </zoom-form-item>
+              <zoom-form-item>
+                <span slot="label">sssss</span>
+                <zoom-date></zoom-date>
               </zoom-form-item>
             </zoom-form>
           </div>
