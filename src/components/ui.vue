@@ -153,9 +153,9 @@ export default {
     }
     .tip {
       p {
-        line-height: inherit;
-        margin-bottom: 0;
-        font-size: 14px;
+        line-height: inherit !important;
+        margin-bottom: 0 !important;
+        font-size: 16px !important;
       }
       padding: 8px 16px;
       background: #ecf8ff;

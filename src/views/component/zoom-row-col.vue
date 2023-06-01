@@ -5,8 +5,8 @@
       <template slot="header">
         <h2>{{ $zoom.$t('使用方法') }}</h2>
         <div class="tip">
-          参照bootstrap，通过Row列配置 + Col行配置，实现栅格系统，将屏幕一分为12格，可根据超大屏、大屏、中屏、小屏、超小屏等不同屏幕下，配置屏幕所占比。
-          还可以通过flex属性实现flex布局
+          <text-template code="参照bootstrap，通过Row列配置" />
+          <text-template code="还可以通过flex属性实现flex布局" />
         </div>
         <h3>{{ $zoom.$t('基础用法') }}</h3>
       </template>

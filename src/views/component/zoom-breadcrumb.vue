@@ -3,36 +3,29 @@
     <!-- 普通 -->
     <tab-template :code="breadcrumbCode">
       <template slot="header">
-        <h2>基本用法</h2>
-        <p>可以对条目自定义自定义点击事件, 在条目上绑定<span>onClick</span>回调函数</p>
+        <h2>{{ $zoom.$t('基本用法') }}</h2>
+        <text-template code="可以对条目自定义自定义点击事件, 在条目上绑定*onClick*回调函数" />
       </template>
       <zoom-breadcrumb :op="op"></zoom-breadcrumb>
     </tab-template>
     <!-- 自定义分隔符 -->
     <tab-template :code="breadcrumbFlag">
       <template slot="header">
-        <h2>自定义分隔符</h2>
-        <p>
-          通过
-          <span>flag</span>属性修改面包屑导航中间的分隔符
-        </p>
+        <h2>{{ $zoom.$t('自定义分隔符') }}</h2>
+        <text-template code="通过 *flag* 属性修改面包屑导航中间的分隔符" />
       </template>
       <zoom-breadcrumb :op="breadcrumbOp"></zoom-breadcrumb>
     </tab-template>
     <!-- 自定义样式 -->
     <tab-template :code="breadcrumbCss">
       <template slot="header">
-        <h2>自定义样式</h2>
-        <p>
-          通过
-          <span>css</span>属性来添加自定义class
-        </p>
+        <h2>{{ $zoom.$t('自定义样式') }}</h2>
+        <text-template code="通过 *css* 属性来添加自定义class" />
       </template>
       <zoom-breadcrumb :op="breadcrumbOp2"></zoom-breadcrumb>
     </tab-template>
     <div class="tip">
-      zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
-      组件暂不支持页面渲染后再改变属性，v-model除外。
+      <text-template code="zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。 组件暂不支持页面渲染后再改变属性，v-model除外。" />
     </div>
     <attribute :list="attributeList"></attribute>
   </div>

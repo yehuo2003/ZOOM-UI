@@ -5,13 +5,8 @@
       <template slot="header">
         <h2>{{ $zoom.$t('使用方法') }}</h2>
         <div class="tip">
-          layout本身没有默认宽高, 跟随父元素宽高, layout布局提供四个<span>slot插槽</span>, 有
-          <span>slot="header"</span>、
-          <span>slot="aside"</span>、
-          <span>slot="main"</span>、
-          <span>slot="footer"</span>，
-          开发者可以自由布局定义, 还可以嵌套使用<br>
-          组件默认每次路由变化后, 会自动将滚动条返回顶部, 可手动关闭该功能
+          <text-template code="layout.tip.1" />
+          <text-template code="layout.tip.2" />
         </div>
         <h3>{{ $zoom.$t('经典布局') }}</h3>
       </template>
@@ -59,11 +54,7 @@
       <template slot="header">
         <h2>{{ $zoom.$t('嵌套用法') }}</h2>
         <div class="tip">
-          Layout布局的头部和尾部默认高度为 <span>0</span>, 侧边栏宽度默认为 <span>0</span>, 可以通过 layout 标签上的
-          <span>headerHeight</span>、
-          <span>footerHeight</span>、
-          <span>asideWidth</span>，
-          来修改，主体部分将会自动计算
+          <text-template code="layout.tip.3" />
         </div>
       </template>
       <zoom-layout headerHeight="60" footerHeight="60" style="height: 300px;">

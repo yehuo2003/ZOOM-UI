@@ -74,6 +74,9 @@ export default {
 </script>
 <style scoped lang="scss">
 .zoom-not-found {
+  article {
+    margin-bottom: 10px;
+  }
   li {
     .to-link {
       color: #75c6d9;

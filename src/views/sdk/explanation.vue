@@ -4,14 +4,14 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-31 22:57:12
+ * @LastEditTime: 2023-06-01 22:52:22
 -->
 <template>
   <div class="explanation">
     <h2>Software Development Kit</h2>
     <div class="tip">
-      Software Development Kit软件开发包是zoom-ui基于vue和原生js，封装的一套函数库，其中包含一些常用的方法以及指令，已经集成到zoom-ui中，用户无需额外引入，即可直接调用。<br>
-      用户也可以根据自己的习惯，对于该方法再次进行封装。在使用过程中请根据手册遵守zoom-ui的SDK使用规范，这样可以帮助大家更好的进行开发。
+      <text-template code="explanation.tip1" />
+      <text-template code="explanation.tip2" />
     </div>
     <h2>{{ $zoom.$t('SDK方法一览') }}</h2>
     <attribute :list="attributeList"></attribute>
@@ -32,7 +32,7 @@ export default {
               name: "directive",
               type: "Function",
               text: "参数: <span>focus</span>、<span>drag</span>、<span>tip</span>、<span>lazyupload</span>",
-              text2: '用法: 直接在需要用到的标签上写上如: <span>v-focus</span>, 具体用法参考: <a href="#/SDK/zoom-directive">内置扩展指令</a>'
+              text2: 'explanation.focus'
             },
             {
               id: 2,

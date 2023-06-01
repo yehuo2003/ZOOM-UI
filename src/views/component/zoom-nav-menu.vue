@@ -3,21 +3,18 @@
     <!-- 普通 -->
     <tab-template :code="menuCode">
       <template slot="header">
-        <h2>基本用法</h2>
-        <h3>基础菜单的用法</h3>
-        <p>一级菜单始终显示, 并且可以配置自定义icon图标</p>
+        <h2>{{ $zoom.$t('基本用法') }}</h2>
+        <h3>{{ $zoom.$t('基础菜单的用法') }}</h3>
+        <text-template code="一级菜单始终显示, 并且可以配置自定义icon图标" />
       </template>
       <zoom-nav-menu :op="op"></zoom-nav-menu>
     </tab-template>
     <!-- 隐藏迷你菜单 -->
     <tab-template :code="hideMenu">
       <template slot="header">
-        <h2>隐藏迷你菜单</h2>
-        <p>通过op对象配置, 左边按钮为迷你菜单 鼠标经过时候显示</p>
-        <p>
-          通过op对象配置
-          <span>hideTree: true</span>属性来隐藏左边迷你导航菜单
-        </p>
+        <h2>{{ $zoom.$t('隐藏迷你菜单') }}</h2>
+        <text-template code="通过op对象配置, 左边按钮为迷你菜单 鼠标经过时候显示" />
+        <text-template code="通过op对象配置 *hideTree: true* 属性来隐藏左边迷你导航菜单" />
       </template>
       <zoom-nav-menu :op="navMenuOp"></zoom-nav-menu>
     </tab-template>
