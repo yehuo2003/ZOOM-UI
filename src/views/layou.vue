@@ -18,7 +18,6 @@
       >
       </zoom-option>
     </zoom-select>
-    {{value}}
   </div>
 </template>
 <script>

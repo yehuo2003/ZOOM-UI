@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-13 22:44:33
+ * @LastEditTime: 2023-06-04 13:01:13
 -->
 <template>
   <div
@@ -102,6 +102,7 @@ export default {
     removeItem(item) {
       this.calculatedHeight();
       this.currentValue = this.currentValue.filter((i) => i !== item);
+      this.list = this.list.filter(i => i.text !== item);
       this.options = this.options.map((i) => {
         if (i.text === item) {
           i.checked = false;
@@ -277,9 +278,9 @@ export default {
       setTimeout(() => {
         let tags = this.$refs["tags"].clientHeight;
         if (tags) {
-          this.$refs["downVal"].style.height = `${tags}px`;
+          this.$refs["downVal"].style.height = `${tags + 6}px`;
         } else {
-          this.$refs["downVal"].style.height = "24px";
+          this.$refs["downVal"].style.height = "30px";
         }
         if (this.tipInstance) {
           this.tipInstance.updateTip();
@@ -321,11 +322,12 @@ export default {
   outline: 0;
   display: inline-block;
   box-sizing: border-box;
+  appearance: none;
   -webkit-appearance: none;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .zoom-input__suffix {
-  right: 8px;
+  right: 5px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -357,8 +359,15 @@ export default {
   width: 1em;
   height: 1em;
   vertical-align: middle;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: inline-block;
+  color: #666;
+  font-size: 15px;
+  transition: color .3s, font-weight .3s;
+}
+.zoom-select__multiple .icon-close-plus:hover {
+  color: #191919;
+  font-weight: bold;
 }
 .zoom-select .zoom-input.is-focus .zoom-input__inner {
   border-color: #40a9ff;
@@ -392,6 +401,7 @@ export default {
   line-height: normal;
   white-space: normal;
   padding-left: 4px;
+  padding-right: 20px;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
@@ -455,7 +465,7 @@ export default {
   color: #d9d9d9;
 }
 .zoom-select .zoom-select-mask {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0);
   position: fixed;
   top: 0;
   left: 0;
@@ -483,6 +493,7 @@ export default {
   transition: opacity 0.34s ease-out;
 }
 .zoom-select__tags-text {
+  font-size: 12px;
   width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
