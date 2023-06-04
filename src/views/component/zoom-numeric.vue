@@ -7,10 +7,8 @@
     <!-- 设置属性 -->
     <tab-template :code="numericCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的数字框组件，可以用v-model绑定数据, 但是只能绑定Number类型数据，并且进行加或减
-          可以绑定op对象，并设置常用属性
-        </p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的数字框组件，可以用v-model绑定数据, 但是只能绑定Number类型数据，并且进行加或减 可以绑定op对象，并设置常用属性" />
       </template>
       <zoom-numeric :op="numericOp"></zoom-numeric>
       禁用数字框：<zoom-numeric v-model="num" :op="numericOp2"></zoom-numeric>
@@ -41,7 +39,7 @@ export default {
               name: "max",
               type: "Number",
               text: "设置用户可输入的的最大值, 设置之后, 用户输入范围最大不得大于最大值, 也无法通过减号按钮让当前值大于最大值",
-              text2: '用法: 配置op对象, 设置 <span>max: "最大值"</span>'
+              text2: '用法: 配置op对象, 设置 <span>min: "最大值"</span>'
             },
             {
               id: 3,

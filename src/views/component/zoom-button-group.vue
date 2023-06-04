@@ -4,11 +4,11 @@
     <tab-template :code="btn">
       <template slot="header">
         <div class="tip">
-          按钮群组即为按钮的集合, 组件包含按钮组件的功能<br>
-          可以绑定多个按钮为数据
+          <text-template code="按钮群组即为按钮的集合, 组件包含按钮组件的功能" />
+          <text-template code="可以绑定多个按钮为数据" />
         </div>
-        <h2>基本用法</h2>
-        <p>基础按钮的用法</p>
+        <h2>{{ $zoom.$t('基本用法') }}</h2>
+        <text-template code="基础按钮的用法" />
       </template>
       <zoom-button-group :op="btnOp"></zoom-button-group>
     </tab-template>

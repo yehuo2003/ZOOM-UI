@@ -5,9 +5,9 @@
       <template slot="header">
         <h2>基本用法</h2>
         <div class="tip">
-          zoom-tabs组件, 需要配合zoom-tab-item组件一起使用<br>
-          可以配置自定义的标签页title和内容<br>
-          默认横排显示, 可以切换竖排显示, 靠左或者靠右显示
+          <text-template code="zoom-tabs组件, 需要配合zoom-tab-item组件一起使用" />
+          <text-template code="可以配置自定义的标签页title和内容" />
+          <text-template code="默认横排显示, 可以切换竖排显示, 靠左或者靠右显示" />
         </div>
       </template>
       <zoom-tabs :value="curTab2" @change="tabChange2">
@@ -31,12 +31,8 @@
     <!-- 竖排显示 -->
     <tab-template :code="tabsCustom">
       <template slot="header">
-        <h2>竖排显示</h2>
-        <p>
-          如果想要竖排显示, 可以在组件标签设置
-          <span>position="left"</span>,
-          <span>right</span>就是靠右
-        </p>
+        <h2>{{ $zoom.$t('竖排显示') }}</h2>
+        <text-template code="如果想要竖排显示, 可以在组件标签设置 *position='left'*, right就是靠右" />
       </template>
       <zoom-tabs position="left" :value="sizeTab" @change="sizeChange">
         <zoom-tab-item :index="0" :label="'Tab1'">
@@ -81,7 +77,7 @@ export default {
             },
             {
               id: 2,
-              title: "tab页名称",
+              title: "Tab页名称",
               name: "label",
               type: "String",
               text:

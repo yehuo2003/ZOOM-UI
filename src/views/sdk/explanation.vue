@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-01 22:52:22
+ * @LastEditTime: 2023-06-04 13:15:41
 -->
 <template>
   <div class="explanation">
@@ -80,7 +80,7 @@ export default {
               name: "random",
               type: "Function",
               text: "获得一个自定义范围内的随机数/随机颜色",
-              text2: '用法: 调用方法: <span>this.$zoom.$rn("随机数范围")</span>, 随机颜色: <span>this.$zoom.$rc("随机颜色范围")</span>, 具体用法参考: <a href="#/SDK/random">随机数/颜色</a>'
+              text2: '*this.$zoom.$rn("随机数范围")*'
             }
           ]
         }

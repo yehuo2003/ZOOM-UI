@@ -7,8 +7,8 @@
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="dropdownCustom">
       <template slot="header">
-        <h3>设置属性</h3>
-        <p>zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
+        <h3>{{ $zoom.$t('设置属性') }}</h3>
+        <text-template code="zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容" />
       </template>
       下拉单选：<zoom-dropdown :op="dropdownOp"></zoom-dropdown><br>
       下拉多选：<zoom-dropdown :op="dropdownOp2"></zoom-dropdown>
@@ -18,8 +18,8 @@
     <!-- 动态设置数据 -->
     <tab-template cls="data-drop" :code="dropdownLoad">
       <template slot="header">
-        <h3>动态设置数据</h3>
-        <p>有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发</p>
+        <h3>{{ $zoom.$t('动态设置数据') }}</h3>
+        <text-template code="有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发" />
       </template>
       默认无数据：<zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown><br>
       <zoom-button @click="handleClick">点击加载数据</zoom-button>

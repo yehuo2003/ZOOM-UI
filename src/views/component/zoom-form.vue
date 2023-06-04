@@ -4,11 +4,10 @@
     <tab-template cls="data-drop" :code="formCode">
       <template slot="header">
         <div class="tip">
-          zoom-ui的form表单组件提供了强大的表单功能，在表单中每个条目默认为块级元素，也可以更改为行内元素，此外表单还提供了一键验证功能，用于自定义验证表单中所有zoom-ui的表单组件，
-          此外还有一键重置功能，用于重置表单中所有zoom-ui的表单元素组件。
+          <text-template code="zoom-ui的form表单组件提供了强大的表单功能" />
         </div>
-        <h2>使用方法</h2>
-        <p>如果表单中只有一个按钮, 默认可以用回车键提交。或者点击会触发默认事件, 阻止默认事件可通过zoom-form标签中加<span>submit.prevent="false"</span>阻止默认提交事件</p>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
+        <text-template code="如果表单中只有一个按钮, 默认可以用回车键提交。或者点击会触发默认事件, 阻止默认事件可通过zoom-form标签中加*submit.prevent='false'*阻止默认提交事件" />
       </template>
       <zoom-form @submit.prevent="false" label-width="100px">
         <zoom-form-item label="姓名">
@@ -22,11 +21,11 @@
     <!-- 高级用法 -->
     <tab-template cls="data-drop" :code="formCustom">
       <template slot="header">
-        <h2>高级用法</h2>
-        <p><span>label-width</span>为label的宽度, 可以自定义</p>
-        <p>在<span>zoom-form</span>标签上加 <span>:inline="true"</span> 可以将条目变为行内元素</p>
-        <p>在<span>zoom-form-item</span>标签上加 <span>:require="true"</span> 则为必填项, 可配合<span>valid</span>函数做校验</p>
-        <p>zoom-ui提供的<span>reset</span>函数可以重置表单内所有表单组件</p>
+        <h2>{{ $zoom.$t('高级用法') }}</h2>
+        <text-template code="*label-width为label*的宽度, 可以自定义" />
+        <text-template code="在*zoom-form*标签上加 *:inline='true'* 可以将条目变为行内元素" />
+        <text-template code="在*zoom-form-item*标签上加 *:require='true'* 则为必填项, 可配合valid函数做校验" />
+        <text-template code="zoom-ui提供的*reset*函数可以重置表单内所有表单组件" />
       </template>
       <zoom-form ref="form" label-width="120px">
         <zoom-form-item inline="true" :require="true" label="名字">

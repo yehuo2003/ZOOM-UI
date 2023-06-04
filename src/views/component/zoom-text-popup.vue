@@ -7,9 +7,9 @@
     <!-- 设置属性 -->
     <tab-template :code="popupCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的弹出编辑组件，可以用v-model绑定数据，默认展示的是输入框，点击编辑状态成文本域，方便用户输入。可以绑定op对象，并设置常用属性</p>
-        <p>禁用状态下，无法拖动和编辑</p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的弹出编辑组件，可以用v-model绑定数据，默认展示的是输入框，点击编辑状态成文本域，方便用户输入。可以绑定op对象，并设置常用属性" />
+        <text-template code="禁用状态下，无法拖动和编辑" />
       </template>
       <zoom-text-popup rows="10" :op="textPopupOp"></zoom-text-popup><br>
       禁用文本域：<br>

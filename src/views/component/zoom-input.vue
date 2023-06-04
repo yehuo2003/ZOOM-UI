@@ -7,8 +7,8 @@
     <!-- 设置属性 -->
     <tab-template :code="opIpt">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的input输入框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容</p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的input输入框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容" />
       </template>
       姓名：<zoom-input :op="inputOp"></zoom-input><br>
       密码：<zoom-input :op="inputOp2"></zoom-input><br>

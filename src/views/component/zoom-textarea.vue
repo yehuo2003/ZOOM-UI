@@ -7,9 +7,9 @@
     <!-- 设置属性 -->
     <tab-template :code="textareaCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的文本域组件，可以用v-model绑定数据，并且可以看到已经输入字节/最大字节。默认宽度为父元素100%，高度用户可自由拖动。可以绑定op对象，并设置常用属性</p>
-        <p>禁用状态下，无法拖动文本域</p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的文本域组件，可以用v-model绑定数据，并且可以看到已经输入字节/最大字节。默认宽度为父元素100%，高度用户可自由拖动。可以绑定op对象，并设置常用属性" />
+        <text-template code="禁用状态下，无法拖动文本域" />
       </template>
       <zoom-textarea :op="textareaOp"></zoom-textarea><br>
       禁用文本域：<br>

@@ -1,7 +1,7 @@
 <template>
   <div class="custom-zoom-checkbox">
     <!-- 普通 -->
-    <h2>使用方法</h2>
+    <h2>{{ $zoom.$t('使用方法') }}</h2>
     <zoom-tabs class="data-drop" :value="curTab" @change="tabChange">
       <zoom-tab-item :index="0" label="效果">
         <zoom-checkbox :op="op"></zoom-checkbox>
@@ -10,11 +10,11 @@
         <custom-code :html="checkboxCode"></custom-code>
       </zoom-tab-item>
     </zoom-tabs>
-    <h3>标签属性</h3>
+    <h3>{{ $zoom.$t('标签属性') }}</h3>
     <div class="tip">
-      复选框组件需要绑定自定义<span>op</span>对象, <span>op</span>对象中定义<span>name</span>, 和<span>data</span>, 并且可以通过v-model绑定数据
+      <text-template code="当前组件需要绑定自定义*op*对象, *op*对象中定义*name*, 和*data*, 并且可以通过v-model绑定数据" />
     </div>
-    <p>禁用状态下，开启或关闭开关</p>
+    <text-template code="禁用状态下，开启或关闭开关" />
     <zoom-tabs class="data-drop" :value="opTab" @change="opChange">
       <zoom-tab-item :index="0" label="效果">
         <span>爱好</span><br>

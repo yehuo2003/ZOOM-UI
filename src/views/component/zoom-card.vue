@@ -4,37 +4,32 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-16 21:44:20
+ * @LastEditTime: 2023-06-04 14:15:16
 -->
 <template>
   <div class="custom-zoom-card">
     <div class="tip">
-      卡片组件默认为块级元素, 宽度为100%
-      可以设置边框和边框阴影
+      <text-template code="卡片组件默认为块级元素, 宽度为100%可以设置边框和边框阴影" />
     </div>
     <!-- 普通 -->
     <tab-template :code="cardCode">
       <template slot="header">
-        <h2>基本用法</h2>
-        <p>可以在卡片组件标签中自定义内容</p>
+        <h2>{{ $zoom.$t('基本用法') }}</h2>
+        <text-template code="可以在卡片组件标签中自定义内容" />
       </template>
       <zoom-card>
-        <h1>自定义内容</h1>
+        <h1>{{ $zoom.$t('自定义内容') }}</h1>
       </zoom-card>
     </tab-template>
     <!-- 边框阴影 -->
     <tab-template :code="cardBorder">
       <template slot="header">
-        <h2>边框阴影</h2>
-        <p>
-          通过组件标签设置属性
-          <span>border="true"</span>开启边框,
-          <span>hover-shadow="true"</span>鼠标经过时阴影显示
-        </p>
+        <h2>{{ $zoom.$t('边框阴影') }}</h2>
+        <text-template code="通过组件标签设置属性 *border='true'*开启边框, *hover-shadow='true'*鼠标经过时阴影显示" />
       </template>
       <zoom-card border="true" hover-shadow="true">
-        <h1>自定义内容</h1>
-        <h3>边框阴影</h3>
+        <h1>{{ $zoom.$t('自定义内容') }}</h1>
+        <h3>{{ $zoom.$t('边框阴影') }}</h3>
       </zoom-card>
     </tab-template>
     <attribute :list="attributeList"></attribute>

@@ -3,8 +3,8 @@
     <!-- 普通 -->
     <tab-template :code="panelCode">
       <template slot="header">
-        <h2>使用方法</h2>
-        <p>可通过<span>title</span>来自定义标题, <span>show</span>属性控制默认隐藏或显示</p>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
+        <text-template code="可通过*title*来自定义标题, *show*属性控制默认隐藏或显示" />
       </template>
       <zoom-panel title="折叠面板">
         内容
@@ -18,8 +18,8 @@
     <!-- 自定义title标签 -->
     <tab-template :code="panelCustom">
       <template slot="header">
-        <h2>自定义title标签</h2>
-        <p>可对<span>title</span>绑定自定义html片段</p>
+        <h2>{{ $zoom.$t('自定义title标签') }}</h2>
+        <text-template code="可对*title*绑定自定义html片段" />
       </template>
       <zoom-panel :title="panelTitle">
         内容

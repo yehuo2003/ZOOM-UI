@@ -1,13 +1,21 @@
+<!--
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-06-04 13:58:17
+-->
 <template>
   <div class="install-develop">
-    <h2>导入组件</h2>
-    <h3>完整引入</h3>
-    <p>在main.js文件中全局注册，方法如下：</p>
+    <h2>{{ $zoom.$t('导入组件') }}</h2>
+    <h3>{{ $zoom.$t('完整引入') }}</h3>
+    <text-template code="在main.js文件中全局注册，方法如下：" />
     <custom-code :html="quote"></custom-code>
-    <h2>组件使用</h2>
-    <p>全局导入后，可以直接通过标签使用，方法如下：</p>
+    <h2>{{ $zoom.$t('组件使用') }}</h2>
+    <text-template code="全局导入后，可以直接通过标签使用，方法如下：" />
     <custom-code :html="use"></custom-code>
-    <h3>更多使用操作请查看 <router-link to="/component">组件使用</router-link></h3>
+    <h3>{{ $zoom.$t('更多使用操作请查看') }} <router-link to="/component">{{ $zoom.$t('组件使用') }}</router-link></h3>
   </div>
 </template>
 <script>

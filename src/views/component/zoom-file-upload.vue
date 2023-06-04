@@ -1,10 +1,7 @@
 <template>
   <div class="custom-zoom-file-upload">
     <div class="tip">
-      zoom-ui提供了强大的文件上传组件，组件分为三种模式，一种是列表模式，一种缩略图模式，用户可以自由切换，还有一种自定义模式，
-      默认是用列表模式上传方式是采用原生ajax，分为两套，一套xhr一套fetch，默认使用xhr，带有进度条功能，上传成功进度条变为绿色，失败变红色，
-      如果用户设置closeProgress为true关闭了进度条，则采用fetchSubmit上传。
-      此外还提供了单文件上传和多文件上传，还可以自定义单个文件上传的大小和类型
+      <text-template code="zoom-ui提供了强大的文件上传组件" />
     </div>
     <!-- 普通 -->
     <tab-template cls="data-drop" :code="fileCode">
@@ -35,7 +32,7 @@ export default {
               title: "关闭自动上传",
               name: "notUpload",
               type: "Boolean",
-              text: "默认为<span>false</span>, 为<span>true</span> 关闭自动上传	开启时进度条会隐藏",
+              text: "关闭自动上传, 开启时进度条会隐藏",
               text2: '用法: 在组件标签上, 或者配置op对象, 设置 <span>notUpload: "true"</span>'
             },
             {

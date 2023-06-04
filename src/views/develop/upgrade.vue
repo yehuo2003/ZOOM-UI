@@ -1,12 +1,12 @@
 <template>
   <div class="install-develop">
-    <h2>查看版本</h2>
-    <p>在项目根目录下，通过<span>Win + R</span> 打开cmd命令行，输入命令: </p>
+    <h2>{{ $zoom.$t('查看版本') }}</h2>
+    <text-template code="在项目根目录下，通过*Win + R* 打开cmd命令行，输入命令:" />
     <custom-code :html="quire"></custom-code>
-    <h2>版本升级</h2>
-    <p>使用npm更新命令如下: </p>
+    <h2>{{ $zoom.$t('版本升级') }}</h2>
+    <text-template code="使用npm更新命令如下:" />
     <custom-code :html="promote"></custom-code>
-    <p>使用 Yarn 更新: </p>
+    <text-template code="使用 Yarn 更新:" />
     <custom-code :html="yarnPromote"></custom-code>
   </div>
 </template>

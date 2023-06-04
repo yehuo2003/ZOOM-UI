@@ -7,11 +7,11 @@
     <!-- 标签属性 -->
     <tab-template cls="data-drop" :code="radioCustom">
       <template slot="header">
-        <h2>标签属性</h2>
+        <h2>{{ $zoom.$t('标签属性') }}</h2>
         <div class="tip">
-          单选框组件需要绑定自定义<span>op</span>对象, <span>op</span>对象中定义<span>name</span>, 和<span>data</span>, 并且可以通过v-model绑定数据
+          <text-template code="当前组件需要绑定自定义*op*对象, *op*对象中定义*name*, 和*data*, 并且可以通过v-model绑定数据" />
         </div>
-        <p>禁用状态下，开启或关闭开关</p>
+        <text-template code="禁用状态下，开启或关闭开关" />
       </template>
       <zoom-radio v-model="age" :op="radioOp"></zoom-radio>
       <zoom-button @click="radioClick">当前选中的值</zoom-button><br>

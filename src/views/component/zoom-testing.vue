@@ -2,8 +2,7 @@
   <div class="custom-zoom-testing">
     <!-- 普通 -->
     <div class="tip">
-      验证码组件默认生成4位数随机验证码,随机范围0~9a~Z, <br>
-      使用canvas绘制, 可自定义随机数范围和id
+      <text-template code="验证码组件默认生成4位数随机验证码,随机范围0~9a~Z, 使用canvas绘制, 可自定义随机数范围和id" />
     </div>
     <tab-template :code="testingCode">
       <zoom-testing></zoom-testing>
@@ -11,10 +10,8 @@
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="testingCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>可自定义随机数范围, 也可以通过
-          <span>pool</span>属性来定义验证码内容为汉字
-        </p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="可自定义随机数范围, 也可以通过 *pool* 属性来定义验证码内容为汉字" />
       </template>
       <zoom-testing :op="testingOp"></zoom-testing>
     </tab-template>

@@ -3,11 +3,11 @@
     <!-- 普通 -->
     <tab-template cls="data-drop" :code="captchaCustom">
       <template slot="header">
-        <h2>使用方法</h2>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
         <div class="tip">
-          zoom-ui提供的滑块验证码，使用canvas绘制，默认隐藏图片，鼠标经过时候显示。可以绑定op对象，并设置常用属性
+          <text-template code="zoom-ui提供的滑块验证码，使用canvas绘制，默认隐藏图片，鼠标经过时候显示。可以绑定op对象，并设置常用属性" />
         </div>
-        <p>禁用状态下，无法拖动文本域</p>
+        <text-template code="禁用状态下，无法拖动文本域" />
       </template>
       <zoom-captcha :op="captchaOp"></zoom-captcha>
       禁用状态

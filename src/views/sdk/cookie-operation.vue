@@ -2,9 +2,9 @@
   <div class="cookie-operation">
     <h2>cookie-operation</h2>
     <div class="tip">
-      zoom-ui基于window.cookie封装的一套可供用户极简化操作cookie的API
-      <br />除了对cookie进行简单的增删改查以外, 还可以对cookie设置子项, 也就是以对象方式存入cookie
-      <br />该操作可以作为全局存值的一种方法
+      <text-template code="zoom-ui基于window.cookie封装的一套可供用户极简化操作cookie的API" />
+      <text-template code="除了对cookie进行简单的增删改查以外, 还可以对cookie设置子项, 也就是以对象方式存入cookie" />
+      <text-template code="该操作可以作为全局存值的一种方法" />
     </div>
     <div v-for="item of list" :key="item.id">
       <h2>{{ $zoom.$t(item.title) }}</h2>

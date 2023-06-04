@@ -7,7 +7,7 @@
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="searchCustom">
       <template slot="header">
-        <h2>设置属性</h2>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
         <p>zoom-ui提供的search下拉框组件，可以绑定op对象，并设置常用属性。组件自带搜索功能，但是需要绑定对应的点击事件</p>
       </template>
       <zoom-search :op="searchOp"></zoom-search>
@@ -16,7 +16,7 @@
     <!-- 迷你 -->
     <tab-template cls="data-drop" :code="searchMini">
       <template slot="header">
-        <h2>迷你下拉框</h2>
+        <h2>{{ $zoom.$t('迷你下拉框') }}</h2>
         <p>通过配置op对象中的属性，
         设置<span>mini: true</span>即可生效
         </p>

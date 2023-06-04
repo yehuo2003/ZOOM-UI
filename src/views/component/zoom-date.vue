@@ -7,10 +7,9 @@
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="dateCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的日期选择组件，组件可以用v-model绑定,默认显示当前时间, 点击输入框,弹出日期选择框,
-          点击年份, 可选择前后六年时间,点击月份 可在1~12月份之间选择,也可以点击左右箭头切换。可以绑定op对象，并设置常用属性</p>
-        <p>禁用状态下，无法拖动文本域</p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的日期选择组件" />
+        <text-template code="禁用状态下，无法拖动文本域" />
       </template>
       <zoom-date :op="dateOp"></zoom-date><br>
       禁用日期选择：<br>

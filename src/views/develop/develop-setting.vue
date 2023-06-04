@@ -4,39 +4,43 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-18 12:20:20
+ * @LastEditTime: 2023-06-04 13:51:34
 -->
 <template>
   <div class="install-develop">
     <h2>Node.js</h2>
-    <h3>安装zoom-ui前首先确保您的环境安装了Node.js，建议8.0以上版本</h3>
-    <h3>如果未安装可以到官网 <a href="https://nodejs.org" target="_blank">https://nodejs.org</a> 进行下载安装</h3>
-    <p>查看Node.js版本可以通过<span>Win + R</span> 打开cmd命令行，输入命令查看Node.js版本：</p>
+    <h3>{{ $zoom.$t('安装zoom-ui前首先确保您的环境安装了Node.js，建议8.0以上版本') }}</h3>
+    <h3>
+      <text-template code="如果未安装可以到官网 https://nodejs.org 进行下载安装" />
+    </h3>
+    <text-template code="查看Node.js版本可以通过*Win + R* 打开cmd命令行，输入命令查看Node.js版本：" />
     <custom-code :html="node"></custom-code>
-    <p>或者</p>
+    <text-template code="或者" />
     <custom-code :html="node2"></custom-code>
     <h2>NPM</h2>
-    <h3>安装完了Node.js后，通过<span>Win + R</span> 打开cmd命令行，输入命令查看Npm版本：</h3>
-    <h3>推荐版本 6.0 以上</h3>
+    <h3>{{ $zoom.$t('安装完了Node.js后，通过Win + R 打开cmd命令行，输入命令查看Npm版本：') }}</h3>
+    <h3>{{ $zoom.$t('推荐版本 6.0 以上') }}</h3>
     <custom-code :html="npm"></custom-code>
-    <h3>如果NPM不是最新版本，可以手动升级</h3>
-    <p>升级命令:</p>
+    <text-template code="" />
+    <h3>{{ $zoom.$t('如果NPM不是最新版本，可以手动升级') }}</h3>
+    <text-template code="升级命令:" />
     <custom-code :html="updateNpm"></custom-code>
-    <h3>因为网络环境原因无法升级成功的可以切换为淘宝镜像</h3>
-    <p>输入以下命令，切换到淘宝镜像源：</p>
+    <h3>{{ $zoom.$t('因为网络环境原因无法升级成功的可以切换为淘宝镜像') }}</h3>
+    <text-template code="输入以下命令，切换到淘宝镜像源：" />
     <custom-code :html="cnpm"></custom-code>
-    <h2>全局安装yarn</h2>
-    <p>yarn 的安装：</p>
+    <h2>{{ $zoom.$t('全局安装yarn') }}</h2>
+    <text-template code="yarn 的安装：" />
     <custom-code :html="yarn"></custom-code>
-    <p>yarn 淘宝源安装：</p>
+    <text-template code="yarn 淘宝源安装：" />
     <custom-code :html="cyarn"></custom-code>
-    <h2>Vue 全局安装</h2>
-    <h3>建议安装 2.6 以上版本的 Vue</h3>
-    <p>安装命令：</p>
+    <h2>{{ $zoom.$t('Vue 全局安装') }}</h2>
+    <text-template code="" />
+    <h3>{{ $zoom.$t('建议安装 2.6 以上版本的 Vue') }}</h3>
+    <text-template code="安装命令：" />
     <custom-code :html="vue"></custom-code>
-    <p>或者: </p>
+    <text-template code="或者" />
     <custom-code :html="vue2"></custom-code>
-    <p>查看 Vue 版本: </p>
+    <text-template code="查看 Vue 版本:" />
     <custom-code :html="vueVersions"></custom-code>
   </div>
 </template>

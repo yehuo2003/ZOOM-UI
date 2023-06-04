@@ -9,11 +9,10 @@
       <template slot="header">
         <h2>标签属性</h2>
         <div class="tip">
-          配置组件的属性有两种方式，一种是示例中的op对象，另一种是直接将属性配置在组件标签上，如下所示：
-          注意：两种方式不能混用，当使用op对象配置属性后，组件其它标签将被忽略(v-model)除外，而且目前还不支持在组件渲染完成后再修改标签属性的值，
-          即zoom-ui对标签属性没有做双向绑定(v-model)除外。
+          <text-template code="配置组件的属性有两种方式，一种是示例中的op对象，另一种是直接将属性配置在组件标签上，如下所示：" />
+          <text-template code="注意：两种方式不能混用" />
         </div>
-        <p>禁用状态下，开启或关闭开关</p>
+        <text-template code="禁用状态下，开启或关闭开关" />
       </template>
       <zoom-switch :op="switchOp"></zoom-switch>
       禁用开关:

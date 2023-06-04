@@ -7,9 +7,9 @@
     <!-- 设置属性 -->
     <tab-template :code="sliderCustom">
       <template slot="header">
-        <h2>设置属性</h2>
-        <p>zoom-ui提供的滑块组件，可以用v-model绑定数值，滑块显示内容为百分比0~100%, 数据可绑定<span>:min</span>最小值和<span>:max</span>最大值</p>
-        <p>比如<span>:min="0"</span>，<span>:max="500"</span>，那么进度条10%的时候,值就是50，以此类推</p>
+        <h2>{{ $zoom.$t('设置属性') }}</h2>
+        <text-template code="zoom-ui提供的滑块组件，可以用v-model绑定数值，滑块显示内容为百分比0~100%, 数据可绑定*:min*最小值和*:max*最大值" />
+        <text-template code="比如*:min='0'*，*:max='500'*，那么进度条10%的时候,值就是50，以此类推" />
       </template>
       <zoom-slider v-model="num1"></zoom-slider>
       <zoom-button @click="slider1Num">滑块1的值</zoom-button>

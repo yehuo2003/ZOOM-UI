@@ -4,11 +4,11 @@
     <tab-template :code="carouselCode">
       <template slot="header">
         <div class="tip">
-          轮播图可以自定义高度和宽度，高度默认19，宽度默认28，可自行修改。<br>
-          当鼠标进入轮播图时，展示左右箭头，点击可切换上一张或下一张。<br>
-          图片下方还提供了图片标题，和提示灯，鼠标经过提示灯也可以切换图片。
+          <text-template code="轮播图可以自定义高度和宽度，高度默认19，宽度默认28，可自行修改。" />
+          <text-template code="当鼠标进入轮播图时，展示左右箭头，点击可切换上一张或下一张。" />
+          <text-template code="图片下方还提供了图片标题，和提示灯，鼠标经过提示灯也可以切换图片。" />
         </div>
-        <h2>用法</h2>
+        <h2>{{ $zoom.$t('用法') }}</h2>
       </template>
       <zoom-carousel :op="op"></zoom-carousel>
     </tab-template>

@@ -1,14 +1,13 @@
 <template>
   <div class="custom-zoom-dialog-box">
     <div class="tip">
-      卡片组件默认为块级元素, 宽度为100%
-      可以设置边框和边框阴影
+      <text-template code="卡片组件默认为块级元素, 宽度为100%可以设置边框和边框阴影" />
     </div>
     <!-- 普通 -->
     <tab-template :code="dialogCode">
       <template slot="header">
-        <h2>基本用法</h2>
-        <p>可以在对话框组件标签中自定义内容</p>
+        <h2>{{ $zoom.$t('基本用法') }}</h2>
+        <text-template code="可以在卡片组件标签中自定义内容" />
       </template>
       <zoom-button @click="handleClick">显示对话框</zoom-button>
       <zoom-dialog-box title="对话框标题" :show="visibility" @close="visibility=false">
