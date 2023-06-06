@@ -1,24 +1,24 @@
 <template>
   <div class="custom-zoom-grid">
     <!-- 普通 -->
-    <h2>使用方法</h2>
+    <h2>{{ $zoom.$t('使用方法') }}</h2>
     <div class="tip">
-      zoom-ui提供的表格组件, 可自由设置表格数据<br>
-      配置数据可在组件标签中绑定op对象, 在op对象里绑定数据<br>
-      组件默认索引值在第一列, 也可以自己设定隐藏索引值<br>
-      如果有按钮的话, 则加载在索引值的后面,  即第二列
+      <text-template code="zoom-ui提供的表格组件, 可自由设置表格数据" />
+      <text-template code="配置数据可在组件标签中绑定op对象, 在op对象里绑定数据" />
+      <text-template code="组件默认索引值在第一列, 也可以自己设定隐藏索引值" />
+      <text-template code="如果有按钮的话, 则加载在索引值的后面,  即第二列" />
     </div>
     <tab-template :code="gridCode">
       <template slot="header">
-        <h2>基础使用</h2>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
       </template>
       <zoom-grid :op="gridOp"></zoom-grid>
     </tab-template>
     <!-- 手动加载数据 -->
     <tab-template cls="data-drop" :code="gridLoad">
       <template slot="header">
-        <h2>手动加载数据</h2>
-        <p>请点击 <span>手动加载数据</span> 按钮试试</p>
+        <h2>{{ $zoom.$t('手动加载数据') }}</h2>
+        <text-template code="请点击*手动加载数据*按钮试试" />
       </template>
       <zoom-button @click="loadData">手动加载数据</zoom-button>
       <zoom-grid ref="grid" :op="gridOp2"></zoom-grid>
@@ -26,25 +26,22 @@
     <!-- 带复选功能的表格 -->
     <tab-template v-if="showGrid" cls="data-drop" :code="gridCheck">
       <template slot="header">
-        <h3>带复选功能的表格</h3>
-        <p>当开启复选框时候, 调用<span>getData()</span>方法获取的是已选中数据</p>
+        <h3>{{ $zoom.$t('带复选功能的表格') }}</h3>
+        <text-template code="当开启复选框时候, 调用*getData()*方法获取的是已选中数据" />
       </template>
       <zoom-grid :op="gridOp3"></zoom-grid>
     </tab-template>
     <!-- 表格的编辑功能 -->
     <tab-template v-if="showGrid" cls="data-drop" :code="gridEdit">
       <template slot="header">
-        <h3>表格的编辑功能</h3>
-        <p>需要使用表格编辑功能，需要先配置editMode属性<br>
-          然后在需要编辑的列中设置属性<span>editable: true</span>可启用编辑功能<br>
-          如果需要监听编辑的数据变化可在标签中绑定<span>editChange</span>方法
+        <h3>{{ $zoom.$t('表格的编辑功能') }}</h3>
+        <text-template code="grid.description.1" />
         </p>
       </template>
       <zoom-grid :op="gridOp4" @editChange="handlerEdit"></zoom-grid>
     </tab-template>
     <div class="tip">
-      zoom-ui组件设置属性通过两种方法，一种是标签内绑定属性设置，另一种是配置op对象后，在op对象里设置属性，当设置了op对象内的属性后，标签内样式将会被覆盖。
-      组件暂不支持页面渲染后再改变属性，v-model除外。如果需要页面加载完毕后再加载表格数据, 请使用组件内置的load方法。
+      <text-template code="grid.description.2" />
     </div>
     <attribute :list="attributeList"></attribute>
   </div>

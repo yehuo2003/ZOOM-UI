@@ -2,9 +2,9 @@
   <div class="custom-zoom-transfer">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的穿梭框组件, 主要是以表格形式渲染<br>
-      组件可以配置自定义数据, 并且实现全选/取消<br>
-      此外组件还自带了搜索功能, 方便用户快速检索数据
+      <text-template code="zoom-ui提供的穿梭框组件, 主要是以表格形式渲染" />
+      <text-template code="组件可以配置自定义数据, 并且实现全选/取消" />
+      <text-template code="此外组件还自带了搜索功能, 方便用户快速检索数据" />
     </div>
     <tab-template :code="transferCode">
       <zoom-transfer :op="transferOp"></zoom-transfer>

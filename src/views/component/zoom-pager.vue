@@ -1,23 +1,23 @@
 <template>
   <div class="custom-zoom-pager">
     <!-- 普通 -->
-    <h2>使用方法</h2>
+    <h2>{{ $zoom.$t('使用方法') }}</h2>
     <div class="tip">
-      zoom-ui提供了强大的分页组件, 可以配合表格组件或者其它组件一起使用<br>
-      需要对分页组件配置op对象, 并配置相应信息<br>
-      分页组件还提供了多个点击事件, 来方便开发者使用
+      <text-template code="zoom-ui提供了强大的分页组件, 可以配合表格组件或者其它组件一起使用" />
+      <text-template code="需要对分页组件配置op对象, 并配置相应信息" />
+      <text-template code="分页组件还提供了多个点击事件, 来方便开发者使用" />
     </div>
     <tab-template :code="pagerCode">
       <template slot="header">
-        <h2>基础使用</h2>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
       </template>
       <zoom-pager :op="pagerOp"></zoom-pager>
     </tab-template>
     <!-- 迷你版 -->
     <tab-template cls="data-drop" :code="pagerCustom">
       <template slot="header">
-        <h2>迷你版</h2>
-        <p>显示迷你版分页组件</p>
+        <h2>{{ $zoom.$t('迷你版') }}</h2>
+        <p>{{ $zoom.$t('显示迷你版分页组件') }}</p>
       </template>
       <zoom-pager :op="miniOp"></zoom-pager>
     </tab-template>

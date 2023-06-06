@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:23:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-29 21:29:03
+ * @LastEditTime: 2023-06-06 22:27:33
 -->
 <template>
   <div class="zoom-home">
@@ -54,7 +54,16 @@
                         <zoom-input :placeholder="$zoom.$t('请输入')"></zoom-input>
                       </zoom-form-item>
                       <zoom-form-item>
-                        <zoom-dropdown :op="dropdownOp"></zoom-dropdown>
+                        <zoom-select style="width: 270px;">
+                          <zoom-option
+                            v-for="item in options"
+                            :key="item.value"
+                            :text="item.text"
+                            :value="item.value"
+                            :disabled="item.disabled"
+                          >
+                          </zoom-option>
+                        </zoom-select>
                       </zoom-form-item>
                       <zoom-form-item>
                         <zoom-date></zoom-date>
@@ -182,14 +191,12 @@ export default {
           {text: this.$zoom.$t('按需付费'), value: 2, checked: true}
         ]
       },
-      dropdownOp: {
-        data: [
-          {value: '1', text: this.$zoom.$t('北京')},
-          {value: '2', text: this.$zoom.$t('上海')},
-          {value: '3', text: this.$zoom.$t('广州')},
-          {value: '4', text: this.$zoom.$t('深圳')}
-        ],
-      },
+      options: [
+        {value: '1', text: this.$zoom.$t('北京')},
+        {value: '2', text: this.$zoom.$t('上海')},
+        {value: '3', text: this.$zoom.$t('广州')},
+        {value: '4', text: this.$zoom.$t('深圳')}
+      ],
     }
   },
   created () {
