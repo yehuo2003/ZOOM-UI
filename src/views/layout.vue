@@ -8,7 +8,7 @@
       <div slot="main">
         <zoom-layout asideWidth="200" headerHeight="60" toggleAside="true">
           <zoom-tree-menu :op="navOp" slot="aside"></zoom-tree-menu>
-          <div slot="main">
+          <!-- <div slot="main">
             <zoom-button @click="changeHead">改变高度</zoom-button>
             <zoom-form @submit.prevent="false">
               <zoom-form-item>
@@ -31,7 +31,7 @@
                 <zoom-date></zoom-date>
               </zoom-form-item>
             </zoom-form>
-          </div>
+          </div> -->
         </zoom-layout>
       </div>
       <div slot="footer">

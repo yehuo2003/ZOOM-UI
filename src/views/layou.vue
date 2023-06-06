@@ -4,11 +4,11 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-14 21:37:13
+ * @LastEditTime: 2023-06-05 23:41:20
 -->
 <template>
   <div class="test-layou">
-    <zoom-select v-model="curText" multiple style="width: 270px;">
+    <zoom-select ref="select" v-model="curText" multiple style="width: 270px;">
       <zoom-option
         v-for="item in options"
         :key="item.value"
@@ -18,6 +18,7 @@
       >
       </zoom-option>
     </zoom-select>
+    <zoom-button @click="testOPT">测试</zoom-button>
   </div>
 </template>
 <script>
@@ -61,6 +62,10 @@ export default {
     }
   },
   methods: {
+    testOPT() {
+      this.$refs['select'].reset();
+      console.log(this.curText, 'curText==');
+    },
     test() {
       console.log(666);
     }

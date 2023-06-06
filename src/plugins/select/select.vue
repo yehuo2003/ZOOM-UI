@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-04 13:01:13
+ * @LastEditTime: 2023-06-05 23:46:10
 -->
 <template>
   <div
@@ -51,7 +51,7 @@
       />
       <span class="zoom-input__suffix">
         <a
-          :class="showDown ? 'icon-up' : 'icon-down'"
+          :class="showDown ? 'icon-down' : 'icon-up'"
           href="javascript:void(0);"
           class="zoom-icon zoom-select__caret"
         ></a>
@@ -99,6 +99,27 @@ export default {
     this.calculatedHeight();
   },
   methods: {
+    reset() {
+      this.options.forEach(i => {
+        if (!i.disabled) {
+          i.checked = false;
+        }
+      })
+      this.list.forEach(i => {
+        if (!i.disabled) {
+          i.checked = false;
+        }
+      })
+      this.currentValue = [];
+      if (this.tipInstance && this.tipInstance.$children && this.tipInstance.$children.length) {
+        this.tipInstance.$children[0].$children.forEach((i) => {
+          i.$el.__vue__.list[0].checked = false;
+        });
+      }
+      this.calculatedHeight();
+      this.$emit("input", null);
+      this.$emit("change", null);
+    },
     removeItem(item) {
       this.calculatedHeight();
       this.currentValue = this.currentValue.filter((i) => i !== item);
