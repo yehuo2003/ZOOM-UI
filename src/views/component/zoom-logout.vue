@@ -2,8 +2,8 @@
   <div class="custom-zoom-logout">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的注销组件, 以a标签形式, 默认文字为"注销", 可自行修改<br>
-      点击注销后清空cookie缓存, 并刷新页面, 如果有指定的url则进行跳转
+      <text-template code="zoom-ui提供的注销组件, 以a标签形式, 默认文字为'注销', 可自行修改" />
+      <text-template code="点击注销后清空cookie缓存, 并刷新页面, 如果有指定的url则进行跳转" />
     </div>
     <tab-template :code="logoutCode">
       <zoom-logout></zoom-logout>
@@ -11,8 +11,8 @@
     <!-- 个性化设置 -->
     <tab-template :code="logoutCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="可对注销组件配置 *op* 对象进行个性化设置" />
       </template>
       <zoom-logout :op="logoutOp"></zoom-logout>
     </tab-template>

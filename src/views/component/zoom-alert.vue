@@ -2,23 +2,23 @@
   <div class="custom-zoom-alert">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的弹出警告框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
-      如果不加title属性, 默认为小弹框, 用户可以自定义弹框标题、内容、类型以及消失时间<br>
-      弹框设置了五种类型
+      <text-template code="zoom-ui提供的弹出警告框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用" />
+      <text-template code="如果不加title属性, 默认为小弹框, 用户可以自定义弹框标题、内容、类型以及消失时间" />
+      <text-template code="弹框设置了五种类型" />
     </div>
     <tab-template :code="aletCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <h3>使用<span>this.$zoom.alert</span>可以调用弹框</h3>
-        <p>点击按钮可触发弹框</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="使用 *this.$zoom.alert* 可以调用弹框" />
+        <text-template code="点击按钮可触发弹框" />
       </template>
       <zoom-button @click="alertClick">弹出警告框</zoom-button>
     </tab-template>
     <!-- 不同类型弹框 -->
     <tab-template :code="alertType">
       <template slot="header">
-        <h2>不同类型弹框</h2>
-        <p>可对<span>alert</span>弹框添加标题和不同类型来实现个性化</p>
+        <h2>{{ $zoom.$t('不同类型弹框') }}</h2>
+        <text-template code="可对 *alert* 弹框添加标题和不同类型来实现个性化" />
       </template>
       <zoom-button @click="styleClick('primary')" type="primary">重点弹框</zoom-button>
       <zoom-button @click="styleClick('success')" type="success">成功弹框</zoom-button>
@@ -29,8 +29,8 @@
     <!-- 设置弹框存在时间 -->
     <tab-template :code="aletTime">
       <template slot="header">
-        <h2>设置弹框存在时间</h2>
-        <p>弹框存在时间默认为<span>2000</span>毫秒, 可以自定义存在时间</p>
+        <h2>{{ $zoom.$t('设置弹框存在时间') }}</h2>
+        <text-template code="弹框存在时间默认为 *2000* 毫秒, 可以自定义存在时间" />
       </template>
       <zoom-button @click="timeClick('primary', 1000)" type="primary">1000毫秒后关闭</zoom-button>
       <zoom-button @click="timeClick('success', 2000)" type="success">2000毫秒后关闭</zoom-button>

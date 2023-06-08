@@ -4,14 +4,14 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-17 00:19:54
+ * @LastEditTime: 2023-06-08 20:01:14
 -->
 <template>
   <div class="custom-zoom-link">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的文字链接组件, 以a标签形式存在, 有不同的主题可供选择<br>
-      可以自定义组件内容、类型、跳转链接和下划线以及是否禁用
+      <text-template code="zoom-ui提供的文字链接组件, 以a标签形式存在, 有不同的主题可供选择" />
+      <text-template code="可以自定义组件内容、类型、跳转链接和下划线以及是否禁用" />
     </div>
     <tab-template :code="linkCode">
       <zoom-link>普通文字链接</zoom-link>
@@ -19,7 +19,7 @@
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="linkCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
       </template>
       <zoom-link>普通文字链接</zoom-link><br>
       <zoom-link type="primary">primary 文字链接</zoom-link><br>

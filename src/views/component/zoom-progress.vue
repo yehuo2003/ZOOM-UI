@@ -2,14 +2,12 @@
   <div class="custom-zoom-progress">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的进度条组件, 取值范围 0% ~ 100%, 初始值为 0, 可自定义<br>
-      进度条提供了五种状态, 可供用户自定义 <br>
-      还可以自定义数值放在内部或外部
+      <text-template code="zoom-ui提供的进度条组件, 取值范围 0% ~ 100%, 初始值为 0, 可自定义 进度条提供了五种状态, 可供用户自定义 还可以自定义数值放在内部或外部" />
     </div>
     <tab-template :code="progressCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <p>通过参数<span>progress</span>可以动态绑定进度条的状态</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="通过参数 *progress* 可以动态绑定进度条的状态" />
       </template>
       <zoom-progress :progress="progressNumber"></zoom-progress>
       <zoom-progress :op="progressOp"></zoom-progress>
@@ -17,8 +15,8 @@
     <!-- 自定义状态 -->
     <tab-template :code="iptStatus">
       <template slot="header">
-        <h2>自定义状态</h2>
-        <p>通过参数<span>status</span>可以动态绑定进度条的状态</p>
+        <h2>{{ $zoom.$t('自定义状态') }}</h2>
+        <text-template code="通过参数 *status* 可以动态绑定进度条的状态" />
       </template>
       <zoom-progress :progress="progressNumber"></zoom-progress><br>
       <zoom-progress :progress="progressNumber" status="danger"></zoom-progress><br>
@@ -29,9 +27,9 @@
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="progressCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>进度条的值和状态均为动态绑定</p>
-        <p>点击下面按钮查看效果</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="进度条的值和状态均为动态绑定" />
+        <text-template code="点击下面按钮查看效果" />
       </template>
       <zoom-progress :progress="progressVal" :status="status"></zoom-progress>
       <zoom-button reset-time="5200" @click="addProgress">点我试试</zoom-button>
@@ -53,10 +51,10 @@ export default {
           content: [
             {
               id: 1,
-              title: "进度条状态",
+              title: "进度条数值",
               name: "progress",
               type: "Number",
-              text: "绑定当前进度条状态, 范围1~100之间",
+              text: "绑定当前进度条数值, 范围1~100之间",
               text2: '用法: 配置op属性, 设置<span>progress: 数值</span>, 或者直接在组件标签绑定属性<span>progress="数值"</span>'
             },
             {

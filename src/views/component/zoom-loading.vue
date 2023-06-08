@@ -2,18 +2,15 @@
   <div class="custom-zoom-loading">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的loading加载已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
-      通过this.$zoom.loading调用, 可以自定义loading的主题, 和是否显示全屏遮罩层
+      <text-template code="zoom-ui提供的loading加载已经全局注册, 并不需要在页面上创建标签, 就可以直接调用" />
+      <text-template code="通过this.$zoom.loading调用, 可以自定义loading的主题, 和是否显示全屏遮罩层" />
     </div>
     <tab-template :code="loadingCode">
       <template slot="header">
-        <h2>使用方法</h2>
-        <p>使用<span>this.$zoom.loading.show()</span>方法可以开启loading</p>
-        <p>使用<span>this.$zoom.loading.hide()</span>方法可以关闭loading</p>
-        <p>
-          还可以通过 <span>color</span> 改变loading的颜色<br>
-          <span>full</span>属性可以设置全屏遮罩层
-        </p>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
+        <text-template code="使用 *this.$zoom.loading.show()* 方法可以开启loading" />
+        <text-template code="使用 *this.$zoom.loading.hide()* 方法可以关闭loading" />
+        <text-template code="还可以通过 *color* 改变loading的颜色 *full* 属性可以设置全屏遮罩层" />
       </template>
       <zoom-button @click="openLoading">默认loading</zoom-button> <span>3秒后消失</span><br>
       <zoom-button @click="customLoading">红色loading</zoom-button> <span>5秒后消失</span>

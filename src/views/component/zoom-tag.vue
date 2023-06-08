@@ -2,8 +2,8 @@
   <div class="custom-zoom-tag">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的标签组件, 有多种类型可供选择, 点击可以选中标签<br>
-      可配置动态删除或新增标签
+      <text-template code="zoom-ui提供的标签组件, 有多种类型可供选择, 点击可以选中标签" />
+      <text-template code="可配置动态删除或新增标签" />
     </div>
     <tab-template :code="tagCode">
       <zoom-tag :op="op"></zoom-tag>
@@ -11,8 +11,8 @@
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="tagCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>可以在<span>op</span>对象进行个性化设置, 进行动态新增或删除标签</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="可以在 *op* 对象进行个性化设置, 进行动态新增或删除标签" />
       </template>
       <zoom-tag :op="tagOp"></zoom-tag>
     </tab-template>
@@ -42,7 +42,7 @@ export default {
               name: "title",
               type: "String",
               text: "新增标签按钮的提示文字, 默认叫<span>add</span>",
-              text2: '用法: 配置op属性, 设置<span>title: 属性"</span>'
+              text2: '用法: 配置op属性, 设置<span>title: 属性</span>'
             },
             {
               id: 3,

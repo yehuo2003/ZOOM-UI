@@ -2,23 +2,23 @@
   <div class="custom-zoom-prompt">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的Prompt提示框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
-      通过this.$zoom.prompt调用, 使用方法和Conmif确认框类似<br>
-      可以通过回车键触发确认按钮事件, Esc按键触发取消事件
+      <text-template code="zoom-ui提供的Prompt提示框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用" />
+      <text-template code="通过this.$zoom.prompt调用, 使用方法和Conmif确认框类似" />
+      <text-template code="可以通过回车键触发确认按钮事件, Esc按键触发取消事件" />
     </div><tab-template :code="promptCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <p>prompt提示框是以Promise形式调用, 返回两个回调<span>.then()</span>接受确认按钮事件, <span>.catch()</span>接受取消按钮事件</p>
-        <p>回调函数中提供一个参数是输入框的值</p>
-        <p>请打开控制台看效果</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="prompt提示框是以Promise形式调用, 返回两个回调 *.then()* 接受确认按钮事件,  *.catch()* 接受取消按钮事件" />
+        <text-template code="回调函数中提供一个参数是输入框的值" />
+        <text-template code="请打开控制台看效果" />
       </template>
       <zoom-button @click="promptClick">提示框</zoom-button>
     </tab-template>
     <!-- 个性化操作 -->
     <tab-template :code="promptCustom">
       <template slot="header">
-        <h2>个性化操作</h2>
-        <p>可对<span>prompt</span>提示框传入对象来配置不同属性来实现个性化</p>
+        <h2>{{ $zoom.$t('个性化操作') }}</h2>
+        <text-template code="可对 *prompt* 提示框传入对象来配置不同属性来实现个性化" />
       </template>
       <zoom-button @click="styleClick('primary')" type="primary">重点提示框</zoom-button>
       <zoom-button @click="styleClick('success')" type="success">成功提示框</zoom-button>

@@ -2,22 +2,22 @@
   <div class="custom-zoom-internationalisation">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的国际化组件, 目前已封装了三种国际化, 分别为中文zh、英文en以及日文ja<br>
-      封装的国际化仅限于zoom-ui组件部分, 需要配置更多的国际化可前往 <router-link to="/SDK/internationalisation">国际化</router-link> 查看 <br>
-      用户还可以动态配置, 自己需要的语言供组件切换
+      <text-template code="zoom-ui提供的国际化组件, 目前自带了三种国际化, 分别为中文zh、英文en以及日文ja" />
+      <text-template code="封装的国际化仅限于zoom-ui组件部分, 需要配置更多的国际化可前往 国际化查看" />
+      <text-template code="用户还可以动态配置, 自己需要的语言供组件切换" />
     </div>
     <tab-template cls="data-drop" :code="internationalisationCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <p>点击切换对应国际化后会刷新页面</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="点击切换对应国际化后会刷新页面" />
       </template>
       <zoom-internationalisation></zoom-internationalisation>
     </tab-template>
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="internationalisationCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>可对国际化组件配置<span>op</span>对象进行个性化设置</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="可对国际化组件配置 *op* 对象进行个性化设置" />
       </template>
       <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
     </tab-template>

@@ -2,39 +2,39 @@
   <div class="custom-zoom-steps">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供了三种形态的步骤条, 有横条和竖条还有时间线步骤条 <br>
-      可以根据修改type来更换步骤条属性
+      <text-template code="zoom-ui提供了三种形态的步骤条, 有横条和竖条还有时间线步骤条" />
+      <text-template code="可以根据修改type来更换步骤条属性" />
     </div>
     <tab-template :code="stepCode">
       <template slot="header">
-        <h2>使用方法</h2>
-        <h3>默认步骤条</h3>
+        <h2>{{ $zoom.$t('使用方法') }}</h2>
+        <h3>{{ $zoom.$t('默认步骤条') }}</h3>
       </template>
       <zoom-steps :op="stepsOp" @change="stepsChange"></zoom-steps>
     </tab-template>
     <!-- 时间线步骤条 -->
     <tab-template cls="data-drop" :code="timeLineCode">
       <template slot="header">
-        <h3>时间线步骤条</h3>
-        <p>通过修改标签上绑定的<span>type</span>属性为<span>timeLine</span>可以设置为时间线步骤条</p>
-        <p>设置了时间线步骤条后, 需要在op的<span>data</span>属性里绑定<span>time</span>属性, 格式为时间格式</p>
+        <h3>{{ $zoom.$t('时间线步骤条') }}</h3>
+        <text-template code="通过修改标签上绑定的*type*属性为*timeLine*可以设置为时间线步骤条" />
+        <text-template code="设置了时间线步骤条后, 需要在*op*的*data*属性里绑定*time*属性, 格式为时间格式" />
       </template>
       <zoom-steps type="timeLine" :op="stepsOp2" @change="stepsChange"></zoom-steps>
     </tab-template>
     <!-- advanced模式步骤条 -->
     <tab-template cls="data-drop" :code="advancedCode">
       <template slot="header">
-        <h3>advanced模式步骤条</h3>
-        <p>通过修改标签上绑定的<span>type</span>属性为<span>advanced</span>可以设置为时间线步骤条</p>
-        <p>设置了时间线步骤条后, 可以在op的<span>data</span>属性里绑定<span>count</span>属性, 格式为<span>Number</span>类型</p>
+        <h3>{{ $zoom.$t('advanced模式步骤条') }}</h3>
+        <text-template code="通过修改标签上绑定的*type*属性为*advanced*可以设置为时间线步骤条" />
+        <text-template code="设置了时间线步骤条后, 可以在*op*的*data*属性里绑定*count*属性, 格式为*Number*类型" />
       </template>
       <zoom-steps type="advanced" :op="stepsOp3" @change="stepsChange"></zoom-steps>
     </tab-template>
     <!-- 主动调用上一步/下一步 -->
     <tab-template cls="data-drop" :code="customCode">
       <template slot="header">
-        <h3>主动调用上一步/下一步</h3>
-        <p>如果设置了属性<span>disabled</span>后将会无法点击, 这时候可以通过绑定<span>ref</span>属性并调用<span>next()</span>或<span>prev()</span>方法来切换步骤</p>
+        <h3>{{ $zoom.$t('主动调用上一步/下一步') }}</h3>
+        <text-template code="如果设置了属性*disabled*后将会无法点击, 这时候可以通过绑定*ref*属性并调用*next()*或*prev()*方法来切换步骤" />
       </template>
       <zoom-steps :op="stepsOp4" ref="steps"></zoom-steps>
       <zoom-button @click="handleClick('prev')">上一步</zoom-button>

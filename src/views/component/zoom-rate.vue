@@ -2,8 +2,8 @@
   <div class="custom-zoom-rate">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的评分组件, 目前有两种模式, 星星图标和表情图标, 默认展示星星图标<br>
-      用户可以用v-model绑定组件, 动态获取用户选中的评分数量
+      <text-template code="zoom-ui提供的评分组件, 目前有两种模式, 星星图标和表情图标, 默认展示星星图标" />
+      <text-template code="用户可以用v-model绑定组件, 动态获取用户选中的评分数量" />
     </div>
     <tab-template :code="rateCode">
       <zoom-rate></zoom-rate>
@@ -11,8 +11,8 @@
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="rateCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>可对注销组件配置<span>op</span>对象进行个性化设置</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="可对注销组件配置 *op* 对象进行个性化设置" />
       </template>
       <zoom-rate :op="rateOp"></zoom-rate>
     </tab-template>

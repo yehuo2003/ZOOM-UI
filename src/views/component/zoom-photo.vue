@@ -2,9 +2,9 @@
   <div class="custom-zoom-photo">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的放大镜功能, 用户可以上传一张小图一张大图, 也可以只上传一张图片用来显示<br>
-      可以设置图片展示区域在内部还是在外部<br>
-      还可以自定义放大倍数, 和放大镜样式和宽度
+      <text-template code="zoom-ui提供的放大镜功能, 用户可以上传一张小图一张大图, 也可以只上传一张图片用来显示" />
+      <text-template code="可以设置图片展示区域在内部还是在外部" />
+      <text-template code="还可以自定义放大倍数, 和放大镜样式和宽度" />
     </div>
     <tab-template :code="photoCode">
       <div style="width: 500px;">
@@ -14,8 +14,8 @@
     <!-- 内部显示放大镜 -->
     <tab-template :code="photoCustom">
       <template slot="header">
-        <h2>内部显示放大镜</h2>
-        <p>通过op对象里的属性<span>outShow</span>来决定放大镜在内部还是外部</p>
+        <h2>{{ $zoom.$t('内部显示放大镜') }}</h2>
+        <text-template code="通过op对象里的属性 *outShow* 来决定放大镜在内部还是外部" />
       </template>
       <zoom-photo :op="photoOp"></zoom-photo>
     </tab-template>

@@ -82,6 +82,11 @@ export default {
       ],
       nodeList: [
         {
+          title: 'Jun 1, 2023---版本：1.3.4', content: [
+            {text: '日期组件弹出框位置错位BUG修复'}
+          ]
+        },
+        {
           title: 'May 31, 2023---版本：1.3.3', content: [
             {text: '解决about:blank报错问题'},
             {text: '搜索框BUG修复'}

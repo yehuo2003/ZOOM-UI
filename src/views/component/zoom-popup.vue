@@ -4,21 +4,21 @@
     <tab-template :code="popupCode">
       <template slot="header">
         <div class="tip">
-          zoom-ui提供的Popup弹出框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用<br>
-          通过this.$zoom.popup调用, 可以自定义标题、内容、类型、自定义按钮文字以及点击按钮的回调事件<br>
-          按回车默认确定功能, 按Esc默认是关闭弹框
+          <text-template code="zoom-ui提供的Popup弹出框组件已经全局注册, 并不需要在页面上创建标签, 就可以直接调用" />
+          <text-template code="通过this.$zoom.popup调用, 可以自定义标题、内容、类型、自定义按钮文字以及点击按钮的回调事件" />
+          <text-template code="按回车默认确定功能, 按Esc默认是关闭弹框" />
         </div>
-        <h2>基础使用</h2>
-        <h3>使用<span>this.$zoom.popup</span>可以调用弹框</h3>
-        <p>点击按钮可触发弹框</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="使用 *this.$zoom.popup* 可以调用弹框" />
+        <text-template code="点击按钮可触发弹框" />
       </template>
       <zoom-button @click="popupClick">弹出警告框</zoom-button>
     </tab-template>
     <!-- 个性化操作 -->
     <tab-template :code="popupCustom">
       <template slot="header">
-        <h2>个性化操作</h2>
-        <p>可对<span>popup</span>弹框添加标题和不同类型等属性来实现个性化</p>
+        <h2>{{ $zoom.$t('个性化操作') }}</h2>
+        <text-template code="可对 *popup* 弹框添加标题和不同类型等属性来实现个性化" />
       </template>
       <zoom-button @click="styleClick('primary')" type="primary">重点弹框</zoom-button>
       <zoom-button @click="styleClick('success')" type="success">成功弹框</zoom-button>

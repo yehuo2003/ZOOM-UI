@@ -2,8 +2,8 @@
   <div class="custom-zoom-userinfo">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的user-info组件, 方便用户进行多用户切换<br>
-      并且可以配置图片作为用户头像
+      <text-template code="zoom-ui提供的user-info组件, 方便用户进行多用户切换" />
+      <text-template code="并且可以配置图片作为用户头像" />
     </div>
     <tab-template :code="userinfoCode">
       <zoom-userinfo></zoom-userinfo>
@@ -11,8 +11,8 @@
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="userinfoCustom">
       <template slot="header">
-        <h2>个性化设置</h2>
-        <p>可对用户信息组件配置<span>op</span>对象进行个性化设置</p>
+        <h2>{{ $zoom.$t('个性化设置') }}</h2>
+        <text-template code="可对用户信息组件配置 *op* 对象进行个性化设置" />
       </template>
       <zoom-userinfo  ref="user" :op="userinfoOp">
         <ul>

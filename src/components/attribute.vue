@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-30 23:02:18
+ * @LastEditTime: 2023-06-08 20:42:40
 -->
 <template>
   <div>
@@ -13,9 +13,9 @@
       <zoom-panel
         v-for="i of item.content"
         :key="i.id"
-        :title="'<span>' + i.name +'</span><span>' + i.type + '</span>'"
+        :title="'<span>' + i.title +'</span><span>' + i.type + '</span>'"
       >
-        <h3>{{ $zoom.$t(i.title) }}</h3>
+        <h3>{{ $zoom.$t(i.name) }}</h3>
         <text-template :code="setLanguage(i.text)" />
         <text-template :code="setLanguage(i.text2)" />
         <text-template :code="setLanguage(i.text3)" />

@@ -2,22 +2,22 @@
   <div class="custom-zoom-progress-group">
     <!-- 普通 -->
     <div class="tip">
-      进度条群组是在进度条组件的基础上进行封装, 具有和进度条相同样式<br>
-      用户可以在进度条群组中配置多条进度条用于展示<br>
+      <text-template code="进度条群组是在进度条组件的基础上进行封装, 具有和进度条相同样式" />
+      <text-template code="用户可以在进度条群组中配置多条进度条用于展示" />
     </div>
     <tab-template :code="progressCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <p>通过参数<span>progress</span>可以动态绑定进度条的状态</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="通过参数 *progress* 可以动态绑定进度条的状态" />
       </template>
       <zoom-progress-group :op="groupOp"></zoom-progress-group>
     </tab-template>
     <!-- 动态设置属性 -->
     <tab-template :code="iptStatus">
       <template slot="header">
-        <h2>动态设置属性</h2>
-        <p>通过方法<span>load</span>可以动态设置进度条群组的数据</p>
-        <p>组件会自动根据值从小到大进行排列</p>
+        <h2>{{ $zoom.$t('动态设置属性') }}</h2>
+        <text-template code="通过方法 *load* 可以动态设置进度条群组的数据" />
+        <text-template code="组件会自动根据值从小到大进行排列" />
       </template>
       <zoom-progress-group ref="group" :op="progressOp"></zoom-progress-group>
       <br>

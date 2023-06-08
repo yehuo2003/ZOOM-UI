@@ -2,9 +2,7 @@
   <div class="custom-zoom-color-picker">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的取色器组件, 取色器选择由js算法模拟, 部分算法来源于网络, zoom-ui进行二次封装并且优化<br>
-      组件可以自定义初始颜色, 可以自由取色并监听颜色变化 <br>
-      也可以隐藏组件或禁用组件
+      <text-template code="colorPicker.1" />
     </div>
     <tab-template :code="colorPickerCode">
       <zoom-color-picker :defaultColor="color" @onChange="colorChange"></zoom-color-picker>

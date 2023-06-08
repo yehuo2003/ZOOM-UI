@@ -4,15 +4,13 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-18 12:19:51
+ * @LastEditTime: 2023-06-08 20:40:08
 -->
 <template>
   <div class="custom-zoom-gallery">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供的画廊幻灯片组件, 有大小图切换功能<br>
-      可以点击大图左右两侧阴影处, 或者用键盘左右按键控制上一张或者下一张<br>
-      还可以开启放大镜功能
+      <text-template code="Gallery.1" />
     </div>
     <tab-template :code="galleryCode">
       <zoom-gallery :op="op"></zoom-gallery>

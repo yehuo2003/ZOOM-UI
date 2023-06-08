@@ -2,16 +2,16 @@
   <div class="custom-zoom-tip">
     <!-- 普通 -->
     <div class="tip">
-      zoom-ui提供了强大的tip组件, 不需要标签引用, 只需要在要调用的标签上写 v-tip="tip内容" 即可<br>
-      zoom-tip提供了五种不同的主题, 用户可自由切换, 另外有上下左右四种方向, 可供用户选择优先显示的方向<br>
-      用户可以选择点击触发或者鼠标经过触发, 默认为鼠标经过触发<br>
-      另外还内置了过渡效果, 可以选择开启/关闭
+      <text-template code="zoom-ui提供了强大的tip组件, 不需要标签引用, 只需要在要调用的标签上写 v-tip='tip内容' 即可" />
+      <text-template code="zoom-tip提供了五种不同的主题, 用户可自由切换, 另外有上下左右四种方向, 可供用户选择优先显示的方向" />
+      <text-template code="用户可以选择点击触发或者鼠标经过触发, 默认为鼠标经过触发" />
+      <text-template code="另外还内置了过渡效果, 可以选择开启/关闭" />
     </div>
     <tab-template :code="tipCode">
       <template slot="header">
-        <h2>基础使用</h2>
-        <h3>使用<span>v-tip</span>指令可以实现</h3>
-        <p>查看<span>zoom-tip</span>效果</p>
+        <h2>{{ $zoom.$t('基础使用') }}</h2>
+        <text-template code="使用 *v-tip* 指令可以实现" />
+        <text-template code="查看 *zoom-tip* 效果" />
       </template>
       <span v-tip="'tip内容展示'">鼠标经过</span><br>
       <span v-tip.click="'tip内容展示'">点击我</span><br>
@@ -20,9 +20,9 @@
     <!-- 个性化操作 -->
     <tab-template :code="tipCustom">
       <template slot="header">
-        <h2>个性化操作</h2>
-        <p>查看不同主题下的tip提示</p>
-        <p>如果设置了方向, 则优先会显示指定方向</p>
+        <h2>{{ $zoom.$t('个性化操作') }}</h2>
+        <text-template code="查看不同主题下的tip提示" />
+        <text-template code="如果设置了方向, 则优先会显示指定方向" />
       </template>
       <div class="custom-tip">
         <p v-tip.primary.bottom="'tip提示内容'">tip 主题 primary</p>

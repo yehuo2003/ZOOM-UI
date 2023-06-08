@@ -2,9 +2,9 @@
   <div class="custom-zoom-notice">
     <!-- 普通 -->
     <div class="tip">
-      文字滚动可以设置横向滚动或者纵向滚动, 默认为横向滚动<br>
-      横向滚动时候, 可以设置自定义icon图标, 默认为喇叭<br>
-      滚动时候当鼠标经过可以暂停滚动, 可关闭此效果
+      <text-template code="文字滚动可以设置横向滚动或者纵向滚动, 默认为横向滚动" />
+      <text-template code="横向滚动时候, 可以设置自定义icon图标, 默认为喇叭" />
+      <text-template code="滚动时候当鼠标经过可以暂停滚动, 可关闭此效果" />
     </div>
     <tab-template :code="noticeCode">
       <zoom-notice>这是一段滚动文字内容</zoom-notice>
@@ -12,8 +12,8 @@
     <!-- 设置纵向滚动 -->
     <tab-template cls="data-drop" :code="noticeCodeCustom">
       <template slot="header">
-        <h2>设置纵向滚动</h2>
-        <p>可以通过组件的<span>vertical</span>属性修改组件为纵向滚动条</p>
+        <h2>{{ $zoom.$t('设置纵向滚动') }}</h2>
+        <text-template code="可以通过组件的 *vertical* 属性修改组件为纵向滚动条" />
       </template>
 
     </tab-template>
