@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-05 23:46:10
+ * @LastEditTime: 2023-06-09 20:28:47
 -->
 <template>
   <div
@@ -41,14 +41,27 @@
     </div>
     <div @click="showTip(showDown)" class="zoom-input">
       <input
+        @compositionstart="handleComposition"
+        @compositionupdate="handleComposition"
+        @compositionend="handleComposition"
+        @keydown="handleTab($event)"
+        @blur="handleBlur"
+        @input="Oninput"
         :value="currentValue"
         type="text"
         readonly="readonly"
         unselectable="on"
         autocomplete="off"
+        :class="error ? 'error' : ''"
         class="zoom-input__inner"
         ref="downVal"
       />
+      <span
+        v-show="errMsg && error"
+        ref="err"
+        v-tip.error.right.multiple.click="errMsg"
+        style="width: 100%;height:30px;disaplay:block;position:absolute;z-index:-999;top:0;left:0;"
+      ></span>
       <span class="zoom-input__suffix">
         <a
           :class="showDown ? 'icon-down' : 'icon-up'"
@@ -65,8 +78,10 @@
   </div>
 </template>
 <script>
+import InputMixin from "../mixins/input";
 export default {
   name: "zoom-select",
+  mixins: [InputMixin],
   props: {
     multiple: {
       // 是否启用多选功能 默认false
@@ -317,6 +332,9 @@ export default {
 };
 </script>
 <style>
+.zoom-select .zoom-input .zoom-input__inner.error {
+  border: 1px solid red;
+}
 .zoom-select {
   display: inline-block;
   position: relative;

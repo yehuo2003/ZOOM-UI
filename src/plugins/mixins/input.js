@@ -124,9 +124,12 @@ export default {
     },
     // 验证功能
     handleBlur() {
-      if (this.currentValue.length < this.options.minLength) {
+      const testing = this.options.testing || (this.op && this.op.testing);
+      const minLength = this.options.minLength || (this.op && this.op.minLength);
+      const errMsg = this.options.errMsg || (this.op && this.op.errMsg);
+      if (this.currentValue.length < minLength) {
         // 小长度为 {min} 个字符！
-        this.errMsg = this.$zoom.$t('input.min', {min: this.options.minLength});
+        this.errMsg = this.$zoom.$t('input.min', {min: minLength});
         this.error = true;
         this.$refs["err"].click();
         this.$nextTick(() => {
@@ -138,12 +141,12 @@ export default {
             });
           }, 2000);
         });
-      } else if (this.options.testing) {
-        let test = this.options.testing(this.currentValue);
+      } else if (testing) {
+        let test = testing(this.currentValue);
         if (!test) {
           this.error = true;
-          if (this.options.errMsg) {
-            this.errMsg = this.options.errMsg;
+          if (errMsg) {
+            this.errMsg = errMsg;
             this.$nextTick(() => {
               this.$refs["err"].click();
               setTimeout(() => {

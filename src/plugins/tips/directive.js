@@ -49,7 +49,8 @@ export default {
         const { click, info, dark, danger, err, error, warning, warn, success, primary, transition, multiple } = binding.modifiers
         const limitPlacementQueue = allPlacements.filter(placement => binding.modifiers[placement])
         el._tipOptions = binding.value
-        el._tipHandler = function tipHandler () {
+        el._tipHandler = function tipHandler (e) {
+          e.stopPropagation();
           if (this._tipOptions == null) return
           const options = this._tipOptions
           const placements = limitPlacementQueue.length

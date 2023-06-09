@@ -4,29 +4,51 @@
  * @Autor: linzhuming
  * @Date: 2020-03-22 00:14:20
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-05 23:41:20
+ * @LastEditTime: 2023-06-09 20:30:40
 -->
 <template>
   <div class="test-layou">
-    <zoom-select ref="select" v-model="curText" multiple style="width: 270px;">
-      <zoom-option
-        v-for="item in options"
-        :key="item.value"
-        :text="item.label"
-        :value="item.value"
-        :disabled="item.disabled"
-      >
-      </zoom-option>
-    </zoom-select>
-    <zoom-button @click="testOPT">测试</zoom-button>
+    <zoom-form ref="form" label-width="120px">
+      <zoom-form-item inline="true" :require="true" label="名字">
+        <zoom-input placeholder="请输入名字"></zoom-input>
+      </zoom-form-item>
+      <zoom-form-item :require="true" inline="true" label="密码">
+        <zoom-select ref="select" v-model="curText" multiple :op="selectOp" style="width: 270px;">
+          <zoom-option
+            v-for="item in options"
+            :key="item.value"
+            :text="item.label"
+            :value="item.value"
+            :disabled="item.disabled"
+          >
+          </zoom-option>
+        </zoom-select>
+      </zoom-form-item>
+      <zoom-form-item style="text-align: center">
+        <zoom-button @click="testOPT">测试</zoom-button>
+      </zoom-form-item>
+    </zoom-form>
+    <!-- <zoom-input :op="selectOp"></zoom-input> -->
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      selectOp: {
+        errMsg: '验证不通过',
+        testing: val => {
+          console.log(val.length, '!val.length==');
+          if (!val.length) {
+            return false
+          } else {
+            return true
+          }
+        }
+      },
       color: '#1890ff',
       curText: '选项1,选项2,选项3',
+      // curText: '',
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -63,8 +85,10 @@ export default {
   },
   methods: {
     testOPT() {
-      this.$refs['select'].reset();
-      console.log(this.curText, 'curText==');
+      // this.$refs['select'].handleBlur();
+      // this.$refs['select'].reset();
+      let valid = this.$refs['form'].valid();
+      console.log(valid, 'valid==');
     },
     test() {
       console.log(666);
