@@ -3,7 +3,7 @@
     <zoom-layout :headerHeight="isHead ? 60 : 0">
       <div slot="header">
         <zoom-nav-menu :op="titleOp"></zoom-nav-menu>
-        <zoom-internationalisation :op="interOp"></zoom-internationalisation>
+        <zoom-internationalization :op="interOp"></zoom-internationalization>
       </div>
       <div slot="main">
         <zoom-layout asideWidth="200" headerHeight="60" toggleAside="true">
@@ -232,7 +232,7 @@ export default {
 }
 
 
-.zoom-header .zoom-internationalisation {
+.zoom-header .zoom-internationalization {
   position: absolute;
   z-index: 1000;
   right: 0;

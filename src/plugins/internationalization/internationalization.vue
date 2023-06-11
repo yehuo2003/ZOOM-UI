@@ -1,12 +1,12 @@
 <template>
-  <div class="zoom-internationalisation">
+  <div class="zoom-internationalization">
     <div class="internationalisation-info-title">
       <i class="zoom-icon icon-set"></i>
       <span>{{title}}</span>
       <span class="zoom-icon icon-down"></span>
       <span class="zoom-icon icon-up"></span>
     </div>
-    <div class="zoom-internationalisation-spread">
+    <div class="zoom-internationalization-spread">
       <ul v-for="(item, index) of list" :key="index">
         <li @click="toggleLang(item)" v-show="item.text !== title">{{item.text}}</li>
       </ul>
@@ -15,7 +15,7 @@
 </template>
 <script>
 export default {
-  name: "zoom-internationalisation",
+  name: "zoom-internationalization",
   props: {
     op: {
       type: Object,
@@ -85,19 +85,19 @@ export default {
 };
 </script>
 <style>
-.zoom-internationalisation:hover {
+.zoom-internationalization:hover {
   height: 50px;
 }
-.zoom-internationalisation:hover .internationalisation-info-title .icon-down {
+.zoom-internationalization:hover .internationalisation-info-title .icon-down {
   display: none;
 }
-.zoom-internationalisation:hover .zoom-internationalisation-spread,
-.zoom-internationalisation:hover .internationalisation-info-title .icon-up {
+.zoom-internationalization:hover .zoom-internationalization-spread,
+.zoom-internationalization:hover .internationalisation-info-title .icon-up {
   text-align: center;
   min-height: 30px;
   display: block;
 }
-.zoom-internationalisation .zoom-internationalisation-spread {
+.zoom-internationalization .zoom-internationalization-spread {
   border: 1px solid #d9d9d9;
   position: absolute;
   cursor: pointer;
@@ -108,24 +108,24 @@ export default {
   height: auto;
   display: none;
 }
-.zoom-internationalisation .zoom-internationalisation-spread li:hover {
+.zoom-internationalization .zoom-internationalization-spread li:hover {
   background: #1890ff;
   color: #fff;
 }
-.zoom-internationalisation .internationalisation-info-title .icon-up,
-.zoom-internationalisation .internationalisation-info-title .icon-down {
+.zoom-internationalization .internationalisation-info-title .icon-up,
+.zoom-internationalization .internationalisation-info-title .icon-down {
   float: right;
   padding-right: 5px;
   cursor: pointer;
 }
-.zoom-internationalisation .internationalisation-info-title .icon-up {
+.zoom-internationalization .internationalisation-info-title .icon-up {
   display: none;
 }
-.zoom-internationalisation {
+.zoom-internationalization {
   position: relative;
   display: inline-block;
 }
-.zoom-internationalisation .internationalisation-info-title {
+.zoom-internationalization .internationalisation-info-title {
   display: inline-block;
   min-height: 30px;
   line-height: 30px;

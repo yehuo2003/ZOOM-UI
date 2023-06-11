@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2020-04-12 11:40:54
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-03-10 21:57:17
+ * @LastEditTime: 2023-06-11 22:32:24
 -->
 <template>
   <div class="zoom-selector">

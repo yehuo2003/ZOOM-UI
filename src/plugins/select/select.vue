@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-09 20:28:47
+ * @LastEditTime: 2023-06-11 22:40:53
 -->
 <template>
   <div
@@ -48,6 +48,7 @@
         @blur="handleBlur"
         @input="Oninput"
         :value="currentValue"
+        :placeholder="placeholder ? placeholder : op.placeHolder"
         type="text"
         readonly="readonly"
         unselectable="on"
@@ -88,6 +89,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    placeholder: {  // 占位符
+      type: String,
+      default: "",
+    },
     value: {
       type: String,
       default: "",
@@ -96,6 +101,9 @@ export default {
       // 是否启用缩写模式 默认false
       type: Boolean,
       default: false,
+    },
+    op: {
+      type: Object
     },
   },
   data() {
@@ -277,16 +285,30 @@ export default {
         }
       }, 1000);
     },
-    loadData() {
+    load(arr) {
+      if (arr && arr instanceof Array && arr.length) {
+        this.loadData(arr);
+      }
+    },
+    loadData(arr) {
       let data = [];
-      this.$slots.default.forEach((item) => {
-        if (
-          item.componentOptions &&
-          item.componentOptions.tag === "zoom-option"
-        ) {
-          data.push(item.componentOptions.propsData);
-        }
-      });
+      if (!this.$slots.default && !arr) {
+        this.currentValue = "";
+        this.options = data;
+        return
+      }
+      if (arr) {
+        data = arr;
+      } else {
+        this.$slots.default.forEach((item) => {
+          if (
+            item.componentOptions &&
+            item.componentOptions.tag === "zoom-option"
+          ) {
+            data.push(item.componentOptions.propsData);
+          }
+        });
+      }
       if (this.multiple) {
         let lst = "";
         if (this.value) {
