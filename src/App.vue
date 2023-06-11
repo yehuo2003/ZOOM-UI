@@ -5,7 +5,7 @@
         <zoom-nav-menu class="zoom-instructions-nav" :op="titleOp"></zoom-nav-menu>
         <div class="header-right">
           <zoom-search v-model="searchVal" :op="searchOp" @search="search"></zoom-search>
-          <zoom-internationalisation></zoom-internationalisation>
+          <zoom-internationalization></zoom-internationalization>
         </div>
       </header>
       <router-view @showHeader="showHeader" ref="main" slot="main"/>
@@ -113,9 +113,9 @@ export default {
       z-index: 999;
       right: 10px;
       top: 7px;
-      .zoom-internationalisation {
+      .zoom-internationalization {
         padding-left: 10px;
-        .zoom-internationalisation-spread {
+        .zoom-internationalization-spread {
           background: #fff;
           ul {
             color: #333;

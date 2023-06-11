@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-04-21 21:35:38
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-08 20:42:40
+ * @LastEditTime: 2023-06-12 00:05:18
 -->
 <template>
   <div>
@@ -42,7 +42,7 @@ export default {
         const regex = /<span>(.*?)<\/span>/g;
         const regex2 = /"([^"]*)"/g;
         const text = val.replace(regex, '*$1*').replace(regex2, "'$1'");
-        console.log(text);
+        // console.log(text);
         return text;
       }
       return val;

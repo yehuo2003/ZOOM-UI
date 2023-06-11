@@ -6,7 +6,7 @@
     </tab-template>
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="dropdownCustom">
-      <template slot="header">s
+      <template slot="header">
         <h3>{{ $zoom.$t('设置属性') }}</h3>
         <text-template code="zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容" />
       </template>

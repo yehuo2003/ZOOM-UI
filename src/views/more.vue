@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2021-03-28 17:09:59
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-05-31 22:34:57
+ * @LastEditTime: 2023-06-12 00:08:32
 -->
 <template>
   <div class="more">
@@ -82,8 +82,27 @@ export default {
       ],
       nodeList: [
         {
+          title: 'Jun 12, 2023---版本：1.3.8', content: [
+            {text: '新增select选择器组件'},
+            {text: '国际化组件优化'}
+          ]
+        },
+        {
+          title: 'Jun 9, 2023---版本：1.3.6', content: [
+            {text: '选择器组件新增验证功能'},
+            {text: '选择器组件重置功能完善'}
+          ]
+        },
+        {
+          title: 'Jun 6, 2023---版本：1.3.5', content: [
+            {text: 'layout组件新增可拖拽功能'},
+            {text: '选择器组件新增重置功能'}
+          ]
+        },
+        {
           title: 'Jun 1, 2023---版本：1.3.4', content: [
-            {text: '日期组件弹出框位置错位BUG修复'}
+            {text: '日期组件弹出框位置错位BUG修复'},
+            {text: '选择器组件BUG修复'}
           ]
         },
         {

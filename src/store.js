@@ -30,6 +30,7 @@ export default new Vuex.Store({
         {title: 'ButtonGroup按钮群组', url: '#/component/zoom-button-group'},
         {title: 'Input输入框', url: '#/component/zoom-input'},
         {title: 'Dropdown下拉框', url: '#/component/zoom-dropdown'},
+        {title: 'select选择器', url: '#/component/zoom-select'},
         {title: 'Search搜索框', url: '#/component/zoom-search'},
         {title: 'Numeric数字框', url: '#/component/zoom-numeric'},
         {title: 'Textarea文本域组件', url: '#/component/zoom-textarea'},
@@ -61,7 +62,7 @@ export default new Vuex.Store({
       ]},
       {title: '业务组件', children: [
         {title: 'Logout注销组件', url: '#/component/zoom-logout'},
-        {title: 'i18n国际化组件', url: '#/component/zoom-internationalisation'},
+        {title: 'i18n国际化组件', url: '#/component/zoom-internationalization'},
         {title: 'Userinfo用户组件', url: '#/component/zoom-userinfo'}
       ]},
       {title: '其它组件', children: [

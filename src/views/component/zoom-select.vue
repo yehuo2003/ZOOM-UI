@@ -2,18 +2,51 @@
   <div class="custom-zoom-dropdown">
     <!-- 普通 -->
     <tab-template :code="dropdownCode">
-      <zoom-dropdown></zoom-dropdown>
+      <zoom-select></zoom-select>
     </tab-template>
     <!-- 设置属性 -->
     <tab-template cls="data-drop" :code="dropdownCustom">
-      <template slot="header">s
+      <template slot="header">
         <h3>{{ $zoom.$t('设置属性') }}</h3>
-        <text-template code="zoom-ui提供的dropdown下拉框组件，可以绑定op对象，并设置常用属性。组件自带清除功能，点击输入框右边的清除按钮可清除输入内容" />
+        <text-template code="zoom-ui提供的select选择器组件，可以绑定op对象，并设置常用属性。下拉数据可通过zoom-option来进行配置, 并且绑定*value*值和*text*值" />
       </template>
-      下拉单选：<zoom-dropdown :op="dropdownOp"></zoom-dropdown><br>
-      下拉多选：<zoom-dropdown :op="dropdownOp2"></zoom-dropdown>
+      下拉单选：
+      <zoom-select :op="dropdownOp" style="width: 270px;">
+        <zoom-option
+          v-for="item in options"
+          :key="item.value"
+          :text="item.text"
+          :value="item.value"
+          :disabled="item.disabled"
+        >
+        </zoom-option>
+      </zoom-select>
       <br>
-      下拉禁用：<zoom-dropdown :op="dropdownOp3"></zoom-dropdown>
+      <br>
+      下拉多选：
+      <zoom-select multiple :op="dropdownOp2" style="width: 270px;">
+        <zoom-option
+          v-for="item in options2"
+          :key="item.value"
+          :text="item.text"
+          :value="item.value"
+          :disabled="item.disabled"
+        >
+        </zoom-option>
+      </zoom-select>
+      <br>
+      <br>
+      下拉禁用：
+      <zoom-select style="width: 270px;">
+        <zoom-option
+          v-for="item in options3"
+          :key="item.value"
+          :text="item.text"
+          :value="item.value"
+          :disabled="item.disabled"
+        >
+        </zoom-option>
+      </zoom-select>
     </tab-template>
     <!-- 动态设置数据 -->
     <tab-template cls="data-drop" :code="dropdownLoad">
@@ -21,7 +54,9 @@
         <h3>{{ $zoom.$t('动态设置数据') }}</h3>
         <text-template code="有时候下拉框数据是通过后台请求的，这就用到了动态加载数据，可以帮助开发者方便的开发" />
       </template>
-      默认无数据：<zoom-dropdown ref="dropdown" :op="dropdownOp4"></zoom-dropdown><br>
+      默认无数据：
+      <zoom-select ref="select"></zoom-select>
+      <br>
       <zoom-button @click="handleClick">点击加载数据</zoom-button>
     </tab-template>
     <attribute :list="attributeList"></attribute>
@@ -42,7 +77,7 @@ export default {
               name: "placeHolder",
               type: "String",
               text: "可自定义占位符内容",
-              text2: '用法: 配置op对象, 设置 <span>placeHolder: "参数"</span>'
+              text2: '用法: 配置op对象, 设置 <span>placeHolder: "参数"</span>, 或者直接在标签上绑定<span>placeHolder="参数"</span>'
             },
             {
               id: 2,
@@ -57,8 +92,8 @@ export default {
               title: "默认选中",
               name: "default",
               type: "String",
-              text: "<span>default</span>为默认展示的数据, 必须要是<span>data</span>数组里有的数据, <span>default</span>请和<span>value</span>值保持一致",
-              text2: '用法: 配置op对象, 设置 <span>default: "属性"</span>'
+              text: "使用<span>v-model</span>绑定数据",
+              text2: '<span>v-model</span>'
             },
             {
               id: 4,
@@ -70,59 +105,35 @@ export default {
             },
             {
               id: 5,
-              title: "禁止输入",
-              name: "readonly",
-              type: "Boolean",
-              text: "默认<span>false</span>, 为<span>true</span>禁止输入内容, 开启后用户无法输入但是可以清除输入框里的内容",
-              text2: '用法: 配置op对象, 设置 <span>readonly: "true"</span>'
-            },
-            {
-              id: 6,
               title: "禁用",
               name: "disabled",
               type: "Boolean",
-              text: "默认 <span>false</span>, 为<span>true</span>则禁用输入框, 禁用状态下, 无法输入也无法清除输入框里内容",
-              text2: '用法: 配置op对象, 设置 <span>disabled: "true"</span>'
+              text: "默认 <span>false</span>, 为<span>true</span>则无法被选中",
+              text2: '用法: 在option配置中, 设置要禁用的选项为 <span>disabled: "true"</span>'
+            },
+            {
+              id: 6,
+              title: "是否多选",
+              name: "multiple",
+              type: "Boolean",
+              text: "默认<span>false</span>, 为<span>true</span>则启用多选功能, 样式为复选框",
+              text2: '用法: 在标签里直接绑定, 设置 <span>multiple</span>'
             },
             {
               id: 7,
-              title: "隐藏清除按钮",
-              name: "hideClose",
+              title: "缩写模式",
+              name: "collapseTags",
               type: "Boolean",
-              text: "默认<span>false</span>, 为<span>true</span>则不显示清除按钮",
-              text2: '用法: 配置op对象, 设置 <span>hideClose: "true"</span>'
+              text: "默认<span>false</span>, 为<span>true</span>开启缩写功能,只有在启用多选模式下才能生效。",
+              text2: '用法: 在标签里直接绑定, 设置 <span>collapseTags</span>'
             },
             {
               id: 8,
-              title: "是否多选",
-              name: "isChecked",
-              type: "Boolean",
-              text: "默认<span>false</span>, 为<span>true</span>则启用多选功能, 样式为复选框",
-              text2: '用法: 配置op对象, 设置 <span>isChecked: "true"</span>'
-            },
-            {
-              id: 9,
-              title: "最小输入字符",
-              name: "minLength",
-              type: "Number",
-              text: "默认<span>0</span>, 设置用户可以输入的最小字符长度, 如果输入字符小于该长度会有提示",
-              text2: '用法: 配置op对象, 设置 <span>minLength: 0</span>'
-            },
-            {
-              id: 10,
-              title: "最大输入字符",
-              name: "maxLength",
-              type: "Number",
-              text: "设置用户可以输入的最大字符长度, 如果输入字符大于该长度将无法继续输入",
-              text2: '用法: 配置op对象, 设置 <span>maxLength: 50</span>'
-            },
-            {
-              id: 11,
               title: "组件宽度",
               name: "width",
               type: "String",
-              text: "默认<span>270px</span>, 可自定义组件的宽度",
-              text2: '用法: 配置op对象, 设置 <span>width: "100%"</span>'
+              text: "默认<span>100%</span>, 可自定义组件的宽度",
+              text2: '用法: 直接在标签里设置, 设置 <span>style="width: 270px;"</span>'
             }
           ]
         },
@@ -145,14 +156,6 @@ export default {
               type: "Function",
               text: "通过ref来获取当前下拉框, 再调用<span></span>load方法, 入参为数组。",
               text2: '用法: <span>this.$refs[属性].load(data)</span>'
-            },
-            {
-              id: 3,
-              title: "设置禁用状态",
-              name: "setDisabled",
-              type: "Function",
-              text: "参数传<span>true</span>则设置禁用组件, 为<span>false</span>可取消禁用",
-              text2: '用法: ref属性, 设置 <span>this.$refs[绑定属性].setDisabled(true)</span>'
             }
           ]
         }
@@ -164,24 +167,29 @@ export default {
         disabled: true,
       },
       dropdownOp2: {
-        isChecked: true,
-        disabled: false,
         placeHolder: '--请选择--',
-        readonly: true,
-        hideClose: false,
-        data: [
-          {value: '1', text: '北京'},
-          {value: '2', text: '上海'},
-          {value: '3', text: '广州'},
-          {value: '4', text: '深圳'}
-        ],
       },
+      options: [
+        {value: '1', text: '北京'},
+        {value: '2', text: '上海'},
+        {value: '3', text: '广州'},
+        {value: '4', text: '深圳'}
+      ],
+      options2: [
+        {value: '3', text: '广州'},
+        {value: '1', text: '北京'},
+        {value: '2', text: '上海'},
+        {value: '4', text: '深圳'}
+      ],
+      options3: [
+        {value: '1', text: '北京', disabled: true},
+        {value: '3', text: '广州'},
+        {value: '2', text: '上海', disabled: true},
+        {value: '4', text: '深圳'}
+      ],
+      options4: [],
       dropdownOp: {
-        isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
-        disabled: false,			// 是否禁用
         placeHolder: '--请选择--',	//占位符
-        default: '2',			//默认选中的值, 写value
-        readonly: false,		//是否禁止输入
         errMsg: '必填',
         testing: val => {
           if (!val) {
@@ -189,19 +197,12 @@ export default {
           } else {
             return true;
           }
-        },
-        hideClose: true,			//是否隐藏清除按钮 默认false
-        data: [						//下拉框数据, 键值对的方式, text是展示的文本
-          {value: '1', text: '北京'},
-          {value: '2', text: '上海'},
-          {value: '3', text: '广州'},
-          {value: '4', text: '深圳'}
-        ],
+        }
       },
       dropdownLoad:
         `&lt;template&gt;
             &lt;div&gt;
-              默认无数据：&lt;zoom-dropdown ref="dropdown"&gt;&lt;/zoom-dropdown&gt;&lt;br&gt;
+              默认无数据：&lt;zoom-select ref="select"&gt;&lt;/zoom-select&gt;&lt;br&gt;
               &lt;zoom-button @click="handleClick"&gt;点击加载数据&lt;/zoom-button&gt;
             &lt;/div&gt;
           &lt;/template&gt;
@@ -219,7 +220,7 @@ export default {
                     {value: '3', text: '广州'},
                     {value: '4', text: '深圳'}
                   ];
-                  this.$refs['dropdown'].load(data);
+                  this.$refs['select'].load(data);
                 }
               }
             }
@@ -227,37 +228,65 @@ export default {
       dropdownCustom:
         `&lt;template&gt;
             &lt;div&gt;
-              下拉单选：&lt;zoom-dropdown :op="dropdownOp"&gt;&lt;/zoom-dropdown&gt;
-              下拉多选：&lt;zoom-dropdown :op="dropdownOp2"&gt;&lt;/zoom-dropdown&gt;
-              下拉禁用：&lt;zoom-dropdown :op="dropdownOp3"&gt;&lt;/zoom-dropdown&gt;
+              下拉单选：&lt;zoom-select :op="dropdownOp" style="width: 270px;"&gt;
+                &lt;zoom-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :text="item.text"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                &gt;
+                &lt;/zoom-option&gt;
+              &lt;/zoom-select&gt;
+              下拉多选：&lt;zoom-select multiple :op="dropdownOp2" style="width: 270px;"&gt;
+                &lt;zoom-option
+                  v-for="item in options2"
+                  :key="item.value"
+                  :text="item.text"
+                  :value="item.value"
+                  :disabled="item.disabled"
+                &gt;
+                &lt;/zoom-option&gt;
+              &lt;/zoom-select&gt;
+              下拉禁用：&lt;zoom-select"&gt;
+                &lt;zoom-option
+                    v-for="item in options3"
+                    :key="item.value"
+                    :text="item.text"
+                    :value="item.value"
+                    :disabled="item.disabled"
+                  &gt;
+                  &lt;/zoom-option&gt;
+              &lt;/zoom-select&gt;
             &lt;/div&gt;
           &lt;/template&gt;
           &lt;script&gt;
             export default {
               data() {
                 return {
-                  dropdownOp3: {
-                    disabled: true,
-                  },
+                  options: [
+                    {value: '1', text: '北京'},
+                    {value: '2', text: '上海'},
+                    {value: '3', text: '广州'},
+                    {value: '4', text: '深圳'}
+                  ],
+                  options2: [
+                    {value: '3', text: '广州'},
+                    {value: '1', text: '北京'},
+                    {value: '2', text: '上海'},
+                    {value: '4', text: '深圳'}
+                  ],
+                  options3: [
+                    {value: '1', text: '北京', disabled: true},
+                    {value: '3', text: '广州'},
+                    {value: '2', text: '上海', disabled: true},
+                    {value: '4', text: '深圳'}
+                  ],
                   dropdownOp2: {
-                    isChecked: true,
-                    disabled: false,
                     placeHolder: '--请选择--',
-                    readonly: true,
-                    hideClose: false,
-                    data: [
-                      {value: '1', text: '北京'},
-                      {value: '2', text: '上海'},
-                      {value: '3', text: '广州'},
-                      {value: '4', text: '深圳'}
-                    ],
                   },
                   dropdownOp: {
-                    isChecked: false,			//	是否开启多选 为true情况下 v-model绑定返回数组
-                    disabled: false,			// 是否禁用
                     placeHolder: '--请选择--',	//占位符
-                    default: '2',			//默认选中的值, 写value
-                    readonly: false,		//是否禁止输入
                     errMsg: '必填',
                     testing: val => {
                       if (!val) {
@@ -265,20 +294,13 @@ export default {
                       } else {
                         return true;
                       }
-                    },
-                    hideClose: true,			//是否隐藏清除按钮 默认false
-                    data: [						//下拉框数据, 键值对的方式, text是展示的文本
-                      {value: '1', text: '北京'},
-                      {value: '2', text: '上海'},
-                      {value: '3', text: '广州'},
-                      {value: '4', text: '深圳'}
-                    ]
+                    }
                   }
                 }
               }
             }
           &lt;/script&gt;`,
-      dropdownCode: `&lt;zoom-dropdown&gt;&lt;/zoom-dropdown&gt;`
+      dropdownCode: `&lt;zoom-select&gt;&lt;/zoom-select&gt;`
     }
   },
   methods: {
@@ -289,7 +311,7 @@ export default {
         {value: '3', text: '广州'},
         {value: '4', text: '深圳'}
       ];
-      this.$refs['dropdown'].load(data);
+      this.$refs['select'].load(data);
     }
   }
 }

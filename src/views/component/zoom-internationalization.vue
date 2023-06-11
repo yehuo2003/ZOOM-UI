@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-zoom-internationalisation">
+  <div class="custom-zoom-internationalization">
     <!-- 普通 -->
     <div class="tip">
       <text-template code="zoom-ui提供的国际化组件, 目前自带了三种国际化, 分别为中文zh、英文en以及日文ja" />
@@ -11,7 +11,7 @@
         <h2>{{ $zoom.$t('基础使用') }}</h2>
         <text-template code="点击切换对应国际化后会刷新页面" />
       </template>
-      <zoom-internationalisation></zoom-internationalisation>
+      <zoom-internationalization></zoom-internationalization>
     </tab-template>
     <!-- 个性化设置 -->
     <tab-template cls="data-drop" :code="internationalisationCustom">
@@ -19,7 +19,7 @@
         <h2>{{ $zoom.$t('个性化设置') }}</h2>
         <text-template code="可对国际化组件配置 *op* 对象进行个性化设置" />
       </template>
-      <zoom-internationalisation :op="internationalisationOp"></zoom-internationalisation>
+      <zoom-internationalization :op="internationalisationOp"></zoom-internationalization>
     </tab-template>
     <attribute :list="attributeList"></attribute>
   </div>
@@ -85,7 +85,7 @@ export default {
       internationalisationCustom:
         `&lt;template&gt;
             &lt;div&gt;
-              &lt;zoom-internationalisation :op="op"&gt;&lt;/zoom-internationalisation&gt;
+              &lt;zoom-internationalization :op="op"&gt;&lt;/zoom-internationalization&gt;
             &lt;/div&gt;
           &lt;/template&gt;
           &lt;script&gt;
@@ -104,7 +104,7 @@ export default {
               }
             }
           &lt;/script&gt;`,
-      internationalisationCode: `&lt;zoom-internationalisation&gt;&lt;/zoom-internationalisation&gt;`
+      internationalisationCode: `&lt;zoom-internationalization&gt;&lt;/zoom-internationalization&gt;`
     }
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.custom-zoom-internationalisation {
+.custom-zoom-internationalization {
   .data-drop {
     ::v-deep .zoom-tabs-content.content-active {
       min-height: 120px;

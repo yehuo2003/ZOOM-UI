@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Version: 2.0
+ * @Autor: linzhuming
+ * @Date: 2023-04-21 21:35:38
+ * @LastEditors: linzhuming
+ * @LastEditTime: 2023-06-11 21:31:56
+ */
 export default {
   path: '/component',
   component: () => import('../views/Component.vue'),
@@ -20,6 +28,7 @@ export default {
     { path: '/component/zoom-button-group', component: () => import('../views/component/zoom-button-group.vue') },  //  button-group
     { path: '/component/zoom-input', component: () => import('../views/component/zoom-input.vue') },  //  input
     { path: '/component/zoom-dropdown', component: () => import('../views/component/zoom-dropdown.vue') },  //  dropdown
+    { path: '/component/zoom-select', component: () => import('../views/component/zoom-select.vue') },  //  select
     { path: '/component/zoom-search', component: () => import('../views/component/zoom-search.vue') },  //  search
     { path: '/component/zoom-numeric', component: () => import('../views/component/zoom-numeric.vue') },  //  numeric
     { path: '/component/zoom-textarea', component: () => import('../views/component/zoom-textarea.vue') },  //  textarea
@@ -43,7 +52,7 @@ export default {
     { path: '/component/zoom-tip', component: () => import('../views/component/zoom-tip.vue') },  //  tip
     { path: '/component/zoom-loading', component: () => import('../views/component/zoom-loading.vue') },  //  loading
     { path: '/component/zoom-logout', component: () => import('../views/component/zoom-logout.vue') },  //  logout
-    { path: '/component/zoom-internationalisation', component: () => import('../views/component/zoom-internationalisation.vue') },  //  internationalisation
+    { path: '/component/zoom-internationalization', component: () => import('../views/component/zoom-internationalization.vue') },  //  internationalisation
     { path: '/component/zoom-userinfo', component: () => import('../views/component/zoom-userinfo.vue') },  //  userinfo
     { path: '/component/zoom-photo', component: () => import('../views/component/zoom-photo.vue') },  //  photo
     { path: '/component/zoom-rate', component: () => import('../views/component/zoom-rate.vue') },  //  rate
