@@ -4,7 +4,7 @@
  * @Autor: linzhuming
  * @Date: 2023-02-25 17:11:07
  * @LastEditors: linzhuming
- * @LastEditTime: 2023-06-11 22:40:53
+ * @LastEditTime: 2023-06-11 23:13:57
 -->
 <template>
   <div
@@ -48,7 +48,7 @@
         @blur="handleBlur"
         @input="Oninput"
         :value="currentValue"
-        :placeholder="placeholder ? placeholder : op.placeHolder"
+        :placeholder="placeholder ? placeholder : (op && op.placeHolder)"
         type="text"
         readonly="readonly"
         unselectable="on"
@@ -103,7 +103,8 @@ export default {
       default: false,
     },
     op: {
-      type: Object
+      type: Object,
+      default:() => {},
     },
   },
   data() {

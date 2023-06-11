@@ -13,7 +13,7 @@
         <zoom-input :op="selectOp"></zoom-input>
       </zoom-form-item>
       <zoom-form-item :require="true" inline="true" label="密码">
-        <zoom-select ref="select" v-model="curText" :op="selectOp" style="width: 270px;">
+        <zoom-select ref="select" v-model="curText" placeholder="666" :op="selectOp" style="width: 270px;">
           <zoom-option
             v-for="item in options"
             :key="item.value"
